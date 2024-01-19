@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_file
 from selectolax.lexbor import LexborHTMLParser
 from datetime import datetime
 from markupsafe import escape
@@ -6,6 +6,7 @@ import requests
 import connect
 import helper
 import json
+import io
 
 db, cursor = connect.connect_mysql()
 
@@ -239,3 +240,18 @@ def dualar():
         helper.daily_json("dualar", data)
 
     return jsonify(data)
+
+
+@app.route("/aygoruntusu")
+def ay_goruntusu():
+    ref = request.headers.get("ref")
+    if not ref:
+        return "Ref Error", 404
+
+    r = requests.get(ref, stream=True)
+    if r.status_code == 200:
+        image_data = io.BytesIO(r.content)
+
+        return send_file(image_data, mimetype="image/gif")
+    else:
+        return "Error", 404

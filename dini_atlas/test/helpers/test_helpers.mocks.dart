@@ -7,8 +7,11 @@ import 'dart:async' as _i6;
 import 'dart:ui' as _i7;
 
 import 'package:dini_atlas/models/user_location.dart' as _i10;
-import 'package:dini_atlas/services/isar_service.dart' as _i8;
-import 'package:dini_atlas/services/user_settings_service.dart' as _i9;
+import 'package:dini_atlas/services/local/isar_service.dart' as _i8;
+import 'package:dini_atlas/services/local/user_settings_service.dart' as _i9;
+import 'package:dini_atlas/services/remote/dio_service.dart' as _i11;
+import 'package:dini_atlas/services/remote/fetch_times_service.dart' as _i13;
+import 'package:dio/dio.dart' as _i12;
 import 'package:flutter/material.dart' as _i5;
 import 'package:isar/isar.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -724,11 +727,60 @@ class MockIsarService extends _i1.Mock implements _i8.IsarService {
 class MockUserSettingsService extends _i1.Mock
     implements _i9.UserSettingsService {
   @override
+  _i6.Future<_i10.UserLocation?> getUserLocation() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserLocation,
+          [],
+        ),
+        returnValue: _i6.Future<_i10.UserLocation?>.value(),
+        returnValueForMissingStub: _i6.Future<_i10.UserLocation?>.value(),
+      ) as _i6.Future<_i10.UserLocation?>);
+
+  @override
   _i6.Future<void> setUserLocation(_i10.UserLocation? location) =>
       (super.noSuchMethod(
         Invocation.method(
           #setUserLocation,
           [location],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [DioService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDioService extends _i1.Mock implements _i11.DioService {
+  @override
+  _i6.Future<_i12.Response<dynamic>?> request(
+    dynamic url, {
+    _i11.DioMethod? method = _i11.DioMethod.get,
+    Map<String, dynamic>? data,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #request,
+          [url],
+          {
+            #method: method,
+            #data: data,
+          },
+        ),
+        returnValue: _i6.Future<_i12.Response<dynamic>?>.value(),
+        returnValueForMissingStub: _i6.Future<_i12.Response<dynamic>?>.value(),
+      ) as _i6.Future<_i12.Response<dynamic>?>);
+}
+
+/// A class which mocks [FetchTimesService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFetchTimesService extends _i1.Mock implements _i13.FetchTimesService {
+  @override
+  _i6.Future<void> fetchTimes() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchTimes,
+          [],
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),

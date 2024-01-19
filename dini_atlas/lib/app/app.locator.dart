@@ -11,9 +11,11 @@ import 'package:stacked_services/src/dialog/dialog_service.dart';
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
-import '../services/isar_service.dart';
-import '../services/location_service.dart';
-import '../services/user_settings_service.dart';
+import '../services/local/isar_service.dart';
+import '../services/local/location_service.dart';
+import '../services/local/user_settings_service.dart';
+import '../services/remote/dio_service.dart';
+import '../services/remote/fetch_times_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -35,4 +37,6 @@ Future<void> setupLocator({
   locator.registerSingleton(isarService);
 
   locator.registerLazySingleton(() => UserSettingsService());
+  locator.registerLazySingleton(() => DioService());
+  locator.registerLazySingleton(() => FetchTimesService());
 }

@@ -21,6 +21,7 @@ abstract class AppTheme {
         shadow: kcShadowColor,
       ),
       textTheme: _textTheme(),
+      dividerTheme: DividerThemeData(color: kcDividerColor),
     );
   }
 

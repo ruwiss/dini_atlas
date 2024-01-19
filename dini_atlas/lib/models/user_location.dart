@@ -1,17 +1,15 @@
-import 'package:geocoding/geocoding.dart';
-
 class UserLocation {
   String country;
   String city;
-  UserLocation({required this.country, required this.city});
-
-  UserLocation.fromPlacemark(Placemark placemark)
-      : country = placemark.country!.trim(),
-        city = placemark.administrativeArea!.trim();
+  String state;
+  UserLocation(
+      {required this.country, required this.city, required this.state});
 
   UserLocation.fromJson(Map<String, dynamic> json)
-      : country = json['country'],
-        city = json['city'];
+      : country = json['country'].trim(),
+        city = json['administrativeArea'].trim(),
+        state = json['subAdministrativeArea'].trim();
 
-  Map<String, dynamic> toJson() => {'country': country, 'city': city};
+  Map<String, dynamic> toJson() =>
+      {'country': country, 'city': city, 'state': state};
 }

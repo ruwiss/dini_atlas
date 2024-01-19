@@ -1,6 +1,6 @@
 import 'package:dini_atlas/app/app.router.dart';
-import 'package:dini_atlas/services/location_service.dart';
-import 'package:dini_atlas/services/user_settings_service.dart';
+import 'package:dini_atlas/services/local/location_service.dart';
+import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked/stacked.dart';
 import 'package:dini_atlas/app/app.locator.dart';

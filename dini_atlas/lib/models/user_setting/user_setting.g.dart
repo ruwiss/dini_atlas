@@ -21,11 +21,6 @@ const UserSettingSchema = CollectionSchema(
       id: 0,
       name: r'jsonString',
       type: IsarType.string,
-    ),
-    r'key': PropertySchema(
-      id: 1,
-      name: r'key',
-      type: IsarType.string,
     )
   },
   estimateSize: _userSettingEstimateSize,
@@ -49,7 +44,6 @@ int _userSettingEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.jsonString.length * 3;
-  bytesCount += 3 + object.key.length * 3;
   return bytesCount;
 }
 
@@ -60,7 +54,6 @@ void _userSettingSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.jsonString);
-  writer.writeString(offsets[1], object.key);
 }
 
 UserSetting _userSettingDeserialize(
@@ -72,7 +65,6 @@ UserSetting _userSettingDeserialize(
   final object = UserSetting();
   object.id = id;
   object.jsonString = reader.readString(offsets[0]);
-  object.key = reader.readString(offsets[1]);
   return object;
 }
 
@@ -84,8 +76,6 @@ P _userSettingDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
-    case 1:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -373,137 +363,6 @@ extension UserSettingQueryFilter
       ));
     });
   }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'key',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'key',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> keyIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'key',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition>
-      keyIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'key',
-        value: '',
-      ));
-    });
-  }
 }
 
 extension UserSettingQueryObject
@@ -523,18 +382,6 @@ extension UserSettingQuerySortBy
   QueryBuilder<UserSetting, UserSetting, QAfterSortBy> sortByJsonStringDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'jsonString', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterSortBy> sortByKey() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterSortBy> sortByKeyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.desc);
     });
   }
 }
@@ -564,18 +411,6 @@ extension UserSettingQuerySortThenBy
       return query.addSortBy(r'jsonString', Sort.desc);
     });
   }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterSortBy> thenByKey() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QAfterSortBy> thenByKeyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'key', Sort.desc);
-    });
-  }
 }
 
 extension UserSettingQueryWhereDistinct
@@ -584,13 +419,6 @@ extension UserSettingQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'jsonString', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<UserSetting, UserSetting, QDistinct> distinctByKey(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'key', caseSensitive: caseSensitive);
     });
   }
 }
@@ -606,12 +434,6 @@ extension UserSettingQueryProperty
   QueryBuilder<UserSetting, String, QQueryOperations> jsonStringProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'jsonString');
-    });
-  }
-
-  QueryBuilder<UserSetting, String, QQueryOperations> keyProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'key');
     });
   }
 }

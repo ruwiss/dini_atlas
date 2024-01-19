@@ -1,4 +1,5 @@
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/home_tab.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -41,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Center(
               child: getViewForIndex(viewModel.currentIndex),
             ),
@@ -93,12 +94,12 @@ class _HomeViewState extends State<HomeView> {
 
   Widget getViewForIndex(int index) {
     switch (index) {
-      case 1:
-        return const Text("sayfa2");
       case 2:
         return const Text("sayfa3");
+      case 1:
+        return const Text("sayfa2");
       default:
-        return const Text("sayfa1");
+        return const HomeTab();
     }
   }
 }

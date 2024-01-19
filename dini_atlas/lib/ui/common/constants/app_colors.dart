@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 const Color kcBackgroundColor = Color(0xFFFFFFFF);
 const Color kcPrimaryColor = Color(0xFF672CBC);
+const Color kcOnPrimaryColor = Color(0xFFFFFFFF);
 const Color kcPrimaryColorLight = Color(0xFF863ED5);
 const Color kcPrimaryColorDark = Color(0xFF240F4F);
 const Color kcOnBackgroundColor = Color(0xFF8789A3);
 
 const Color kcShadowColor = Color(0xFFBAB0CE);
+final Color kcDividerColor = const Color(0xFFBBC4CE).withOpacity(.35);
 
 const Color kcGrayColor = Color(0xFF8789A3);
-const Color kcGrayColorLight = Color(0xFFF1F4FA);
-const Color kcGrayColorVeryLight = Color(0xFFF9F9F9);
-const Color kcGrayColorDark = Color.fromRGBO(18, 25, 49, 0.05);
+final Color kcGrayColorLight = const Color(0xFFF2F2F3).withOpacity(.5);
 const Color kcBlueGrayColor = Color(0xFFEDF3F9);
 
 // Purple

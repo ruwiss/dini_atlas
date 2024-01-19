@@ -1,7 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
-import '../models/user_location.dart';
+import '../../models/user_location.dart';
 
 class LocationException implements Exception {
   final String message;
@@ -41,12 +41,15 @@ class LocationService {
         desiredAccuracy: LocationAccuracy.high);
 
     // Koordinatı placemarka dönüştür
-    final List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    final List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+      localeIdentifier: "en_US",
+    );
 
     // Placemark üzerinden konum bilgisini getir
     final Placemark location = placemarks.first;
 
-    return UserLocation.fromPlacemark(location);
+    return UserLocation.fromJson(location.toJson());
   }
 }

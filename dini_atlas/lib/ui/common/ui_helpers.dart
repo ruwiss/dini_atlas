@@ -35,6 +35,8 @@ const Widget verticalSpaceLarge = SizedBox(height: _largeSize);
 /// 120.0
 const Widget verticalSpaceMassive = SizedBox(height: _massiveSize);
 
+// * Border Radius
+
 /// 5.0
 BorderRadius borderRadiusSmall = BorderRadius.circular(5);
 
@@ -43,6 +45,20 @@ BorderRadius borderRadiusMedium = BorderRadius.circular(10);
 
 /// 30.0
 BorderRadius borderRadiusLarge = BorderRadius.circular(30);
+
+// * Padding
+
+/// 10.0
+const EdgeInsets paddingTiny = EdgeInsets.all(_tinySize);
+
+/// 20.0
+const EdgeInsets paddingMedium = EdgeInsets.all(_mediumSize - 5);
+
+/// 25.0
+const EdgeInsets paddingLarge = EdgeInsets.all(_mediumSize);
+
+/// 50.0
+const EdgeInsets paddingMassive = EdgeInsets.all(_largeSize);
 
 Widget spacedDivider = const Column(
   children: <Widget>[
@@ -53,6 +69,7 @@ Widget spacedDivider = const Column(
 );
 
 Widget verticalSpace(double height) => SizedBox(height: height);
+Widget horizontalSpace(double width) => SizedBox(width: width);
 
 double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;

@@ -2,8 +2,10 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:dini_atlas/services/isar_service.dart';
-import 'package:dini_atlas/services/user_settings_service.dart';
+import 'package:dini_atlas/services/local/isar_service.dart';
+import 'package:dini_atlas/services/local/user_settings_service.dart';
+import 'package:dini_atlas/services/remote/dio_service.dart';
+import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -14,6 +16,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<IsarService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<UserSettingsService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<DioService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<FetchTimesService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -22,6 +26,8 @@ void registerServices() {
   getAndRegisterDialogService();
   getAndRegisterIsarService();
   getAndRegisterUserSettingsService();
+  getAndRegisterDioService();
+  getAndRegisterFetchTimesService();
 // @stacked-mock-register
 }
 
@@ -86,6 +92,20 @@ MockUserSettingsService getAndRegisterUserSettingsService() {
   _removeRegistrationIfExists<UserSettingsService>();
   final service = MockUserSettingsService();
   locator.registerSingleton<UserSettingsService>(service);
+  return service;
+}
+
+MockDioService getAndRegisterDioService() {
+  _removeRegistrationIfExists<DioService>();
+  final service = MockDioService();
+  locator.registerSingleton<DioService>(service);
+  return service;
+}
+
+MockFetchTimesService getAndRegisterFetchTimesService() {
+  _removeRegistrationIfExists<FetchTimesService>();
+  final service = MockFetchTimesService();
+  locator.registerSingleton<FetchTimesService>(service);
   return service;
 }
 // @stacked-mock-create

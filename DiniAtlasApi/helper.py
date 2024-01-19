@@ -56,7 +56,8 @@ def fetch_radios():
 
 def daily_json(name, data=None):
     current_day = datetime.now().day
-    filename = f"json/{name}-{current_day}.json"
+    dir = "json/"
+    filename = f"{dir}{name}-{current_day}.json"
 
     if data:
         with open(filename, "w", encoding="utf-8") as f:
@@ -68,6 +69,11 @@ def daily_json(name, data=None):
                 return existing_data
 
         except FileNotFoundError:
-            old_filename = f"json/{name}-{current_day - 1}.json"
-            if os.path.exists(old_filename):
-                os.remove(old_filename)
+            for fname in os.listdir(dir):
+                if (
+                    fname.startswith(name)
+                    and fname.endswith(".json")
+                    and fname != filename
+                ):
+                    file = os.path.join(dir, fname)
+                    os.remove(file)

@@ -8,3 +8,4 @@ const String kiNotificationDisabled =
 const String kiNotificationEnabled = "assets/vectors/notification-enabled.svg";
 const String kiQuran = "assets/vectors/quran.svg";
 const String kiSettings = "assets/vectors/settings.svg";
+const String kiMosque = "assets/images/mosque.png";
