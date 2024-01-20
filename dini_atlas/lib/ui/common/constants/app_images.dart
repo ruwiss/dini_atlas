@@ -1,3 +1,4 @@
+const String kiNoInternetGif = "assets/images/no_internet.gif";
 const String kiLogo = "assets/images/logo.png";
 const String kiCategories = "assets/vectors/categories.svg";
 const String kiHome = "assets/vectors/home.svg";

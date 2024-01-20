@@ -9,6 +9,7 @@ import 'dart:ui' as _i9;
 import 'package:dini_atlas/models/location_api/city.dart' as _i14;
 import 'package:dini_atlas/models/location_api/country.dart' as _i13;
 import 'package:dini_atlas/models/location_api/state.dart' as _i15;
+import 'package:dini_atlas/models/prayer/eid_prayer.dart' as _i21;
 import 'package:dini_atlas/models/prayer/prayer_time.dart' as _i20;
 import 'package:dini_atlas/models/prayer/prayer_times.dart' as _i4;
 import 'package:dini_atlas/models/user_location.dart' as _i12;
@@ -880,7 +881,7 @@ class MockPrayerTimesService extends _i1.Mock
   @override
   _i8.Future<void> setPrayerTimes({
     required List<_i20.PrayerTime>? times,
-    required dynamic eidTimes,
+    required _i21.EidPrayerTime? eidTimes,
   }) =>
       (super.noSuchMethod(
         Invocation.method(

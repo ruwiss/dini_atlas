@@ -1,3 +1,4 @@
+import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,10 @@ class StartupView extends StackedView<StartupViewModel> {
       body: Center(
         child: Builder(
           builder: (context) {
-            if (viewModel.hasError) {
+            if (viewModel.hasError &&
+                viewModel.modelError is LocationException) {
               return _locationErrorWidget(
-                  context, viewModel.modelError.toString(), viewModel);
+                  context, viewModel.modelError.message, viewModel);
             } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,

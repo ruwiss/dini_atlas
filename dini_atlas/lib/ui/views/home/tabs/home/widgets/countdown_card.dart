@@ -58,12 +58,11 @@ class CountdownCard extends StatelessWidget {
       child: BlendMask(
         blendMode: BlendMode.screen,
         child: Image.network(
-          "http://10.0.2.2:5000/aygoruntusu",
-          headers: const {
-            "ref": "https://namazvakti.diyanet.gov.tr/images/i2.gif"
-          },
+          "http://10.0.2.2:5000/aygoruntusu/i2.gif",
           height: 41,
-          errorBuilder: (context, error, stackTrace) => const SizedBox(),
+          width: 41,
+          cacheHeight: 41,
+          cacheWidth: 41,
         ),
       ),
     );

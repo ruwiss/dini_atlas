@@ -16,13 +16,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   @override
-  void initState() {
-    // TODO: veriler çekildiğinde splash kapatılacak
-    FlutterNativeSplash.remove();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       builder: (context, viewModel, child) => Scaffold(
@@ -101,5 +94,12 @@ class _HomeViewState extends State<HomeView> {
       default:
         return const HomeTab();
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: veriler çekildiğinde splash kapatılacak
+    FlutterNativeSplash.remove();
+    super.initState();
   }
 }

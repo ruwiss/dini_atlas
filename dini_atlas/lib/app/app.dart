@@ -1,3 +1,4 @@
+import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/ui/views/home/home_view.dart';
 import 'package:dini_atlas/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -10,15 +11,18 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
+import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart';
 // @stacked-import
 
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
-    // @stacked-route
+    MaterialRoute(page: NoInternetView),
+// @stacked-route
   ],
   dependencies: [
+    Factory(classType: NetworkChecker),
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: DialogService),
     LazySingleton(classType: NavigationService),

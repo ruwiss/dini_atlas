@@ -13,6 +13,7 @@ import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/local/isar_service.dart';
 import '../services/local/location_service.dart';
+import '../services/local/network_checker.dart';
 import '../services/local/prayer_times_service.dart';
 import '../services/local/user_settings_service.dart';
 import '../services/remote/dio_service.dart';
@@ -29,6 +30,7 @@ Future<void> setupLocator({
       environment: environment, environmentFilter: environmentFilter);
 
 // Register dependencies
+  locator.registerFactory(() => NetworkChecker());
   locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => NavigationService());

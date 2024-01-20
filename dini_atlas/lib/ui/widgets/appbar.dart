@@ -5,10 +5,15 @@ import 'package:stacked_services/stacked_services.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget(
-      {super.key, required this.title, this.actions, required this.leading});
+      {super.key,
+      required this.title,
+      this.actions,
+      this.leading,
+      this.hideBackButton = false});
   final String title;
   final List<Widget>? actions;
   final Widget? leading;
+  final bool hideBackButton;
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
@@ -18,6 +23,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 15),
       child: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           title,
           style: const TextStyle(
@@ -27,10 +33,12 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         leading: leading ??
-            IconButton(
-              onPressed: () => locator<NavigationService>().back(),
-              icon: const Icon(Icons.arrow_back),
-            ),
+            (hideBackButton
+                ? null
+                : IconButton(
+                    onPressed: () => locator<NavigationService>().back(),
+                    icon: const Icon(Icons.arrow_back),
+                  )),
         actions: actions,
       ),
     );

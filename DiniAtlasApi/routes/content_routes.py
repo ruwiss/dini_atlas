@@ -242,13 +242,9 @@ def dualar():
     return jsonify(data)
 
 
-@app.route("/aygoruntusu")
-def ay_goruntusu():
-    ref = request.headers.get("ref")
-    if not ref:
-        return "Ref Error", 404
-
-    r = requests.get(ref, stream=True)
+@app.route("/aygoruntusu/<img>")
+def ay_goruntusu(img):
+    r = requests.get(f"https://namazvakti.diyanet.gov.tr/images/{img}", stream=True)
     if r.status_code == 200:
         image_data = io.BytesIO(r.content)
 
