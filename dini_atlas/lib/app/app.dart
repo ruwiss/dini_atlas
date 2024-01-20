@@ -9,6 +9,7 @@ import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
+import 'package:dini_atlas/services/local/prayer_times_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -25,6 +26,7 @@ import 'package:dini_atlas/services/remote/fetch_times_service.dart';
     InitializableSingleton(classType: IsarService),
     LazySingleton(classType: UserSettingsService),
     LazySingleton(classType: DioService),
+    LazySingleton(classType: PrayerTimesService),
     LazySingleton(classType: FetchTimesService),
 // @stacked-service
   ],

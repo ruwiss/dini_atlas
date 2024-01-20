@@ -1,67 +1,51 @@
+import 'package:isar/isar.dart';
+
+part 'prayer_time.g.dart';
+
+@embedded
 class PrayerTime {
-  final String aksam;
-  final String ayinSekliUrl;
-  final int greenwichOrtalamaZamani;
-  final String gunes;
-  final String gunesBatis;
-  final String gunesDogus;
-  final String hicriTarihKisa;
-  final dynamic hicriTarihKisaIso8601;
-  final String hicriTarihUzun;
-  final dynamic hicriTarihUzunIso8601;
-  final String ikindi;
-  final String imsak;
-  final String kibleSaati;
-  final String miladiTarihKisa;
-  final String miladiTarihKisaIso8601;
-  final String miladiTarihUzun;
-  final DateTime miladiTarihUzunIso8601;
-  final String ogle;
-  final String yatsi;
+  late String imsak;
+  late String gunes;
+  late String ogle;
+  late String ikindi;
+  late String aksam;
+  late String yatsi;
+  late String ayinSekliUrl;
+  late String kibleSaati;
+  late double greenwichOrtalamaZamani;
+  late String gunesBatis;
+  late String gunesDogus;
+  late String hicriTarihKisa;
+  String? hicriTarihKisaIso8601;
+  late String hicriTarihUzun;
+  String? hicriTarihUzunIso8601;
+  late String miladiTarihKisa;
+  late String miladiTarihKisaIso8601;
+  late String miladiTarihUzun;
+  late DateTime miladiTarihUzunIso8601;
 
-  PrayerTime({
-    required this.aksam,
-    required this.ayinSekliUrl,
-    required this.greenwichOrtalamaZamani,
-    required this.gunes,
-    required this.gunesBatis,
-    required this.gunesDogus,
-    required this.hicriTarihKisa,
-    required this.hicriTarihKisaIso8601,
-    required this.hicriTarihUzun,
-    required this.hicriTarihUzunIso8601,
-    required this.ikindi,
-    required this.imsak,
-    required this.kibleSaati,
-    required this.miladiTarihKisa,
-    required this.miladiTarihKisaIso8601,
-    required this.miladiTarihUzun,
-    required this.miladiTarihUzunIso8601,
-    required this.ogle,
-    required this.yatsi,
-  });
+  PrayerTime();
 
-  factory PrayerTime.fromJson(Map<String, dynamic> json) => PrayerTime(
-        aksam: json["Aksam"],
-        ayinSekliUrl: json["AyinSekliURL"],
-        greenwichOrtalamaZamani: json["GreenwichOrtalamaZamani"],
-        gunes: json["Gunes"],
-        gunesBatis: json["GunesBatis"],
-        gunesDogus: json["GunesDogus"],
-        hicriTarihKisa: json["HicriTarihKisa"],
-        hicriTarihKisaIso8601: json["HicriTarihKisaIso8601"],
-        hicriTarihUzun: json["HicriTarihUzun"],
-        hicriTarihUzunIso8601: json["HicriTarihUzunIso8601"],
-        ikindi: json["Ikindi"],
-        imsak: json["Imsak"],
-        kibleSaati: json["KibleSaati"],
-        miladiTarihKisa: json["MiladiTarihKisa"],
-        miladiTarihKisaIso8601: json["MiladiTarihKisaIso8601"],
-        miladiTarihUzun: json["MiladiTarihUzun"],
-        miladiTarihUzunIso8601: DateTime.parse(json["MiladiTarihUzunIso8601"]),
-        ogle: json["Ogle"],
-        yatsi: json["Yatsi"],
-      );
+  PrayerTime.fromJson(Map<String, dynamic> json)
+      : aksam = json["Aksam"],
+        ayinSekliUrl = json["AyinSekliURL"],
+        greenwichOrtalamaZamani = json["GreenwichOrtalamaZamani"],
+        gunes = json["Gunes"],
+        gunesBatis = json["GunesBatis"],
+        gunesDogus = json["GunesDogus"],
+        hicriTarihKisa = json["HicriTarihKisa"],
+        hicriTarihKisaIso8601 = json["HicriTarihKisaIso8601"],
+        hicriTarihUzun = json["HicriTarihUzun"],
+        hicriTarihUzunIso8601 = json["HicriTarihUzunIso8601"],
+        ikindi = json["Ikindi"],
+        imsak = json["Imsak"],
+        kibleSaati = json["KibleSaati"],
+        miladiTarihKisa = json["MiladiTarihKisa"],
+        miladiTarihKisaIso8601 = json["MiladiTarihKisaIso8601"],
+        miladiTarihUzun = json["MiladiTarihUzun"],
+        miladiTarihUzunIso8601 = DateTime.parse(json["MiladiTarihUzunIso8601"]),
+        ogle = json["Ogle"],
+        yatsi = json["Yatsi"];
 
   Map<String, dynamic> toJson() => {
         "Aksam": aksam,

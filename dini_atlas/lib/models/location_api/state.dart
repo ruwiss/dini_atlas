@@ -1,23 +1,23 @@
+import 'package:isar/isar.dart';
+
+part 'state.g.dart';
+
+@embedded
 class StateModel {
-    final String ilceAdi;
-    final String ilceAdiEn;
-    final String ilceId;
+  late String ilceAdi;
+  late String ilceAdiEn;
+  late String ilceId;
 
-    StateModel({
-        required this.ilceAdi,
-        required this.ilceAdiEn,
-        required this.ilceId,
-    });
+  StateModel();
 
-    factory StateModel.fromJson(Map<String, dynamic> json) => StateModel(
-        ilceAdi: json["IlceAdi"],
-        ilceAdiEn: json["IlceAdiEn"],
-        ilceId: json["IlceID"],
-    );
+  StateModel.fromJson(Map<String, dynamic> json)
+      : ilceAdi = (json["IlceAdi"] as String).toLowerCase(),
+        ilceAdiEn = (json["IlceAdiEn"] as String).toLowerCase(),
+        ilceId = (json["IlceID"] as String).toLowerCase();
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "IlceAdi": ilceAdi,
         "IlceAdiEn": ilceAdiEn,
         "IlceID": ilceId,
-    };
+      };
 }

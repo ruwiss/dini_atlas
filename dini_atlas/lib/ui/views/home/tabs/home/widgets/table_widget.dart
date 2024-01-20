@@ -27,12 +27,12 @@ class TableWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _navigateTableIconButton(
+          _changeTableIconButton(
             icon: Icons.keyboard_arrow_left_rounded,
             onTap: () {},
           ),
           _dateTimeWidget(),
-          _navigateTableIconButton(
+          _changeTableIconButton(
             icon: Icons.keyboard_arrow_right_rounded,
             onTap: () {},
           ),
@@ -54,7 +54,7 @@ class TableWidget extends StatelessWidget {
     );
   }
 
-  IconButton _navigateTableIconButton({VoidCallback? onTap, IconData? icon}) {
+  IconButton _changeTableIconButton({VoidCallback? onTap, IconData? icon}) {
     return IconButton(
       onPressed: onTap,
       icon: Icon(

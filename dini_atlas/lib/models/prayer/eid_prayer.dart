@@ -1,16 +1,17 @@
-class EidPrayer {
-  final EidPrayerTime bayramNamazVakti;
-  final StateInfo ilceBilgisi;
+import 'package:isar/isar.dart';
 
-  EidPrayer({
-    required this.bayramNamazVakti,
-    required this.ilceBilgisi,
-  });
+part 'eid_prayer.g.dart';
 
-  factory EidPrayer.fromJson(Map<String, dynamic> json) => EidPrayer(
-        bayramNamazVakti: EidPrayerTime.fromJson(json["bayramNamazVakti"]),
-        ilceBilgisi: StateInfo.fromJson(json["ilceBilgisi"]),
-      );
+@embedded
+class EidPrayerTime {
+  late BayramNamazVakti bayramNamazVakti;
+  late IlceBilgisi ilceBilgisi;
+
+  EidPrayerTime();
+
+  EidPrayerTime.fromJson(Map<String, dynamic> json)
+      : bayramNamazVakti = BayramNamazVakti.fromJson(json["bayramNamazVakti"]),
+        ilceBilgisi = IlceBilgisi.fromJson(json["ilceBilgisi"]);
 
   Map<String, dynamic> toJson() => {
         "bayramNamazVakti": bayramNamazVakti.toJson(),
@@ -18,32 +19,30 @@ class EidPrayer {
       };
 }
 
-class EidPrayerTime {
-  final String kurbanBayramNamaziHTarihi;
-  final String kurbanBayramNamaziSaati;
-  final String kurbanBayramNamaziTarihi;
-  final String ramazanBayramNamaziHTarihi;
-  final String ramazanBayramNamaziSaati;
-  final String ramazanBayramNamaziTarihi;
+@embedded
+class BayramNamazVakti {
+  @Name("kurbanNamaziHTarih")
+  late String kurbanBayramNamaziHTarihi;
+  @Name("kurbanNamaziSaat")
+  late String kurbanBayramNamaziSaati;
+  @Name("kurbanNamaziTarih")
+  late String kurbanBayramNamaziTarihi;
+  @Name("ramazanNamaziHTarih")
+  late String ramazanBayramNamaziHTarihi;
+  @Name("ramazanNamaziSaat")
+  late String ramazanBayramNamaziSaati;
+  @Name("ramazanNamaziTarih")
+  late String ramazanBayramNamaziTarihi;
 
-  EidPrayerTime({
-    required this.kurbanBayramNamaziHTarihi,
-    required this.kurbanBayramNamaziSaati,
-    required this.kurbanBayramNamaziTarihi,
-    required this.ramazanBayramNamaziHTarihi,
-    required this.ramazanBayramNamaziSaati,
-    required this.ramazanBayramNamaziTarihi,
-  });
+  BayramNamazVakti();
 
-  factory EidPrayerTime.fromJson(Map<String, dynamic> json) =>
-      EidPrayerTime(
-        kurbanBayramNamaziHTarihi: json["KurbanBayramNamaziHTarihi"],
-        kurbanBayramNamaziSaati: json["KurbanBayramNamaziSaati"],
-        kurbanBayramNamaziTarihi: json["KurbanBayramNamaziTarihi"],
-        ramazanBayramNamaziHTarihi: json["RamazanBayramNamaziHTarihi"],
-        ramazanBayramNamaziSaati: json["RamazanBayramNamaziSaati"],
-        ramazanBayramNamaziTarihi: json["RamazanBayramNamaziTarihi"],
-      );
+  BayramNamazVakti.fromJson(Map<String, dynamic> json)
+      : kurbanBayramNamaziHTarihi = json["KurbanBayramNamaziHTarihi"],
+        kurbanBayramNamaziSaati = json["KurbanBayramNamaziSaati"],
+        kurbanBayramNamaziTarihi = json["KurbanBayramNamaziTarihi"],
+        ramazanBayramNamaziHTarihi = json["RamazanBayramNamaziHTarihi"],
+        ramazanBayramNamaziSaati = json["RamazanBayramNamaziSaati"],
+        ramazanBayramNamaziTarihi = json["RamazanBayramNamaziTarihi"];
 
   Map<String, dynamic> toJson() => {
         "KurbanBayramNamaziHTarihi": kurbanBayramNamaziHTarihi,
@@ -55,43 +54,32 @@ class EidPrayerTime {
       };
 }
 
-class StateInfo {
-  final String cografiKibleAcisi;
-  final String ilceAdi;
-  final dynamic ilceAdiEn;
-  final String ilceId;
-  final String kabeyeUzaklik;
-  final String kibleAcisi;
-  final String sehirAdi;
-  final dynamic sehirAdiEn;
-  final String ulkeAdi;
-  final dynamic ulkeAdiEn;
+@embedded
+class IlceBilgisi {
+  late String cografiKibleAcisi;
+  late String ilceAdi;
+  late String? ilceAdiEn;
+  late String ilceId;
+  late String kabeyeUzaklik;
+  late String kibleAcisi;
+  late String sehirAdi;
+  late String? sehirAdiEn;
+  late String ulkeAdi;
+  late String? ulkeAdiEn;
 
-  StateInfo({
-    required this.cografiKibleAcisi,
-    required this.ilceAdi,
-    required this.ilceAdiEn,
-    required this.ilceId,
-    required this.kabeyeUzaklik,
-    required this.kibleAcisi,
-    required this.sehirAdi,
-    required this.sehirAdiEn,
-    required this.ulkeAdi,
-    required this.ulkeAdiEn,
-  });
+  IlceBilgisi();
 
-  factory StateInfo.fromJson(Map<String, dynamic> json) => StateInfo(
-        cografiKibleAcisi: json["CografiKibleAcisi"],
-        ilceAdi: json["IlceAdi"],
-        ilceAdiEn: json["IlceAdiEn"],
-        ilceId: json["IlceID"],
-        kabeyeUzaklik: json["KabeyeUzaklik"],
-        kibleAcisi: json["KibleAcisi"],
-        sehirAdi: json["SehirAdi"],
-        sehirAdiEn: json["SehirAdiEn"],
-        ulkeAdi: json["UlkeAdi"],
-        ulkeAdiEn: json["UlkeAdiEn"],
-      );
+  IlceBilgisi.fromJson(Map<String, dynamic> json)
+      : cografiKibleAcisi = json["CografiKibleAcisi"],
+        ilceAdi = json["IlceAdi"],
+        ilceAdiEn = json["IlceAdiEn"],
+        ilceId = json["IlceID"],
+        kabeyeUzaklik = json["KabeyeUzaklik"],
+        kibleAcisi = json["KibleAcisi"],
+        sehirAdi = json["SehirAdi"],
+        sehirAdiEn = json["SehirAdiEn"],
+        ulkeAdi = json["UlkeAdi"],
+        ulkeAdiEn = json["UlkeAdiEn"];
 
   Map<String, dynamic> toJson() => {
         "CografiKibleAcisi": cografiKibleAcisi,

@@ -6,6 +6,7 @@ import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
+import 'package:dini_atlas/services/local/prayer_times_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -18,6 +19,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<UserSettingsService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DioService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<FetchTimesService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<PrayerTimesService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -28,6 +30,7 @@ void registerServices() {
   getAndRegisterUserSettingsService();
   getAndRegisterDioService();
   getAndRegisterFetchTimesService();
+  getAndRegisterPrayerTimesService();
 // @stacked-mock-register
 }
 
@@ -106,6 +109,13 @@ MockFetchTimesService getAndRegisterFetchTimesService() {
   _removeRegistrationIfExists<FetchTimesService>();
   final service = MockFetchTimesService();
   locator.registerSingleton<FetchTimesService>(service);
+  return service;
+}
+
+MockPrayerTimesService getAndRegisterPrayerTimesService() {
+  _removeRegistrationIfExists<PrayerTimesService>();
+  final service = MockPrayerTimesService();
+  locator.registerSingleton<PrayerTimesService>(service);
   return service;
 }
 // @stacked-mock-create

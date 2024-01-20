@@ -1,23 +1,22 @@
+import 'package:isar/isar.dart';
+part 'city.g.dart';
+
+@embedded
 class City {
-    final String sehirAdi;
-    final String sehirAdiEn;
-    final String sehirId;
+  late String sehirAdi;
+  late String sehirAdiEn;
+  late String sehirId;
 
-    City({
-        required this.sehirAdi,
-        required this.sehirAdiEn,
-        required this.sehirId,
-    });
+  City();
 
-    factory City.fromJson(Map<String, dynamic> json) => City(
-        sehirAdi: json["SehirAdi"],
-        sehirAdiEn: json["SehirAdiEn"],
-        sehirId: json["SehirID"],
-    );
+  City.fromJson(Map<String, dynamic> json)
+      : sehirAdi = (json["SehirAdi"] as String).toLowerCase(),
+        sehirAdiEn = (json["SehirAdiEn"] as String).toLowerCase(),
+        sehirId = (json["SehirID"] as String).toLowerCase();
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "SehirAdi": sehirAdi,
         "SehirAdiEn": sehirAdiEn,
         "SehirID": sehirId,
-    };
+      };
 }

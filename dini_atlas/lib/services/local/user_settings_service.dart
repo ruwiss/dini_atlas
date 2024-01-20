@@ -1,29 +1,56 @@
+import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/models/location_api/city.dart';
+import 'package:dini_atlas/models/location_api/country.dart';
+import 'package:dini_atlas/models/location_api/state.dart';
+import 'package:dini_atlas/models/user_location.dart';
+import 'package:dini_atlas/models/user_setting.dart';
+import 'package:dini_atlas/services/local/isar_service.dart';
 import 'dart:convert';
 
-import 'package:dini_atlas/app/app.locator.dart';
-import 'package:dini_atlas/models/user_location.dart';
-import 'package:dini_atlas/models/user_setting/user_setting.dart';
-import 'package:dini_atlas/services/local/isar_service.dart';
+class UserSettingsException implements Exception {
+  final String message;
+  UserSettingsException(this.message);
+}
 
 class UserSettingsService {
-  static const int userLocationKey = 0;
-
   final _db = locator<IsarService>().isar;
+  late UserSetting userSettings;
 
-  Future<UserLocation?> getUserLocation() async {
-    final currentLocation = await _db.userSettings.get(userLocationKey);
-    if (currentLocation == null) return null;
-    return UserLocation.fromJson(jsonDecode(currentLocation.jsonString));
+  Future<UserSetting?> getUserSettings() async {
+    try {
+      final userSettings =
+          await _db.userSettings.get(IsarService.userSettingsKey);
+      if (userSettings != null) this.userSettings = userSettings;
+      return userSettings;
+    } catch (e) {
+      throw UserSettingsException(
+          "Kullanıcı ayarları alınırken bir sorun oluştu. $e");
+    }
   }
 
-  Future<void> setUserLocation(UserLocation location) async {
-    // Nesne oluştur
-    final jsonString = jsonEncode(location);
-    final userSetting = UserSetting()
-      ..id = userLocationKey
-      ..jsonString = jsonString;
+  Future<void> setUserSettings(
+      {required UserLocation location,
+      Country? country,
+      City? city,
+      StateModel? state}) async {
+    try {
+      final jsonString = jsonEncode(location.toJson());
+      // Nesne oluştur
+      final userSettings = UserSetting()
+        ..id = IsarService.userSettingsKey
+        ..jsonString = jsonString;
 
-    // Veriyi kaydet
-    _db.writeTxn(() => _db.userSettings.put(userSetting));
+      if (country != null) userSettings.country = country;
+      if (city != null) userSettings.city = city;
+      if (state != null) userSettings.state = state;
+
+      this.userSettings = userSettings;
+
+      // Veriyi kaydet
+      await _db.writeTxn(() async => await _db.userSettings.put(userSettings));
+    } catch (e) {
+      throw UserSettingsException(
+          "Kullanıcı ayarları kaydedilirken bir sorun oluştu. $e");
+    }
   }
 }

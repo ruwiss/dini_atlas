@@ -17,10 +17,28 @@ const UserSettingSchema = CollectionSchema(
   name: r'UserSetting',
   id: -4374868905468663165,
   properties: {
-    r'jsonString': PropertySchema(
+    r'city': PropertySchema(
       id: 0,
+      name: r'city',
+      type: IsarType.object,
+      target: r'City',
+    ),
+    r'country': PropertySchema(
+      id: 1,
+      name: r'country',
+      type: IsarType.object,
+      target: r'Country',
+    ),
+    r'jsonString': PropertySchema(
+      id: 2,
       name: r'jsonString',
       type: IsarType.string,
+    ),
+    r'state': PropertySchema(
+      id: 3,
+      name: r'state',
+      type: IsarType.object,
+      target: r'StateModel',
     )
   },
   estimateSize: _userSettingEstimateSize,
@@ -30,7 +48,11 @@ const UserSettingSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {},
+  embeddedSchemas: {
+    r'Country': CountrySchema,
+    r'City': CitySchema,
+    r'StateModel': StateModelSchema
+  },
   getId: _userSettingGetId,
   getLinks: _userSettingGetLinks,
   attach: _userSettingAttach,
@@ -43,7 +65,29 @@ int _userSettingEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.city;
+    if (value != null) {
+      bytesCount +=
+          3 + CitySchema.estimateSize(value, allOffsets[City]!, allOffsets);
+    }
+  }
+  {
+    final value = object.country;
+    if (value != null) {
+      bytesCount += 3 +
+          CountrySchema.estimateSize(value, allOffsets[Country]!, allOffsets);
+    }
+  }
   bytesCount += 3 + object.jsonString.length * 3;
+  {
+    final value = object.state;
+    if (value != null) {
+      bytesCount += 3 +
+          StateModelSchema.estimateSize(
+              value, allOffsets[StateModel]!, allOffsets);
+    }
+  }
   return bytesCount;
 }
 
@@ -53,7 +97,25 @@ void _userSettingSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.jsonString);
+  writer.writeObject<City>(
+    offsets[0],
+    allOffsets,
+    CitySchema.serialize,
+    object.city,
+  );
+  writer.writeObject<Country>(
+    offsets[1],
+    allOffsets,
+    CountrySchema.serialize,
+    object.country,
+  );
+  writer.writeString(offsets[2], object.jsonString);
+  writer.writeObject<StateModel>(
+    offsets[3],
+    allOffsets,
+    StateModelSchema.serialize,
+    object.state,
+  );
 }
 
 UserSetting _userSettingDeserialize(
@@ -63,8 +125,23 @@ UserSetting _userSettingDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = UserSetting();
+  object.city = reader.readObjectOrNull<City>(
+    offsets[0],
+    CitySchema.deserialize,
+    allOffsets,
+  );
+  object.country = reader.readObjectOrNull<Country>(
+    offsets[1],
+    CountrySchema.deserialize,
+    allOffsets,
+  );
   object.id = id;
-  object.jsonString = reader.readString(offsets[0]);
+  object.jsonString = reader.readString(offsets[2]);
+  object.state = reader.readObjectOrNull<StateModel>(
+    offsets[3],
+    StateModelSchema.deserialize,
+    allOffsets,
+  );
   return object;
 }
 
@@ -76,7 +153,25 @@ P _userSettingDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readObjectOrNull<City>(
+        offset,
+        CitySchema.deserialize,
+        allOffsets,
+      )) as P;
+    case 1:
+      return (reader.readObjectOrNull<Country>(
+        offset,
+        CountrySchema.deserialize,
+        allOffsets,
+      )) as P;
+    case 2:
       return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readObjectOrNull<StateModel>(
+        offset,
+        StateModelSchema.deserialize,
+        allOffsets,
+      )) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -175,6 +270,41 @@ extension UserSettingQueryWhere
 
 extension UserSettingQueryFilter
     on QueryBuilder<UserSetting, UserSetting, QFilterCondition> {
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> cityIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'city',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition>
+      cityIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'city',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition>
+      countryIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'country',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition>
+      countryIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'country',
+      ));
+    });
+  }
+
   QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -363,10 +493,48 @@ extension UserSettingQueryFilter
       ));
     });
   }
+
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> stateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'state',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition>
+      stateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'state',
+      ));
+    });
+  }
 }
 
 extension UserSettingQueryObject
-    on QueryBuilder<UserSetting, UserSetting, QFilterCondition> {}
+    on QueryBuilder<UserSetting, UserSetting, QFilterCondition> {
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> city(
+      FilterQuery<City> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'city');
+    });
+  }
+
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> country(
+      FilterQuery<Country> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'country');
+    });
+  }
+
+  QueryBuilder<UserSetting, UserSetting, QAfterFilterCondition> state(
+      FilterQuery<StateModel> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'state');
+    });
+  }
+}
 
 extension UserSettingQueryLinks
     on QueryBuilder<UserSetting, UserSetting, QFilterCondition> {}
@@ -431,9 +599,27 @@ extension UserSettingQueryProperty
     });
   }
 
+  QueryBuilder<UserSetting, City?, QQueryOperations> cityProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'city');
+    });
+  }
+
+  QueryBuilder<UserSetting, Country?, QQueryOperations> countryProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'country');
+    });
+  }
+
   QueryBuilder<UserSetting, String, QQueryOperations> jsonStringProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'jsonString');
+    });
+  }
+
+  QueryBuilder<UserSetting, StateModel?, QQueryOperations> stateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'state');
     });
   }
 }

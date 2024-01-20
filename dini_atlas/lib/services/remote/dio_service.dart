@@ -11,8 +11,8 @@ class DioService {
       contentType: Headers.jsonContentType,
     );
 
-
-  Future<Response?> request(url, {
+  Future<Response?> request(
+    url, {
     DioMethod method = DioMethod.get,
     Map<String, dynamic>? data,
   }) async {

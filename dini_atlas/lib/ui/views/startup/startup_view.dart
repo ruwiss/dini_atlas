@@ -21,7 +21,7 @@ class StartupView extends StackedView<StartupViewModel> {
           builder: (context) {
             if (viewModel.hasError) {
               return _locationErrorWidget(
-                  context, viewModel.modelError.message, viewModel);
+                  context, viewModel.modelError.toString(), viewModel);
             } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +97,7 @@ class StartupView extends StackedView<StartupViewModel> {
       return const CircularProgressIndicator();
     } else {
       return InkWell(
-        onTap: viewModel.getLocation,
+        onTap: viewModel.getDatas,
         borderRadius: borderRadiusLarge,
         splashColor: kcPurpleColorDark,
         child: Ink(
@@ -139,7 +139,7 @@ class StartupView extends StackedView<StartupViewModel> {
         ),
         verticalSpaceSmall,
         TextButton.icon(
-          onPressed: viewModel.getLocation,
+          onPressed: viewModel.getDatas,
           icon: const Icon(Icons.location_disabled),
           label: const Text(
             "Yeniden Dene",

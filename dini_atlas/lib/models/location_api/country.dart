@@ -1,23 +1,23 @@
+import 'package:isar/isar.dart';
+
+part 'country.g.dart';
+
+@embedded
 class Country {
-    final String ulkeAdi;
-    final String ulkeAdiEn;
-    final String ulkeId;
+  late String ulkeAdi;
+  late String ulkeAdiEn;
+  late String ulkeId;
 
-    Country({
-        required this.ulkeAdi,
-        required this.ulkeAdiEn,
-        required this.ulkeId,
-    });
+  Country();
 
-    factory Country.fromJson(Map<String, dynamic> json) => Country(
-        ulkeAdi: json["UlkeAdi"],
-        ulkeAdiEn: json["UlkeAdiEn"],
-        ulkeId: json["UlkeID"],
-    );
+  Country.fromJson(Map<String, dynamic> json)
+      : ulkeAdi = (json["UlkeAdi"] as String).toLowerCase(),
+        ulkeAdiEn = (json["UlkeAdiEn"] as String).toLowerCase(),
+        ulkeId = (json["UlkeID"] as String).toLowerCase();
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "UlkeAdi": ulkeAdi,
         "UlkeAdiEn": ulkeAdiEn,
         "UlkeID": ulkeId,
-    };
+      };
 }

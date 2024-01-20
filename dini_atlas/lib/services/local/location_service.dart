@@ -1,3 +1,4 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -8,32 +9,28 @@ class LocationException implements Exception {
   LocationException(this.message);
 }
 
-class LocationFailure {
-  final String message;
-  const LocationFailure(this.message);
-}
-
 class LocationService {
-  Future<UserLocation?> getUserLocation() async {
+  Future<Either<UserLocation, LocationException>> getUserLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
     // Kullanıcı konum hizmeti açık mı
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      throw const LocationFailure("Konum hizmeti aktif degil");
+      return Right(LocationException("Konum hizmeti aktif degil"));
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        throw LocationException("Konum iznini reddettiniz");
+        return Right(LocationException("Konum iznini reddettiniz"));
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw const LocationFailure("Konum iznini kalıcı olarak reddettiniz.");
+      return Right(
+          LocationException("Konum iznini kalıcı olarak reddettiniz."));
     }
 
     // Kullanıcı pozisyonunu koordinat olarak al
@@ -41,15 +38,12 @@ class LocationService {
         desiredAccuracy: LocationAccuracy.high);
 
     // Koordinatı placemarka dönüştür
-    final List<Placemark> placemarks = await placemarkFromCoordinates(
-      position.latitude,
-      position.longitude,
-      localeIdentifier: "en_US",
-    );
+    final List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
 
     // Placemark üzerinden konum bilgisini getir
     final Placemark location = placemarks.first;
 
-    return UserLocation.fromJson(location.toJson());
+    return Left(UserLocation.fromJson(location.toJson()));
   }
 }
