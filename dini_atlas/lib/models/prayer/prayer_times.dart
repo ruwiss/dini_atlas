@@ -6,7 +6,7 @@ part 'prayer_times.g.dart';
 
 @collection
 class PrayerTimes {
-  late Id id;
+  Id id = Isar.autoIncrement;
 
   late EidPrayerTime eidPrayers;
 

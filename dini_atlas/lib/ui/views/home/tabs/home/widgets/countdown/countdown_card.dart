@@ -1,11 +1,16 @@
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/widgets/countdown/countdown_widget.dart';
 import 'package:dini_atlas/ui/widgets/blend_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../home_tab_viewmodel.dart';
+
 class CountdownCard extends StatelessWidget {
-  const CountdownCard({super.key});
+  final HomeTabViewModel viewModel;
+  const CountdownCard({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +40,9 @@ class CountdownCard extends StatelessWidget {
         onTap: () {},
         child: Row(
           children: [
-            const Text(
-              "Konya",
-              style: TextStyle(
+            Text(
+              viewModel.userCity?.sehirAdi.capitalize() ?? "",
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: kcOnPrimaryColor,
@@ -52,48 +57,26 @@ class CountdownCard extends StatelessWidget {
   }
 
   Positioned _liveMoon() {
+    final String? id = viewModel.currentMoonPhaseImage;
     return Positioned(
       top: 3,
       right: 7,
       child: BlendMask(
         blendMode: BlendMode.screen,
         child: Image.network(
-          "http://10.0.2.2:5000/aygoruntusu/i2.gif",
+          id == null ? "" : "http://10.0.2.2:5000/aygoruntusu/$id",
           height: 41,
           width: 41,
           cacheHeight: 41,
           cacheWidth: 41,
+          errorBuilder: (_, __, ___) => const SizedBox(),
         ),
       ),
     );
   }
 
   Positioned _countdown() {
-    return Positioned(
-      left: 20,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Sonraki Vakit",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: kcOnPrimaryColor,
-            ),
-          ),
-          verticalSpace(2),
-          const Text(
-            "02:46:59",
-            style: TextStyle(
-              fontSize: 26,
-              color: kcOnPrimaryColor,
-            ),
-          ),
-        ],
-      ),
-    );
+    return const Positioned(left: 20, child: CountDownWidget());
   }
 
   Stack _cardView() {

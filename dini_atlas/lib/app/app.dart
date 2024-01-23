@@ -22,15 +22,15 @@ import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart';
 // @stacked-route
   ],
   dependencies: [
-    Factory(classType: NetworkChecker),
-    LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: DialogService),
+    LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: NavigationService),
+    Factory(classType: NetworkChecker),
     LazySingleton(classType: LocationService),
     InitializableSingleton(classType: IsarService),
     LazySingleton(classType: UserSettingsService),
-    LazySingleton(classType: DioService),
     LazySingleton(classType: PrayerTimesService),
+    LazySingleton(classType: DioService),
     LazySingleton(classType: FetchTimesService),
 // @stacked-service
   ],

@@ -5,6 +5,7 @@ import 'package:dini_atlas/models/location_api/state.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
 class UserSettingsException implements Exception {
@@ -21,6 +22,7 @@ class UserSettingsService {
       final userSettings =
           await _db.userSettings.get(IsarService.userSettingsKey);
       if (userSettings != null) this.userSettings = userSettings;
+      if (kDebugMode) print("Kullanıcı ayarları getirildi");
       return userSettings;
     } catch (e) {
       throw UserSettingsException(
@@ -48,6 +50,8 @@ class UserSettingsService {
 
       // Veriyi kaydet
       await _db.writeTxn(() async => await _db.userSettings.put(userSettings));
+
+      if (kDebugMode) print("Kullanıcı ayarları kaydedildi");
     } catch (e) {
       throw UserSettingsException(
           "Kullanıcı ayarları kaydedilirken bir sorun oluştu. $e");

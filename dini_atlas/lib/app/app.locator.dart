@@ -30,17 +30,17 @@ Future<void> setupLocator({
       environment: environment, environmentFilter: environmentFilter);
 
 // Register dependencies
-  locator.registerFactory(() => NetworkChecker());
-  locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => DialogService());
+  locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => NavigationService());
+  locator.registerFactory(() => NetworkChecker());
   locator.registerLazySingleton(() => LocationService());
   final isarService = IsarService();
   await isarService.init();
   locator.registerSingleton(isarService);
 
   locator.registerLazySingleton(() => UserSettingsService());
-  locator.registerLazySingleton(() => DioService());
   locator.registerLazySingleton(() => PrayerTimesService());
+  locator.registerLazySingleton(() => DioService());
   locator.registerLazySingleton(() => FetchTimesService());
 }

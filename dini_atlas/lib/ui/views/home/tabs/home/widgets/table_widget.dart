@@ -3,8 +3,11 @@ import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../home_tab_viewmodel.dart';
+
 class TableWidget extends StatelessWidget {
-  const TableWidget({super.key});
+  final HomeTabViewModel viewModel;
+  const TableWidget({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {

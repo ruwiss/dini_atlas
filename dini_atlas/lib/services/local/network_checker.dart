@@ -1,10 +1,10 @@
-import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
+import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'dart:async';
 
 class NetworkChecker with ListenableServiceMixin {
   // Çağrılırken tanımlanabilecekler
@@ -38,6 +38,7 @@ class NetworkChecker with ListenableServiceMixin {
     notifyListeners();
     if (currentConnectivity == ConnectivityResult.none && autoNavigate) {
       if (_navigationService.currentRoute != Routes.noInternetView) {
+        if (kDebugMode) print("İnternet Yok");
         _navigationService.replaceWithNoInternetView();
       }
     }

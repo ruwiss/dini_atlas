@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -44,6 +45,14 @@ class LocationService {
     // Placemark üzerinden konum bilgisini getir
     final Placemark location = placemarks.first;
 
-    return Left(UserLocation.fromJson(location.toJson()));
+    // Nesne oluştur
+    final UserLocation userLocation = UserLocation.fromJson(location.toJson());
+
+    if (kDebugMode) {
+      print(
+          "Kullanıcı konumu alındı: ${userLocation.country}: ${userLocation.city}");
+    }
+
+    return Left(userLocation);
   }
 }

@@ -27,6 +27,10 @@ class DioService {
     final Map<String, dynamic>? postData = !withArgs ? data : null;
     final Map<String, dynamic>? queryData = withArgs ? data : null;
 
-    return await req(url, data: postData, queryParameters: queryData);
+    try {
+      return await req(url, data: postData, queryParameters: queryData);
+    } on DioException catch (e) {
+      throw "${e.message} : ${e.error}";
+    }
   }
 }

@@ -92,7 +92,7 @@ class _HomeViewState extends State<HomeView> {
       case 1:
         return const Text("sayfa2");
       default:
-        return const HomeTab();
+        return const HomeTabView();
     }
   }
 
