@@ -1,9 +1,11 @@
 import 'package:dini_atlas/app/theme.dart';
+import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/app/app.bottomsheets.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -11,6 +13,7 @@ Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await setupLocator();
+  await initializeDateFormatting(ksDefaultLocale);
   setupDialogUi();
   setupBottomSheetUi();
   AppTheme.setStatusBarColor();

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'dart:async';
 
-enum CurrentPrayerType { imsak, gunes, ogle, ikindi, aksam, yatsi }
+enum PrayerType { imsak, gunes, ogle, ikindi, aksam, yatsi, none }
 
 class HomeService with ListenableServiceMixin {
   static final HomeService _singleton = HomeService._internal();
@@ -19,7 +19,7 @@ class HomeService with ListenableServiceMixin {
 
   PrayerTimes? prayerTimes;
   bool nextTimeIsAfterDay = false;
-  CurrentPrayerType? currentPrayerType;
+  PrayerType currentPrayerType = PrayerType.none;
   String? countdownTimer;
 
   PrayerTime getTimesByDay(DateTime date) {
@@ -60,22 +60,16 @@ class HomeService with ListenableServiceMixin {
       print("Sıradaki vakit: $nextPrayerTime");
       print("nextTimeIsAfterDay: $nextTimeIsAfterDay");
     }
-    if (nextTimeIsAfterDay) {
-      currentPrayerType = CurrentPrayerType.imsak;
-    } else {
-      final int nextIndex = times.indexOf(nextPrayerTime);
-      int currentIndex = nextIndex - 1;
-      if (currentIndex.isNegative) currentIndex = 5;
-      currentPrayerType = switch (currentIndex) {
-        0 => CurrentPrayerType.imsak,
-        1 => CurrentPrayerType.gunes,
-        2 => CurrentPrayerType.ogle,
-        3 => CurrentPrayerType.ikindi,
-        4 => CurrentPrayerType.aksam,
-        5 => CurrentPrayerType.yatsi,
-        _ => null,
-      };
-    }
+    final int nextIndex = times.indexOf(nextPrayerTime);
+    currentPrayerType = switch (nextIndex) {
+      0 => PrayerType.imsak,
+      1 => PrayerType.gunes,
+      2 => PrayerType.ogle,
+      3 => PrayerType.ikindi,
+      4 => PrayerType.aksam,
+      5 => PrayerType.yatsi,
+      _ => PrayerType.none,
+    };
 
     startCountdownTimer(nextPrayerTime);
   }
@@ -88,22 +82,25 @@ class HomeService with ListenableServiceMixin {
     if (nextTimeIsAfterDay) current = current.add(const Duration(days: 1));
 
     // Geri sayımı başlat
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      final DateTime now = DateTime.now();
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        final DateTime now = DateTime.now();
 
-      // Mevcut zamanı yıl, ay, gün olmadan datetime'a çevir
-      final DateTime nowAsTime =
-          DateTime(0, 0, 0, now.hour, now.minute, now.second);
+        // Mevcut zamanı yıl, ay, gün olmadan datetime'a çevir
+        final DateTime nowAsTime =
+            DateTime(0, 0, 0, now.hour, now.minute, now.second);
 
-      // İkisinin farkını string formatında al ve state'e kaydet
-      countdownTimer = current.differenceToString(nowAsTime);
-      notifyListeners();
+        // İkisinin farkını string formatında al ve state'e kaydet
+        countdownTimer = current.differenceToString(nowAsTime);
+        notifyListeners();
 
-      // Eğer geri sayım durduysa yeni vakit için tekrar hesap yap
-      if (countdownTimer == "00:00:00") {
-        timer.cancel();
-        calculatePrayerTime();
-      }
-    });
+        // Eğer geri sayım durduysa yeni vakit için tekrar hesap yap
+        if (countdownTimer == "00:00:00") {
+          timer.cancel();
+          calculatePrayerTime();
+        }
+      },
+    );
   }
 }

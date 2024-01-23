@@ -1,3 +1,4 @@
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:geolocator/geolocator.dart';
@@ -39,8 +40,11 @@ class LocationService {
         desiredAccuracy: LocationAccuracy.high);
 
     // Koordinatı placemarka dönüştür
-    final List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    final List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+      localeIdentifier: ksDefaultLocale,
+    );
 
     // Placemark üzerinden konum bilgisini getir
     final Placemark location = placemarks.first;

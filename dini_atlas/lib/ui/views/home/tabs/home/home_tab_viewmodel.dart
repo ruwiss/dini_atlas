@@ -1,5 +1,7 @@
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
+import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
@@ -14,9 +16,15 @@ class HomeTabViewModel extends ReactiveViewModel {
 
   String? currentMoonPhaseImage;
   City? userCity;
+  int? selectedPrayerTime;
+
+  List<PrayerTime>? get _prayerTimeList =>
+      _homeService.prayerTimes?.prayerTimes;
+  bool? get nextTimeIsAfterDay => _homeService.nextTimeIsAfterDay;
+  PrayerType get currentPrayerType => _homeService.currentPrayerType;
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [];
+  List<ListenableServiceMixin> get listenableServices => [_homeService];
 
   void init() async {
     // Ana servisteki değişiklikleri dinle
@@ -33,6 +41,9 @@ class HomeTabViewModel extends ReactiveViewModel {
 
     // Kullanıcı şehrini getir
     getUserCity();
+
+    // Tablo için vakitleri getir
+    changePrayerTimeIndex();
   }
 
   Future<void> _getPrayerTimes() async {
@@ -57,4 +68,34 @@ class HomeTabViewModel extends ReactiveViewModel {
     userCity = userSettings?.city;
     notifyListeners();
   }
+
+  PrayerTime get tablePrayerTime => _prayerTimeList![selectedPrayerTime!];
+
+  void changePrayerTimeIndex({bool? increment, bool? decrement}) {
+    // Eğer bir değişim yoksa, o zaman sadece bugünün namazı sırasını getir
+    if (increment == null && decrement == null) {
+      final DateTime datetime = DateTime.now();
+
+      // Sıradaki vakit namazları getir (tablo için)
+      selectedPrayerTime = _prayerTimeList
+          ?.indexWhere((e) => e.miladiTarihUzunIso8601.isEqualTo(datetime));
+    } else {
+      // Tabloda önceki güne gidilince
+      if (increment != null) selectedPrayerTime = selectedPrayerTime! + 1;
+      // Tabloda sonraki güne gidilirse
+      if (decrement != null) selectedPrayerTime = selectedPrayerTime! - 1;
+
+      // Eğer tabloda gidilen gün mevcut listede yoksa başa dön
+      if (selectedPrayerTime! >= _prayerTimeList!.length) {
+        selectedPrayerTime = 0;
+      } else if (selectedPrayerTime!.isNegative) {
+        // Eğer tabloda gidilen günden daha öncesi yoksa sona git
+        selectedPrayerTime = _prayerTimeList!.length - 1;
+      }
+    }
+    notifyListeners();
+  }
+
+  bool isCurrentPrayerTime(PrayerTime prayerTime) =>
+      prayerTime.miladiTarihUzunIso8601.isEqualTo(DateTime.now());
 }
