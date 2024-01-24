@@ -2,7 +2,6 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'home_viewmodel.dart';
@@ -94,12 +93,5 @@ class _HomeViewState extends State<HomeView> {
       default:
         return const HomeTabView();
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: veriler çekildiğinde splash kapatılacak
-    FlutterNativeSplash.remove();
-    super.initState();
   }
 }

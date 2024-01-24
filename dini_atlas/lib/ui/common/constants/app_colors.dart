@@ -12,6 +12,8 @@ final Color kcDividerColor = const Color(0xFFBBC4CE).withOpacity(.35);
 
 const Color kcGrayColor = Color(0xFF8789A3);
 final Color kcGrayColorLight = const Color(0xFFF2F2F3).withOpacity(.5);
+const Color kcGrayColorLightSoft = Color(0xFFF9F9F9);
+const Color kcGrayColorSoft = Color(0xFFCBCBCB);
 const Color kcBlueGrayColor = Color(0xFFEDF3F9);
 
 // Purple

@@ -64,8 +64,10 @@ class TableWidget extends StatelessWidget {
                           fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                     verticalSpace(3),
-                    Text(prayerTime.hicriTarihUzun,
-                        style: const TextStyle(fontSize: 12))
+                    Text(
+                      prayerTime.hicriTarihUzun,
+                      style: const TextStyle(fontSize: 12),
+                    )
                   ],
                 );
               },
@@ -147,7 +149,6 @@ class TableWidget extends StatelessWidget {
     } else {
       isCurrent = isCurrentPrayer && viewModel.currentPrayerType == prayerType;
     }
-
     final (String, String) values = switch (prayerType) {
       PrayerType.imsak => ("İmsak", prayerTime.imsak),
       PrayerType.gunes => ("Güneş", prayerTime.gunes),
@@ -177,7 +178,7 @@ class TableWidget extends StatelessWidget {
               ),
               horizontalSpace(30),
               IconButton(
-                onPressed: () {},
+                onPressed: () => viewModel.showNotificationSettingsDialog(),
                 icon: SvgPicture.asset(
                   isActive ? kiNotificationEnabled : kiNotificationDisabled,
                 ),

@@ -1,3 +1,4 @@
+import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
@@ -5,8 +6,14 @@ import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/dialogs/settings/base_dialog_items.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_service.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/widgets/selectable_button.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class HomeTabViewModel extends ReactiveViewModel {
   final HomeService _homeService = HomeService();
@@ -26,7 +33,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   @override
   List<ListenableServiceMixin> get listenableServices => [_homeService];
 
-  void init() async {
+  Future<void> init() async {
     // Ana servisteki değişiklikleri dinle
     _homeService.listen();
 
@@ -98,4 +105,34 @@ class HomeTabViewModel extends ReactiveViewModel {
 
   bool isCurrentPrayerTime(PrayerTime prayerTime) =>
       prayerTime.miladiTarihUzunIso8601.isEqualTo(DateTime.now());
+
+  void showNotificationSettingsDialog() {
+    final dialogService = locator<DialogService>();
+    dialogService.showCustomDialog(
+      variant: DialogType.settings,
+      data: [
+        const BaseHomeDialogItem1(
+          title: "Sesli Uyarı",
+          svgIcon: kiEar,
+          showDivider: false,
+        ),
+        verticalSpaceMedium,
+        const BaseHomeDialogItem1(
+          title: "Önceden Uyar",
+          svgIcon: kiEar,
+          bottomWidget: Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SelectableSettingButton(text: "5 dk", selected: true),
+                SelectableSettingButton(text: "15 dk", selected: false),
+                SelectableSettingButton(text: "30 dk", selected: false),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
