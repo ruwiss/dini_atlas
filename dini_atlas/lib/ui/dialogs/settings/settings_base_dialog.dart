@@ -3,14 +3,14 @@ import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BaseHomeDialogItem1 extends StatefulWidget {
+class SettingsBaseDialog extends StatefulWidget {
   final String title;
   final String svgIcon;
   final String? subtitle;
   final Widget? bottomWidget;
   final bool showDivider;
   final Function(bool value)? onChanged;
-  const BaseHomeDialogItem1(
+  const SettingsBaseDialog(
       {super.key,
       required this.title,
       required this.svgIcon,
@@ -20,10 +20,10 @@ class BaseHomeDialogItem1 extends StatefulWidget {
       this.onChanged});
 
   @override
-  State<BaseHomeDialogItem1> createState() => _BaseHomeDialogItem1State();
+  State<SettingsBaseDialog> createState() => _SettingsBaseDialogState();
 }
 
-class _BaseHomeDialogItem1State extends State<BaseHomeDialogItem1> {
+class _SettingsBaseDialogState extends State<SettingsBaseDialog> {
   bool checkbox1 = false;
 
   @override

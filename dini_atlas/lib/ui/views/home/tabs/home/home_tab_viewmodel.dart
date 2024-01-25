@@ -8,17 +8,10 @@ import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
-import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:dini_atlas/ui/common/ui_helpers.dart';
-import 'package:dini_atlas/ui/dialogs/settings/base_dialog_items.dart';
+import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_service.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/widgets/selectable_button.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/widgets/selectable_tile.dart';
-import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-enum SettingTimeSelection { dk5, dk15, dk30 }
 
 class HomeTabViewModel extends ReactiveViewModel {
   final HomeService homeService;
@@ -133,87 +126,11 @@ class HomeTabViewModel extends ReactiveViewModel {
   }
 
   void showNotificationSettingsDialog(String title) {
-    SettingTimeSelection timeSelection = SettingTimeSelection.dk15;
-    int soundSelection = 0;
     final dialogService = locator<DialogService>();
     dialogService.showCustomDialog(
       variant: DialogType.settings,
       title: title,
-      data: [
-        const BaseHomeDialogItem1(
-          title: "Sesli Uyarı",
-          svgIcon: kiEar,
-        ),
-        verticalSpaceMedium,
-        BaseHomeDialogItem1(
-          title: "Önceden Uyar",
-          svgIcon: kiEar,
-          bottomWidget: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: StatefulBuilder(
-              builder: (context, setState) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: SettingTimeSelection.values
-                      .map(
-                        (e) => SelectableSettingButton(
-                          text: switch (e) {
-                            SettingTimeSelection.dk5 => "5 dk",
-                            SettingTimeSelection.dk15 => "15 dk",
-                            SettingTimeSelection.dk30 => "30 dk",
-                          },
-                          selected: e == timeSelection,
-                          onTap: (_) => setState(() => timeSelection = e),
-                        ),
-                      )
-                      .toList(),
-                );
-              },
-            ),
-          ),
-        ),
-        verticalSpaceSmall,
-        StatefulBuilder(
-          builder: (context, setState) {
-            return BaseHomeDialogItem1(
-              title: "Uyarı Sesleri",
-              svgIcon: kiEar,
-              bottomWidget: Column(
-                children: List.generate(
-                  3,
-                  (index) => SettingsSelectableTile(
-                    text: "Örnek Ses $index",
-                    selected: soundSelection == index,
-                    onTap: (_) => setState(() => soundSelection = index),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-        verticalSpaceSmall,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            MaterialButton(
-              onPressed: () {},
-              color: kcGrayColorLightSoft,
-              child: const Text(
-                "Tümüne Uygula",
-                style: TextStyle(fontSize: 14, color: kcPrimaryColorDark),
-              ),
-            ),
-            MaterialButton(
-              onPressed: () {},
-              color: kcPurpleColorLight,
-              child: const Text(
-                "Kaydet",
-                style: TextStyle(fontSize: 14, color: kcPrimaryColorDark),
-              ),
-            ),
-          ],
-        ),
-      ],
+      data: const SettingsNotiDialog(),
     );
   }
 }

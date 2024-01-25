@@ -145,7 +145,7 @@ class FetchTimesService {
           userLocation.city, userLocation.state, city.sehirId);
 
       // getirilen id'leri kullanıcı ayarlarına kaydet
-      await _userSettings.setUserSettings(
+      await _userSettings.setUserLocationSettings(
           country: country, city: city, state: state, location: userLocation);
 
       if (kDebugMode) print("Lokasyon idleri veritabanına kaydedildi");

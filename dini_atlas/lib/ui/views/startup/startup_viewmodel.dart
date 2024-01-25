@@ -29,7 +29,7 @@ class StartupViewModel extends BaseViewModel {
   Future<void> _fetchUserLocationAndPrayerTimes() async {
     final result = await _locationService.getUserLocation();
     await result.fold((l) async {
-      await _userSettingsService.setUserSettings(location: l);
+      await _userSettingsService.setUserLocationSettings(location: l);
       await _fetchTimesService.fetchTimes();
     }, (r) {
       setError(r);

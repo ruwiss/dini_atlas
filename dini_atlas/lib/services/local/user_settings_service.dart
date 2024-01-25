@@ -29,7 +29,7 @@ class UserSettingsService {
     }
   }
 
-  Future<void> setUserSettings(
+  Future<void> setUserLocationSettings(
       {required UserLocation location,
       Country? country,
       City? city,

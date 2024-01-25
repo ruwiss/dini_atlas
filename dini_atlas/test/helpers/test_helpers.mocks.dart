@@ -776,7 +776,7 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i7.Future<_i3.UserSetting?>);
 
   @override
-  _i7.Future<void> setUserSettings({
+  _i7.Future<void> setUserLocationSettings({
     required _i11.UserLocation? location,
     _i12.Country? country,
     _i13.City? city,

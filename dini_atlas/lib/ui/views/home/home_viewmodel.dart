@@ -4,7 +4,7 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../dialogs/settings/base_dialog_items.dart';
+import '../../dialogs/settings/settings_base_dialog.dart';
 
 class HomeViewModel extends IndexTrackingViewModel {
   final dialogService = locator<DialogService>();
@@ -26,7 +26,7 @@ class HomeViewModel extends IndexTrackingViewModel {
     dialogService.showCustomDialog(
       variant: DialogType.settings,
       data: [
-        BaseHomeDialogItem1(
+        SettingsBaseDialog(
           title: "Sessiz Mod",
           svgIcon: kiEar,
           subtitle: "Namaz vaktinden 5 dk önce başlar ve 30 dk sonra biter",

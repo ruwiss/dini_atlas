@@ -1,15 +1,11 @@
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
-import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'settings_dialog_model.dart';
-
-class SettingsDialog extends StackedView<SettingsDialogModel> {
+class SettingsDialog extends StatelessWidget {
   final DialogRequest request;
   final Function(DialogResponse) completer;
-
   const SettingsDialog({
     super.key,
     required this.request,
@@ -17,12 +13,8 @@ class SettingsDialog extends StackedView<SettingsDialogModel> {
   });
 
   @override
-  Widget builder(
-    BuildContext context,
-    SettingsDialogModel viewModel,
-    Widget? child,
-  ) {
-    final List<Widget> data = request.data ?? [];
+  Widget build(BuildContext context) {
+    final Widget data = request.data ?? [];
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       backgroundColor: kcBackgroundColor,
@@ -33,10 +25,7 @@ class SettingsDialog extends StackedView<SettingsDialogModel> {
           _headerWidget(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: data,
-            ),
+            child: data,
           )
         ],
       ),
@@ -81,8 +70,4 @@ class SettingsDialog extends StackedView<SettingsDialogModel> {
       ),
     );
   }
-
-  @override
-  SettingsDialogModel viewModelBuilder(BuildContext context) =>
-      SettingsDialogModel();
 }
