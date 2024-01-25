@@ -1,6 +1,6 @@
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/home_service.dart';
+import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 

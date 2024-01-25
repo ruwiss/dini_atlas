@@ -5,14 +5,23 @@ import 'package:flutter/material.dart';
 import 'settings_base_dialog.dart';
 
 class SettingsQuranDialog extends StatefulWidget {
-  const SettingsQuranDialog({super.key});
+  final int quranReciterId;
+  final Function(int value)? onRecitedIdChanged;
+  const SettingsQuranDialog(
+      {super.key, required this.quranReciterId, this.onRecitedIdChanged});
 
   @override
   State<SettingsQuranDialog> createState() => _SettingsQuranDialogState();
 }
 
 class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
-  int _soundSelection = 0;
+  late int _soundSelection;
+
+  @override
+  void initState() {
+     _soundSelection = widget.quranReciterId;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +36,14 @@ class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
             children: List.generate(
               10,
               (index) => SettingsSelectableTile(
+                value: index,
                 text: "ﻲﻤﺠﻌﻟا ﻲﻠﻋ ﻦﺑ ﺪﻤﺣأ",
                 selected: _soundSelection == index,
-                onTap: (_) => setState(() => _soundSelection = index),
+                onTap: (value) {
+                  widget.onRecitedIdChanged?.call(value);
+                  _soundSelection = index;
+                  setState(() {});
+                },
               ),
             ),
           ),

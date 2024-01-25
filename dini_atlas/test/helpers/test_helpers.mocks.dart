@@ -784,7 +784,7 @@ class MockUserSettingsService extends _i1.Mock
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #setUserSettings,
+          #setUserLocationSettings,
           [],
           {
             #location: location,

@@ -6,18 +6,42 @@ import 'package:flutter/material.dart';
 import '../../views/home/tabs/home/widgets/selectable_button.dart';
 import '../../views/home/tabs/home/widgets/selectable_tile.dart';
 
-enum SettingTimeSelection { dk5, dk15, dk30 }
+enum SettingTimeSelection {
+  dk5(5),
+  dk15(15),
+  dk30(30);
+
+  final int time;
+  const SettingTimeSelection(this.time);
+}
 
 class SettingsNotiDialog extends StatefulWidget {
-  const SettingsNotiDialog({super.key});
+  final int advancedVoiceWarningTime;
+  final int warningSoundId;
+  final Function(int value)? onWarningSoundChanged;
+  final Function(int value)? onAdvancedVoiceWarningTimeChanged;
+  const SettingsNotiDialog({
+    super.key,
+    required this.advancedVoiceWarningTime,
+    required this.warningSoundId,
+    this.onWarningSoundChanged,
+    this.onAdvancedVoiceWarningTimeChanged,
+  });
 
   @override
   State<SettingsNotiDialog> createState() => _SettingsNotiDialogState();
 }
 
 class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
-  SettingTimeSelection _timeSelection = SettingTimeSelection.dk15;
-  int _soundSelection = 0;
+  late int _selectedTime;
+  late int _selectedSound;
+
+  @override
+  void initState() {
+    _selectedTime = widget.advancedVoiceWarningTime;
+    _selectedSound = widget.warningSoundId;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +62,14 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
               children: SettingTimeSelection.values
                   .map(
                     (e) => SelectableSettingButton(
-                      text: switch (e) {
-                        SettingTimeSelection.dk5 => "5 dk",
-                        SettingTimeSelection.dk15 => "15 dk",
-                        SettingTimeSelection.dk30 => "30 dk",
+                      value: e.time,
+                      text: "${e.time} dakika",
+                      selected: e.time == _selectedTime,
+                      onTap: (value) {
+                        widget.onAdvancedVoiceWarningTimeChanged?.call(value);
+                        _selectedTime = e.time;
+                        setState(() {});
                       },
-                      selected: e == _timeSelection,
-                      onTap: (_) => setState(() => _timeSelection = e),
                     ),
                   )
                   .toList(),
@@ -59,9 +84,14 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
             children: List.generate(
               3,
               (index) => SettingsSelectableTile(
+                value: _selectedSound,
                 text: "Örnek Ses $index",
-                selected: _soundSelection == index,
-                onTap: (_) => setState(() => _soundSelection = index),
+                selected: _selectedSound == index,
+                onTap: (value) {
+                  widget.onWarningSoundChanged?.call(value);
+                  _selectedSound = index;
+                  setState(() {});
+                },
               ),
             ),
           ),

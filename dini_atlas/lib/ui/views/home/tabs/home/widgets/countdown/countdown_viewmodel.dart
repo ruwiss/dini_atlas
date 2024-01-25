@@ -1,4 +1,4 @@
-import 'package:dini_atlas/ui/views/home/tabs/home/home_service.dart';
+import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:stacked/stacked.dart';
 
 class CountDownViewModel extends ReactiveViewModel {

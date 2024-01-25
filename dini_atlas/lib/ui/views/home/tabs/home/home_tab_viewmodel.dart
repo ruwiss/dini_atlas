@@ -9,7 +9,7 @@ import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/home_service.dart';
+import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -40,6 +40,9 @@ class HomeTabViewModel extends ReactiveViewModel {
 
     // Namaz vakitlerini getir
     await _getPrayerTimes();
+
+    // Uygulama ayarlarını getir (diyalog)
+    homeService.getAppSettings();
 
     // Gelen namaz vakitlerini hazırla
     homeService.calculatePrayerTime();
@@ -130,7 +133,12 @@ class HomeTabViewModel extends ReactiveViewModel {
     dialogService.showCustomDialog(
       variant: DialogType.settings,
       title: title,
-      data: const SettingsNotiDialog(),
+      data: SettingsNotiDialog(
+        advancedVoiceWarningTime: 15,
+        warningSoundId: 0,
+        onWarningSoundChanged: (value) {},
+        onAdvancedVoiceWarningTimeChanged: (value) {},
+      ),
     );
   }
 }

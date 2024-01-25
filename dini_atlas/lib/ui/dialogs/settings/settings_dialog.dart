@@ -24,7 +24,9 @@ class SettingsDialog extends StatelessWidget {
         children: [
           _headerWidget(),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 14),
+            margin: const EdgeInsets.only(bottom: 10),
             color: kcBackgroundColor,
             child: data,
           )

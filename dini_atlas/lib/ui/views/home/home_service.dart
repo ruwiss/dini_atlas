@@ -1,7 +1,10 @@
+import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
+import 'package:dini_atlas/models/user_setting.dart';
+import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -10,13 +13,26 @@ import 'dart:async';
 enum PrayerType { imsak, gunes, ogle, ikindi, aksam, yatsi, none }
 
 class HomeService with ListenableServiceMixin {
-  void listen() => listenToReactiveValues(
-      [prayerTimes, nextTimeIsAfterDay, currentPrayerType, countdownTimer]);
+  final _userSettingsService = locator<UserSettingsService>();
+  void listen() => listenToReactiveValues([
+        appSettings,
+        prayerTimes,
+        nextTimeIsAfterDay,
+        currentPrayerType,
+        countdownTimer
+      ]);
 
   PrayerTimes? prayerTimes;
   bool nextTimeIsAfterDay = false;
   PrayerType currentPrayerType = PrayerType.none;
   String? countdownTimer;
+  AppSettings? appSettings;
+
+  void getAppSettings() async {
+    final userSettings = await _userSettingsService.getUserSettings();
+    appSettings = userSettings?.appSettings;
+    notifyListeners();
+  }
 
   PrayerTime getTimesByDay(DateTime date) {
     return prayerTimes!.prayerTimes.singleWhere(

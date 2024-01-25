@@ -5,7 +5,7 @@ import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'home_tab_viewmodel.dart';
-import 'home_service.dart';
+import '../../home_service.dart';
 
 class HomeTabView extends StatefulWidget {
   const HomeTabView({super.key});
