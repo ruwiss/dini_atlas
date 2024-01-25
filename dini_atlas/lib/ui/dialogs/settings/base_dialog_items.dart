@@ -28,51 +28,54 @@ class _BaseHomeDialogItem1State extends State<BaseHomeDialogItem1> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SvgPicture.asset(widget.svgIcon),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: kcGrayColor,
-                      ),
-                    ),
-                    if (widget.subtitle != null)
+    return Container(
+      color: kcBackgroundColor,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SvgPicture.asset(widget.svgIcon),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        widget.subtitle!,
-                        style:
-                            const TextStyle(fontSize: 12, color: kcGrayColor),
-                      )
-                  ],
+                        widget.title,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: kcGrayColor,
+                        ),
+                      ),
+                      if (widget.subtitle != null)
+                        Text(
+                          widget.subtitle!,
+                          style:
+                              const TextStyle(fontSize: 12, color: kcGrayColor),
+                        )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Checkbox(
-              value: checkbox1,
-              onChanged: (value) {
-                setState(() => checkbox1 = value!);
-                widget.onChanged?.call(value!);
-              },
-            ),
-          ],
-        ),
-        if (widget.bottomWidget != null) widget.bottomWidget!,
-        if (widget.showDivider) ...[
-          verticalSpace(23),
-          const Divider(height: 1),
-        ]
-      ],
+              Checkbox(
+                value: checkbox1,
+                onChanged: (value) {
+                  setState(() => checkbox1 = value!);
+                  widget.onChanged?.call(value!);
+                },
+              ),
+            ],
+          ),
+          if (widget.bottomWidget != null) widget.bottomWidget!,
+          if (widget.showDivider) ...[
+            verticalSpace(23),
+            const Divider(height: 1),
+          ]
+        ],
+      ),
     );
   }
 }

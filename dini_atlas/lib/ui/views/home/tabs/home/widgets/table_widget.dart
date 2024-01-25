@@ -144,10 +144,10 @@ class TableWidget extends StatelessWidget {
     final PrayerTime prayerTime = viewModel.tablePrayerTime;
     final isCurrentPrayer = viewModel.isCurrentPrayerTime(prayerTime);
     late bool isCurrent;
+    // sonraki vakit mi?
+    isCurrent = isCurrentPrayer && viewModel.currentPrayerType == prayerType;
     if (viewModel.nextTimeIsAfterDay!) {
-      isCurrent = prayerType == PrayerType.imsak;
-    } else {
-      isCurrent = isCurrentPrayer && viewModel.currentPrayerType == prayerType;
+      isCurrent = prayerType == PrayerType.none;
     }
     final (String, String) values = switch (prayerType) {
       PrayerType.imsak => ("İmsak", prayerTime.imsak),
@@ -178,7 +178,8 @@ class TableWidget extends StatelessWidget {
               ),
               horizontalSpace(30),
               IconButton(
-                onPressed: () => viewModel.showNotificationSettingsDialog(),
+                onPressed: () =>
+                    viewModel.showNotificationSettingsDialog(values.$1),
                 icon: SvgPicture.asset(
                   isActive ? kiNotificationEnabled : kiNotificationDisabled,
                 ),
