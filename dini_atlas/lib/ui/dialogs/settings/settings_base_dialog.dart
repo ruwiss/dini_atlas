@@ -24,7 +24,7 @@ class SettingsBaseDialog extends StatefulWidget {
 }
 
 class _SettingsBaseDialogState extends State<SettingsBaseDialog> {
-  bool checkbox1 = false;
+  bool checkbox = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +61,9 @@ class _SettingsBaseDialogState extends State<SettingsBaseDialog> {
                 ),
               ),
               Checkbox(
-                value: checkbox1,
+                value: checkbox,
                 onChanged: (value) {
-                  setState(() => checkbox1 = value!);
+                  setState(() => checkbox = value!);
                   widget.onChanged?.call(value!);
                 },
               ),

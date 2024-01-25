@@ -13,20 +13,25 @@ class SettingsSelectableTile extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap?.call(text),
       child: Padding(
-        padding: const EdgeInsets.only(top: 5),
-        child: ListTile(
-          tileColor: kcGrayColorLightSoft,
-          title: Text(
-            text,
-            textAlign: TextAlign.end,
-            style: TextStyle(
-              fontSize: 18,
+        padding: const EdgeInsets.only(top: 3),
+        child: Container(
+          decoration: BoxDecoration(
+            color: kcGrayColorLightSoft,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: ListTile(
+            title: Text(
+              text,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 18,
+                color: selected ? kcPrimaryColor : kcGrayColor.withOpacity(.8),
+              ),
+            ),
+            leading: Icon(
+              Icons.check,
               color: selected ? kcPrimaryColor : kcGrayColor.withOpacity(.8),
             ),
-          ),
-          leading: Icon(
-            Icons.check,
-            color: selected ? kcPrimaryColor : kcGrayColor.withOpacity(.8),
           ),
         ),
       ),
