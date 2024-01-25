@@ -19,8 +19,7 @@ class UserSettingsService {
 
   Future<UserSetting?> getUserSettings() async {
     try {
-      final userSettings =
-          await _db.userSettings.get(IsarService.userSettingsKey);
+      final userSettings = await _db.userSettings.get(1);
       if (userSettings != null) this.userSettings = userSettings;
       if (kDebugMode) print("Kullanıcı ayarları getirildi");
       return userSettings;
@@ -37,10 +36,10 @@ class UserSettingsService {
       StateModel? state}) async {
     try {
       final jsonString = jsonEncode(location.toJson());
+      await _db.writeTxn(() async => await _db.userSettings.clear());
+
       // Nesne oluştur
-      final userSettings = UserSetting()
-        ..id = IsarService.userSettingsKey
-        ..jsonString = jsonString;
+      final userSettings = UserSetting()..jsonString = jsonString;
 
       if (country != null) userSettings.country = country;
       if (city != null) userSettings.city = city;

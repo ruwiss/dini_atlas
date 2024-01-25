@@ -5,8 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:isar/isar.dart';
 
 class IsarService {
-  static const int userSettingsKey = 0;
-
   late Isar isar;
 
   Future<void> init() async {

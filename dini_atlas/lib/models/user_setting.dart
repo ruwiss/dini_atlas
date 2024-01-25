@@ -8,7 +8,7 @@ part 'user_setting.g.dart';
 
 @collection
 class UserSetting {
-  late Id id;
+  Id id = Isar.autoIncrement;
   late String jsonString;
   Country? country;
   City? city;
