@@ -10,10 +10,6 @@ import 'dart:async';
 enum PrayerType { imsak, gunes, ogle, ikindi, aksam, yatsi, none }
 
 class HomeService with ListenableServiceMixin {
-  static final HomeService _singleton = HomeService._internal();
-  factory HomeService() => _singleton;
-  HomeService._internal();
-
   void listen() => listenToReactiveValues(
       [prayerTimes, nextTimeIsAfterDay, currentPrayerType, countdownTimer]);
 

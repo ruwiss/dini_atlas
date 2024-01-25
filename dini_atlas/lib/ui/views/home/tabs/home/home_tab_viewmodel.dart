@@ -1,8 +1,10 @@
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
+import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
@@ -19,32 +21,35 @@ import 'package:stacked_services/stacked_services.dart';
 enum SettingTimeSelection { dk5, dk15, dk30 }
 
 class HomeTabViewModel extends ReactiveViewModel {
-  final HomeService _homeService = HomeService();
+  final HomeService homeService;
+  HomeTabViewModel({required this.homeService});
   final _prayerTimesService = locator<PrayerTimesService>();
   final _fetchTimesService = locator<FetchTimesService>();
   final _userSettingsService = locator<UserSettingsService>();
+  final _locationService = locator<LocationService>();
+  final _navigationService = locator<NavigationService>();
 
   String? currentMoonPhaseImage;
   City? userCity;
   int? selectedPrayerTime;
+  bool locationBusy = false;
 
-  List<PrayerTime>? get _prayerTimeList =>
-      _homeService.prayerTimes?.prayerTimes;
-  bool? get nextTimeIsAfterDay => _homeService.nextTimeIsAfterDay;
-  PrayerType get currentPrayerType => _homeService.currentPrayerType;
+  List<PrayerTime>? get _prayerTimeList => homeService.prayerTimes?.prayerTimes;
+  bool? get nextTimeIsAfterDay => homeService.nextTimeIsAfterDay;
+  PrayerType get currentPrayerType => homeService.currentPrayerType;
 
   @override
-  List<ListenableServiceMixin> get listenableServices => [_homeService];
+  List<ListenableServiceMixin> get listenableServices => [homeService];
 
   Future<void> init() async {
     // Ana servisteki değişiklikleri dinle
-    _homeService.listen();
+    homeService.listen();
 
     // Namaz vakitlerini getir
     await _getPrayerTimes();
 
     // Gelen namaz vakitlerini hazırla
-    _homeService.calculatePrayerTime();
+    homeService.calculatePrayerTime();
 
     // Ayın seklini getir
     _getCurrentMoonPhaseImage();
@@ -61,12 +66,12 @@ class HomeTabViewModel extends ReactiveViewModel {
 
     await result.fold(
       (times) async {
-        _homeService.prayerTimes = times;
+        homeService.prayerTimes = times;
         notifyListeners();
       },
       (ifNotUpToDate) async {
         // Asenkron işlem tamamlanana kadar bekleyeceğiz
-        _homeService.prayerTimes = await _fetchTimesService.fetchTimes();
+        homeService.prayerTimes = await _fetchTimesService.fetchTimes();
         notifyListeners();
       },
     );
@@ -76,7 +81,7 @@ class HomeTabViewModel extends ReactiveViewModel {
 
   void _getCurrentMoonPhaseImage() {
     currentMoonPhaseImage =
-        _homeService.getTimesByDay(DateTime.now()).ayinSekliUrl.split("/").last;
+        homeService.getTimesByDay(DateTime.now()).ayinSekliUrl.split("/").last;
     notifyListeners();
   }
 
@@ -115,6 +120,17 @@ class HomeTabViewModel extends ReactiveViewModel {
 
   bool isCurrentPrayerTime(PrayerTime prayerTime) =>
       prayerTime.miladiTarihUzunIso8601.isEqualTo(DateTime.now());
+
+  void updateLocation() async {
+    setBusyForObject(locationBusy, true);
+    final result = await _locationService.getUserLocation();
+    await result.fold((l) async {
+      await _fetchTimesService.fetchTimes(userLocation: l);
+      _prayerTimesService.prayerTimes = null;
+      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+    }, (r) {});
+    setBusyForObject(locationBusy, false);
+  }
 
   void showNotificationSettingsDialog(String title) {
     SettingTimeSelection timeSelection = SettingTimeSelection.dk15;

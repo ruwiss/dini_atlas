@@ -1,18 +1,20 @@
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/home_service.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import 'countdown_viewmodel.dart';
 
 class CountDownWidget extends StatelessWidget {
-  const CountDownWidget({super.key});
+  final HomeService homeService;
+  const CountDownWidget({super.key, required this.homeService});
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CountDownViewModel>.reactive(
-      viewModelBuilder: () => CountDownViewModel(),
-      onViewModelReady: (viewModel) => viewModel.init(),
+      viewModelBuilder: () => CountDownViewModel(homeService: homeService),
+      onViewModelReady: (viewModel) => viewModel.init(homeService),
       builder: (
         BuildContext context,
         CountDownViewModel model,

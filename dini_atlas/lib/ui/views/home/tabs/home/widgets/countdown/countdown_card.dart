@@ -1,6 +1,7 @@
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/home_service.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/countdown/countdown_widget.dart';
 import 'package:dini_atlas/ui/widgets/blend_mask.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,9 @@ import '../../home_tab_viewmodel.dart';
 
 class CountdownCard extends StatelessWidget {
   final HomeTabViewModel viewModel;
-  const CountdownCard({super.key, required this.viewModel});
+  final HomeService homeService;
+  const CountdownCard(
+      {super.key, required this.viewModel, required this.homeService});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +36,14 @@ class CountdownCard extends StatelessWidget {
   }
 
   Positioned _location() {
+    final bool isBusy = viewModel.busy(viewModel.locationBusy);
     return Positioned(
       right: 13,
       bottom: 9,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          if (!isBusy) viewModel.updateLocation();
+        },
         child: Row(
           children: [
             Text(
@@ -49,7 +55,16 @@ class CountdownCard extends StatelessWidget {
               ),
             ),
             horizontalSpaceTiny,
-            SvgPicture.asset(kiLocation)
+            !isBusy
+                ? SvgPicture.asset(kiLocation)
+                : const SizedBox(
+                    height: 15,
+                    width: 15,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: kcBackgroundColor,
+                    ),
+                  )
           ],
         ),
       ),
@@ -76,7 +91,8 @@ class CountdownCard extends StatelessWidget {
   }
 
   Positioned _countdown() {
-    return const Positioned(left: 20, child: CountDownWidget());
+    return Positioned(
+        left: 20, child: CountDownWidget(homeService: homeService));
   }
 
   Stack _cardView() {
