@@ -4,6 +4,7 @@ import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'home_service.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StatefulWidget {
@@ -14,9 +15,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final HomeService _homeService = HomeService();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
+      onViewModelReady: (viewModel) => viewModel.init(_homeService),
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBarWidget(
           title: ksAppName,
@@ -91,7 +95,7 @@ class _HomeViewState extends State<HomeView> {
       case 1:
         return const Text("sayfa2");
       default:
-        return const HomeTabView();
+        return HomeTabView(homeService: _homeService);
     }
   }
 }

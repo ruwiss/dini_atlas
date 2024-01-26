@@ -10,12 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'dart:async';
 
-enum PrayerType { imsak, gunes, ogle, ikindi, aksam, yatsi, none }
-
 class HomeService with ListenableServiceMixin {
   final _userSettingsService = locator<UserSettingsService>();
   void listen() => listenToReactiveValues([
-        appSettings,
+        userSettings,
         prayerTimes,
         nextTimeIsAfterDay,
         currentPrayerType,
@@ -24,13 +22,12 @@ class HomeService with ListenableServiceMixin {
 
   PrayerTimes? prayerTimes;
   bool nextTimeIsAfterDay = false;
-  PrayerType currentPrayerType = PrayerType.none;
+  PrayerType currentPrayerType = PrayerType.all;
   String? countdownTimer;
-  AppSettings? appSettings;
+  UserSettings? userSettings;
 
-  void getAppSettings() async {
-    final userSettings = await _userSettingsService.getUserSettings();
-    appSettings = userSettings?.appSettings;
+  void getUserSettings() async {
+    userSettings = await _userSettingsService.getUserSettings();
     notifyListeners();
   }
 
@@ -73,15 +70,7 @@ class HomeService with ListenableServiceMixin {
       print("nextTimeIsAfterDay: $nextTimeIsAfterDay");
     }
     final int nextIndex = times.indexOf(nextPrayerTime);
-    currentPrayerType = switch (nextIndex) {
-      0 => PrayerType.imsak,
-      1 => PrayerType.gunes,
-      2 => PrayerType.ogle,
-      3 => PrayerType.ikindi,
-      4 => PrayerType.aksam,
-      5 => PrayerType.yatsi,
-      _ => PrayerType.none,
-    };
+    currentPrayerType = PrayerType.values[nextIndex];
 
     startCountdownTimer(nextPrayerTime);
   }

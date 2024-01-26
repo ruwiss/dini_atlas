@@ -1,8 +1,8 @@
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
-import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -103,29 +103,13 @@ class TableWidget extends StatelessWidget {
             }
             return Column(
               children: [
-                _tableItem(
-                  prayerType: PrayerType.imsak,
-                  isActive: true,
-                ),
-                _tableItem(
-                  prayerType: PrayerType.gunes,
-                  isActive: false,
-                ),
-                _tableItem(
-                  prayerType: PrayerType.ogle,
-                  isActive: false,
-                ),
-                _tableItem(
-                  prayerType: PrayerType.ikindi,
-                  isActive: true,
-                ),
-                _tableItem(
-                  prayerType: PrayerType.aksam,
-                  isActive: true,
-                ),
+                _tableItem(prayerType: PrayerType.imsak),
+                _tableItem(prayerType: PrayerType.gunes),
+                _tableItem(prayerType: PrayerType.ogle),
+                _tableItem(prayerType: PrayerType.ikindi),
+                _tableItem(prayerType: PrayerType.aksam),
                 _tableItem(
                   prayerType: PrayerType.yatsi,
-                  isActive: false,
                   hideDivider: true,
                 ),
               ],
@@ -138,26 +122,27 @@ class TableWidget extends StatelessWidget {
 
   Widget _tableItem({
     required PrayerType prayerType,
-    required bool isActive,
     bool hideDivider = false,
   }) {
     final PrayerTime prayerTime = viewModel.tablePrayerTime;
-    final isCurrentPrayer = viewModel.isCurrentPrayerTime(prayerTime);
+    final bool isCurrentPrayer = viewModel.isCurrentPrayerTime(prayerTime);
     late bool isCurrent;
     // sonraki vakit mi?
     isCurrent = isCurrentPrayer && viewModel.currentPrayerType == prayerType;
     if (viewModel.nextTimeIsAfterDay!) {
-      isCurrent = prayerType == PrayerType.none;
+      isCurrent = prayerType == PrayerType.all;
     }
-    final (String, String) values = switch (prayerType) {
-      PrayerType.imsak => ("İmsak", prayerTime.imsak),
-      PrayerType.gunes => ("Güneş", prayerTime.gunes),
-      PrayerType.ogle => ("Öğle", prayerTime.ogle),
-      PrayerType.ikindi => ("İkindi", prayerTime.ikindi),
-      PrayerType.aksam => ("Akşam", prayerTime.aksam),
-      PrayerType.yatsi => ("Yatsı", prayerTime.yatsi),
-      PrayerType.none => ("-", "-"),
+    final (PrayerType, String) values = switch (prayerType) {
+      PrayerType.imsak => (PrayerType.imsak, prayerTime.imsak),
+      PrayerType.gunes => (PrayerType.gunes, prayerTime.gunes),
+      PrayerType.ogle => (PrayerType.ogle, prayerTime.ogle),
+      PrayerType.ikindi => (PrayerType.ikindi, prayerTime.ikindi),
+      PrayerType.aksam => (PrayerType.aksam, prayerTime.aksam),
+      PrayerType.yatsi => (PrayerType.yatsi, prayerTime.yatsi),
+      PrayerType.all => (PrayerType.all, "-"),
     };
+
+    final bool isActive = viewModel.isNotiActiveForPrayer(prayerType);
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 4),
       child: Column(
@@ -165,7 +150,7 @@ class TableWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                values.$1,
+                values.$1.text,
                 style: !isCurrent
                     ? null
                     : const TextStyle(

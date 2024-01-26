@@ -6,8 +6,15 @@ class SelectableSettingButton<T> extends StatelessWidget {
   final String text;
   final bool selected;
   final Function(T value)? onTap;
-  const SelectableSettingButton(
-      {super.key, required this.value, required this.text, this.selected = false, this.onTap});
+  final bool disabled;
+  const SelectableSettingButton({
+    super.key,
+    required this.value,
+    required this.text,
+    this.selected = false,
+    this.onTap,
+    this.disabled = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +22,7 @@ class SelectableSettingButton<T> extends StatelessWidget {
       onTap: () => onTap?.call(value),
       child: Card(
         surfaceTintColor: kcBackgroundColor,
-        color: selected ? kcPurpleColorMedium : kcBackgroundColor,
+        color: selected && !disabled ? kcPurpleColorMedium : kcBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 3),
           child: Text(
@@ -23,7 +30,11 @@ class SelectableSettingButton<T> extends StatelessWidget {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: selected ? kcBackgroundColor : kcPrimaryColorDark,
+              color: disabled
+                  ? kcGrayColor
+                  : selected
+                      ? kcBackgroundColor
+                      : kcPrimaryColorDark,
             ),
           ),
         ),

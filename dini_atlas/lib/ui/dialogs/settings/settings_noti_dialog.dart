@@ -1,10 +1,13 @@
+import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
-import 'package:dini_atlas/ui/dialogs/settings/settings_base_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../views/home/tabs/home/widgets/selectable_button.dart';
 import '../../views/home/tabs/home/widgets/selectable_tile.dart';
+import 'settings_dialog.dart';
 
 enum SettingTimeSelection {
   dk5(5),
@@ -16,16 +19,14 @@ enum SettingTimeSelection {
 }
 
 class SettingsNotiDialog extends StatefulWidget {
-  final int advancedVoiceWarningTime;
-  final int warningSoundId;
-  final Function(int value)? onWarningSoundChanged;
-  final Function(int value)? onAdvancedVoiceWarningTimeChanged;
+  final PrayerNotiSettings prayerNotiSettings;
+  final Function(PrayerNotiSettings settings)? onSave;
+  final Function(PrayerNotiSettings settings)? onSaveAll;
   const SettingsNotiDialog({
     super.key,
-    required this.advancedVoiceWarningTime,
-    required this.warningSoundId,
-    this.onWarningSoundChanged,
-    this.onAdvancedVoiceWarningTimeChanged,
+    this.onSave,
+    this.onSaveAll,
+    required this.prayerNotiSettings,
   });
 
   @override
@@ -33,13 +34,12 @@ class SettingsNotiDialog extends StatefulWidget {
 }
 
 class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
-  late int _selectedTime;
-  late int _selectedSound;
+  final _navigationService = locator<NavigationService>();
+  late PrayerNotiSettings _prayerNotiSettings;
 
   @override
   void initState() {
-    _selectedTime = widget.advancedVoiceWarningTime;
-    _selectedSound = widget.warningSoundId;
+    _prayerNotiSettings = widget.prayerNotiSettings;
     super.initState();
   }
 
@@ -47,14 +47,25 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SettingsBaseDialog(
-          title: "Sesli Uyarı",
-          svgIcon: kiEar,
-        ),
+        SettingsBaseDialog(
+            checkboxValue: _prayerNotiSettings.voiceWarningEnable,
+            title: "Sesli Uyarı",
+            svgIcon: kiEar,
+            onChanged: (value) {
+              _prayerNotiSettings.voiceWarningEnable = value;
+              setState(() {});
+            }),
         verticalSpaceMedium,
         SettingsBaseDialog(
+          checkboxValue: _prayerNotiSettings.advancedWarningSoundsEnable,
           title: "Önceden Uyar",
           svgIcon: kiEar,
+          disabled: !_prayerNotiSettings.voiceWarningEnable ||
+              !_prayerNotiSettings.advancedWarningSoundsEnable,
+          onChanged: (value) {
+            _prayerNotiSettings.advancedWarningSoundsEnable = value;
+            setState(() {});
+          },
           bottomWidget: Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Row(
@@ -63,11 +74,13 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
                   .map(
                     (e) => SelectableSettingButton(
                       value: e.time,
-                      text: "${e.time} dakika",
-                      selected: e.time == _selectedTime,
+                      text: "${e.time} dk",
+                      selected: e.time ==
+                          _prayerNotiSettings.advancedVoiceWarningTime,
+                      disabled: !_prayerNotiSettings.voiceWarningEnable ||
+                          !_prayerNotiSettings.advancedWarningSoundsEnable,
                       onTap: (value) {
-                        widget.onAdvancedVoiceWarningTimeChanged?.call(value);
-                        _selectedTime = e.time;
+                        _prayerNotiSettings.advancedVoiceWarningTime = e.time;
                         setState(() {});
                       },
                     ),
@@ -80,16 +93,17 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
         SettingsBaseDialog(
           title: "Uyarı Sesleri",
           svgIcon: kiEar,
+          disabled: !_prayerNotiSettings.voiceWarningEnable,
           bottomWidget: Column(
             children: List.generate(
               3,
               (index) => SettingsSelectableTile(
-                value: _selectedSound,
+                disabled: !_prayerNotiSettings.voiceWarningEnable,
+                value: _prayerNotiSettings.warningSoundId,
                 text: "Örnek Ses $index",
-                selected: _selectedSound == index,
+                selected: _prayerNotiSettings.warningSoundId == index,
                 onTap: (value) {
-                  widget.onWarningSoundChanged?.call(value);
-                  _selectedSound = index;
+                  _prayerNotiSettings.warningSoundId = index;
                   setState(() {});
                 },
               ),
@@ -97,26 +111,36 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
           ),
         ),
         verticalSpaceSmall,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            MaterialButton(
-              onPressed: () {},
-              color: kcGrayColorLightSoft,
-              child: const Text(
-                "Tümüne Uygula",
-                style: TextStyle(fontSize: 14, color: kcPrimaryColorDark),
-              ),
-            ),
-            MaterialButton(
-              onPressed: () {},
-              color: kcPurpleColorLight,
-              child: const Text(
-                "Kaydet",
-                style: TextStyle(fontSize: 14, color: kcPrimaryColorDark),
-              ),
-            ),
-          ],
+        _actionButtons(),
+      ],
+    );
+  }
+
+  Widget _actionButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        MaterialButton(
+          onPressed: () {
+            widget.onSaveAll?.call(_prayerNotiSettings);
+            _navigationService.back();
+          },
+          color: kcGrayColorLightSoft,
+          child: const Text(
+            "Tümüne Uygula",
+            style: TextStyle(fontSize: 14, color: kcPrimaryColorDark),
+          ),
+        ),
+        MaterialButton(
+          onPressed: () {
+            widget.onSave?.call(_prayerNotiSettings);
+            _navigationService.back();
+          },
+          color: kcPurpleColorMedium,
+          child: const Text(
+            "Kaydet",
+            style: TextStyle(fontSize: 14, color: kcOnPrimaryColor),
+          ),
         ),
       ],
     );

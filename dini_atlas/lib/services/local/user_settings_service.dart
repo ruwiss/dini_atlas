@@ -8,6 +8,8 @@ import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
+import 'package:isar/isar.dart';
+
 class UserSettingsException implements Exception {
   final String message;
   UserSettingsException(this.message);
@@ -15,9 +17,9 @@ class UserSettingsException implements Exception {
 
 class UserSettingsService {
   final _db = locator<IsarService>().isar;
-  UserSetting? userSettings;
+  UserSettings? userSettings;
 
-  Future<UserSetting?> getUserSettings() async {
+  Future<UserSettings?> getUserSettings() async {
     try {
       if (this.userSettings != null) return this.userSettings;
       final userSettings = await _db.userSettings.get(1);
@@ -40,7 +42,7 @@ class UserSettingsService {
       await _db.writeTxn(() async => await _db.userSettings.clear());
 
       // Nesne oluştur
-      final userSettings = UserSetting()..jsonString = jsonString;
+      final userSettings = UserSettings()..jsonString = jsonString;
 
       if (country != null) userSettings.country = country;
       if (city != null) userSettings.city = city;
@@ -58,21 +60,80 @@ class UserSettingsService {
     }
   }
 
-  Future<void> setAppSettings(AppSettings appSettings) async {
+  Future<UserSettings> setSilentMode(bool value) async {
     try {
-      // Veriyi çağır ve değiştir
       final userSettings = await getUserSettings();
-      userSettings!.appSettings = appSettings;
-
+      userSettings!.silentModeEnable = value;
       this.userSettings = userSettings;
-
-      if (kDebugMode) print("Uygulama ayarları kaydedildi");
-
       // Veriyi kaydet
       await _db.writeTxn(() async => await _db.userSettings.put(userSettings));
+      return userSettings;
     } catch (e) {
       throw UserSettingsException(
-          "Uygulama ayarları kaydedilirken bir sorun oluştu. $e");
+          "Sessiz mod ayarı kaydedilirken bir sorun oluştu. $e");
+    }
+  }
+
+  Future<UserSettings> setQuranReciter(int id) async {
+    try {
+      final userSettings = await getUserSettings();
+      userSettings!.quranReciterId = id;
+      this.userSettings = userSettings;
+      // Veriyi kaydet
+      await _db.writeTxn(() async => await _db.userSettings.put(userSettings));
+      return userSettings;
+    } catch (e) {
+      throw UserSettingsException(
+          "Sessiz mod ayarı kaydedilirken bir sorun oluştu. $e");
+    }
+  }
+
+  Future<void> setPrayerNotiSettings(
+      {required PrayerNotiSettings prayerNotiSettings,
+      bool updateAll = false}) async {
+    try {
+      if (!updateAll) {
+        // Tek vakti güncelle
+        await _db.writeTxn(
+            () async => _db.prayerNotiSettings.putByName(prayerNotiSettings));
+      } else {
+        // Tüm vakitleri güncelle
+        for (PrayerType type in PrayerType.values) {
+          if (type == PrayerType.all) continue;
+          final value = prayerNotiSettings..name = type.text;
+          await _db
+              .writeTxn(() async => _db.prayerNotiSettings.putByName(value));
+        }
+      }
+
+      if (kDebugMode) print("Vakit ayarları kaydedildi");
+    } catch (e) {
+      throw UserSettingsException(
+          "Vakit ayarları kaydedilirken bir sorun oluştu. $e");
+    }
+  }
+
+  Future<PrayerNotiSettings> getPrayerNotiSettings(
+      {required PrayerType prayerType}) async {
+    try {
+      final value = await _db.prayerNotiSettings.getByName(prayerType.text);
+      if (kDebugMode) print("${prayerType.text} Vakit Ayarları Getirildi");
+
+      return value!;
+    } catch (e) {
+      throw UserSettingsException(
+          "${prayerType.text} Vakit ayarları getirilirken bir sorun oluştu. $e");
+    }
+  }
+
+  Future<List<PrayerNotiSettings>> getAllPrayerNotiSettings() async {
+    try {
+      final values = await _db.prayerNotiSettings.where().findAll();
+      if (kDebugMode) print("Tüm vakitlere ait ayarlar getirildi");
+      return values;
+    } catch (e) {
+      throw UserSettingsException(
+          "Liste olarak vakit ayarları getirilirken bir sorun oluştu. $e");
     }
   }
 }

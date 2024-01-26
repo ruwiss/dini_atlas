@@ -48,8 +48,19 @@ class _FakeIsar_0 extends _i1.SmartFake implements _i2.Isar {
         );
 }
 
-class _FakeUserSetting_1 extends _i1.SmartFake implements _i3.UserSetting {
-  _FakeUserSetting_1(
+class _FakeUserSettings_1 extends _i1.SmartFake implements _i3.UserSettings {
+  _FakeUserSettings_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePrayerNotiSettings_2 extends _i1.SmartFake
+    implements _i3.PrayerNotiSettings {
+  _FakePrayerNotiSettings_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -736,6 +747,16 @@ class MockIsarService extends _i1.Mock implements _i9.IsarService {
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> createDefaultPrayerNotiSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #createDefaultPrayerNotiSettings,
+          [],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }
 
 /// A class which mocks [UserSettingsService].
@@ -744,20 +765,7 @@ class MockIsarService extends _i1.Mock implements _i9.IsarService {
 class MockUserSettingsService extends _i1.Mock
     implements _i10.UserSettingsService {
   @override
-  _i3.UserSetting get userSettings => (super.noSuchMethod(
-        Invocation.getter(#userSettings),
-        returnValue: _FakeUserSetting_1(
-          this,
-          Invocation.getter(#userSettings),
-        ),
-        returnValueForMissingStub: _FakeUserSetting_1(
-          this,
-          Invocation.getter(#userSettings),
-        ),
-      ) as _i3.UserSetting);
-
-  @override
-  set userSettings(_i3.UserSetting? _userSettings) => super.noSuchMethod(
+  set userSettings(_i3.UserSettings? _userSettings) => super.noSuchMethod(
         Invocation.setter(
           #userSettings,
           _userSettings,
@@ -766,14 +774,14 @@ class MockUserSettingsService extends _i1.Mock
       );
 
   @override
-  _i7.Future<_i3.UserSetting?> getUserSettings() => (super.noSuchMethod(
+  _i7.Future<_i3.UserSettings?> getUserSettings() => (super.noSuchMethod(
         Invocation.method(
           #getUserSettings,
           [],
         ),
-        returnValue: _i7.Future<_i3.UserSetting?>.value(),
-        returnValueForMissingStub: _i7.Future<_i3.UserSetting?>.value(),
-      ) as _i7.Future<_i3.UserSetting?>);
+        returnValue: _i7.Future<_i3.UserSettings?>.value(),
+        returnValueForMissingStub: _i7.Future<_i3.UserSettings?>.value(),
+      ) as _i7.Future<_i3.UserSettings?>);
 
   @override
   _i7.Future<void> setUserLocationSettings({
@@ -796,6 +804,114 @@ class MockUserSettingsService extends _i1.Mock
         returnValue: _i7.Future<void>.value(),
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<_i3.UserSettings> setSilentMode(bool? value) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setSilentMode,
+          [value],
+        ),
+        returnValue: _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setSilentMode,
+            [value],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setSilentMode,
+            [value],
+          ),
+        )),
+      ) as _i7.Future<_i3.UserSettings>);
+
+  @override
+  _i7.Future<_i3.UserSettings> setQuranReciter(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #setQuranReciter,
+          [id],
+        ),
+        returnValue: _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setQuranReciter,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setQuranReciter,
+            [id],
+          ),
+        )),
+      ) as _i7.Future<_i3.UserSettings>);
+
+  @override
+  _i7.Future<void> setPrayerNotiSettings({
+    required _i3.PrayerNotiSettings? prayerNotiSettings,
+    bool? updateAll = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setPrayerNotiSettings,
+          [],
+          {
+            #prayerNotiSettings: prayerNotiSettings,
+            #updateAll: updateAll,
+          },
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<_i3.PrayerNotiSettings> getPrayerNotiSettings(
+          {required _i3.PrayerType? prayerType}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPrayerNotiSettings,
+          [],
+          {#prayerType: prayerType},
+        ),
+        returnValue:
+            _i7.Future<_i3.PrayerNotiSettings>.value(_FakePrayerNotiSettings_2(
+          this,
+          Invocation.method(
+            #getPrayerNotiSettings,
+            [],
+            {#prayerType: prayerType},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i7.Future<_i3.PrayerNotiSettings>.value(_FakePrayerNotiSettings_2(
+          this,
+          Invocation.method(
+            #getPrayerNotiSettings,
+            [],
+            {#prayerType: prayerType},
+          ),
+        )),
+      ) as _i7.Future<_i3.PrayerNotiSettings>);
+
+  @override
+  _i7.Future<List<_i3.PrayerNotiSettings>> getAllPrayerNotiSettings() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAllPrayerNotiSettings,
+          [],
+        ),
+        returnValue: _i7.Future<List<_i3.PrayerNotiSettings>>.value(
+            <_i3.PrayerNotiSettings>[]),
+        returnValueForMissingStub:
+            _i7.Future<List<_i3.PrayerNotiSettings>>.value(
+                <_i3.PrayerNotiSettings>[]),
+      ) as _i7.Future<List<_i3.PrayerNotiSettings>>);
 }
 
 /// A class which mocks [DioService].

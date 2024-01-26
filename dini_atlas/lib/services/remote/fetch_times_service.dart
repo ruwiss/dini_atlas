@@ -34,7 +34,7 @@ class FetchTimesService {
   Future<PrayerTimes?> fetchTimes({UserLocation? userLocation}) async {
     try {
       // kullanıcı kayıtlı ayarlarını getir
-      UserSetting? userSettings = await _userSettings.getUserSettings();
+      UserSettings? userSettings = await _userSettings.getUserSettings();
 
       if (userSettings == null) {
         if (kDebugMode) print("Kullanıcı ayarları bulunamadı");
@@ -101,7 +101,7 @@ class FetchTimesService {
     }
   }
 
-  Future<PrayerTimes> _fetchPrayerTimes(UserSetting userSetting) async {
+  Future<PrayerTimes> _fetchPrayerTimes(UserSettings userSetting) async {
     try {
       // vakitleri getir
       final List<PrayerTime> times = await _getTimes(userSetting.state!.ilceId);

@@ -1,8 +1,7 @@
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/selectable_tile.dart';
 import 'package:flutter/material.dart';
-
-import 'settings_base_dialog.dart';
+import 'settings_dialog.dart';
 
 class SettingsQuranDialog extends StatefulWidget {
   final int quranReciterId;

@@ -8,18 +8,17 @@ import 'home_tab_viewmodel.dart';
 import '../../home_service.dart';
 
 class HomeTabView extends StatefulWidget {
-  const HomeTabView({super.key});
+  final HomeService homeService;
+  const HomeTabView({super.key, required this.homeService});
   @override
   HomeTabViewState createState() => HomeTabViewState();
 }
 
 class HomeTabViewState extends State<HomeTabView> {
-  final HomeService _homeService = HomeService();
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeTabViewModel>.reactive(
-      viewModelBuilder: () => HomeTabViewModel(homeService: _homeService),
+      viewModelBuilder: () => HomeTabViewModel(homeService: widget.homeService),
       onViewModelReady: (viewModel) async {
         await viewModel.init();
         FlutterNativeSplash.remove();
@@ -34,7 +33,7 @@ class HomeTabViewState extends State<HomeTabView> {
             verticalSpaceSmall,
             _subtitleWidget(),
             verticalSpace(15),
-            CountdownCard(viewModel: model, homeService: _homeService),
+            CountdownCard(viewModel: model, homeService: widget.homeService),
             verticalSpace(30),
             TableWidget(viewModel: model),
           ],

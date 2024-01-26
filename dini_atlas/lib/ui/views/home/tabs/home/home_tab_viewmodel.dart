@@ -4,6 +4,7 @@ import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
@@ -30,6 +31,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   List<PrayerTime>? get _prayerTimeList => homeService.prayerTimes?.prayerTimes;
   bool? get nextTimeIsAfterDay => homeService.nextTimeIsAfterDay;
   PrayerType get currentPrayerType => homeService.currentPrayerType;
+  List<PrayerNotiSettings>? prayerNotiSettingsList;
 
   @override
   List<ListenableServiceMixin> get listenableServices => [homeService];
@@ -38,11 +40,14 @@ class HomeTabViewModel extends ReactiveViewModel {
     // Ana servisteki değişiklikleri dinle
     homeService.listen();
 
+    // Kullanıcı vakit ayarlarını liste olarak getir
+    await getAllPrayerNotiSettings();
+
     // Namaz vakitlerini getir
     await _getPrayerTimes();
 
     // Uygulama ayarlarını getir (diyalog)
-    homeService.getAppSettings();
+    homeService.getUserSettings();
 
     // Gelen namaz vakitlerini hazırla
     homeService.calculatePrayerTime();
@@ -128,16 +133,50 @@ class HomeTabViewModel extends ReactiveViewModel {
     setBusyForObject(locationBusy, false);
   }
 
-  void showNotificationSettingsDialog(String title) {
+  // Tüm vakitler için bildirim ayarlarını getir
+  Future<void> getAllPrayerNotiSettings() async {
+    prayerNotiSettingsList =
+        await _userSettingsService.getAllPrayerNotiSettings();
+    notifyListeners();
+  }
+
+  // Daha önce getirilen vakit bildirim ayarlarından 1 tanesini filtreleyip geri döndür
+  PrayerNotiSettings getPrayerNotiSettings(PrayerType prayerType) {
+    final notiSettings =
+        prayerNotiSettingsList!.singleWhere((e) => e.name == prayerType.text);
+    return notiSettings.copyWith();
+  }
+
+  // Vakit bildirim seçeneği aktif mi kontrol et
+  bool isNotiActiveForPrayer(PrayerType prayerType) {
+    return getPrayerNotiSettings(prayerType).voiceWarningEnable;
+  }
+
+  // Vakit ayarlar diyaloğunu göster
+  void showNotificationSettingsDialog(PrayerType type) {
+    final settings = getPrayerNotiSettings(type);
     final dialogService = locator<DialogService>();
+
+    // Diyaloğu göster
     dialogService.showCustomDialog(
       variant: DialogType.settings,
-      title: title,
+      title: type.text,
       data: SettingsNotiDialog(
-        advancedVoiceWarningTime: 15,
-        warningSoundId: 0,
-        onWarningSoundChanged: (value) {},
-        onAdvancedVoiceWarningTimeChanged: (value) {},
+        prayerNotiSettings: settings.copyWith(),
+        onSave: (settings) async {
+          // Tek bir vakit bildirim ayarını güncelle
+          await _userSettingsService.setPrayerNotiSettings(
+              prayerNotiSettings: settings);
+          getAllPrayerNotiSettings();
+        },
+        onSaveAll: (settings) async {
+          // Tüm vakitlerin bildirim ayarlarını güncelle
+          await _userSettingsService.setPrayerNotiSettings(
+            prayerNotiSettings: settings,
+            updateAll: true,
+          );
+          getAllPrayerNotiSettings();
+        },
       ),
     );
   }
