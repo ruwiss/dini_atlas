@@ -1,3 +1,5 @@
+import 'package:dini_atlas/extensions/datetime_extensions.dart';
+import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
 import 'package:dini_atlas/app/app.locator.dart';
@@ -51,6 +53,15 @@ class PrayerTimesService {
     } catch (e) {
       throw PrayerTimesException(e.toString());
     }
+  }
+
+  Future<PrayerTime?> getPrayerTimesByDay(DateTime date) async {
+    final result = await getPrayerTimes();
+    final prayerTime = result.fold(
+        (l) => l.prayerTimes
+            .singleWhere((e) => e.miladiTarihUzunIso8601.isEqualTo(date)),
+        (r) => null);
+    return prayerTime;
   }
 
   Future<void> setPrayerTimes(PrayerTimes prayerTimes) async {

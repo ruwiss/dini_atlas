@@ -20,6 +20,17 @@ extension DateTimeExtensions on DateTime {
     return '${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}';
   }
 
+  // Iki tarih farkı String olarak [1 sa 2 dk] olarak döndürür
+  String differenceToStringForPushNotification(DateTime other) {
+    Duration difference = this.difference(other);
+    int hours = difference.inHours;
+    int minutes = (difference.inMinutes % 60);
+
+    String text = "$minutes dk";
+    if (hours > 0) text = "$hours sa $minutes dk";
+    return text;
+  }
+
   // Verilen tarihi [Cumartesi, Ocak 09] formatına döndürür
   String formatAsWeekMonthDay() {
     final formatter = DateFormat('EEEE, MMMM dd', ksDefaultLocale);

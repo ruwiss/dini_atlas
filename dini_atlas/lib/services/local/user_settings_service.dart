@@ -2,6 +2,7 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
 import 'package:dini_atlas/models/location_api/country.dart';
 import 'package:dini_atlas/models/location_api/state.dart';
+import 'package:dini_atlas/models/prayer/prayer_times.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
 import 'package:isar/isar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSettingsException implements Exception {
   final String message;
@@ -136,4 +138,11 @@ class UserSettingsService {
           "Liste olarak vakit ayarları getirilirken bir sorun oluştu. $e");
     }
   }
+
+  Future<void> savePrayerTimesToSharedPreferences(PrayerTimes times) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+        'prayerTimes', times.convertForSharedPreferences());
+  }
+
 }

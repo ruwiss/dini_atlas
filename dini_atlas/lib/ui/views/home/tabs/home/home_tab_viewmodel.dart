@@ -69,6 +69,8 @@ class HomeTabViewModel extends ReactiveViewModel {
       (times) async {
         homeService.prayerTimes = times;
         notifyListeners();
+        // Namaz vakitlerini bildirim ekranı için Shared Preferences'a kaydet
+        await _userSettingsService.savePrayerTimesToSharedPreferences(times);
       },
       (ifNotUpToDate) async {
         // Asenkron işlem tamamlanana kadar bekleyeceğiz
