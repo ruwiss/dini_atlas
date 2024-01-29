@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   android_alarm_manager_plus: ^3.0.4
+  audioplayers: ^5.2.1
   connectivity_plus: ^5.0.2
   dio: ^5.4.0
   flutter:

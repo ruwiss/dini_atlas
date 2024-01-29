@@ -70,7 +70,11 @@ class HomeService with ListenableServiceMixin {
       print("nextTimeIsAfterDay: $nextTimeIsAfterDay");
     }
     final int nextIndex = times.indexOf(nextPrayerTime);
-    currentPrayerType = PrayerType.values[nextIndex];
+    if (nextIndex != -1) {
+      currentPrayerType = PrayerType.values[nextIndex];
+    } else {
+      currentPrayerType = PrayerType.imsak;
+    }
 
     startCountdownTimer(nextPrayerTime);
   }

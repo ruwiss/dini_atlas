@@ -8,7 +8,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PrayerNotification {
-  static Future<List<PrayerSharedP>?> _getPrayerTimeFromSharedPreferences() async {
+  static Future<List<PrayerSharedP>?>
+      _getPrayerTimeFromSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     final timeStr = prefs.getStringList('prayerTimes');
 
@@ -17,7 +18,8 @@ abstract class PrayerNotification {
     return timeStr.map((e) => PrayerSharedP.fromSharedPrefItem(e)).toList();
   }
 
- static PrayerSharedP _getPrayerByDay(List<PrayerSharedP> times, DateTime date) {
+  static PrayerSharedP _getPrayerByDay(
+      List<PrayerSharedP> times, DateTime date) {
     return times.singleWhere((e) => e.date.isEqualTo(date));
   }
 
@@ -28,6 +30,10 @@ abstract class PrayerNotification {
     if (prayerTimes == null) return;
 
     final DateTime now = DateTime.now();
+    final DateTime nowAsTime = DateTime(0, 0, 0, now.hour, now.minute);
+
+    // Mevcut namaz sonraki gün mü?
+    bool isNextDay = false;
 
     // Bugünün vakitleri
     final currentDay = _getPrayerByDay(prayerTimes, now);
@@ -41,16 +47,15 @@ abstract class PrayerNotification {
       },
       orElse: () {
         // Vakit sonraki güne ait, o zaman imsak vaktini döndür
+        isNextDay = true;
         return _getPrayerByDay(prayerTimes, now.add(const Duration(days: 1)))
             .items
             .singleWhere((e) => e.name == "İmsak");
       },
     );
 
-    final DateTime nowAsTime =
-        DateTime(0, 0, 0, now.hour, now.minute, now.second);
-
     DateTime prayerTime = nextPrayer.timeValue.parseTime().convertToDateTime();
+    if (isNextDay) prayerTime = prayerTime.add(const Duration(days: 1));
 
     // Sıradaki namaza ne kadar kaldı hesapla
     final difference =
