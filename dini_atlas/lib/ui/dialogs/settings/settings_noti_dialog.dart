@@ -47,66 +47,78 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SettingsBaseDialog(
-            checkboxValue: _prayerNotiSettings.voiceWarningEnable,
-            title: "Sesli Uyarı",
-            svgIcon: kiEar,
-            onChanged: (value) {
-              _prayerNotiSettings.voiceWarningEnable = value;
-              setState(() {});
-            }),
-        verticalSpaceMedium,
-        SettingsBaseDialog(
-          checkboxValue: _prayerNotiSettings.advancedWarningSoundsEnable,
-          title: "Önceden Uyar",
-          svgIcon: kiEar,
-          disabled: !_prayerNotiSettings.voiceWarningEnable ||
-              !_prayerNotiSettings.advancedWarningSoundsEnable,
-          onChanged: (value) {
-            _prayerNotiSettings.advancedWarningSoundsEnable = value;
-            setState(() {});
-          },
-          bottomWidget: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: SettingTimeSelection.values
-                  .map(
-                    (e) => SelectableSettingButton(
-                      value: e.time,
-                      text: "${e.time} dk",
-                      selected: e.time ==
-                          _prayerNotiSettings.advancedVoiceWarningTime,
-                      disabled: !_prayerNotiSettings.voiceWarningEnable ||
-                          !_prayerNotiSettings.advancedWarningSoundsEnable,
-                      onTap: (value) {
-                        _prayerNotiSettings.advancedVoiceWarningTime = e.time;
-                        setState(() {});
-                      },
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SettingsBaseDialog(
+                    checkboxValue: _prayerNotiSettings.voiceWarningEnable,
+                    title: "Sesli Uyarı",
+                    svgIcon: kiEar,
+                    onChanged: (value) {
+                      _prayerNotiSettings.voiceWarningEnable = value;
+                      setState(() {});
+                    }),
+                verticalSpaceMedium,
+                SettingsBaseDialog(
+                  checkboxValue:
+                      _prayerNotiSettings.advancedWarningSoundsEnable,
+                  title: "Önceden Uyar",
+                  svgIcon: kiEar,
+                  disabled: !_prayerNotiSettings.voiceWarningEnable ||
+                      !_prayerNotiSettings.advancedWarningSoundsEnable,
+                  onChanged: (value) {
+                    _prayerNotiSettings.advancedWarningSoundsEnable = value;
+                    setState(() {});
+                  },
+                  bottomWidget: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: SettingTimeSelection.values
+                          .map(
+                            (e) => SelectableSettingButton(
+                              value: e.time,
+                              text: "${e.time} dk",
+                              selected: e.time ==
+                                  _prayerNotiSettings.advancedVoiceWarningTime,
+                              disabled:
+                                  !_prayerNotiSettings.voiceWarningEnable ||
+                                      !_prayerNotiSettings
+                                          .advancedWarningSoundsEnable,
+                              onTap: (value) {
+                                _prayerNotiSettings.advancedVoiceWarningTime =
+                                    e.time;
+                                setState(() {});
+                              },
+                            ),
+                          )
+                          .toList(),
                     ),
-                  )
-                  .toList(),
-            ),
-          ),
-        ),
-        verticalSpaceSmall,
-        SettingsBaseDialog(
-          title: "Uyarı Sesleri",
-          svgIcon: kiEar,
-          disabled: !_prayerNotiSettings.voiceWarningEnable,
-          bottomWidget: Column(
-            children: List.generate(
-              3,
-              (index) => SettingsSelectableTile(
-                disabled: !_prayerNotiSettings.voiceWarningEnable,
-                value: _prayerNotiSettings.warningSoundId,
-                text: "Örnek Ses $index",
-                selected: _prayerNotiSettings.warningSoundId == index,
-                onTap: (value) {
-                  _prayerNotiSettings.warningSoundId = index;
-                  setState(() {});
-                },
-              ),
+                  ),
+                ),
+                verticalSpaceSmall,
+                SettingsBaseDialog(
+                  title: "Uyarı Sesleri",
+                  svgIcon: kiEar,
+                  disabled: !_prayerNotiSettings.voiceWarningEnable,
+                  bottomWidget: Column(
+                    children: List.generate(
+                      3,
+                      (index) => SettingsSelectableTile(
+                        disabled: !_prayerNotiSettings.voiceWarningEnable,
+                        value: _prayerNotiSettings.warningSoundId,
+                        text: "Örnek Ses $index",
+                        selected: _prayerNotiSettings.warningSoundId == index,
+                        onTap: (value) {
+                          _prayerNotiSettings.warningSoundId = index;
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

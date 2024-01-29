@@ -8,6 +8,7 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
+import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
 import 'package:dini_atlas/ui/views/home/home_service.dart';
@@ -71,6 +72,7 @@ class HomeTabViewModel extends ReactiveViewModel {
         notifyListeners();
         // Namaz vakitlerini bildirim ekranı için Shared Preferences'a kaydet
         await _userSettingsService.savePrayerTimesToSharedPreferences(times);
+        PushNotification.instance.showPrayerCountdownNotification();
       },
       (ifNotUpToDate) async {
         // Asenkron işlem tamamlanana kadar bekleyeceğiz

@@ -39,7 +39,8 @@ class _HomeViewState extends State<HomeView> {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Center(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
               child: getViewForIndex(viewModel.currentIndex),
             ),
           ),

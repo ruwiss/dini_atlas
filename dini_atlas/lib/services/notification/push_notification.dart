@@ -45,7 +45,7 @@ class PushNotification {
     return times.singleWhere((e) => e.date.isEqualTo(date));
   }
 
-  Future<void> showPrayerCountdownNotification(String text) async {
+  Future<void> showPrayerCountdownNotification() async {
     final List<PrayerSharedP>? prayerTimes =
         await _getPrayerTimeFromSharedPreferences();
 
@@ -94,6 +94,7 @@ class PushNotification {
       enableVibration: false,
       channelShowBadge: false,
       autoCancel: false,
+      silent: true,
       category: AndroidNotificationCategory.event,
     );
     const NotificationDetails notificationDetails =

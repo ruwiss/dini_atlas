@@ -19,6 +19,7 @@ class TableWidget extends StatelessWidget {
         _tableHeader(),
         verticalSpace(20),
         _tableBody(context),
+        verticalSpaceSmall,
       ],
     );
   }
@@ -88,34 +89,31 @@ class TableWidget extends StatelessWidget {
 
   Container _tableBody(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxHeight: screenHeight(context) * 0.49),
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 16),
       decoration: BoxDecoration(
         color: kcGrayColorLight,
         borderRadius: borderRadiusMedium,
       ),
-      child: SingleChildScrollView(
-        child: Builder(
-          key: ValueKey(viewModel.selectedPrayerTime),
-          builder: (context) {
-            if (viewModel.selectedPrayerTime == null) {
-              return const SizedBox();
-            }
-            return Column(
-              children: [
-                _tableItem(prayerType: PrayerType.imsak),
-                _tableItem(prayerType: PrayerType.gunes),
-                _tableItem(prayerType: PrayerType.ogle),
-                _tableItem(prayerType: PrayerType.ikindi),
-                _tableItem(prayerType: PrayerType.aksam),
-                _tableItem(
-                  prayerType: PrayerType.yatsi,
-                  hideDivider: true,
-                ),
-              ],
-            );
-          },
-        ),
+      child: Builder(
+        key: ValueKey(viewModel.selectedPrayerTime),
+        builder: (context) {
+          if (viewModel.selectedPrayerTime == null) {
+            return const SizedBox();
+          }
+          return Column(
+            children: [
+              _tableItem(prayerType: PrayerType.imsak),
+              _tableItem(prayerType: PrayerType.gunes),
+              _tableItem(prayerType: PrayerType.ogle),
+              _tableItem(prayerType: PrayerType.ikindi),
+              _tableItem(prayerType: PrayerType.aksam),
+              _tableItem(
+                prayerType: PrayerType.yatsi,
+                hideDivider: true,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

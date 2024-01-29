@@ -28,15 +28,17 @@ class HomeTabViewState extends State<HomeTabView> {
         HomeTabViewModel model,
         Widget? child,
       ) {
-        return Column(
-          children: [
-            verticalSpaceSmall,
-            _subtitleWidget(),
-            verticalSpace(15),
-            CountdownCard(viewModel: model, homeService: widget.homeService),
-            verticalSpace(30),
-            TableWidget(viewModel: model),
-          ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              verticalSpaceSmall,
+              _subtitleWidget(),
+              verticalSpace(15),
+              CountdownCard(viewModel: model, homeService: widget.homeService),
+              verticalSpace(30),
+              TableWidget(viewModel: model),
+            ],
+          ),
         );
       },
     );

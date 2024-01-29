@@ -20,11 +20,14 @@ class SettingsDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       backgroundColor: kcBackgroundColor,
       surfaceTintColor: kcBackgroundColor,
+      insetPadding: const EdgeInsets.all(25),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _headerWidget(),
           Container(
+            constraints: BoxConstraints(maxHeight: screenHeight(context) * .7),
+            width: double.infinity,
             padding:
                 const EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 14),
             margin: const EdgeInsets.only(bottom: 10),
@@ -115,6 +118,7 @@ class _SettingsBaseDialogState extends State<SettingsBaseDialog> {
     return Container(
       color: kcBackgroundColor,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

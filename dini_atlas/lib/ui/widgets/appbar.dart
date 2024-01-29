@@ -20,27 +20,24 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 15),
-      child: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: kcPrimaryColor,
-          ),
+    return AppBar(
+      automaticallyImplyLeading: false,
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: kcPrimaryColor,
         ),
-        leading: leading ??
-            (hideBackButton
-                ? null
-                : IconButton(
-                    onPressed: () => locator<NavigationService>().back(),
-                    icon: const Icon(Icons.arrow_back),
-                  )),
-        actions: actions,
       ),
+      leading: leading ??
+          (hideBackButton
+              ? null
+              : IconButton(
+                  onPressed: () => locator<NavigationService>().back(),
+                  icon: const Icon(Icons.arrow_back),
+                )),
+      actions: actions,
     );
   }
 }
