@@ -1,5 +1,6 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:dini_atlas/app/theme.dart';
+import 'package:dini_atlas/services/notification/prayer_notification.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 @pragma('vm:entry-point')
 void printHello() {
-  PushNotification.instance
-      .showPrayerCountdownNotification();
+  PrayerNotification.showPrayerCountdownNotification();
 }
 
 Future<void> main() async {
