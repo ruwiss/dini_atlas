@@ -71,7 +71,7 @@ class HomeTabViewModel extends ReactiveViewModel {
         homeService.prayerTimes = times;
         notifyListeners();
         // Namaz vakitlerini bildirim ekranı için Shared Preferences'a kaydet
-        await _userSettingsService.savePrayerTimesToSharedPreferences(times);
+        await PrayerTimesService.savePrayerTimesToSharedPreferences(times);
         PrayerNotification.showPrayerCountdownNotification();
       },
       (ifNotUpToDate) async {
@@ -142,6 +142,11 @@ class HomeTabViewModel extends ReactiveViewModel {
     prayerNotiSettingsList =
         await _userSettingsService.getAllPrayerNotiSettings();
     notifyListeners();
+
+    // İlk girişte ve ayarlar kaydedildiğinde, bildirim ayarlarını
+    // Background Task üzerinde kontrol etmek için Shared Preferences'a kaydet
+    _userSettingsService
+        .setPrayerNotiSettingsForBackgroundTask(prayerNotiSettingsList!);
   }
 
   // Daha önce getirilen vakit bildirim ayarlarından 1 tanesini filtreleyip geri döndür

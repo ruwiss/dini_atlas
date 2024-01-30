@@ -9,6 +9,10 @@ extension StringTimeExtensions on String {
     return TimeOfDay(hour: hour, minute: min);
   }
 
+  DateTime parseTimeAsDateTime() {
+    return DateTime(0, 0, 0, parseTime().hour, parseTime().minute);
+  }
+
   /// Capitalize first letter of the String
   String capitalize() {
   if (isEmpty)  return this;

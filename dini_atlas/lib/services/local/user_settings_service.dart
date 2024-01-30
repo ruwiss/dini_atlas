@@ -2,14 +2,13 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
 import 'package:dini_atlas/models/location_api/country.dart';
 import 'package:dini_atlas/models/location_api/state.dart';
-import 'package:dini_atlas/models/prayer/prayer_times.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:isar/isar.dart';
 import 'dart:convert';
 
-import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSettingsException implements Exception {
@@ -64,11 +63,13 @@ class UserSettingsService {
 
   Future<UserSettings> setSilentMode(bool value) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
       final userSettings = await getUserSettings();
       userSettings!.silentModeEnable = value;
       this.userSettings = userSettings;
       // Veriyi kaydet
       await _db.writeTxn(() async => await _db.userSettings.put(userSettings));
+      await prefs.setBool("silentMode", value);
       return userSettings;
     } catch (e) {
       throw UserSettingsException(
@@ -139,10 +140,21 @@ class UserSettingsService {
     }
   }
 
-  Future<void> savePrayerTimesToSharedPreferences(PrayerTimes times) async {
+  // Background Task'da kullanmak üzere bildirim ayarlarını SharedPreferences'a kaydet
+  void setPrayerNotiSettingsForBackgroundTask(
+      List<PrayerNotiSettings> settingsList) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList(
-        'prayerTimes', times.convertForSharedPreferences());
+
+    // Verileri String formatında listeye dönüştür
+    final List<String> stringList =
+        settingsList.map((e) => jsonEncode(e.toJson())).toList();
+
+    // Verileri cihaza kaydet
+    await prefs.setStringList("userNotiSettings", stringList);
   }
 
+  static Future<bool> getSilentModeSettingForBackgroundTask() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("silentMode") ?? false;
+  }
 }

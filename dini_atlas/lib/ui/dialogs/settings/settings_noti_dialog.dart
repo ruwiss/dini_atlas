@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/user_setting.dart';
+import 'package:dini_atlas/ui/common/constants/app_sounds.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,8 @@ class SettingsNotiDialog extends StatefulWidget {
 }
 
 class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
+  final _player = AudioPlayer();
+
   final _navigationService = locator<NavigationService>();
   late PrayerNotiSettings _prayerNotiSettings;
 
@@ -103,19 +107,22 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
                   svgIcon: kiEar,
                   disabled: !_prayerNotiSettings.voiceWarningEnable,
                   bottomWidget: Column(
-                    children: List.generate(
-                      3,
-                      (index) => SettingsSelectableTile(
-                        disabled: !_prayerNotiSettings.voiceWarningEnable,
-                        value: _prayerNotiSettings.warningSoundId,
-                        text: "Örnek Ses $index",
-                        selected: _prayerNotiSettings.warningSoundId == index,
-                        onTap: (value) {
-                          _prayerNotiSettings.warningSoundId = index;
-                          setState(() {});
-                        },
-                      ),
-                    ),
+                    children: kaNotiSounds
+                        .map(
+                          (e) => SettingsSelectableTile(
+                            disabled: !_prayerNotiSettings.voiceWarningEnable,
+                            value: _prayerNotiSettings.warningSoundId,
+                            text: e.name,
+                            selected:
+                                _prayerNotiSettings.warningSoundId == e.id,
+                            onTap: (value) {
+                              _player.play(AssetSource(e.path));
+                              _prayerNotiSettings.warningSoundId = e.id;
+                              setState(() {});
+                            },
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
               ],

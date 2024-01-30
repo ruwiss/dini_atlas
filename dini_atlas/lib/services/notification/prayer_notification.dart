@@ -1,31 +1,16 @@
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/prayer/prayer_shared_p.dart';
+import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PrayerNotification {
-  static Future<List<PrayerSharedP>?>
-      _getPrayerTimeFromSharedPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final timeStr = prefs.getStringList('prayerTimes');
-
-    if (timeStr == null) return null;
-
-    return timeStr.map((e) => PrayerSharedP.fromSharedPrefItem(e)).toList();
-  }
-
-  static PrayerSharedP _getPrayerByDay(
-      List<PrayerSharedP> times, DateTime date) {
-    return times.singleWhere((e) => e.date.isEqualTo(date));
-  }
-
-  static Future<void> showPrayerCountdownNotification() async {
+  static void showPrayerCountdownNotification() async {
     final List<PrayerSharedP>? prayerTimes =
-        await _getPrayerTimeFromSharedPreferences();
+        await PrayerTimesService.getPrayerTimesFromSharedPreferences();
 
     if (prayerTimes == null) return;
 
@@ -36,7 +21,7 @@ abstract class PrayerNotification {
     bool isNextDay = false;
 
     // Bugünün vakitleri
-    final currentDay = _getPrayerByDay(prayerTimes, now);
+    final currentDay = PrayerTimesService.getPrayerByDay(prayerTimes, now);
 
     // Sıradaki namaz vakti
     final PrayerSharedPItem nextPrayer = currentDay.items.firstWhere(
@@ -48,7 +33,7 @@ abstract class PrayerNotification {
       orElse: () {
         // Vakit sonraki güne ait, o zaman imsak vaktini döndür
         isNextDay = true;
-        return _getPrayerByDay(prayerTimes, now.add(const Duration(days: 1)))
+        return PrayerTimesService.getPrayerByDay(prayerTimes, now.add(const Duration(days: 1)))
             .items
             .singleWhere((e) => e.name == "İmsak");
       },

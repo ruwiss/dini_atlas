@@ -37,6 +37,12 @@ extension DateTimeExtensions on DateTime {
     String formattedDate = formatter.format(this);
     return formattedDate;
   }
+
+  // DateTime objesini TimeOfDay objesine döndürür
+  TimeOfDay toTimeOfDay() => TimeOfDay(hour: hour, minute: minute);
+
+  // DateTime objesini [00:00] String formatına döndürür
+  String toHourMinString() => "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
 }
 
 // TimeOfDay Extensions
@@ -44,6 +50,9 @@ extension TimeOfDayExtensions on TimeOfDay {
   // TimeOfDay objesini double formatına döndürür
   double toDouble() => hour + minute / 60.0;
 
-  // TimeOfDay objesini DateTime formatına döndürur
+  // TimeOfDay objesini DateTime formatına döndürür
   DateTime convertToDateTime() => DateTime(0, 0, 0, hour, minute);
+
+  // TimeOfDay objesini [00:00] String formatına döndürür
+  String toHourMinString () => "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
 }

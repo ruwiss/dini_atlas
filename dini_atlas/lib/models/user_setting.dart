@@ -63,6 +63,8 @@ class PrayerNotiSettings {
   /// Sesli uyarı için ses
   int warningSoundId = 0;
 
+  PrayerNotiSettings();
+
   // Create copyWith function
   PrayerNotiSettings copyWith({
     int? id,
@@ -82,4 +84,21 @@ class PrayerNotiSettings {
           advancedVoiceWarningTime ?? this.advancedVoiceWarningTime
       ..warningSoundId = warningSoundId ?? this.warningSoundId;
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "voiceWarningEnable": voiceWarningEnable,
+        "advancedWarningSoundsEnable": advancedWarningSoundsEnable,
+        "advancedVoiceWarningTime": advancedVoiceWarningTime,
+        "warningSoundId": warningSoundId
+      };
+
+  PrayerNotiSettings.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        voiceWarningEnable = json['voiceWarningEnable'],
+        advancedWarningSoundsEnable = json['advancedWarningSoundsEnable'],
+        advancedVoiceWarningTime = json['advancedVoiceWarningTime'],
+        warningSoundId = json['warningSoundId'];
 }

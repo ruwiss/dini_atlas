@@ -1,10 +1,12 @@
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
+import 'package:dini_atlas/models/prayer/prayer_shared_p.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PrayerTimesException implements Exception {
   final String message;
@@ -37,7 +39,8 @@ class PrayerTimesService {
       PrayerTimes? currentPrayerTimes = await _db.prayerTimes.get(1);
 
       if (kDebugMode) {
-        print("Mevcut namaz vakitleri: ${currentPrayerTimes?.lastFetch}");
+        print(
+            "Mevcut namaz vakitleri: ${currentPrayerTimes?.lastFetch} kaydedilme zamanı.");
       }
 
       // eğer locale kayıtlı vakitler yoksa (sorun oluştuysa)
@@ -72,5 +75,28 @@ class PrayerTimesService {
     } catch (e) {
       throw PrayerTimesException(e.toString());
     }
+  }
+
+  // Background task üzerinde kullanmak için verileri shared preferences'a kaydet
+  static Future<void> savePrayerTimesToSharedPreferences(
+      PrayerTimes times) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(
+        'prayerTimes', times.convertForSharedPreferences());
+  }
+
+  static Future<List<PrayerSharedP>?>
+      getPrayerTimesFromSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    final timeStr = prefs.getStringList('prayerTimes');
+
+    if (timeStr == null) return null;
+
+    return timeStr.map((e) => PrayerSharedP.fromSharedPrefItem(e)).toList();
+  }
+
+  static PrayerSharedP getPrayerByDay(
+      List<PrayerSharedP> times, DateTime date) {
+    return times.singleWhere((e) => e.date.isEqualTo(date));
   }
 }
