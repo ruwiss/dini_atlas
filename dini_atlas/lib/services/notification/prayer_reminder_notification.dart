@@ -43,6 +43,8 @@ class PrayerReminderNotification {
     final bool silentMode =
         await UserSettingsService.getSilentModeSettingForBackgroundTask();
 
+    bool silentEnabled = false;
+
     // Sıradaki namaz vaktini bul
     final index = currentPrayer.items.indexWhere((e) {
       // eğer sessiz mod aktifse
@@ -52,10 +54,9 @@ class PrayerReminderNotification {
         // ikisinin farkını dk olarak hesapla
         final diff = currentDateTime.difference(prayerDateTime).inMinutes;
 
-        // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa bildirim gösterme
-        final bool silentEnabled = diff >= -5 && diff <= 30;
+        // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa sessiz bildirim göster
+        silentEnabled = diff >= -5 && diff <= 30;
         debugPrint("Sessiz Mod aktif mi: $silentEnabled");
-        if (silentEnabled) return false;
       }
 
       bool value = false;
@@ -113,6 +114,7 @@ class PrayerReminderNotification {
         channelShowBadge: false,
         category: AndroidNotificationCategory.event,
         visibility: NotificationVisibility.public,
+        playSound: silentEnabled,
         sound: RawResourceAndroidNotificationSound(
           kaNotiSounds.singleWhere((e) => e.id == warningSoundId).rawPath,
         ),
