@@ -48,6 +48,12 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
   }
 
   @override
+  dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

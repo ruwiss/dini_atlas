@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/prayer/prayer_shared_p.dart';
@@ -8,12 +6,11 @@ import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_sounds.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'push_notification.dart';
+import 'dart:convert';
 
 class PrayerReminderNotification {
   static void showPrayerReminderNotification() async {
@@ -56,7 +53,6 @@ class PrayerReminderNotification {
 
         // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa sessiz bildirim göster
         silentEnabled = diff >= -5 && diff <= 30;
-        debugPrint("Sessiz Mod aktif mi: $silentEnabled");
       }
 
       bool value = false;
@@ -104,7 +100,7 @@ class PrayerReminderNotification {
     if (activePrayer != null) {
       AndroidNotificationDetails androidNotificationDetails =
           AndroidNotificationDetails(
-        ksPrayerReminderNotiChannel,
+        "$ksPrayerReminderNotiChannel${silentEnabled ? '_s' : ''}",
         'Ezan Vakti Hatırlatıcı',
         channelDescription: 'Ezan vakti hatırlatıcı bildirimi',
         importance: Importance.max,
@@ -114,10 +110,9 @@ class PrayerReminderNotification {
         channelShowBadge: false,
         category: AndroidNotificationCategory.event,
         visibility: NotificationVisibility.public,
-        playSound: silentEnabled,
+        playSound: !silentEnabled,
         sound: RawResourceAndroidNotificationSound(
-          kaNotiSounds.singleWhere((e) => e.id == warningSoundId).rawPath,
-        ),
+            kaNotiSounds.firstWhere((e) => e.id == warningSoundId).rawPath),
       );
 
       NotificationDetails notificationDetails =

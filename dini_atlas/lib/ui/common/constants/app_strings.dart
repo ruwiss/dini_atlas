@@ -8,7 +8,7 @@ const String ksAppName = "Dinî Atlas";
 const String ksDefaultLocale = "tr_TR";
 
 // Namaz vakti geri sayım push notification bildirim kanalı
-const String ksPrayerNotiChannel = "prayer_countdown_channel";
+const String ksPrayerNotiChannel = "prayer_countdown_channel_2";
 
 // Namaz vakti ek hatırlatıcı push notification bildirim kanalı
-const String ksPrayerReminderNotiChannel = "prayer_reminder_channel";
+const String ksPrayerReminderNotiChannel = "prayer_reminder_channel_2";
