@@ -18,11 +18,12 @@ const Color kcBlueGrayColor = Color(0xFFEDF3F9);
 
 // Purple
 const Color kcPurpleColorDark = Color(0xFF9055FF);
+const Color kcPurpleColorDarkSoft = Color(0xFF364282);
 const Color kcPurpleColorMedium = Color(0xFFDF98FA);
 const Color kcPurpleColorLight = Color(0xFFF3D4FF);
 
 // Random Card Colors
-List<Color> kcRandomCardColors = [
+List<Color> kcListCardColors = [
   const Color(0xFF863ED5).withOpacity(.35),
   const Color(0xFF9055FF).withOpacity(.35),
   const Color(0xFFDF98FA).withOpacity(.35),

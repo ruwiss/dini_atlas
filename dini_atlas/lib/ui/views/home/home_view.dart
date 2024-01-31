@@ -1,4 +1,5 @@
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:dini_atlas/ui/views/home/tabs/categories/categories_tab.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,7 @@ class _HomeViewState extends State<HomeView> {
       case 2:
         return const Text("sayfa3");
       case 1:
-        return const Text("sayfa2");
+        return const CategoriesTab();
       default:
         return HomeTabView(homeService: _homeService);
     }

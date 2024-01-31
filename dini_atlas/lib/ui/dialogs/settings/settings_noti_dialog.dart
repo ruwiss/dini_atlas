@@ -145,26 +145,29 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        MaterialButton(
+        ElevatedButton(
           onPressed: () {
             widget.onSaveAll?.call(_prayerNotiSettings);
             _navigationService.back();
           },
-          color: kcGrayColorLightSoft,
           child: const Text(
             "Tümüne Uygula",
             style: TextStyle(fontSize: 14, color: kcPrimaryColorDark),
           ),
         ),
-        MaterialButton(
+        ElevatedButton(
           onPressed: () {
             widget.onSave?.call(_prayerNotiSettings);
             _navigationService.back();
           },
-          color: kcPurpleColorMedium,
+          style: ElevatedButton.styleFrom(backgroundColor: kcPurpleColorMedium),
           child: const Text(
             "Kaydet",
-            style: TextStyle(fontSize: 14, color: kcOnPrimaryColor),
+            style: TextStyle(
+              fontSize: 14,
+              color: kcOnPrimaryColor,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ],
