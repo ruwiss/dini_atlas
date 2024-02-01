@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'home_service.dart';
 import 'home_viewmodel.dart';
+import 'tabs/quran/quran_tab.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -93,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
   Widget getViewForIndex(int index) {
     switch (index) {
       case 2:
-        return const Text("sayfa3");
+        return const QuranTab();
       case 1:
         return const CategoriesTab();
       default:

@@ -24,3 +24,7 @@ const String kiBook = "assets/vectors/book.svg";
 const String kiBook2 = "assets/vectors/book2.svg";
 const String kiRadio = "assets/vectors/radio.svg";
 const String kiEsmaulHusna = "assets/vectors/esmaul_husna.svg";
+
+const String kiCardImage = "assets/vectors/card_image.svg";
+const String kiReadme = "assets/vectors/readme.svg";
+const String kiAyahFrame = "assets/vectors/ayah_frame.svg";
