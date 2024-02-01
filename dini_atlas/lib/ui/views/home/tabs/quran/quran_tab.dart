@@ -9,7 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class QuranTab extends StackedView<QuranTabViewModel> {
-  const QuranTab({super.key});
+  QuranTab({super.key});
+
+  final _scrollController = ScrollController();
+  void _scrollTop() {
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      curve: Curves.fastOutSlowIn,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
 
   @override
   Widget builder(
@@ -29,8 +38,12 @@ class QuranTab extends StackedView<QuranTabViewModel> {
                     const QuranHeaderCard(),
                     // Sure listesi filtreleme butonları
                     QuranTabButtons(
-                        currentIndex: viewModel.currentIndex,
-                        onIndexChanged: viewModel.setIndex),
+                      currentIndex: viewModel.currentIndex,
+                      onIndexChanged: (id) {
+                        viewModel.setIndex(id);
+                        _scrollTop();
+                      },
+                    ),
                     verticalSpaceMedium,
                     viewModel.isBusy
                         ? const CircularProgressIndicator()
@@ -39,6 +52,7 @@ class QuranTab extends StackedView<QuranTabViewModel> {
                             : QuranSurahList(
                                 sura: viewModel.suraList!,
                                 currentIndex: viewModel.currentIndex,
+                                scrollController: _scrollController,
                               ),
                   ],
                 );

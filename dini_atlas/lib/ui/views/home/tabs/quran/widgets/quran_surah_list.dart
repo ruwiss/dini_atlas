@@ -9,9 +9,11 @@ class QuranSurahList extends StatelessWidget {
     super.key,
     required this.sura,
     required this.currentIndex,
+    this.scrollController
   });
   final List<SuraModel> sura;
   final int currentIndex;
+  final ScrollController? scrollController;
 
   bool get _isSure => currentIndex == 0;
   bool get _isSayfa => currentIndex == 1;
@@ -22,6 +24,7 @@ class QuranSurahList extends StatelessWidget {
     return Flexible(
       child: ListView.builder(
         shrinkWrap: true,
+        controller: scrollController,
         itemCount: sura.length,
         itemBuilder: (context, index) {
           final SuraModel item = sura[index];
