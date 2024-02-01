@@ -42,7 +42,8 @@ extension DateTimeExtensions on DateTime {
   TimeOfDay toTimeOfDay() => TimeOfDay(hour: hour, minute: minute);
 
   // DateTime objesini [00:00] String formatına döndürür
-  String toHourMinString() => "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
+  String toHourMinString() =>
+      "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
 }
 
 // TimeOfDay Extensions
@@ -54,5 +55,6 @@ extension TimeOfDayExtensions on TimeOfDay {
   DateTime convertToDateTime() => DateTime(0, 0, 0, hour, minute);
 
   // TimeOfDay objesini [00:00] String formatına döndürür
-  String toHourMinString () => "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
+  String toHourMinString() =>
+      "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
 }

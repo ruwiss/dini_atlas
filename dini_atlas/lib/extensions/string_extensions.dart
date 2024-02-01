@@ -15,8 +15,7 @@ extension StringTimeExtensions on String {
 
   /// Capitalize first letter of the String
   String capitalize() {
-  if (isEmpty)  return this;
-  return this[0].toUpperCase() + substring(1);
-}
-
+    if (isEmpty) return this;
+    return this[0].toUpperCase() + substring(1);
+  }
 }

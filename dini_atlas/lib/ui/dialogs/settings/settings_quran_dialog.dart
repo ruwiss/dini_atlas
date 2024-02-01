@@ -18,7 +18,7 @@ class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
 
   @override
   void initState() {
-     _soundSelection = widget.quranReciterId;
+    _soundSelection = widget.quranReciterId;
     super.initState();
   }
 

@@ -24,4 +24,3 @@ class UserLocation {
   Map<String, dynamic> toJson() =>
       {'country': country, 'city': city, 'state': state};
 }
-

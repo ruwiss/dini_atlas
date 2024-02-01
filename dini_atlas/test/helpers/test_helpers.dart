@@ -7,6 +7,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
+import 'package:dini_atlas/services/remote/quran_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -20,6 +21,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<DioService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<FetchTimesService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<PrayerTimesService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<QuranService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -31,6 +33,7 @@ void registerServices() {
   getAndRegisterDioService();
   getAndRegisterFetchTimesService();
   getAndRegisterPrayerTimesService();
+  getAndRegisterQuranService();
 // @stacked-mock-register
 }
 
@@ -116,6 +119,13 @@ MockPrayerTimesService getAndRegisterPrayerTimesService() {
   _removeRegistrationIfExists<PrayerTimesService>();
   final service = MockPrayerTimesService();
   locator.registerSingleton<PrayerTimesService>(service);
+  return service;
+}
+
+MockQuranService getAndRegisterQuranService() {
+  _removeRegistrationIfExists<QuranService>();
+  final service = MockQuranService();
+  locator.registerSingleton<QuranService>(service);
   return service;
 }
 // @stacked-mock-create

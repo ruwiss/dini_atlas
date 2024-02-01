@@ -1,11 +1,11 @@
-import 'package:dini_atlas/ui/common/constants/app_colors.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/widgets/quran_header_card.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/widgets/quran_surah_list.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/widgets/quran_tab_buttons.dart';
+import 'package:dini_atlas/ui/widgets/no_internet_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 
 class QuranTab extends StackedView<QuranTabViewModel> {
@@ -18,21 +18,38 @@ class QuranTab extends StackedView<QuranTabViewModel> {
     Widget? child,
   ) {
     return Center(
-      child: Column(
-        children: [
-          QuranHeaderCard(),
-          QuranTabButtons(
-              currentIndex: viewModel.currentIndex,
-              onIndexChanged: viewModel.setIndex),
-          verticalSpaceMedium,
-          switch (viewModel.currentIndex) {
-            0 => QuranSurahList(),
-            1 => const SizedBox(),
-            2 => const SizedBox(),
-            _ => const SizedBox(),
-          }
-        ],
-      ),
+      child: StreamBuilder<ConnectivityResult>(
+          stream: Connectivity().onConnectivityChanged,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data != ConnectivityResult.none) {
+                return Column(
+                  children: [
+                    // Son okunan sure bilgisi
+                    const QuranHeaderCard(),
+                    // Sure listesi filtreleme butonları
+                    QuranTabButtons(
+                        currentIndex: viewModel.currentIndex,
+                        onIndexChanged: viewModel.setIndex),
+                    verticalSpaceMedium,
+                    viewModel.isBusy
+                        ? const CircularProgressIndicator()
+                        : viewModel.hasError
+                            ? Center(child: Text(viewModel.modelError))
+                            : QuranSurahList(
+                                sura: viewModel.suraList!,
+                                currentIndex: viewModel.currentIndex,
+                              ),
+                  ],
+                );
+              } else {
+                // İnternet bağlantısı yok
+                return const NoInternetWidget();
+              }
+            } else {
+              return const CircularProgressIndicator();
+            }
+          }),
     );
   }
 
@@ -42,6 +59,6 @@ class QuranTab extends StackedView<QuranTabViewModel> {
 
   @override
   void onViewModelReady(QuranTabViewModel viewModel) {
-    // init();
+    viewModel.init();
   }
 }

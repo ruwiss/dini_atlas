@@ -1,6 +1,5 @@
-import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/no_internet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,34 +19,7 @@ class NoInternetView extends StackedView<NoInternetViewModel> {
       child: Scaffold(
         appBar: const AppBarWidget(title: "İnternet Yok", hideBackButton: true),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Center(
-          child: Container(
-            padding: const EdgeInsets.only(left: 25.0, right: 25.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 50),
-                  child: Image.asset(kiNoInternetGif),
-                ),
-                const Text(
-                  "Üzgünüm",
-                  style: TextStyle(
-                    color: kcGrayColor,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                verticalSpaceMedium,
-                const Text(
-                  "Şuanda bir internet bağlantısına ihtiyacınız var.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: kcGrayColor, fontSize: 18),
-                )
-              ],
-            ),
-          ),
-        ),
+        body: const Center(child: NoInternetWidget()),
       ),
     );
   }

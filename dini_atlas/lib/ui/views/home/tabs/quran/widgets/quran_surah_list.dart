@@ -1,19 +1,31 @@
+import 'package:dini_atlas/models/quran/sura_model.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class QuranSurahList extends StatelessWidget {
-  const QuranSurahList({super.key});
+  const QuranSurahList({
+    super.key,
+    required this.sura,
+    required this.currentIndex,
+  });
+  final List<SuraModel> sura;
+  final int currentIndex;
+
+  bool get _isSure => currentIndex == 0;
+  bool get _isSayfa => currentIndex == 1;
+  bool get _isTakipli => currentIndex == 2;
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: 15,
+        itemCount: sura.length,
         itemBuilder: (context, index) {
-          return _surahItem(hideDivider: index == 14);
+          final SuraModel item = sura[index];
+          return _surahItem(item: item, hideDivider: index == sura.length - 1);
         },
       ),
     );
@@ -25,74 +37,27 @@ class QuranSurahList extends StatelessWidget {
     fontWeight: FontWeight.w500,
   );
 
-  Widget _surahItem({bool hideDivider = false}) {
-    return GestureDetector(
-      onTap: () {},
+  Widget _surahItem({required SuraModel item, bool hideDivider = false}) {
+    return InkWell(
+      onTap: () => print(""),
+      splashFactory: NoSplash.splashFactory,
       child: Column(
         children: [
           verticalSpace(16),
           Row(
             children: [
-              // Sure numarası, çerçeve görünümü
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  SvgPicture.asset(kiAyahFrame),
-                  const Text(
-                    "1",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: kcPrimaryColorDark,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
-
+              _suraNumberView(item), // Sure numarası, çerçeve görünümü
               horizontalSpace(16),
-
-              // Sure adı, numarası, bilgisi
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Sure ismi
-                  const Text(
-                    "Fâtiha",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: kcPrimaryColorDark,
-                    ),
-                  ),
-                  // Sure bilgisi
-                  Row(
-                    children: [
-                      Text("MEKKİ", style: _surahItemSubStyle),
-                      Text(
-                        " • ",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: kcGrayColor.withOpacity(.3),
-                        ),
-                      ),
-                      Text("7 AYET", style: _surahItemSubStyle),
-                    ],
-                  )
+                  _suraNameView(item), // Sure ismi
+                  _suraInfoView(item), // Sure bilgisi
                 ],
               ),
-
               const Spacer(),
-
               // Arapça Sure adı
-              const Text(
-                "الفاتحة",
-                style: TextStyle(
-                  fontFamily: "Amiri",
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: kcPrimaryColorLight,
-                ),
-              )
+              _suraTextView(item) // Sure arapça metin / sayfa metni
             ],
           ),
           verticalSpace(14),
@@ -100,6 +65,81 @@ class QuranSurahList extends StatelessWidget {
           if (hideDivider) verticalSpaceMedium,
         ],
       ),
+    );
+  }
+
+  Text _suraTextView(SuraModel item) {
+    return Text(_isSayfa ? "Sayfa ${item.page}" : item.nameArabic,
+        style: _isSayfa
+            ? const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: kcPrimaryColorLight,
+              )
+            : const TextStyle(
+                fontFamily: "Amiri", // Arabic Font
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: kcPrimaryColorLight,
+              ));
+  }
+
+  Row _suraInfoView(SuraModel item) {
+    return Row(
+      children: [
+        Text(item.location, style: _surahItemSubStyle),
+        Text(
+          " • ",
+          style: TextStyle(
+            fontSize: 15,
+            color: kcGrayColor.withOpacity(.3),
+          ),
+        ),
+        Text("${item.ayahCount} AYET", style: _surahItemSubStyle),
+      ],
+    );
+  }
+
+  Row _suraNameView(SuraModel item) {
+    return Row(
+      children: [
+        Text(
+          item.name,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: kcPrimaryColorDark,
+          ),
+        ),
+        if (_isTakipli) // takipli kuran
+          const Padding(
+            padding: EdgeInsets.only(left: 5),
+            child: Text(
+              "(Takipli)",
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Stack _suraNumberView(SuraModel item) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SvgPicture.asset(kiAyahFrame),
+        Text(
+          "${item.suraId}",
+          style: const TextStyle(
+            fontSize: 14,
+            color: kcPrimaryColorDark,
+            fontWeight: FontWeight.w500,
+          ),
+        )
+      ],
     );
   }
 }

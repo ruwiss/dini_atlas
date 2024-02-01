@@ -21,7 +21,7 @@ def index():
 @app.route("/kuran/sureler")
 def sure_listesi():
     cursor.execute(
-        "SELECT DISTINCT sure, isim, sayfa, cuz FROM sureler ORDER BY sure ASC"
+        "SELECT DISTINCT sure, isim, isim_ar, ayet_sayisi, yer, sayfa FROM sureler ORDER BY sure ASC"
     )
     liste = cursor.fetchall()
     return jsonify(liste)

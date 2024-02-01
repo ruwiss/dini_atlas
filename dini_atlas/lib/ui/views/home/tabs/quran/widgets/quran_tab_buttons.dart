@@ -22,9 +22,8 @@ class QuranTabButtons extends StatelessWidget {
     );
   }
 
-  Widget _tabButton(
-      {required int id, required String title}) {
-        final bool isActive = currentIndex == id;
+  Widget _tabButton({required int id, required String title}) {
+    final bool isActive = currentIndex == id;
     return InkWell(
       onTap: () => onIndexChanged?.call(id),
       splashColor: kcPurpleColorLight.withOpacity(.3),

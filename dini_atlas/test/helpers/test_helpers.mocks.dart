@@ -9,6 +9,7 @@ import 'dart:ui' as _i8;
 import 'package:dini_atlas/models/location_api/city.dart' as _i13;
 import 'package:dini_atlas/models/location_api/country.dart' as _i12;
 import 'package:dini_atlas/models/location_api/state.dart' as _i14;
+import 'package:dini_atlas/models/prayer/prayer_time.dart' as _i21;
 import 'package:dini_atlas/models/prayer/prayer_times.dart' as _i18;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
@@ -17,6 +18,7 @@ import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i19;
 import 'package:dini_atlas/services/local/user_settings_service.dart' as _i10;
 import 'package:dini_atlas/services/remote/dio_service.dart' as _i15;
 import 'package:dini_atlas/services/remote/fetch_times_service.dart' as _i17;
+import 'package:dini_atlas/services/remote/quran_service.dart' as _i22;
 import 'package:dio/dio.dart' as _i16;
 import 'package:flutter/material.dart' as _i6;
 import 'package:fpdart/fpdart.dart' as _i20;
@@ -912,6 +914,17 @@ class MockUserSettingsService extends _i1.Mock
             _i7.Future<List<_i3.PrayerNotiSettings>>.value(
                 <_i3.PrayerNotiSettings>[]),
       ) as _i7.Future<List<_i3.PrayerNotiSettings>>);
+
+  @override
+  void setPrayerNotiSettingsForBackgroundTask(
+          List<_i3.PrayerNotiSettings>? settingsList) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #setPrayerNotiSettingsForBackgroundTask,
+          [settingsList],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [DioService].
@@ -1017,6 +1030,17 @@ class MockPrayerTimesService extends _i1.Mock
       ) as _i7.Future<_i20.Either<_i18.PrayerTimes, bool>>);
 
   @override
+  _i7.Future<_i21.PrayerTime?> getPrayerTimesByDay(DateTime? date) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPrayerTimesByDay,
+          [date],
+        ),
+        returnValue: _i7.Future<_i21.PrayerTime?>.value(),
+        returnValueForMissingStub: _i7.Future<_i21.PrayerTime?>.value(),
+      ) as _i7.Future<_i21.PrayerTime?>);
+
+  @override
   _i7.Future<void> setPrayerTimes(_i18.PrayerTimes? prayerTimes) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1027,3 +1051,8 @@ class MockPrayerTimesService extends _i1.Mock
         returnValueForMissingStub: _i7.Future<void>.value(),
       ) as _i7.Future<void>);
 }
+
+/// A class which mocks [QuranService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockQuranService extends _i1.Mock implements _i22.QuranService {}

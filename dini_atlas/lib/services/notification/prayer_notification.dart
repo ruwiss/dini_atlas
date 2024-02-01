@@ -33,7 +33,8 @@ abstract class PrayerNotification {
       orElse: () {
         // Vakit sonraki güne ait, o zaman imsak vaktini döndür
         isNextDay = true;
-        return PrayerTimesService.getPrayerByDay(prayerTimes, now.add(const Duration(days: 1)))
+        return PrayerTimesService.getPrayerByDay(
+                prayerTimes, now.add(const Duration(days: 1)))
             .items
             .singleWhere((e) => e.name == "İmsak");
       },

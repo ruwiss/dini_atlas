@@ -12,6 +12,7 @@ import 'package:dini_atlas/services/remote/dio_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart';
+import 'package:dini_atlas/services/remote/quran_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -32,6 +33,7 @@ import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart';
     LazySingleton(classType: PrayerTimesService),
     LazySingleton(classType: DioService),
     LazySingleton(classType: FetchTimesService),
+    LazySingleton(classType: QuranService),
 // @stacked-service
   ],
   bottomsheets: [

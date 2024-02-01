@@ -18,6 +18,7 @@ import '../services/local/prayer_times_service.dart';
 import '../services/local/user_settings_service.dart';
 import '../services/remote/dio_service.dart';
 import '../services/remote/fetch_times_service.dart';
+import '../services/remote/quran_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -43,4 +44,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => PrayerTimesService());
   locator.registerLazySingleton(() => DioService());
   locator.registerLazySingleton(() => FetchTimesService());
+  locator.registerLazySingleton(() => QuranService());
 }

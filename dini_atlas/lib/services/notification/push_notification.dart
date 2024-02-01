@@ -1,6 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-
 class PushNotification {
   PushNotification._singleton();
   static final PushNotification _instance = PushNotification._singleton();
@@ -25,6 +24,4 @@ class PushNotification {
       );
     }
   }
-
-  
 }
