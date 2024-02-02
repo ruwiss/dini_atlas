@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class QuranSuraItem extends StatelessWidget {
-  const QuranSuraItem({super.key, required this.ayahModel});
+  const QuranSuraItem(
+      {super.key, required this.ayahModel, required this.playerAvailable});
   final AyahModel ayahModel;
+  final bool playerAvailable;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,10 @@ class QuranSuraItem extends StatelessWidget {
   Widget _suraArabic() {
     const String bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
     String text = ayahModel.textAr.replaceAll("۞", "");
-    if (text.startsWith(bismillah)) text = text.replaceAll(bismillah, "");
+    // İlk ayette besmele varsa, sil
+    if (text.startsWith(bismillah) && text.length > bismillah.length) {
+      text = text.replaceAll(bismillah, "");
+    }
     return Text(
       text,
       textAlign: TextAlign.end,
@@ -86,7 +91,9 @@ class QuranSuraItem extends StatelessWidget {
     return Row(
       children: [
         IconButton(onPressed: () {}, icon: SvgPicture.asset(kiShare)),
-        IconButton(onPressed: () {}, icon: SvgPicture.asset(kiPlay)),
+        IconButton(
+            onPressed: !playerAvailable ? null : () {},
+            icon: SvgPicture.asset(kiPlay)),
         IconButton(
             onPressed: () {}, icon: SvgPicture.asset(kiBookmarkUnchecked))
       ],

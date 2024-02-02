@@ -36,3 +36,7 @@ const String kiShare = "assets/vectors/share.svg";
 const String kiPlay = "assets/vectors/play.svg";
 const String kiBookmarkUnchecked = "assets/vectors/bookmark_unchecked.svg";
 const String kiBookmarkChecked = "assets/vectors/bookmark_checked.svg";
+
+
+const String kiEye = "assets/vectors/eye.svg";
+const String kiRobot = "assets/vectors/robot.svg";

@@ -102,8 +102,9 @@ class QuranHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(sura.yer, style: _infoTextStyle),
-        Text(
+        Text(sura.yer.toUpperCase().replaceAll("I", "İ"),
+            style: _infoTextStyle),
+        const Text(
           " • ",
           style: TextStyle(fontSize: 17, color: kcGrayColorLight),
         ),

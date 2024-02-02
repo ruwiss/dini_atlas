@@ -1,5 +1,6 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
+import 'package:dini_atlas/models/quran/quran_reciter.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
 import 'package:fpdart/fpdart.dart';
 import 'dio_service.dart';
@@ -11,8 +12,11 @@ class QuranException implements Exception {
 
 class QuranService {
   final _dio = locator<DioService>();
+  List<QuranReciter>? _quranReciters;
+
   final String _sura = "/kuran";
   final String _suras = "/kuran/sureler";
+  final String _reciters = "/kuran/okuyucular";
 
   Future<Either<List<SuraInfo>, QuranException>> getSuraList() async {
     try {
@@ -62,6 +66,28 @@ class QuranService {
       return Left(ayahList);
     } catch (e) {
       return Right(QuranException("Ayet listesi alınırken sorun oluştu: $e"));
+    }
+  }
+
+  Future<Either<List<QuranReciter>, QuranException>> getQuranReciters() async {
+    if (_quranReciters != null) return Left(_quranReciters!);
+    try {
+      final response = await _dio.request(_reciters);
+
+      // Cevap yoksa veya sunucu hata gönderdiyse
+      if (response == null || response.statusCode != 200) {
+        return Right(QuranException(response?.statusMessage ?? "Hata"));
+      }
+
+      // Gelen veri
+      final data = response.data as List;
+
+      // Nesne oluştur
+      final quranReciters = data.map((e) => QuranReciter.fromJson(e)).toList();
+      _quranReciters = quranReciters;
+      return Left(quranReciters);
+    } catch (e) {
+      return Right(QuranException("Okuyucu listesi alınırken sorun oluştu $e"));
     }
   }
 }

@@ -3,10 +3,8 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_dialog.dart';
-import 'package:dini_atlas/ui/dialogs/settings/settings_quran_dialog.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import 'home_service.dart';
 
 class HomeViewModel extends IndexTrackingViewModel {
@@ -15,20 +13,15 @@ class HomeViewModel extends IndexTrackingViewModel {
   final _dialogService = locator<DialogService>();
   List<String> get tabItems => [kiHome, kiCategories, kiQuran];
 
-  bool get showSettingsIcon => [0, 2].contains(currentIndex);
+  bool get showSettingsIcon => currentIndex == 0; // ana sayfa ayarlar butonu
 
   void init(HomeService homeService) async {
     _homeService = homeService;
   }
 
   void onSettingsTap() {
-    if (currentIndex == 0) {
-      // Home ekranı ayarlar diyaloğu
-      _showHomeSettingsDialog();
-    } else if (currentIndex == 2) {
-      // Kuran ekranı ayarlar diyaloğu
-      _showQuranSettingsDialog();
-    }
+    // Home ekranı ayarlar diyaloğu
+    _showHomeSettingsDialog();
   }
 
   bool get silentModeEnabled =>
@@ -48,19 +41,6 @@ class HomeViewModel extends IndexTrackingViewModel {
           _homeService.getUserSettings();
         },
         showDivider: false,
-      ),
-    );
-  }
-
-  void _showQuranSettingsDialog() {
-    _dialogService.showCustomDialog(
-      variant: DialogType.settings,
-      data: SettingsQuranDialog(
-        quranReciterId: 0,
-        onRecitedIdChanged: (id) async {
-          await _userSettingsService.setQuranReciter(id);
-          _homeService.getUserSettings();
-        },
       ),
     );
   }

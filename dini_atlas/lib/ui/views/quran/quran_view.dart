@@ -65,7 +65,10 @@ class QuranView extends StackedView<QuranViewModel> {
           return Column(
             children: [
               if (index == 0) QuranHeader(sura: ayahList.sure),
-              QuranSuraItem(ayahModel: ayahList.ayetler[index]),
+              QuranSuraItem(
+                ayahModel: ayahList.ayetler[index],
+                playerAvailable: viewModel.quranReciters.isNotEmpty,
+              ),
 
               // Daha fazla yükleme işlemindeyse indicator ekle
               if (viewModel.loadMoreStatus &&

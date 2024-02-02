@@ -135,14 +135,14 @@ def kuran_okuyuculari():
     for i in reciters:
         server = i["folder_url"].split(".mp3quran.net")[0].split("/")[2]
         server_folder = i["folder_url"].split(".mp3quran.net/")[1].replace("/", "")
-        okuyucular.append(
-            {
-                "id": i["id"],
-                "name": i["name"],
-                "sure_count": i["soar_count"],
-                "reciter_url": f"/kuran/okuyucu/{server}/{server_folder}/{i['id']}",
-            }
-        )
+        if i["soar_count"] == 114:
+            okuyucular.append(
+                {
+                    "id": i["id"],
+                    "name": i["name"],
+                    "reciter_url": f"/kuran/okuyucu/{server}/{server_folder}/{i['id']}",
+                }
+            )
 
     return jsonify(okuyucular)
 

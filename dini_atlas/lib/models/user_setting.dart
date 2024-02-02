@@ -39,7 +39,7 @@ class UserSettings {
   bool silentModeEnable = false;
 
   /// Kuran okuyucu id
-  int quranReciterId = 0;
+  int quranReciterId = -1;
 
   Map<String, dynamic> jsonValue() => jsonDecode(jsonString);
 }

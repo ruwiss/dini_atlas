@@ -41,8 +41,14 @@ class QuranSurahList extends StatelessWidget {
 
   Widget _surahItem({required SuraInfo item, bool hideDivider = false}) {
     return InkWell(
-      onTap: () => locator<NavigationService>()
-          .navigateToQuranView(currentTab: currentTab, sura: item),
+      onTap: () {
+        if (currentTab != QuranTabs.following) {
+          locator<NavigationService>()
+              .navigateToQuranView(currentTab: currentTab, sura: item);
+        } else {
+          // Takipli kuran ekranına git
+        }
+      },
       splashFactory: NoSplash.splashFactory,
       child: Column(
         children: [
@@ -91,7 +97,8 @@ class QuranSurahList extends StatelessWidget {
   Row _suraInfoView(SuraInfo item) {
     return Row(
       children: [
-        Text(item.location, style: _surahItemSubStyle),
+        Text(item.location.toUpperCase().replaceAll("I", "İ"),
+            style: _surahItemSubStyle),
         Text(
           " • ",
           style: TextStyle(
