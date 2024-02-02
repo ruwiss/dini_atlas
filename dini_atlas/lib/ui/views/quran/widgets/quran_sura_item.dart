@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
@@ -51,7 +49,7 @@ class QuranSuraItem extends StatelessWidget {
   }
 
   final TextStyle _suraTextStyle = const TextStyle(
-    fontSize: 17,
+    fontSize: 16,
     color: kcPrimaryColorDark,
   );
 

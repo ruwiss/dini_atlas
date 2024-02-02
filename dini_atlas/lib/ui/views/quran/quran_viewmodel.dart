@@ -8,18 +8,47 @@ import 'package:stacked_services/stacked_services.dart';
 class QuranViewModel extends BaseViewModel {
   final _quranService = locator<QuranService>();
   AyahList? _ayahList;
+  int _currentOffset = 0;
+  bool _loadMoreStatus = false;
+  bool _endOfContent = false;
 
   AyahList? get ayahList => _ayahList;
+  bool get loadMoreStatus => _loadMoreStatus;
 
   void init(SuraInfo sura) async {
-    getAyahList(sura.suraId);
+    getAyahList(suraId: sura.suraId);
   }
 
-  Future<void> getAyahList(int suraId) async {
-    final result = await _quranService.getSuraAyahList(suraId: suraId);
+  void _setLoadMoreStatus(bool status) {
+    _loadMoreStatus = status;
+    notifyListeners();
+  }
+
+  Future<void> getAyahList({required int suraId, bool loadMore = false}) async {
+    if (loadMore) {
+      // Zaten yükleniyorsa veya daha fazla veri yoksa iptal et
+      if (_loadMoreStatus || _endOfContent) return;
+      _setLoadMoreStatus(true);
+      // Kaydırdıkça yükleme ise 10 tane daha veri iste
+      _currentOffset += 10;
+    }
+
+    // Veriyi getir, eğer loadMore ise offset değerini gönder
+    final result = await _quranService.getSuraAyahList(
+        suraId: suraId, offset: loadMore ? _currentOffset : 0);
+    
+    _setLoadMoreStatus(false);
 
     result.fold((data) {
-      _ayahList = data;
+      // Eğer ilk yükleme ise veriyi direkt kaydet
+      if (!loadMore) {
+        _ayahList = data;
+      } else {
+        // Eğer kaydırdıkça yükleme ise verinin üzerine ekleme yap
+        _ayahList?.ayetler.addAll(data.ayetler);
+        // Gelen veri boşsa yüklenecek birşey yok demektir
+        if (data.ayetler.isEmpty) _endOfContent = true;
+      }
       notifyListeners();
     }, (error) {
       setError(error.message);

@@ -37,7 +37,7 @@ class QuranHeader extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: kcPrimaryColor.withOpacity(.4),
+              color: kcPrimaryColor.withOpacity(.3),
               offset: const Offset(1, 3),
               blurRadius: 10,
             ),
