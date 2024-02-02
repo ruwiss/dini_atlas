@@ -28,3 +28,11 @@ const String kiEsmaulHusna = "assets/vectors/esmaul_husna.svg";
 const String kiCardImage = "assets/vectors/card_image.svg";
 const String kiReadme = "assets/vectors/readme.svg";
 const String kiAyahFrame = "assets/vectors/ayah_frame.svg";
+
+const String kiQuran2 = "assets/vectors/quran2.svg";
+const String kiBismillah = "assets/vectors/bismillah.svg";
+
+const String kiShare = "assets/vectors/share.svg";
+const String kiPlay = "assets/vectors/play.svg";
+const String kiBookmarkUnchecked = "assets/vectors/bookmark_unchecked.svg";
+const String kiBookmarkChecked = "assets/vectors/bookmark_checked.svg";

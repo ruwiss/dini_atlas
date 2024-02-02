@@ -1,6 +1,7 @@
 import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/ui/views/home/home_view.dart';
 import 'package:dini_atlas/ui/views/startup/startup_view.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
@@ -13,6 +14,7 @@ import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
+import 'package:dini_atlas/ui/views/quran/quran_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -20,6 +22,10 @@ import 'package:dini_atlas/services/remote/quran_service.dart';
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
     MaterialRoute(page: NoInternetView),
+    CustomRoute(
+      page: QuranView,
+      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+    ),
 // @stacked-route
   ],
   dependencies: [

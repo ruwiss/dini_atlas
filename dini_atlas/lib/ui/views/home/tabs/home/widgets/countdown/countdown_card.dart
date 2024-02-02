@@ -115,7 +115,7 @@ class CountdownCard extends StatelessWidget {
           child: BlendMask(
             opacity: .1,
             blendMode: BlendMode.luminosity,
-            child: Image.asset(kiMosque),
+            child: Image.asset(kiMosque, fit: BoxFit.cover),
           ),
         )
       ],

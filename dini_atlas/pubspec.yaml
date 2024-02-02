@@ -37,6 +37,10 @@ dev_dependencies:
   mockito: ^5.4.1
   stacked_generator: ^1.5.1
 
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/splash_logo.png
+
 flutter:
   uses-material-design: true
 

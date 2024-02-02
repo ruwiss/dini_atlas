@@ -8,10 +8,11 @@ const Color kcPrimaryColorDark = Color(0xFF240F4F);
 const Color kcOnBackgroundColor = Color(0xFF8789A3);
 
 const Color kcShadowColor = Color(0xFFBAB0CE);
-final Color kcDividerColor = const Color(0xFFBBC4CE).withOpacity(.35);
+const Color kcDividerColor = Color(0x59BBC4CE);
 
 const Color kcGrayColor = Color(0xFF8789A3);
-final Color kcGrayColorLight = const Color(0xFFF2F2F3).withOpacity(.5);
+const Color kcGrayColorMedium = Color(0x0D121931);
+const Color kcGrayColorLight = Color(0x0DF2F2F3);
 const Color kcGrayColorLightSoft = Color(0xFFF9F9F9);
 const Color kcGrayColorSoft = Color(0xFFCBCBCB);
 const Color kcBlueGrayColor = Color(0xFFEDF3F9);

@@ -1,29 +1,26 @@
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class QuranTabButtons extends StatelessWidget {
   const QuranTabButtons({
     super.key,
     this.onIndexChanged,
-    required this.currentIndex,
+    required this.quranTab,
   });
   final Function(int id)? onIndexChanged;
-  final int currentIndex;
+  final QuranTabs quranTab;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _tabButton(id: 0, title: "Sûre"),
-        _tabButton(id: 1, title: "Sayfa"),
-        _tabButton(id: 2, title: "Takipli"),
-      ],
+      children: List.generate(QuranTabs.values.length, (i) => _tabButton(i)),
     );
   }
 
-  Widget _tabButton({required int id, required String title}) {
-    final bool isActive = currentIndex == id;
+  Widget _tabButton(int id) {
+    final bool isActive = quranTab.id == id;
     return InkWell(
       onTap: () => onIndexChanged?.call(id),
       splashColor: kcPurpleColorLight.withOpacity(.3),
@@ -33,7 +30,7 @@ class QuranTabButtons extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 14),
             child: Text(
-              title,
+              QuranTabs.values[id].name,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

@@ -1,23 +1,22 @@
-import 'package:dini_atlas/models/quran/sura_model.dart';
+import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
+import 'package:dini_atlas/models/quran/sura_info.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class QuranSurahList extends StatelessWidget {
-  const QuranSurahList({
-    super.key,
-    required this.sura,
-    required this.currentIndex,
-    this.scrollController
-  });
-  final List<SuraModel> sura;
-  final int currentIndex;
+  const QuranSurahList(
+      {super.key,
+      required this.sura,
+      required this.currentTab,
+      this.scrollController});
+  final List<SuraInfo> sura;
+  final QuranTabs currentTab;
   final ScrollController? scrollController;
-
-  bool get _isSure => currentIndex == 0;
-  bool get _isSayfa => currentIndex == 1;
-  bool get _isTakipli => currentIndex == 2;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class QuranSurahList extends StatelessWidget {
         controller: scrollController,
         itemCount: sura.length,
         itemBuilder: (context, index) {
-          final SuraModel item = sura[index];
+          final SuraInfo item = sura[index];
           return _surahItem(item: item, hideDivider: index == sura.length - 1);
         },
       ),
@@ -40,9 +39,10 @@ class QuranSurahList extends StatelessWidget {
     fontWeight: FontWeight.w500,
   );
 
-  Widget _surahItem({required SuraModel item, bool hideDivider = false}) {
+  Widget _surahItem({required SuraInfo item, bool hideDivider = false}) {
     return InkWell(
-      onTap: () => print(""),
+      onTap: () => locator<NavigationService>()
+          .navigateToQuranView(currentTab: currentTab, sura: item),
       splashFactory: NoSplash.splashFactory,
       child: Column(
         children: [
@@ -71,9 +71,10 @@ class QuranSurahList extends StatelessWidget {
     );
   }
 
-  Text _suraTextView(SuraModel item) {
-    return Text(_isSayfa ? "Sayfa ${item.page}" : item.nameArabic,
-        style: _isSayfa
+  Text _suraTextView(SuraInfo item) {
+    return Text(
+        currentTab == QuranTabs.page ? "Sayfa ${item.page}" : item.nameArabic,
+        style: currentTab == QuranTabs.page
             ? const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -87,7 +88,7 @@ class QuranSurahList extends StatelessWidget {
               ));
   }
 
-  Row _suraInfoView(SuraModel item) {
+  Row _suraInfoView(SuraInfo item) {
     return Row(
       children: [
         Text(item.location, style: _surahItemSubStyle),
@@ -103,7 +104,7 @@ class QuranSurahList extends StatelessWidget {
     );
   }
 
-  Row _suraNameView(SuraModel item) {
+  Row _suraNameView(SuraInfo item) {
     return Row(
       children: [
         Text(
@@ -114,7 +115,7 @@ class QuranSurahList extends StatelessWidget {
             color: kcPrimaryColorDark,
           ),
         ),
-        if (_isTakipli) // takipli kuran
+        if (currentTab == QuranTabs.following) // takipli kuran
           const Padding(
             padding: EdgeInsets.only(left: 5),
             child: Text(
@@ -129,7 +130,7 @@ class QuranSurahList extends StatelessWidget {
     );
   }
 
-  Stack _suraNumberView(SuraModel item) {
+  Stack _suraNumberView(SuraInfo item) {
     return Stack(
       alignment: Alignment.center,
       children: [

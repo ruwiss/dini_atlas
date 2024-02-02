@@ -38,7 +38,7 @@ class QuranTab extends StackedView<QuranTabViewModel> {
                     const QuranHeaderCard(),
                     // Sure listesi filtreleme butonları
                     QuranTabButtons(
-                      currentIndex: viewModel.currentIndex,
+                      quranTab: viewModel.currentTab,
                       onIndexChanged: (id) {
                         viewModel.setIndex(id);
                         _scrollTop();
@@ -46,12 +46,12 @@ class QuranTab extends StackedView<QuranTabViewModel> {
                     ),
                     verticalSpaceMedium,
                     viewModel.isBusy
-                        ? const CircularProgressIndicator()
+                        ? const CircularProgressIndicator(strokeWidth: 3.3)
                         : viewModel.hasError
                             ? Center(child: Text(viewModel.modelError))
                             : QuranSurahList(
                                 sura: viewModel.suraList!,
-                                currentIndex: viewModel.currentIndex,
+                                currentTab: viewModel.currentTab,
                                 scrollController: _scrollController,
                               ),
                   ],

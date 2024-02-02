@@ -11,6 +11,7 @@ import 'package:dini_atlas/models/location_api/country.dart' as _i12;
 import 'package:dini_atlas/models/location_api/state.dart' as _i14;
 import 'package:dini_atlas/models/prayer/prayer_time.dart' as _i21;
 import 'package:dini_atlas/models/prayer/prayer_times.dart' as _i18;
+import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i9;
@@ -1055,4 +1056,36 @@ class MockPrayerTimesService extends _i1.Mock
 /// A class which mocks [QuranService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockQuranService extends _i1.Mock implements _i22.QuranService {}
+class MockQuranService extends _i1.Mock implements _i22.QuranService {
+  @override
+  _i7.Future<_i20.Either<List<_i23.SuraInfo>, _i22.QuranException>>
+      getSuraList() => (super.noSuchMethod(
+            Invocation.method(
+              #getSuraList,
+              [],
+            ),
+            returnValue: _i7.Future<
+                    _i20
+                    .Either<List<_i23.SuraInfo>, _i22.QuranException>>.value(
+                _i5.dummyValue<
+                    _i20.Either<List<_i23.SuraInfo>, _i22.QuranException>>(
+              this,
+              Invocation.method(
+                #getSuraList,
+                [],
+              ),
+            )),
+            returnValueForMissingStub: _i7.Future<
+                    _i20
+                    .Either<List<_i23.SuraInfo>, _i22.QuranException>>.value(
+                _i5.dummyValue<
+                    _i20.Either<List<_i23.SuraInfo>, _i22.QuranException>>(
+              this,
+              Invocation.method(
+                #getSuraList,
+                [],
+              ),
+            )),
+          ) as _i7
+              .Future<_i20.Either<List<_i23.SuraInfo>, _i22.QuranException>>);
+}

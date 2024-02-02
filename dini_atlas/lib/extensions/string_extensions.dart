@@ -18,4 +18,16 @@ extension StringTimeExtensions on String {
     if (isEmpty) return this;
     return this[0].toUpperCase() + substring(1);
   }
+
+  /// Arapça okunuştaki harfleri düzelt
+  String fixLatinArabicLetters() {
+    return replaceAll("ḥ", "h")
+        .replaceAll("ḫ", "h")
+        .replaceAll("ṣ", "s")
+        .replaceAll("ṭ", "t")
+        .replaceAll("ḳ", "k")
+        .replaceAll("ẕ", "z")
+        .replaceAll("ḍ", "d")
+        .replaceAll("ŝ", "s");
+  }
 }
