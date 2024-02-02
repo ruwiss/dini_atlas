@@ -3,6 +3,7 @@ import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class QuranViewModel extends BaseViewModel {
   final _quranService = locator<QuranService>();
@@ -26,4 +27,14 @@ class QuranViewModel extends BaseViewModel {
   }
 
   void onSettingsTap() {}
+
+  void showSuraInfo() {
+    final SuraDetailedInfo info = _ayahList!.sure;
+    locator<BottomSheetService>().showBottomSheet(
+      title: info.isim,
+      description:
+          "${info.aciklama} Sure ${info.sayfa}. sayfada yer almaktadır.",
+      confirmButtonTitle: "Kapat",
+    );
+  }
 }

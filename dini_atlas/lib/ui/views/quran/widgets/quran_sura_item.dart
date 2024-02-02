@@ -70,8 +70,11 @@ class QuranSuraItem extends StatelessWidget {
   }
 
   Widget _suraArabic() {
+    const String bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
+    String text = ayahModel.textAr.replaceAll("۞", "");
+    if (text.startsWith(bismillah)) text = text.replaceAll(bismillah, "");
     return Text(
-      ayahModel.textAr.replaceAll("۞", ""),
+      text,
       textAlign: TextAlign.end,
       style: _suraTextStyle.copyWith(
         fontFamily: "Amiri",

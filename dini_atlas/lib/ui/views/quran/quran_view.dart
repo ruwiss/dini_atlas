@@ -28,6 +28,10 @@ class QuranView extends StackedView<QuranViewModel> {
         title: sura.name,
         actions: [
           IconButton(
+            onPressed: viewModel.showSuraInfo,
+            icon: const Icon(Icons.info_outline),
+          ),
+          IconButton(
             onPressed: viewModel.onSettingsTap,
             icon: SvgPicture.asset(kiSettings),
           )
