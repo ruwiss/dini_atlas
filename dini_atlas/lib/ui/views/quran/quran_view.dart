@@ -63,12 +63,12 @@ class QuranView extends StackedView<QuranViewModel> {
         itemCount: ayahList.ayetler.length,
         itemBuilder: (context, index) {
           return Column(
+            key: GlobalObjectKey(ayahList.ayetler[index].ayet),
             children: [
               if (index == 0) QuranHeader(sura: ayahList.sure),
               QuranSuraItem(
+                viewModel: viewModel,
                 ayahModel: ayahList.ayetler[index],
-                suraSetting: viewModel.userSettings.suraSetting,
-                playerAvailable: viewModel.quranReciters.isNotEmpty,
               ),
 
               // Daha fazla yükleme işlemindeyse indicator ekle

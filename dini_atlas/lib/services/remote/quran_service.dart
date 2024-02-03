@@ -1,7 +1,9 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/models/quran/quran_reciter.dart';
+import 'package:dini_atlas/models/quran/sura_audio.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
+import 'package:dini_atlas/models/quran/sura_player.dart';
 import 'package:fpdart/fpdart.dart';
 import 'dio_service.dart';
 
@@ -13,6 +15,9 @@ class QuranException implements Exception {
 class QuranService {
   final _dio = locator<DioService>();
   List<QuranReciter>? _quranReciters;
+
+  QuranReciter? _currentAudioReciter;
+  SuraAudio? _suraAudio;
 
   final String _sura = "/kuran";
   final String _suras = "/kuran/sureler";
@@ -88,6 +93,59 @@ class QuranService {
       return Left(quranReciters);
     } catch (e) {
       return Right(QuranException("Okuyucu listesi alınırken sorun oluştu $e"));
+    }
+  }
+
+  Future<Either<SuraAudio, QuranException>> getSuraAudio(
+      QuranReciter reciter) async {
+    if (reciter == _currentAudioReciter) return Left(_suraAudio!);
+    try {
+      final response = await _dio.request(reciter.reciterUrl);
+
+      // Cevap yoksa veya sunucu hata gönderdiyse
+      if (response == null || response.statusCode != 200) {
+        return Right(QuranException(response?.statusMessage ?? "Hata"));
+      }
+
+      final data = response.data as Map<String, dynamic>;
+
+      // Nesne oluştur
+      _suraAudio = SuraAudio.fromJson(data);
+      _currentAudioReciter = reciter;
+
+      return Left(_suraAudio!);
+    } catch (e) {
+      return Right(
+          QuranException("Sure audio listesi alınırken sorun oluştu $e"));
+    }
+  }
+
+  SuraPlayer? _currentSuraPlayerModel;
+  String? _currentPlayerUrl;
+
+  Future<Either<SuraPlayer, QuranException>> getSuraPlayer(String url) async {
+    if (_currentSuraPlayerModel != null && _currentPlayerUrl == url) {
+      return Left(_currentSuraPlayerModel!);
+    }
+
+    try {
+      final response = await _dio.request(url);
+
+      // Cevap yoksa veya sunucu hata gönderdiyse
+      if (response == null || response.statusCode != 200) {
+        return Right(QuranException(response?.statusMessage ?? "Hata"));
+      }
+
+      final data = response.data as Map<String, dynamic>;
+
+      // Nesne oluştur
+      _currentSuraPlayerModel = SuraPlayer.fromJson(data);
+      _currentPlayerUrl = url;
+
+      return Left(_currentSuraPlayerModel!);
+    }
+    catch (e) {
+      return Right(QuranException("Sûre audio listesi alınırken sorun oluştu $e"));
     }
   }
 }

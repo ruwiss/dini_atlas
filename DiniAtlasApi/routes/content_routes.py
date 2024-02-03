@@ -162,14 +162,14 @@ def kuran_okuyucusu(server, server_folder, id):
         try:
             sure_list.append(
                 {
-                    "id": str(int(mp3.split(".")[0])),
+                    "id": int(mp3.split(".")[0]),
                     "url": f"/kuran/ayet_takibi/{server}/{server_folder}/{id}/{str(int(mp3.split('.')[0]))}",
                 }
             )
         except:
             pass
 
-    return jsonify(sure_list)
+    return jsonify({"okuyucuId": id, "liste": sure_list})
 
 
 @app.route("/kuran/ayet_takibi/<server>/<server_folder>/<int:id>/<int:sure>")

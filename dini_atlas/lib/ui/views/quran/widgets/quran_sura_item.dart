@@ -1,23 +1,19 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
-import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/quran/quran_viewmodel.dart';
 import 'package:dini_atlas/ui/widgets/shareable_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
 
 class QuranSuraItem extends StatefulWidget {
-  const QuranSuraItem({
-    super.key,
-    required this.ayahModel,
-    required this.playerAvailable,
-    required this.suraSetting,
-  });
+  const QuranSuraItem(
+      {super.key, required this.viewModel, required this.ayahModel});
+  final QuranViewModel viewModel;
   final AyahModel ayahModel;
-  final bool playerAvailable;
-  final SuraSetting suraSetting;
 
   @override
   State<QuranSuraItem> createState() => _QuranSuraItemState();
@@ -25,6 +21,22 @@ class QuranSuraItem extends StatefulWidget {
 
 class _QuranSuraItemState extends State<QuranSuraItem> {
   GlobalKey? _suraKey;
+
+  void _shareAyah() async {
+    final bytes = await shareViewAsImage(_suraKey);
+    Share.shareXFiles([
+      XFile.fromData(bytes!, mimeType: "image/png", name: widget.ayahModel.text)
+    ]);
+  }
+
+  void _playSura() {
+    if (widget.viewModel.quranReciters.isEmpty) return;
+    widget.viewModel.playSura(widget.ayahModel);
+  }
+
+  void _pauseSura() {
+    widget.viewModel.pauseAudioPlayer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +69,7 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
   }
 
   Widget suraTextViews() {
+    final suraSetting = widget.viewModel.userSettings.suraSetting;
     return ShareableView(
       builder: (key) {
         _suraKey = key;
@@ -64,22 +77,19 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Arapça Kısım
-            if (widget.suraSetting.showArabicText) ...[
+            if (suraSetting.showArabicText) ...[
               verticalSpace(24),
               _suraArabic()
             ],
 
             // Türkçe Okunuş
-            if (widget.suraSetting.showTurkishText) ...[
+            if (suraSetting.showTurkishText) ...[
               verticalSpace(18),
               _suraTurkish()
             ],
 
             // Meal Kısmı
-            if (widget.suraSetting.showMeaningText) ...[
-              verticalSpace(8),
-              _suraMeal()
-            ],
+            if (suraSetting.showMeaningText) ...[verticalSpace(8), _suraMeal()],
             verticalSpace(18),
           ],
         );
@@ -127,18 +137,11 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
   Row _actionButtons() {
     return Row(
       children: [
-        IconButton(
-            onPressed: () async {
-              final bytes = await shareViewAsImage(_suraKey);
-              Share.shareXFiles([
-                XFile.fromData(bytes!,
-                    mimeType: "image/png", name: widget.ayahModel.text)
-              ]);
-            },
-            icon: SvgPicture.asset(kiShare)),
-        IconButton(
-            onPressed: !widget.playerAvailable ? null : () {},
-            icon: SvgPicture.asset(kiPlay)),
+        IconButton(onPressed: _shareAyah, icon: SvgPicture.asset(kiShare)),
+        widget.viewModel.currentPlayerState == PlayerState.playing &&
+                widget.viewModel.playingAyahId == widget.ayahModel.ayet
+            ? IconButton(onPressed: _pauseSura, icon: SvgPicture.asset(kiPause))
+            : IconButton(onPressed: _playSura, icon: SvgPicture.asset(kiPlay)),
         IconButton(
             onPressed: () {}, icon: SvgPicture.asset(kiBookmarkUnchecked))
       ],
