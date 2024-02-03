@@ -3,10 +3,12 @@ import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/widgets/shareable_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 
-class QuranSuraItem extends StatelessWidget {
+class QuranSuraItem extends StatefulWidget {
   const QuranSuraItem({
     super.key,
     required this.ayahModel,
@@ -16,6 +18,13 @@ class QuranSuraItem extends StatelessWidget {
   final AyahModel ayahModel;
   final bool playerAvailable;
   final SuraSetting suraSetting;
+
+  @override
+  State<QuranSuraItem> createState() => _QuranSuraItemState();
+}
+
+class _QuranSuraItemState extends State<QuranSuraItem> {
+  GlobalKey? _suraKey;
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +49,41 @@ class QuranSuraItem extends StatelessWidget {
               ],
             ),
           ),
-          // Arapça Kısım
-          if (suraSetting.showArabicText) ...[verticalSpace(24), _suraArabic()],
-
-          // Türkçe Okunuş
-          if (suraSetting.showTurkishText) ...[
-            verticalSpace(18),
-            _suraTurkish()
-          ],
-
-          // Meal Kısmı
-          if (suraSetting.showMeaningText) ...[verticalSpace(8), _suraMeal()],
-          verticalSpace(18),
+          suraTextViews(),
           const Divider()
         ],
       ),
+    );
+  }
+
+  Widget suraTextViews() {
+    return ShareableView(
+      builder: (key) {
+        _suraKey = key;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Arapça Kısım
+            if (widget.suraSetting.showArabicText) ...[
+              verticalSpace(24),
+              _suraArabic()
+            ],
+
+            // Türkçe Okunuş
+            if (widget.suraSetting.showTurkishText) ...[
+              verticalSpace(18),
+              _suraTurkish()
+            ],
+
+            // Meal Kısmı
+            if (widget.suraSetting.showMeaningText) ...[
+              verticalSpace(8),
+              _suraMeal()
+            ],
+            verticalSpace(18),
+          ],
+        );
+      },
     );
   }
 
@@ -65,21 +94,21 @@ class QuranSuraItem extends StatelessWidget {
 
   Widget _suraMeal() {
     return Text(
-      ayahModel.text,
+      widget.ayahModel.text,
       style: _suraTextStyle,
     );
   }
 
   Widget _suraTurkish() {
     return Text(
-      ayahModel.textOkunus.fixLatinArabicLetters(),
+      widget.ayahModel.textOkunus.fixLatinArabicLetters(),
       style: _suraTextStyle.copyWith(fontWeight: FontWeight.w300),
     );
   }
 
   Widget _suraArabic() {
     const String bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
-    String text = ayahModel.textAr.replaceAll("۞", "");
+    String text = widget.ayahModel.textAr.replaceAll("۞", "");
     // İlk ayette besmele varsa, sil
     if (text.startsWith(bismillah) && text.length > bismillah.length) {
       text = text.replaceAll(bismillah, "");
@@ -98,9 +127,17 @@ class QuranSuraItem extends StatelessWidget {
   Row _actionButtons() {
     return Row(
       children: [
-        IconButton(onPressed: () {}, icon: SvgPicture.asset(kiShare)),
         IconButton(
-            onPressed: !playerAvailable ? null : () {},
+            onPressed: () async {
+              final bytes = await shareViewAsImage(_suraKey);
+              Share.shareXFiles([
+                XFile.fromData(bytes!,
+                    mimeType: "image/png", name: widget.ayahModel.text)
+              ]);
+            },
+            icon: SvgPicture.asset(kiShare)),
+        IconButton(
+            onPressed: !widget.playerAvailable ? null : () {},
             icon: SvgPicture.asset(kiPlay)),
         IconButton(
             onPressed: () {}, icon: SvgPicture.asset(kiBookmarkUnchecked))
@@ -118,7 +155,7 @@ class QuranSuraItem extends StatelessWidget {
         color: kcPrimaryColorLight,
       ),
       child: Text(
-        "${ayahModel.ayet}",
+        "${widget.ayahModel.ayet}",
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w500,
