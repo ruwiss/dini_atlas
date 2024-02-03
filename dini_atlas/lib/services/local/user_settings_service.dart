@@ -140,6 +140,20 @@ class UserSettingsService {
     }
   }
 
+  Future<UserSettings> setSuraSettings(SuraSetting suraSettings) async {
+    try {
+      final userSettings = await getUserSettings();
+      userSettings!.suraSetting = suraSettings;
+      this.userSettings = userSettings;
+      // Veriyi kaydet
+      await _db.writeTxn(() async => await _db.userSettings.put(userSettings));
+      return userSettings;
+    } catch (e) {
+      throw UserSettingsException(
+          "Sûre ayarları kaydedilirken sorun oluştu $e");
+    }
+  }
+
   // Background Task'da kullanmak üzere bildirim ayarlarını SharedPreferences'a kaydet
   void setPrayerNotiSettingsForBackgroundTask(
       List<PrayerNotiSettings> settingsList) async {

@@ -67,6 +67,7 @@ class QuranView extends StackedView<QuranViewModel> {
               if (index == 0) QuranHeader(sura: ayahList.sure),
               QuranSuraItem(
                 ayahModel: ayahList.ayetler[index],
+                suraSetting: viewModel.userSettings.suraSetting,
                 playerAvailable: viewModel.quranReciters.isNotEmpty,
               ),
 

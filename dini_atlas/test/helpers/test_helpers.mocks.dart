@@ -11,6 +11,8 @@ import 'package:dini_atlas/models/location_api/country.dart' as _i12;
 import 'package:dini_atlas/models/location_api/state.dart' as _i14;
 import 'package:dini_atlas/models/prayer/prayer_time.dart' as _i21;
 import 'package:dini_atlas/models/prayer/prayer_times.dart' as _i18;
+import 'package:dini_atlas/models/quran/ayah_list.dart' as _i24;
+import 'package:dini_atlas/models/quran/quran_reciter.dart' as _i25;
 import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
@@ -1088,4 +1090,80 @@ class MockQuranService extends _i1.Mock implements _i22.QuranService {
             )),
           ) as _i7
               .Future<_i20.Either<List<_i23.SuraInfo>, _i22.QuranException>>);
+
+  @override
+  _i7.Future<_i20.Either<_i24.AyahList, _i22.QuranException>> getSuraAyahList({
+    required int? suraId,
+    int? ayah,
+    int? offset = 0,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSuraAyahList,
+          [],
+          {
+            #suraId: suraId,
+            #ayah: ayah,
+            #offset: offset,
+          },
+        ),
+        returnValue:
+            _i7.Future<_i20.Either<_i24.AyahList, _i22.QuranException>>.value(
+                _i5.dummyValue<_i20.Either<_i24.AyahList, _i22.QuranException>>(
+          this,
+          Invocation.method(
+            #getSuraAyahList,
+            [],
+            {
+              #suraId: suraId,
+              #ayah: ayah,
+              #offset: offset,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i7.Future<_i20.Either<_i24.AyahList, _i22.QuranException>>.value(
+                _i5.dummyValue<_i20.Either<_i24.AyahList, _i22.QuranException>>(
+          this,
+          Invocation.method(
+            #getSuraAyahList,
+            [],
+            {
+              #suraId: suraId,
+              #ayah: ayah,
+              #offset: offset,
+            },
+          ),
+        )),
+      ) as _i7.Future<_i20.Either<_i24.AyahList, _i22.QuranException>>);
+
+  @override
+  _i7.Future<_i20.Either<List<_i25.QuranReciter>, _i22.QuranException>>
+      getQuranReciters() => (super.noSuchMethod(
+            Invocation.method(
+              #getQuranReciters,
+              [],
+            ),
+            returnValue: _i7.Future<
+                _i20.Either<List<_i25.QuranReciter>,
+                    _i22.QuranException>>.value(_i5.dummyValue<
+                _i20.Either<List<_i25.QuranReciter>, _i22.QuranException>>(
+              this,
+              Invocation.method(
+                #getQuranReciters,
+                [],
+              ),
+            )),
+            returnValueForMissingStub: _i7.Future<
+                _i20.Either<List<_i25.QuranReciter>,
+                    _i22.QuranException>>.value(_i5.dummyValue<
+                _i20.Either<List<_i25.QuranReciter>, _i22.QuranException>>(
+              this,
+              Invocation.method(
+                #getQuranReciters,
+                [],
+              ),
+            )),
+          ) as _i7.Future<
+              _i20.Either<List<_i25.QuranReciter>, _i22.QuranException>>);
 }

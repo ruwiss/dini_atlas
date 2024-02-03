@@ -3,6 +3,7 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/models/quran/quran_reciter.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_quran_dialog.dart';
@@ -12,9 +13,9 @@ import 'package:stacked_services/stacked_services.dart';
 class QuranViewModel extends BaseViewModel {
   final _quranService = locator<QuranService>();
   final _userSettingsService = locator<UserSettingsService>();
+  late UserSettings userSettings;
   AyahList? _ayahList;
   List<QuranReciter> _quranReciters = [];
-  int _currentReciterId = -1;
   int _currentOffset = 0;
   bool _loadMoreStatus = false;
   bool _endOfContent = false;
@@ -25,7 +26,8 @@ class QuranViewModel extends BaseViewModel {
   QuranReciter quranReciterById(int id) =>
       quranReciters.singleWhere((e) => e.id == id);
 
-  void init(SuraInfo sura) {
+  void init(SuraInfo sura) async {
+    await runBusyFuture(getUseSettings());
     runBusyFuture(getAyahList(suraId: sura.suraId));
     runBusyFuture(_getQuranRecitersList());
   }
@@ -34,6 +36,10 @@ class QuranViewModel extends BaseViewModel {
     _loadMoreStatus = status;
     notifyListeners();
   }
+
+  Future<void> getUseSettings() async => await _userSettingsService
+      .getUserSettings()
+      .then((value) => userSettings = value!);
 
   Future<void> getAyahList({required int suraId, bool loadMore = false}) async {
     if (loadMore) {
@@ -76,12 +82,11 @@ class QuranViewModel extends BaseViewModel {
     }, (error) {
       setError(error.message);
     });
-    // Kullanıcı ayarlarından kayıtlı reciterId'i getir
-    final userSettings = await _userSettingsService.getUserSettings();
-    _currentReciterId = userSettings!.quranReciterId;
-    if (_currentReciterId == -1) {
-      await _userSettingsService.setQuranReciter(quranReciters.first.id);
-      _currentReciterId = quranReciters.first.id;
+    if (userSettings.quranReciterId == -1) {
+      await _userSettingsService
+          .setQuranReciter(quranReciters.first.id)
+          .then((value) => userSettings = value);
+      notifyListeners();
     }
   }
 
@@ -102,9 +107,18 @@ class QuranViewModel extends BaseViewModel {
       title: "Sûre",
       data: SettingsQuranDialog(
         quranReciters: quranReciters,
-        currentReciterId: _currentReciterId,
+        suraSetting: userSettings.suraSetting.copyWith(),
+        currentReciterId: userSettings.quranReciterId,
         onSelectedReciter: (reciter) {
-          _userSettingsService.setQuranReciter(reciter.id);
+          _userSettingsService
+              .setQuranReciter(reciter.id)
+              .then((value) => userSettings = value);
+        },
+        onSuraSettingChanged: (suraSetting) {
+          _userSettingsService
+              .setSuraSettings(suraSetting)
+              .then((value) => userSettings = value);
+          notifyListeners();
         },
       ),
     );

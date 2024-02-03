@@ -1,15 +1,21 @@
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class QuranSuraItem extends StatelessWidget {
-  const QuranSuraItem(
-      {super.key, required this.ayahModel, required this.playerAvailable});
+  const QuranSuraItem({
+    super.key,
+    required this.ayahModel,
+    required this.playerAvailable,
+    required this.suraSetting,
+  });
   final AyahModel ayahModel;
   final bool playerAvailable;
+  final SuraSetting suraSetting;
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +40,17 @@ class QuranSuraItem extends StatelessWidget {
               ],
             ),
           ),
-          verticalSpace(24),
           // Arapça Kısım
-          _suraArabic(),
-          verticalSpace(18),
+          if (suraSetting.showArabicText) ...[verticalSpace(24), _suraArabic()],
+
           // Türkçe Okunuş
-          _suraTurkish(),
-          verticalSpace(8),
+          if (suraSetting.showTurkishText) ...[
+            verticalSpace(18),
+            _suraTurkish()
+          ],
+
           // Meal Kısmı
-          _suraMeal(),
+          if (suraSetting.showMeaningText) ...[verticalSpace(8), _suraMeal()],
           verticalSpace(18),
           const Divider()
         ],

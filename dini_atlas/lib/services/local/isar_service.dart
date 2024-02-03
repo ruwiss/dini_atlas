@@ -13,17 +13,17 @@ class IsarService {
       [UserSettingsSchema, PrayerTimesSchema, PrayerNotiSettingsSchema],
       directory: dir.path,
     );
-    if (kDebugMode) print("Isar Servisi Başlatıldı");
+    debugPrint("Isar Servisi Başlatıldı");
 
     // Vakit bildirim varsayılan ayarları yoksa oluştur.
-    final isEmptyPrayerNoti =
-        (await isar.prayerNotiSettings.where().findAll()).isEmpty;
-    if (isEmptyPrayerNoti) await createDefaultPrayerNotiSettings();
 
-    if (kDebugMode) print("Varsayılan vakit bildirim ayarları kaydedildi");
+    if ((await isar.prayerNotiSettings.where().findAll()).isEmpty) {
+      await createDefaultPrayerNotiSettings();
+    }
   }
 
   Future<void> createDefaultPrayerNotiSettings() async {
+    debugPrint("Varsayılan vakit bildirim ayarları kaydedildi");
     for (var prayerType in PrayerType.values) {
       if (prayerType == PrayerType.all) continue;
       final value = PrayerNotiSettings()..name = prayerType.text;

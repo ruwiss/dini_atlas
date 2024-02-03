@@ -49,6 +49,12 @@ const UserSettingsSchema = CollectionSchema(
       name: r'state',
       type: IsarType.object,
       target: r'StateModel',
+    ),
+    r'suraSetting': PropertySchema(
+      id: 6,
+      name: r'suraSetting',
+      type: IsarType.object,
+      target: r'SuraSetting',
     )
   },
   estimateSize: _userSettingsEstimateSize,
@@ -61,7 +67,8 @@ const UserSettingsSchema = CollectionSchema(
   embeddedSchemas: {
     r'Country': CountrySchema,
     r'City': CitySchema,
-    r'StateModel': StateModelSchema
+    r'StateModel': StateModelSchema,
+    r'SuraSetting': SuraSettingSchema
   },
   getId: _userSettingsGetId,
   getLinks: _userSettingsGetLinks,
@@ -98,6 +105,9 @@ int _userSettingsEstimateSize(
               value, allOffsets[StateModel]!, allOffsets);
     }
   }
+  bytesCount += 3 +
+      SuraSettingSchema.estimateSize(
+          object.suraSetting, allOffsets[SuraSetting]!, allOffsets);
   return bytesCount;
 }
 
@@ -128,6 +138,12 @@ void _userSettingsSerialize(
     StateModelSchema.serialize,
     object.state,
   );
+  writer.writeObject<SuraSetting>(
+    offsets[6],
+    allOffsets,
+    SuraSettingSchema.serialize,
+    object.suraSetting,
+  );
 }
 
 UserSettings _userSettingsDeserialize(
@@ -156,6 +172,12 @@ UserSettings _userSettingsDeserialize(
     StateModelSchema.deserialize,
     allOffsets,
   );
+  object.suraSetting = reader.readObjectOrNull<SuraSetting>(
+        offsets[6],
+        SuraSettingSchema.deserialize,
+        allOffsets,
+      ) ??
+      SuraSetting();
   return object;
 }
 
@@ -190,6 +212,13 @@ P _userSettingsDeserializeProp<P>(
         StateModelSchema.deserialize,
         allOffsets,
       )) as P;
+    case 6:
+      return (reader.readObjectOrNull<SuraSetting>(
+            offset,
+            SuraSettingSchema.deserialize,
+            allOffsets,
+          ) ??
+          SuraSetting()) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -620,6 +649,13 @@ extension UserSettingsQueryObject
       return query.object(q, r'state');
     });
   }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition> suraSetting(
+      FilterQuery<SuraSetting> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'suraSetting');
+    });
+  }
 }
 
 extension UserSettingsQueryLinks
@@ -791,6 +827,13 @@ extension UserSettingsQueryProperty
   QueryBuilder<UserSettings, StateModel?, QQueryOperations> stateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'state');
+    });
+  }
+
+  QueryBuilder<UserSettings, SuraSetting, QQueryOperations>
+      suraSettingProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'suraSetting');
     });
   }
 }
@@ -1689,3 +1732,142 @@ extension PrayerNotiSettingsQueryProperty
     });
   }
 }
+
+// **************************************************************************
+// IsarEmbeddedGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+const SuraSettingSchema = Schema(
+  name: r'SuraSetting',
+  id: 8751151855999966090,
+  properties: {
+    r'playerAutoChange': PropertySchema(
+      id: 0,
+      name: r'playerAutoChange',
+      type: IsarType.bool,
+    ),
+    r'showArabicText': PropertySchema(
+      id: 1,
+      name: r'showArabicText',
+      type: IsarType.bool,
+    ),
+    r'showMeaningText': PropertySchema(
+      id: 2,
+      name: r'showMeaningText',
+      type: IsarType.bool,
+    ),
+    r'showTurkishText': PropertySchema(
+      id: 3,
+      name: r'showTurkishText',
+      type: IsarType.bool,
+    )
+  },
+  estimateSize: _suraSettingEstimateSize,
+  serialize: _suraSettingSerialize,
+  deserialize: _suraSettingDeserialize,
+  deserializeProp: _suraSettingDeserializeProp,
+);
+
+int _suraSettingEstimateSize(
+  SuraSetting object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  return bytesCount;
+}
+
+void _suraSettingSerialize(
+  SuraSetting object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeBool(offsets[0], object.playerAutoChange);
+  writer.writeBool(offsets[1], object.showArabicText);
+  writer.writeBool(offsets[2], object.showMeaningText);
+  writer.writeBool(offsets[3], object.showTurkishText);
+}
+
+SuraSetting _suraSettingDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = SuraSetting();
+  object.playerAutoChange = reader.readBool(offsets[0]);
+  object.showArabicText = reader.readBool(offsets[1]);
+  object.showMeaningText = reader.readBool(offsets[2]);
+  object.showTurkishText = reader.readBool(offsets[3]);
+  return object;
+}
+
+P _suraSettingDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readBool(offset)) as P;
+    case 1:
+      return (reader.readBool(offset)) as P;
+    case 2:
+      return (reader.readBool(offset)) as P;
+    case 3:
+      return (reader.readBool(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+extension SuraSettingQueryFilter
+    on QueryBuilder<SuraSetting, SuraSetting, QFilterCondition> {
+  QueryBuilder<SuraSetting, SuraSetting, QAfterFilterCondition>
+      playerAutoChangeEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'playerAutoChange',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SuraSetting, SuraSetting, QAfterFilterCondition>
+      showArabicTextEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'showArabicText',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SuraSetting, SuraSetting, QAfterFilterCondition>
+      showMeaningTextEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'showMeaningText',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SuraSetting, SuraSetting, QAfterFilterCondition>
+      showTurkishTextEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'showTurkishText',
+        value: value,
+      ));
+    });
+  }
+}
+
+extension SuraSettingQueryObject
+    on QueryBuilder<SuraSetting, SuraSetting, QFilterCondition> {}

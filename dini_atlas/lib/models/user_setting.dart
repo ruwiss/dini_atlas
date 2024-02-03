@@ -41,6 +41,9 @@ class UserSettings {
   /// Kuran okuyucu id
   int quranReciterId = -1;
 
+  /// Sûre Ayarları
+  SuraSetting suraSetting = SuraSetting();
+
   Map<String, dynamic> jsonValue() => jsonDecode(jsonString);
 }
 
@@ -101,4 +104,32 @@ class PrayerNotiSettings {
         advancedWarningSoundsEnable = json['advancedWarningSoundsEnable'],
         advancedVoiceWarningTime = json['advancedVoiceWarningTime'],
         warningSoundId = json['warningSoundId'];
+}
+
+@embedded
+class SuraSetting {
+  /// Arapça metni göster
+  bool showArabicText = true;
+
+  /// Türkce metni göster
+  bool showTurkishText = true;
+
+  /// Türkçe meali göster
+  bool showMeaningText = true;
+
+  /// Ayet sesli oynatma bitince, diğer ayeti oynat
+  bool playerAutoChange = true;
+
+  SuraSetting copyWith({
+    bool? showArabicText,
+    bool? showTurkishText,
+    bool? showMeaningText,
+    bool? playerAutoChange,
+  }) {
+    return SuraSetting()
+      ..showArabicText = showArabicText ?? this.showArabicText
+      ..showTurkishText = showTurkishText ?? this.showTurkishText
+      ..showMeaningText = showMeaningText ?? this.showMeaningText
+      ..playerAutoChange = playerAutoChange ?? this.playerAutoChange;
+  }
 }
