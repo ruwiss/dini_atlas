@@ -46,6 +46,9 @@ class QuranViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  bool isPlayingAyahId(int ayahId) =>
+      currentPlayerState == PlayerState.playing && playingAyahId == ayahId;
+
   // İlk oynatma için değeri true olarak tut. Oynatma başlayınca false yap
   // Otomatik Oynama Ayarı [kapalı] ise ilk oynatma değeri false olduğunda durdurmak içindir.
   bool _isFirstPlaying = true;
@@ -160,6 +163,7 @@ class QuranViewModel extends BaseViewModel {
   }
 
   void playSura(AyahModel ayahModel) async {
+    if (quranReciters.isEmpty) return;
     _isFirstPlaying = true;
     playingAyahId = ayahModel.ayet; // State'i değiştir
     setBusyForObject(playingAyahId, true);

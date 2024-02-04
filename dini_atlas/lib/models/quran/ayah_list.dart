@@ -20,10 +20,19 @@ class AyahList {
 }
 
 class AyahModel {
+  /// Ayet numarası
   final int ayet;
+
+  /// Sure numarası
   final int sure;
+
+  /// Türkçe meali
   final String text;
+
+  /// Arapça metin
   final String textAr;
+
+  /// Arapça metin Türkçe okunuşu
   final String textOkunus;
 
   AyahModel({

@@ -4,8 +4,8 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
 import 'package:dini_atlas/ui/views/quran/widgets/quran_header.dart';
-import 'package:dini_atlas/ui/views/quran/widgets/quran_sura_item.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
@@ -62,13 +62,22 @@ class QuranView extends StackedView<QuranViewModel> {
         shrinkWrap: true,
         itemCount: ayahList.ayetler.length,
         itemBuilder: (context, index) {
+          final AyahModel ayahModel = ayahList.ayetler[index];
           return Column(
-            key: GlobalObjectKey(ayahList.ayetler[index].ayet),
+            key: GlobalObjectKey(ayahModel.ayet),
             children: [
               if (index == 0) QuranHeader(sura: ayahList.sure),
-              QuranSuraItem(
-                viewModel: viewModel,
-                ayahModel: ayahList.ayetler[index],
+              ContentWidget(
+                number: ayahModel.ayet,
+                text1: ayahModel.textAr,
+                text2: ayahModel.textOkunus,
+                text3: ayahModel.text,
+                onPlay: () => viewModel.playSura(ayahModel),
+                onPause: () => viewModel.pauseAudioPlayer(),
+                isPlaying: viewModel.isPlayingAyahId(ayahModel.ayet),
+                isPlayerLoading: viewModel.busy(viewModel.playingAyahId) &&
+                    viewModel.playingAyahId == ayahModel.ayet,
+                onSave: () {},
               ),
 
               // Daha fazla yükleme işlemindeyse indicator ekle

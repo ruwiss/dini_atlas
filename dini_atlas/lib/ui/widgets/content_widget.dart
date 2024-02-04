@@ -1,41 +1,51 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
-import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
-import 'package:dini_atlas/ui/views/quran/quran_viewmodel.dart';
 import 'package:dini_atlas/ui/widgets/shareable_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
 
-class QuranSuraItem extends StatefulWidget {
-  const QuranSuraItem(
-      {super.key, required this.viewModel, required this.ayahModel});
-  final QuranViewModel viewModel;
-  final AyahModel ayahModel;
+class ContentWidget extends StatefulWidget {
+  const ContentWidget({
+    super.key,
+    required this.number,
+    this.text1,
+    this.text2,
+    this.text3,
+    this.titleText,
+    this.hidePlayButton = false,
+    this.isPlaying = false,
+    this.isPlayerLoading = false,
+    this.onPlay,
+    this.onPause,
+    this.onSave,
+  });
+  final int number;
+  final String? text1;
+  final String? text2;
+  final String? text3;
+  final String? titleText;
+  final bool hidePlayButton;
+  final bool isPlaying;
+  final bool isPlayerLoading;
+  final Function()? onPlay;
+  final Function()? onPause;
+  final Function()? onSave;
 
   @override
-  State<QuranSuraItem> createState() => _QuranSuraItemState();
+  State<ContentWidget> createState() => _QuranSuraItemState();
 }
 
-class _QuranSuraItemState extends State<QuranSuraItem> {
+class _QuranSuraItemState extends State<ContentWidget> {
   GlobalKey? _suraKey;
 
-  void _shareAyah() async {
+  void _shareButton() async {
     final bytes = await shareViewAsImage(_suraKey);
     Share.shareXFiles([
-      XFile.fromData(bytes!, mimeType: "image/png", name: widget.ayahModel.text)
+      XFile.fromData(bytes!,
+          mimeType: "image/png", name: widget.number.toString()),
     ]);
-  }
-
-  void _playSura() {
-    if (widget.viewModel.quranReciters.isEmpty) return;
-    widget.viewModel.playSura(widget.ayahModel);
-  }
-
-  void _pauseSura() {
-    widget.viewModel.pauseAudioPlayer();
   }
 
   @override
@@ -54,22 +64,33 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Ayet Numarası
-                _ayahNumber(),
+                Row(
+                  children: [
+                    // Numara görünümü
+                    _ayahNumber(),
+                    // Başlık metni
+                    if (widget.titleText case final String titleText) ...[
+                      horizontalSpaceSmall,
+                      Text(
+                        titleText,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      )
+                    ]
+                  ],
+                ),
                 // Action Buttons
                 _actionButtons(),
               ],
             ),
           ),
-          suraTextViews(),
+          _textViews(),
           const Divider()
         ],
       ),
     );
   }
 
-  Widget suraTextViews() {
-    final suraSetting = widget.viewModel.userSettings.suraSetting;
+  Widget _textViews() {
     return ShareableView(
       builder: (key) {
         _suraKey = key;
@@ -77,19 +98,13 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Arapça Kısım
-            if (suraSetting.showArabicText) ...[
-              verticalSpace(24),
-              _suraArabic()
-            ],
+            if (widget.text1 != null) ...[verticalSpace(24), _suraArabic()],
 
             // Türkçe Okunuş
-            if (suraSetting.showTurkishText) ...[
-              verticalSpace(18),
-              _suraTurkish()
-            ],
+            if (widget.text2 != null) ...[verticalSpace(18), _suraTurkish()],
 
             // Meal Kısmı
-            if (suraSetting.showMeaningText) ...[verticalSpace(8), _suraMeal()],
+            if (widget.text3 != null) ...[verticalSpace(8), _suraMeal()],
             verticalSpace(18),
           ],
         );
@@ -104,21 +119,21 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
 
   Widget _suraMeal() {
     return Text(
-      widget.ayahModel.text,
+      widget.text3!,
       style: _suraTextStyle,
     );
   }
 
   Widget _suraTurkish() {
     return Text(
-      widget.ayahModel.textOkunus.fixLatinArabicLetters(),
+      widget.text2!.fixLatinArabicLetters(),
       style: _suraTextStyle.copyWith(fontWeight: FontWeight.w300),
     );
   }
 
   Widget _suraArabic() {
     const String bismillah = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
-    String text = widget.ayahModel.textAr.replaceAll("۞", "");
+    String text = widget.text1!.replaceAll("۞", "");
     // İlk ayette besmele varsa, sil
     if (text.startsWith(bismillah) && text.length > bismillah.length) {
       text = text.replaceAll(bismillah, "");
@@ -136,24 +151,25 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
   }
 
   Row _actionButtons() {
-    final int playingAyahId = widget.viewModel.playingAyahId;
-    final int ayet = widget.ayahModel.ayet;
-    final currentPlayerState = widget.viewModel.currentPlayerState;
     return Row(
       children: [
-        IconButton(onPressed: _shareAyah, icon: SvgPicture.asset(kiShare)),
-        // Eğer mevcut ayet oynatılıyorsa, pause ikonu getir
-        currentPlayerState == PlayerState.playing && playingAyahId == ayet
-            ? IconButton(onPressed: _pauseSura, icon: SvgPicture.asset(kiPause))
-            // Eğer mevcut ayet oynatılmıyorsa ancak yükleniyorsa, yükleniyor ikonu getir
-            : widget.viewModel.busy(playingAyahId) && playingAyahId == ayet
-                ? const SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: CircularProgressIndicator(strokeWidth: 3.3))
-                // Eğer mevcut ayet oynatılmıyorsa, play ikonu getir
-                : IconButton(
-                    onPressed: _playSura, icon: SvgPicture.asset(kiPlay)),
+        IconButton(onPressed: _shareButton, icon: SvgPicture.asset(kiShare)),
+        if (!widget.hidePlayButton)
+          // Eğer oynatılıyorsa, pause ikonu getir
+          widget.isPlaying
+              ? IconButton(
+                  onPressed: () => widget.onPause?.call(),
+                  icon: SvgPicture.asset(kiPause))
+              // Eğer mevcut ayet oynatılmıyorsa ancak yükleniyorsa, yükleniyor ikonu getir
+              : widget.isPlayerLoading
+                  ? const SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircularProgressIndicator(strokeWidth: 3.3))
+                  // Eğer mevcut ayet oynatılmıyorsa, play ikonu getir
+                  : IconButton(
+                      onPressed: () => widget.onPlay?.call(),
+                      icon: SvgPicture.asset(kiPlay)),
         IconButton(
             onPressed: () {}, icon: SvgPicture.asset(kiBookmarkUnchecked))
       ],
@@ -170,7 +186,7 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
         color: kcPrimaryColorLight,
       ),
       child: Text(
-        "${widget.ayahModel.ayet}",
+        "${widget.number}",
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w500,
