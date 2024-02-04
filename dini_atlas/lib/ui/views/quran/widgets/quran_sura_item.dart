@@ -129,19 +129,31 @@ class _QuranSuraItemState extends State<QuranSuraItem> {
       style: _suraTextStyle.copyWith(
         fontFamily: "Amiri",
         fontSize: 20,
+        height: 2.3,
         fontWeight: FontWeight.bold,
       ),
     );
   }
 
   Row _actionButtons() {
+    final int playingAyahId = widget.viewModel.playingAyahId;
+    final int ayet = widget.ayahModel.ayet;
+    final currentPlayerState = widget.viewModel.currentPlayerState;
     return Row(
       children: [
         IconButton(onPressed: _shareAyah, icon: SvgPicture.asset(kiShare)),
-        widget.viewModel.currentPlayerState == PlayerState.playing &&
-                widget.viewModel.playingAyahId == widget.ayahModel.ayet
+        // Eğer mevcut ayet oynatılıyorsa, pause ikonu getir
+        currentPlayerState == PlayerState.playing && playingAyahId == ayet
             ? IconButton(onPressed: _pauseSura, icon: SvgPicture.asset(kiPause))
-            : IconButton(onPressed: _playSura, icon: SvgPicture.asset(kiPlay)),
+            // Eğer mevcut ayet oynatılmıyorsa ancak yükleniyorsa, yükleniyor ikonu getir
+            : widget.viewModel.busy(playingAyahId) && playingAyahId == ayet
+                ? const SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: CircularProgressIndicator(strokeWidth: 3.3))
+                // Eğer mevcut ayet oynatılmıyorsa, play ikonu getir
+                : IconButton(
+                    onPressed: _playSura, icon: SvgPicture.asset(kiPlay)),
         IconButton(
             onPressed: () {}, icon: SvgPicture.asset(kiBookmarkUnchecked))
       ],

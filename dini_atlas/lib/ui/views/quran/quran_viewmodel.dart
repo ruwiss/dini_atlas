@@ -41,6 +41,14 @@ class QuranViewModel extends BaseViewModel {
 
   int _playingAyahId = -1;
   int get playingAyahId => _playingAyahId;
+  set playingAyahId(int id) {
+    _playingAyahId = id;
+    notifyListeners();
+  }
+
+  // İlk oynatma için değeri true olarak tut. Oynatma başlayınca false yap
+  // Otomatik Oynama Ayarı [kapalı] ise ilk oynatma değeri false olduğunda durdurmak içindir.
+  bool _isFirstPlaying = true;
 
 // Surenin player url'i ve takip bilgilerini tutar
   SuraPlayer? _suraPlayerModel;
@@ -112,31 +120,49 @@ class QuranViewModel extends BaseViewModel {
   }
 
   void _scrollToAyah(int ayahId) {
-    Scrollable.ensureVisible(GlobalObjectKey(ayahId).currentContext!,
+    final currentContext = GlobalObjectKey(ayahId).currentContext;
+    if (currentContext == null) return;
+    Scrollable.ensureVisible(currentContext,
         duration: const Duration(milliseconds: 300),
         alignment: 0.5,
         curve: Curves.easeInOutCubic);
   }
 
   void _playerListener() async {
+    // Player süresi değişikliklerini dinle
     _player.onPositionChanged.listen((duration) {
       if (_suraPlayerModel == null) return;
+      // Oynatılan sesin ayetini bul
       final ayahItem = _suraPlayerModel!.pages
           .lastWhere((e) => e.startTime <= duration.inMilliseconds);
+      // Farklı bir ayet okunuyorsa state'i güncelle
       if (ayahItem.ayah != _playingAyahId) {
-        _playingAyahId = ayahItem.ayah;
-        notifyListeners();
-        _scrollToAyah(playingAyahId);
+        // Eğer ilk oynatma değilse, otomatik oynatma değeri kapalıysa ve
+        // Sıra diğer ayete gelmişse, oynatıcıyı durdur
+        final bool autoChange = userSettings.suraSetting.playerAutoChange;
+        if (!autoChange && !_isFirstPlaying && _playingAyahId != 0) {
+          pauseAudioPlayer();
+        } else {
+          // State'i sıradaki ayete güncelle
+          _playingAyahId = ayahItem.ayah;
+          notifyListeners();
+          // Oynatılan ayet görünümüne kaydır
+          _scrollToAyah(playingAyahId);
+        }
       }
     });
-
+    // Oynatıcı durumunu dinle (durdu / başladı gibi)
     _player.onPlayerStateChanged.listen((state) {
+      // Durum değişince state'i güncelle
       _currentPlayerState = state;
       notifyListeners();
     });
   }
 
   void playSura(AyahModel ayahModel) async {
+    _isFirstPlaying = true;
+    playingAyahId = ayahModel.ayet; // State'i değiştir
+    setBusyForObject(playingAyahId, true);
     final currentReciterId = _userSettings.quranReciterId;
     final result =
         await _quranService.getSuraAudio(quranReciterById(currentReciterId));
@@ -153,27 +179,33 @@ class QuranViewModel extends BaseViewModel {
 
       await playerResult.fold((l) async {
         _suraPlayerModel = l;
-        _playSuraWithSpesificPosition(ayahModel);
+        await _playSuraWithSpesificPosition(ayahModel);
+        // Oynatma sonrasında otomatik oynatmayı kontrol altında tutmak için
+        _isFirstPlaying = false;
       }, (e) async => debugPrint(e.message));
     }, (e) async => debugPrint(e.message));
+
+    setBusyForObject(playingAyahId, false);
   }
 
-  void _playSuraWithSpesificPosition(AyahModel ayahModel) async {
+  Future<void> _playSuraWithSpesificPosition(AyahModel ayahModel) async {
     if (_suraPlayerModel case final SuraPlayer suraPlayerModel) {
+      // Ayeti bul
       final ayah =
           suraPlayerModel.pages.singleWhere((e) => e.ayah == ayahModel.ayet);
+      // Ayeti player ile oynat
       await _player.play(UrlSource(suraPlayerModel.audio));
+      // Ayet sesin hangi saniyesindeyse oynatıcıyı oraya kaydır
       await _player.seek(Duration(milliseconds: ayah.startTime));
+      // Oynatılan ayet görünümüne kaydır
       _scrollToAyah(ayahModel.ayet);
-      // State'i değiştir
-      _playingAyahId = ayahModel.ayet;
-      notifyListeners();
     }
   }
 
   void pauseAudioPlayer() async {
     if (_player.state == PlayerState.playing) {
       await _player.pause();
+      playingAyahId = -1;
     }
   }
 

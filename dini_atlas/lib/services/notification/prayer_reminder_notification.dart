@@ -37,6 +37,7 @@ class PrayerReminderNotification {
     int? warningSoundId;
 
     // Sessiz Mod durumunu getir
+    // Namazdan 5 dk önce ve 30 dk sonraya kadar
     final bool silentMode =
         await UserSettingsService.getSilentModeSettingForBackgroundTask();
 
@@ -61,13 +62,12 @@ class PrayerReminderNotification {
       final PrayerNotiSettings currentPrayerSetting =
           notiSettings.singleWhere((s) => s.name == e.name);
 
-      warningSoundId = currentPrayerSetting.warningSoundId;
-
       // Eğer bildirim ayarı etkinse vaktinde uyarı yap
       if (currentPrayerSetting.voiceWarningEnable) {
         // Zamanında uyarı
         if (e.timeValue == TimeOfDay.now().toHourMinString()) {
           debugPrint("Namaz vakti bildirim uyarısı");
+          warningSoundId = currentPrayerSetting.warningSoundId;
           value = true;
         }
       }
@@ -85,6 +85,7 @@ class PrayerReminderNotification {
         if (e.timeValue.parseTime().toHourMinString() ==
             editedNotTime.toHourMinString()) {
           advancedVoiceWarningTime = time;
+          warningSoundId = currentPrayerSetting.warningSoundId;
           debugPrint("Namaz vakti bildirim $time dk önceden uyarı");
           value = true;
         }
