@@ -64,6 +64,7 @@ class QuranView extends StackedView<QuranViewModel> {
         itemCount: ayahList.ayetler.length,
         itemBuilder: (context, index) {
           final AyahModel ayahModel = ayahList.ayetler[index];
+          final suraSetting = viewModel.userSettings.suraSetting;
           return Column(
             key: GlobalObjectKey(ayahModel.ayet),
             children: [
@@ -71,9 +72,10 @@ class QuranView extends StackedView<QuranViewModel> {
               ContentWidget(
                 type: ContentTypes.suraType(),
                 number: ayahModel.ayet,
-                text1: ayahModel.textAr,
-                text2: ayahModel.textOkunus,
-                text3: ayahModel.textMeal,
+                text1: suraSetting.showArabicText ? ayahModel.textAr : null,
+                text2:
+                    suraSetting.showTurkishText ? ayahModel.textOkunus : null,
+                text3: suraSetting.showMeaningText ? ayahModel.textMeal : null,
                 onPlay: () => viewModel.playSura(ayahModel),
                 onPause: () => viewModel.pauseAudioPlayer(),
                 isPlaying: viewModel.isPlayingAyahId(ayahModel.ayet),
