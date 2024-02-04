@@ -11,6 +11,7 @@ import 'package:stacked_services/src/dialog/dialog_service.dart';
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
+import '../services/local/favorites_service.dart';
 import '../services/local/isar_service.dart';
 import '../services/local/location_service.dart';
 import '../services/local/network_checker.dart';
@@ -45,4 +46,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => DioService());
   locator.registerLazySingleton(() => FetchTimesService());
   locator.registerLazySingleton(() => QuranService());
+  locator.registerLazySingleton(() => FavouritesService());
 }

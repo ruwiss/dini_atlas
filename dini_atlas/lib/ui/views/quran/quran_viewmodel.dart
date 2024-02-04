@@ -1,11 +1,14 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/models/content_type.dart';
+import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/models/quran/quran_reciter.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
 import 'package:dini_atlas/models/quran/sura_player.dart';
 import 'package:dini_atlas/models/user_setting.dart';
+import 'package:dini_atlas/services/local/favorites_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_quran_dialog.dart';
@@ -17,6 +20,16 @@ class QuranViewModel extends BaseViewModel {
   final _player = AudioPlayer();
   final _quranService = locator<QuranService>();
   final _userSettingsService = locator<UserSettingsService>();
+  final _favouritesService = locator<FavouritesService>();
+
+  List<Favourite>? _favourites;
+  List<Favourite>? get favourites => _favourites;
+  Favourite getFavByAyahId(int ayahId) => favourites!.singleWhere(
+      (e) => e.number == ayahId && e.type == EContentTypes.sure.name);
+  bool isInFavourites(int ayahId) =>
+      favourites?.any(
+          (e) => e.number == ayahId && e.type == EContentTypes.sure.name) ??
+      false;
 
   late UserSettings _userSettings;
   UserSettings get userSettings => _userSettings;
@@ -63,13 +76,14 @@ class QuranViewModel extends BaseViewModel {
   PlayerState get currentPlayerState => _currentPlayerState;
 
   void init(SuraInfo sura) async {
-    await runBusyFuture(getUseSettings());
+    await runBusyFuture(getUserSettings());
     runBusyFuture(getAyahList(suraId: sura.suraId));
     runBusyFuture(_getQuranRecitersList());
+    runBusyFuture(_getFavourites());
     _playerListener();
   }
 
-  Future<void> getUseSettings() async => await _userSettingsService
+  Future<void> getUserSettings() async => await _userSettingsService
       .getUserSettings()
       .then((value) => _userSettings = value!);
 
@@ -210,6 +224,27 @@ class QuranViewModel extends BaseViewModel {
     if (_player.state == PlayerState.playing) {
       await _player.pause();
       playingAyahId = -1;
+    }
+  }
+
+  Future<void> _getFavourites() async {
+    _favourites = await _favouritesService.getFavourites();
+    notifyListeners();
+  }
+
+  Future<void> onBookmarkTap(AyahModel ayahModel) async {
+    if (isInFavourites(ayahModel.ayet)) {
+      /// Favorilerden sil
+      // Kayıtlı modeli getir
+      final Favourite fav = getFavByAyahId(ayahModel.ayet);
+      await _favouritesService.deleteFavourite(fav.id);
+      _favourites?.remove(fav);
+      notifyListeners();
+    } else {
+      /// Favorilere ekle
+      // Favoriler ekranına gidecek ve oradan klasör oluşturacak veya klasör
+      // seçecek. Ekleme işlemi orada yapılacak. Eğer buradan oraya gittiyse
+      // Ekleme işleminden sonra geri buraya gelecek.
     }
   }
 

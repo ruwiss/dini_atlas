@@ -143,9 +143,9 @@ class QuranService {
       _currentPlayerUrl = url;
 
       return Left(_currentSuraPlayerModel!);
-    }
-    catch (e) {
-      return Right(QuranException("Sûre audio listesi alınırken sorun oluştu $e"));
+    } catch (e) {
+      return Right(
+          QuranException("Sûre audio listesi alınırken sorun oluştu $e"));
     }
   }
 }

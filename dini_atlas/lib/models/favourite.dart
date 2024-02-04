@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:isar/isar.dart';
 
-part 'favorite.g.dart';
+part 'favourite.g.dart';
 
 @collection
-class Favorite {
+class Favourite {
   Id id = Isar.autoIncrement;
 
   /// [ContentTypes] type
@@ -23,6 +23,6 @@ class Favorite {
   String? text3;
 
   /// Klasör ismi
-  @Index(unique: true)
+  @Index()
   late String folder;
 }

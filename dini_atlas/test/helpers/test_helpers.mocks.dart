@@ -6,6 +6,7 @@
 import 'dart:async' as _i7;
 import 'dart:ui' as _i8;
 
+import 'package:dini_atlas/models/favourite.dart' as _i29;
 import 'package:dini_atlas/models/location_api/city.dart' as _i13;
 import 'package:dini_atlas/models/location_api/country.dart' as _i12;
 import 'package:dini_atlas/models/location_api/state.dart' as _i14;
@@ -18,6 +19,7 @@ import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
 import 'package:dini_atlas/models/quran/sura_player.dart' as _i27;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
+import 'package:dini_atlas/services/local/favorites_service.dart' as _i28;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i9;
 import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i19;
 import 'package:dini_atlas/services/local/user_settings_service.dart' as _i10;
@@ -1248,4 +1250,53 @@ class MockQuranService extends _i1.Mock implements _i22.QuranService {
           ),
         )),
       ) as _i7.Future<_i20.Either<_i27.SuraPlayer, _i22.QuranException>>);
+}
+
+/// A class which mocks [FavouritesService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFavouritesService extends _i1.Mock implements _i28.FavouritesService {
+  @override
+  _i7.Future<void> addFavourite(_i29.Favourite? favourite) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addFavourite,
+          [favourite],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> deleteFavourite(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteFavourite,
+          [id],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<void> deleteFolder(String? folder) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteFolder,
+          [folder],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
+  _i7.Future<List<_i29.Favourite>> getFavourites({String? folder}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFavourites,
+          [],
+          {#folder: folder},
+        ),
+        returnValue: _i7.Future<List<_i29.Favourite>>.value(<_i29.Favourite>[]),
+        returnValueForMissingStub:
+            _i7.Future<List<_i29.Favourite>>.value(<_i29.Favourite>[]),
+      ) as _i7.Future<List<_i29.Favourite>>);
 }

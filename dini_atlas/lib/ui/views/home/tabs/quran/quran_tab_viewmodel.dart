@@ -17,7 +17,6 @@ class QuranTabViewModel extends IndexTrackingViewModel {
   final _quranService = locator<QuranService>();
   List<SuraInfo>? suraList;
 
-
   QuranTabs get currentTab => QuranTabs.values[currentIndex];
 
   void init() async {
@@ -32,5 +31,4 @@ class QuranTabViewModel extends IndexTrackingViewModel {
       notifyListeners();
     }, (error) => setError(error.message));
   }
-
 }

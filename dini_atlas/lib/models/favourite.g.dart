@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'favorite.dart';
+part of 'favourite.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,13 +9,13 @@ part of 'favorite.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetFavoriteCollection on Isar {
-  IsarCollection<Favorite> get favorites => this.collection();
+extension GetFavouriteCollection on Isar {
+  IsarCollection<Favourite> get favourites => this.collection();
 }
 
-const FavoriteSchema = CollectionSchema(
-  name: r'Favorite',
-  id: 5577971995748139032,
+const FavouriteSchema = CollectionSchema(
+  name: r'Favourite',
+  id: 2882997178178307874,
   properties: {
     r'folder': PropertySchema(
       id: 0,
@@ -48,16 +48,16 @@ const FavoriteSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _favoriteEstimateSize,
-  serialize: _favoriteSerialize,
-  deserialize: _favoriteDeserialize,
-  deserializeProp: _favoriteDeserializeProp,
+  estimateSize: _favouriteEstimateSize,
+  serialize: _favouriteSerialize,
+  deserialize: _favouriteDeserialize,
+  deserializeProp: _favouriteDeserializeProp,
   idName: r'id',
   indexes: {
     r'folder': IndexSchema(
       id: 4117413726152065984,
       name: r'folder',
-      unique: true,
+      unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
@@ -70,14 +70,14 @@ const FavoriteSchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {},
-  getId: _favoriteGetId,
-  getLinks: _favoriteGetLinks,
-  attach: _favoriteAttach,
+  getId: _favouriteGetId,
+  getLinks: _favouriteGetLinks,
+  attach: _favouriteAttach,
   version: '3.1.0+1',
 );
 
-int _favoriteEstimateSize(
-  Favorite object,
+int _favouriteEstimateSize(
+  Favourite object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -105,8 +105,8 @@ int _favoriteEstimateSize(
   return bytesCount;
 }
 
-void _favoriteSerialize(
-  Favorite object,
+void _favouriteSerialize(
+  Favourite object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -119,13 +119,13 @@ void _favoriteSerialize(
   writer.writeString(offsets[5], object.type);
 }
 
-Favorite _favoriteDeserialize(
+Favourite _favouriteDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Favorite();
+  final object = Favourite();
   object.folder = reader.readString(offsets[0]);
   object.id = id;
   object.number = reader.readLong(offsets[1]);
@@ -136,7 +136,7 @@ Favorite _favoriteDeserialize(
   return object;
 }
 
-P _favoriteDeserializeProp<P>(
+P _favouriteDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -160,82 +160,30 @@ P _favoriteDeserializeProp<P>(
   }
 }
 
-Id _favoriteGetId(Favorite object) {
+Id _favouriteGetId(Favourite object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _favoriteGetLinks(Favorite object) {
+List<IsarLinkBase<dynamic>> _favouriteGetLinks(Favourite object) {
   return [];
 }
 
-void _favoriteAttach(IsarCollection<dynamic> col, Id id, Favorite object) {
+void _favouriteAttach(IsarCollection<dynamic> col, Id id, Favourite object) {
   object.id = id;
 }
 
-extension FavoriteByIndex on IsarCollection<Favorite> {
-  Future<Favorite?> getByFolder(String folder) {
-    return getByIndex(r'folder', [folder]);
-  }
-
-  Favorite? getByFolderSync(String folder) {
-    return getByIndexSync(r'folder', [folder]);
-  }
-
-  Future<bool> deleteByFolder(String folder) {
-    return deleteByIndex(r'folder', [folder]);
-  }
-
-  bool deleteByFolderSync(String folder) {
-    return deleteByIndexSync(r'folder', [folder]);
-  }
-
-  Future<List<Favorite?>> getAllByFolder(List<String> folderValues) {
-    final values = folderValues.map((e) => [e]).toList();
-    return getAllByIndex(r'folder', values);
-  }
-
-  List<Favorite?> getAllByFolderSync(List<String> folderValues) {
-    final values = folderValues.map((e) => [e]).toList();
-    return getAllByIndexSync(r'folder', values);
-  }
-
-  Future<int> deleteAllByFolder(List<String> folderValues) {
-    final values = folderValues.map((e) => [e]).toList();
-    return deleteAllByIndex(r'folder', values);
-  }
-
-  int deleteAllByFolderSync(List<String> folderValues) {
-    final values = folderValues.map((e) => [e]).toList();
-    return deleteAllByIndexSync(r'folder', values);
-  }
-
-  Future<Id> putByFolder(Favorite object) {
-    return putByIndex(r'folder', object);
-  }
-
-  Id putByFolderSync(Favorite object, {bool saveLinks = true}) {
-    return putByIndexSync(r'folder', object, saveLinks: saveLinks);
-  }
-
-  Future<List<Id>> putAllByFolder(List<Favorite> objects) {
-    return putAllByIndex(r'folder', objects);
-  }
-
-  List<Id> putAllByFolderSync(List<Favorite> objects, {bool saveLinks = true}) {
-    return putAllByIndexSync(r'folder', objects, saveLinks: saveLinks);
-  }
-}
-
-extension FavoriteQueryWhereSort on QueryBuilder<Favorite, Favorite, QWhere> {
-  QueryBuilder<Favorite, Favorite, QAfterWhere> anyId() {
+extension FavouriteQueryWhereSort
+    on QueryBuilder<Favourite, Favourite, QWhere> {
+  QueryBuilder<Favourite, Favourite, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
-  QueryBuilder<Favorite, Favorite, QAfterWhereClause> idEqualTo(Id id) {
+extension FavouriteQueryWhere
+    on QueryBuilder<Favourite, Favourite, QWhereClause> {
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -244,7 +192,7 @@ extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -266,7 +214,7 @@ extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -275,7 +223,7 @@ extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -284,7 +232,7 @@ extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterWhereClause> idBetween(
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -300,7 +248,7 @@ extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterWhereClause> folderEqualTo(
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> folderEqualTo(
       String folder) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
@@ -310,7 +258,7 @@ extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterWhereClause> folderNotEqualTo(
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> folderNotEqualTo(
       String folder) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -346,9 +294,9 @@ extension FavoriteQueryWhere on QueryBuilder<Favorite, Favorite, QWhereClause> {
   }
 }
 
-extension FavoriteQueryFilter
-    on QueryBuilder<Favorite, Favorite, QFilterCondition> {
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderEqualTo(
+extension FavouriteQueryFilter
+    on QueryBuilder<Favourite, Favourite, QFilterCondition> {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -361,7 +309,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderGreaterThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -376,7 +324,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderLessThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -391,7 +339,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderBetween(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -410,7 +358,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderStartsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -423,7 +371,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderEndsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -436,7 +384,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderContains(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -448,7 +396,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderMatches(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -460,7 +408,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderIsEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'folder',
@@ -469,7 +417,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> folderIsNotEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> folderIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'folder',
@@ -478,7 +426,8 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> idEqualTo(
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -487,7 +436,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -500,7 +449,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> idLessThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -513,7 +462,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> idBetween(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -530,7 +479,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> numberEqualTo(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> numberEqualTo(
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -540,7 +489,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> numberGreaterThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> numberGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -553,7 +502,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> numberLessThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> numberLessThan(
     int value, {
     bool include = false,
   }) {
@@ -566,7 +515,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> numberBetween(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> numberBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -583,7 +532,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1IsNull() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1IsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'text1',
@@ -591,7 +540,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1IsNotNull() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1IsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'text1',
@@ -599,7 +548,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1EqualTo(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1EqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -612,7 +561,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1GreaterThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1GreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -627,7 +576,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1LessThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1LessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -642,7 +591,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1Between(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1Between(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -661,7 +610,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1StartsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1StartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -674,7 +623,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1EndsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1EndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -687,7 +636,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1Contains(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1Contains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -699,7 +648,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1Matches(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1Matches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -711,7 +660,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1IsEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1IsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'text1',
@@ -720,7 +669,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text1IsNotEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text1IsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'text1',
@@ -729,7 +678,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2IsNull() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2IsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'text2',
@@ -737,7 +686,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2IsNotNull() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2IsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'text2',
@@ -745,7 +694,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2EqualTo(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2EqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -758,7 +707,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2GreaterThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2GreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -773,7 +722,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2LessThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2LessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -788,7 +737,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2Between(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2Between(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -807,7 +756,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2StartsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2StartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -820,7 +769,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2EndsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2EndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -833,7 +782,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2Contains(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2Contains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -845,7 +794,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2Matches(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2Matches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -857,7 +806,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2IsEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2IsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'text2',
@@ -866,7 +815,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text2IsNotEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text2IsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'text2',
@@ -875,7 +824,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3IsNull() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3IsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'text3',
@@ -883,7 +832,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3IsNotNull() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3IsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'text3',
@@ -891,7 +840,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3EqualTo(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3EqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -904,7 +853,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3GreaterThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3GreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -919,7 +868,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3LessThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3LessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -934,7 +883,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3Between(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3Between(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -953,7 +902,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3StartsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3StartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -966,7 +915,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3EndsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3EndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -979,7 +928,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3Contains(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3Contains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -991,7 +940,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3Matches(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3Matches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1003,7 +952,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3IsEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3IsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'text3',
@@ -1012,7 +961,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> text3IsNotEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> text3IsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'text3',
@@ -1021,7 +970,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeEqualTo(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1034,7 +983,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeGreaterThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1049,7 +998,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeLessThan(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1064,7 +1013,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeBetween(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1083,7 +1032,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeStartsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1096,7 +1045,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeEndsWith(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1109,7 +1058,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeContains(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1121,7 +1070,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeMatches(
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1133,7 +1082,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeIsEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'type',
@@ -1142,7 +1091,7 @@ extension FavoriteQueryFilter
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterFilterCondition> typeIsNotEmpty() {
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> typeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'type',
@@ -1152,210 +1101,210 @@ extension FavoriteQueryFilter
   }
 }
 
-extension FavoriteQueryObject
-    on QueryBuilder<Favorite, Favorite, QFilterCondition> {}
+extension FavouriteQueryObject
+    on QueryBuilder<Favourite, Favourite, QFilterCondition> {}
 
-extension FavoriteQueryLinks
-    on QueryBuilder<Favorite, Favorite, QFilterCondition> {}
+extension FavouriteQueryLinks
+    on QueryBuilder<Favourite, Favourite, QFilterCondition> {}
 
-extension FavoriteQuerySortBy on QueryBuilder<Favorite, Favorite, QSortBy> {
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByFolder() {
+extension FavouriteQuerySortBy on QueryBuilder<Favourite, Favourite, QSortBy> {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByFolder() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'folder', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByFolderDesc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByFolderDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'folder', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByNumber() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'number', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByNumberDesc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'number', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByText1() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByText1() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text1', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByText1Desc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByText1Desc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text1', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByText2() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByText2() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text2', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByText2Desc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByText2Desc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text2', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByText3() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByText3() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text3', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByText3Desc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByText3Desc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text3', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByType() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> sortByTypeDesc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
     });
   }
 }
 
-extension FavoriteQuerySortThenBy
-    on QueryBuilder<Favorite, Favorite, QSortThenBy> {
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByFolder() {
+extension FavouriteQuerySortThenBy
+    on QueryBuilder<Favourite, Favourite, QSortThenBy> {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByFolder() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'folder', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByFolderDesc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByFolderDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'folder', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenById() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByNumber() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'number', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByNumberDesc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'number', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByText1() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByText1() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text1', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByText1Desc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByText1Desc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text1', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByText2() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByText2() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text2', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByText2Desc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByText2Desc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text2', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByText3() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByText3() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text3', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByText3Desc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByText3Desc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'text3', Sort.desc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByType() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QAfterSortBy> thenByTypeDesc() {
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
     });
   }
 }
 
-extension FavoriteQueryWhereDistinct
-    on QueryBuilder<Favorite, Favorite, QDistinct> {
-  QueryBuilder<Favorite, Favorite, QDistinct> distinctByFolder(
+extension FavouriteQueryWhereDistinct
+    on QueryBuilder<Favourite, Favourite, QDistinct> {
+  QueryBuilder<Favourite, Favourite, QDistinct> distinctByFolder(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'folder', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QDistinct> distinctByNumber() {
+  QueryBuilder<Favourite, Favourite, QDistinct> distinctByNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'number');
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QDistinct> distinctByText1(
+  QueryBuilder<Favourite, Favourite, QDistinct> distinctByText1(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'text1', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QDistinct> distinctByText2(
+  QueryBuilder<Favourite, Favourite, QDistinct> distinctByText2(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'text2', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QDistinct> distinctByText3(
+  QueryBuilder<Favourite, Favourite, QDistinct> distinctByText3(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'text3', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Favorite, Favorite, QDistinct> distinctByType(
+  QueryBuilder<Favourite, Favourite, QDistinct> distinctByType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'type', caseSensitive: caseSensitive);
@@ -1363,45 +1312,45 @@ extension FavoriteQueryWhereDistinct
   }
 }
 
-extension FavoriteQueryProperty
-    on QueryBuilder<Favorite, Favorite, QQueryProperty> {
-  QueryBuilder<Favorite, int, QQueryOperations> idProperty() {
+extension FavouriteQueryProperty
+    on QueryBuilder<Favourite, Favourite, QQueryProperty> {
+  QueryBuilder<Favourite, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<Favorite, String, QQueryOperations> folderProperty() {
+  QueryBuilder<Favourite, String, QQueryOperations> folderProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'folder');
     });
   }
 
-  QueryBuilder<Favorite, int, QQueryOperations> numberProperty() {
+  QueryBuilder<Favourite, int, QQueryOperations> numberProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'number');
     });
   }
 
-  QueryBuilder<Favorite, String?, QQueryOperations> text1Property() {
+  QueryBuilder<Favourite, String?, QQueryOperations> text1Property() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'text1');
     });
   }
 
-  QueryBuilder<Favorite, String?, QQueryOperations> text2Property() {
+  QueryBuilder<Favourite, String?, QQueryOperations> text2Property() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'text2');
     });
   }
 
-  QueryBuilder<Favorite, String?, QQueryOperations> text3Property() {
+  QueryBuilder<Favourite, String?, QQueryOperations> text3Property() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'text3');
     });
   }
 
-  QueryBuilder<Favorite, String, QQueryOperations> typeProperty() {
+  QueryBuilder<Favourite, String, QQueryOperations> typeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'type');
     });

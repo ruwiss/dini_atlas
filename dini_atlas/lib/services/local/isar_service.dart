@@ -1,4 +1,4 @@
-import 'package:dini_atlas/models/favorite.dart';
+import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:flutter/foundation.dart';
@@ -15,14 +15,13 @@ class IsarService {
         UserSettingsSchema,
         PrayerTimesSchema,
         PrayerNotiSettingsSchema,
-        FavoriteSchema
+        FavouriteSchema,
       ],
       directory: dir.path,
     );
     debugPrint("Isar Servisi Başlatıldı");
 
     // Vakit bildirim varsayılan ayarları yoksa oluştur.
-
     if ((await isar.prayerNotiSettings.where().findAll()).isEmpty) {
       await createDefaultPrayerNotiSettings();
     }
