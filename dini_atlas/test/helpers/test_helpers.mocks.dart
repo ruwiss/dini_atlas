@@ -13,7 +13,9 @@ import 'package:dini_atlas/models/prayer/prayer_time.dart' as _i21;
 import 'package:dini_atlas/models/prayer/prayer_times.dart' as _i18;
 import 'package:dini_atlas/models/quran/ayah_list.dart' as _i24;
 import 'package:dini_atlas/models/quran/quran_reciter.dart' as _i25;
+import 'package:dini_atlas/models/quran/sura_audio.dart' as _i26;
 import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
+import 'package:dini_atlas/models/quran/sura_player.dart' as _i27;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i9;
@@ -919,6 +921,30 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i7.Future<List<_i3.PrayerNotiSettings>>);
 
   @override
+  _i7.Future<_i3.UserSettings> setSuraSettings(_i3.SuraSetting? suraSettings) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setSuraSettings,
+          [suraSettings],
+        ),
+        returnValue: _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setSuraSettings,
+            [suraSettings],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setSuraSettings,
+            [suraSettings],
+          ),
+        )),
+      ) as _i7.Future<_i3.UserSettings>);
+
+  @override
   void setPrayerNotiSettingsForBackgroundTask(
           List<_i3.PrayerNotiSettings>? settingsList) =>
       super.noSuchMethod(
@@ -1166,4 +1192,60 @@ class MockQuranService extends _i1.Mock implements _i22.QuranService {
             )),
           ) as _i7.Future<
               _i20.Either<List<_i25.QuranReciter>, _i22.QuranException>>);
+
+  @override
+  _i7.Future<_i20.Either<_i26.SuraAudio, _i22.QuranException>> getSuraAudio(
+          _i25.QuranReciter? reciter) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSuraAudio,
+          [reciter],
+        ),
+        returnValue: _i7
+            .Future<_i20.Either<_i26.SuraAudio, _i22.QuranException>>.value(
+            _i5.dummyValue<_i20.Either<_i26.SuraAudio, _i22.QuranException>>(
+          this,
+          Invocation.method(
+            #getSuraAudio,
+            [reciter],
+          ),
+        )),
+        returnValueForMissingStub: _i7
+            .Future<_i20.Either<_i26.SuraAudio, _i22.QuranException>>.value(
+            _i5.dummyValue<_i20.Either<_i26.SuraAudio, _i22.QuranException>>(
+          this,
+          Invocation.method(
+            #getSuraAudio,
+            [reciter],
+          ),
+        )),
+      ) as _i7.Future<_i20.Either<_i26.SuraAudio, _i22.QuranException>>);
+
+  @override
+  _i7.Future<_i20.Either<_i27.SuraPlayer, _i22.QuranException>> getSuraPlayer(
+          String? url) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSuraPlayer,
+          [url],
+        ),
+        returnValue: _i7
+            .Future<_i20.Either<_i27.SuraPlayer, _i22.QuranException>>.value(
+            _i5.dummyValue<_i20.Either<_i27.SuraPlayer, _i22.QuranException>>(
+          this,
+          Invocation.method(
+            #getSuraPlayer,
+            [url],
+          ),
+        )),
+        returnValueForMissingStub: _i7
+            .Future<_i20.Either<_i27.SuraPlayer, _i22.QuranException>>.value(
+            _i5.dummyValue<_i20.Either<_i27.SuraPlayer, _i22.QuranException>>(
+          this,
+          Invocation.method(
+            #getSuraPlayer,
+            [url],
+          ),
+        )),
+      ) as _i7.Future<_i20.Either<_i27.SuraPlayer, _i22.QuranException>>);
 }

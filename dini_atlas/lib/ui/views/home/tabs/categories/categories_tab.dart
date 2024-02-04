@@ -27,9 +27,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
           final CategoryItem item = categoryItems[index];
           return InkWell(
             borderRadius: BorderRadius.circular(10),
-            onTap: () {
-              print(item.id);
-            },
+            onTap: () {},
             child: Stack(
               alignment: Alignment.center,
               children: [

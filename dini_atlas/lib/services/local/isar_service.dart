@@ -1,3 +1,4 @@
+import 'package:dini_atlas/models/favorite.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:flutter/foundation.dart';
@@ -10,7 +11,12 @@ class IsarService {
   Future<void> init() async {
     final dir = await getApplicationDocumentsDirectory();
     isar = await Isar.open(
-      [UserSettingsSchema, PrayerTimesSchema, PrayerNotiSettingsSchema],
+      [
+        UserSettingsSchema,
+        PrayerTimesSchema,
+        PrayerNotiSettingsSchema,
+        FavoriteSchema
+      ],
       directory: dir.path,
     );
     debugPrint("Isar Servisi Başlatıldı");

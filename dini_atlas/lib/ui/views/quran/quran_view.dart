@@ -1,3 +1,4 @@
+import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
@@ -68,10 +69,11 @@ class QuranView extends StackedView<QuranViewModel> {
             children: [
               if (index == 0) QuranHeader(sura: ayahList.sure),
               ContentWidget(
+                type: ContentTypes.suraType(),
                 number: ayahModel.ayet,
                 text1: ayahModel.textAr,
                 text2: ayahModel.textOkunus,
-                text3: ayahModel.text,
+                text3: ayahModel.textMeal,
                 onPlay: () => viewModel.playSura(ayahModel),
                 onPause: () => viewModel.pauseAudioPlayer(),
                 isPlaying: viewModel.isPlayingAyahId(ayahModel.ayet),

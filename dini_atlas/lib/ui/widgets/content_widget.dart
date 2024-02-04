@@ -1,4 +1,5 @@
 import 'package:dini_atlas/extensions/string_extensions.dart';
+import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/widgets/shareable_view.dart';
@@ -9,12 +10,12 @@ import 'package:share_plus/share_plus.dart';
 class ContentWidget extends StatefulWidget {
   const ContentWidget({
     super.key,
+    required this.type,
     required this.number,
     this.text1,
     this.text2,
     this.text3,
     this.titleText,
-    this.hidePlayButton = false,
     this.isPlaying = false,
     this.isPlayerLoading = false,
     this.isSaved = false,
@@ -22,12 +23,12 @@ class ContentWidget extends StatefulWidget {
     this.onPause,
     this.onBookmarkTap,
   });
+  final ContentTypes type;
   final int number;
   final String? text1;
   final String? text2;
   final String? text3;
   final String? titleText;
-  final bool hidePlayButton;
   final bool isPlaying;
   final bool isPlayerLoading;
   final bool isSaved;
@@ -155,8 +156,9 @@ class _QuranSuraItemState extends State<ContentWidget> {
   Row _actionButtons() {
     return Row(
       children: [
-        IconButton(onPressed: _shareButton, icon: SvgPicture.asset(kiShare)),
-        if (!widget.hidePlayButton)
+        if (!widget.type.hideShareButton)
+          IconButton(onPressed: _shareButton, icon: SvgPicture.asset(kiShare)),
+        if (!widget.type.hidePlayButton)
           // Eğer oynatılıyorsa, pause ikonu getir
           widget.isPlaying
               ? IconButton(
@@ -172,10 +174,13 @@ class _QuranSuraItemState extends State<ContentWidget> {
                   : IconButton(
                       onPressed: () => widget.onPlay?.call(),
                       icon: SvgPicture.asset(kiPlay)),
-        IconButton(
+        if (!widget.type.hideBookmarkButton)
+          IconButton(
             onPressed: () => widget.onBookmarkTap?.call(),
             icon: SvgPicture.asset(
-                widget.isSaved ? kiBookmarkChecked : kiBookmarkUnchecked))
+              widget.isSaved ? kiBookmarkChecked : kiBookmarkUnchecked,
+            ),
+          )
       ],
     );
   }
