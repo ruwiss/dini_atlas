@@ -77,7 +77,7 @@ class QuranView extends StackedView<QuranViewModel> {
                 isPlaying: viewModel.isPlayingAyahId(ayahModel.ayet),
                 isPlayerLoading: viewModel.busy(viewModel.playingAyahId) &&
                     viewModel.playingAyahId == ayahModel.ayet,
-                onSave: () {},
+                onBookmarkTap: () {},
               ),
 
               // Daha fazla yükleme işlemindeyse indicator ekle

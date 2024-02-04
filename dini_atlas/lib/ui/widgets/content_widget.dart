@@ -17,9 +17,10 @@ class ContentWidget extends StatefulWidget {
     this.hidePlayButton = false,
     this.isPlaying = false,
     this.isPlayerLoading = false,
+    this.isSaved = false,
     this.onPlay,
     this.onPause,
-    this.onSave,
+    this.onBookmarkTap,
   });
   final int number;
   final String? text1;
@@ -29,9 +30,10 @@ class ContentWidget extends StatefulWidget {
   final bool hidePlayButton;
   final bool isPlaying;
   final bool isPlayerLoading;
+  final bool isSaved;
   final Function()? onPlay;
   final Function()? onPause;
-  final Function()? onSave;
+  final Function()? onBookmarkTap;
 
   @override
   State<ContentWidget> createState() => _QuranSuraItemState();
@@ -171,7 +173,9 @@ class _QuranSuraItemState extends State<ContentWidget> {
                       onPressed: () => widget.onPlay?.call(),
                       icon: SvgPicture.asset(kiPlay)),
         IconButton(
-            onPressed: () {}, icon: SvgPicture.asset(kiBookmarkUnchecked))
+            onPressed: () => widget.onBookmarkTap?.call(),
+            icon: SvgPicture.asset(
+                widget.isSaved ? kiBookmarkChecked : kiBookmarkUnchecked))
       ],
     );
   }
