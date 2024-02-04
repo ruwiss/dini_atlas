@@ -69,3 +69,9 @@ flutter:
         - asset: assets/fonts/Amiri-Regular.ttf
         - asset: assets/fonts/Amiri-Bold.ttf
           weight: 700
+
+    - family: Uthman
+      fonts:
+        - asset: assets/fonts/uthman.ttf
+        - asset: assets/fonts/uthman_bold.ttf
+          weight: 700

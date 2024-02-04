@@ -145,8 +145,8 @@ class _QuranSuraItemState extends State<ContentWidget> {
       text,
       textAlign: TextAlign.end,
       style: _suraTextStyle.copyWith(
-        fontFamily: "Amiri",
-        fontSize: 20,
+        fontFamily: "Uthman",
+        fontSize: 22,
         height: 2.3,
         fontWeight: FontWeight.bold,
       ),

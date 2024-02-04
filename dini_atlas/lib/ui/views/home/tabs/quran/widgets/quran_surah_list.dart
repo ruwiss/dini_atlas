@@ -78,17 +78,17 @@ class QuranSurahList extends StatelessWidget {
   }
 
   Text _suraTextView(SuraInfo item) {
-    return Text(
-        currentTab == QuranTabs.page ? "Sayfa ${item.page}" : item.nameArabic,
-        style: currentTab == QuranTabs.page
+    final bool isPage = currentTab == QuranTabs.page;
+    return Text(isPage ? "Sayfa ${item.page}" : item.nameArabic,
+        style: isPage
             ? const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 color: kcPrimaryColorLight,
               )
             : const TextStyle(
-                fontFamily: "Amiri", // Arabic Font
-                fontSize: 20,
+                fontFamily: "Uthman", // Arabic Font
+                fontSize: 22,
                 fontWeight: FontWeight.w700,
                 color: kcPrimaryColorLight,
               ));
