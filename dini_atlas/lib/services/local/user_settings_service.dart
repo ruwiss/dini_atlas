@@ -154,6 +154,20 @@ class UserSettingsService {
     }
   }
 
+  Future<UserSettings> setIncreaseFontSizeForAyah(int size) async {
+    try {
+      final userSettings = await getUserSettings();
+      userSettings!.increaseAyahFontSize = size;
+      this.userSettings = userSettings;
+      // Veriyi kaydet
+      await _db.writeTxn(() async => _db.userSettings.put(userSettings));
+      return userSettings;
+    } catch (e) {
+      throw UserSettingsException(
+          "Ayet font ayarı kaydedilirken bir sorun oluştu $e");
+    }
+  }
+
   // Background Task'da kullanmak üzere bildirim ayarlarını SharedPreferences'a kaydet
   void setPrayerNotiSettingsForBackgroundTask(
       List<PrayerNotiSettings> settingsList) async {

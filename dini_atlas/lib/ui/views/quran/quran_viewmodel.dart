@@ -288,16 +288,23 @@ class QuranViewModel extends BaseViewModel {
         quranReciters: quranReciters,
         suraSetting: _userSettings.suraSetting.copyWith(),
         currentReciterId: _userSettings.quranReciterId,
+        currentFontSizeIncreaseValue: _userSettings.increaseAyahFontSize,
         onSelectedReciter: (reciter) {
           _userSettingsService
               .setQuranReciter(reciter.id)
               .then((value) => _userSettings = value);
         },
         onSuraSettingChanged: (suraSetting) {
-          _userSettingsService
-              .setSuraSettings(suraSetting)
-              .then((value) => _userSettings = value);
-          notifyListeners();
+          _userSettingsService.setSuraSettings(suraSetting).then((value) {
+            _userSettings = value;
+            notifyListeners();
+          });
+        },
+        onFontSizeChanged: (v) {
+          _userSettingsService.setIncreaseFontSizeForAyah(v).then((value) {
+            _userSettings = value;
+            notifyListeners();
+          });
         },
       ),
     );

@@ -61,7 +61,7 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SettingsBaseDialog(
+                SettingsBaseDialogItem(
                     checkboxValue: _prayerNotiSettings.voiceWarningEnable,
                     title: "Sesli Uyarı",
                     svgIcon: kiEar,
@@ -70,7 +70,7 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
                       setState(() {});
                     }),
                 verticalSpaceMedium,
-                SettingsBaseDialog(
+                SettingsBaseDialogItem(
                   checkboxValue:
                       _prayerNotiSettings.advancedWarningSoundsEnable,
                   title: "Önceden Uyar",
@@ -108,7 +108,7 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
                   ),
                 ),
                 verticalSpaceSmall,
-                SettingsBaseDialog(
+                SettingsBaseDialogItem(
                   title: "Uyarı Sesleri",
                   svgIcon: kiEar,
                   disabled: !_prayerNotiSettings.voiceWarningEnable,

@@ -8,18 +8,23 @@ import 'package:flutter/material.dart';
 import 'settings_dialog.dart';
 
 class SettingsQuranDialog extends StatefulWidget {
-  const SettingsQuranDialog(
-      {super.key,
-      required this.suraSetting,
-      this.onSuraSettingChanged,
-      required this.quranReciters,
-      required this.currentReciterId,
-      this.onSelectedReciter});
+  const SettingsQuranDialog({
+    super.key,
+    required this.suraSetting,
+    this.onSuraSettingChanged,
+    required this.quranReciters,
+    required this.currentReciterId,
+    this.onSelectedReciter,
+    this.onFontSizeChanged,
+    required this.currentFontSizeIncreaseValue,
+  });
   final SuraSetting suraSetting;
   final Function(SuraSetting suraSetting)? onSuraSettingChanged;
   final List<QuranReciter> quranReciters;
   final int currentReciterId;
   final Function(QuranReciter reciter)? onSelectedReciter;
+  final Function(int v)? onFontSizeChanged;
+  final int currentFontSizeIncreaseValue;
 
   @override
   State<SettingsQuranDialog> createState() => _SettingsQuranDialogState();
@@ -50,7 +55,7 @@ class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SettingsBaseDialog(
+            SettingsBaseDialogItem(
               checkboxValue: _showArabicText,
               title: "Arapça metin",
               subtitle: "Kuran Arapça metni gizleyin",
@@ -62,7 +67,7 @@ class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
               },
             ),
             verticalSpaceMedium,
-            SettingsBaseDialog(
+            SettingsBaseDialogItem(
               checkboxValue: _showTurkishText,
               title: "Türkçe metin",
               subtitle: "Kuran'ın Türkçe okunuş metnini gizleyin",
@@ -74,7 +79,7 @@ class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
               },
             ),
             verticalSpaceMedium,
-            SettingsBaseDialog(
+            SettingsBaseDialogItem(
               checkboxValue: _showMeaningText,
               title: "Türkçe meal",
               subtitle: "Kuran'ın Turkçe mealini gizleyin",
@@ -86,7 +91,7 @@ class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
               },
             ),
             verticalSpaceMedium,
-            SettingsBaseDialog(
+            SettingsBaseDialogItem(
               checkboxValue: _playerAutoChange,
               title: "Diğer ayete geç",
               subtitle: "Ayet sesli okunuşu bitince otomatik diğer ayete geç",
@@ -97,8 +102,15 @@ class _SettingsQuranDialogState extends State<SettingsQuranDialog> {
                 setState(() => _playerAutoChange = value);
               },
             ),
+            verticalSpaceMedium,
+            FontSizeDialogItem(
+              min: 0,
+              max: 8,
+              currentValue: widget.currentFontSizeIncreaseValue,
+              onChanged: widget.onFontSizeChanged,
+            ),
             verticalSpaceSmall,
-            SettingsBaseDialog(
+            SettingsBaseDialogItem(
               title: "Kur’an okuyucuları",
               svgIcon: kiEar,
               showDivider: false,

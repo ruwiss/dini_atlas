@@ -41,6 +41,9 @@ class UserSettings {
   /// Kuran okuyucu id
   int quranReciterId = -1;
 
+  /// Font boyutunu +[value] arttır
+  int increaseAyahFontSize = 0;
+
   /// Sûre Ayarları
   SuraSetting suraSetting = SuraSetting();
 

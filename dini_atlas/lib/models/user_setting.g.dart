@@ -29,29 +29,34 @@ const UserSettingsSchema = CollectionSchema(
       type: IsarType.object,
       target: r'Country',
     ),
-    r'jsonString': PropertySchema(
+    r'increaseAyahFontSize': PropertySchema(
       id: 2,
+      name: r'increaseAyahFontSize',
+      type: IsarType.long,
+    ),
+    r'jsonString': PropertySchema(
+      id: 3,
       name: r'jsonString',
       type: IsarType.string,
     ),
     r'quranReciterId': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'quranReciterId',
       type: IsarType.long,
     ),
     r'silentModeEnable': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'silentModeEnable',
       type: IsarType.bool,
     ),
     r'state': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'state',
       type: IsarType.object,
       target: r'StateModel',
     ),
     r'suraSetting': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'suraSetting',
       type: IsarType.object,
       target: r'SuraSetting',
@@ -129,17 +134,18 @@ void _userSettingsSerialize(
     CountrySchema.serialize,
     object.country,
   );
-  writer.writeString(offsets[2], object.jsonString);
-  writer.writeLong(offsets[3], object.quranReciterId);
-  writer.writeBool(offsets[4], object.silentModeEnable);
+  writer.writeLong(offsets[2], object.increaseAyahFontSize);
+  writer.writeString(offsets[3], object.jsonString);
+  writer.writeLong(offsets[4], object.quranReciterId);
+  writer.writeBool(offsets[5], object.silentModeEnable);
   writer.writeObject<StateModel>(
-    offsets[5],
+    offsets[6],
     allOffsets,
     StateModelSchema.serialize,
     object.state,
   );
   writer.writeObject<SuraSetting>(
-    offsets[6],
+    offsets[7],
     allOffsets,
     SuraSettingSchema.serialize,
     object.suraSetting,
@@ -164,16 +170,17 @@ UserSettings _userSettingsDeserialize(
     allOffsets,
   );
   object.id = id;
-  object.jsonString = reader.readString(offsets[2]);
-  object.quranReciterId = reader.readLong(offsets[3]);
-  object.silentModeEnable = reader.readBool(offsets[4]);
+  object.increaseAyahFontSize = reader.readLong(offsets[2]);
+  object.jsonString = reader.readString(offsets[3]);
+  object.quranReciterId = reader.readLong(offsets[4]);
+  object.silentModeEnable = reader.readBool(offsets[5]);
   object.state = reader.readObjectOrNull<StateModel>(
-    offsets[5],
+    offsets[6],
     StateModelSchema.deserialize,
     allOffsets,
   );
   object.suraSetting = reader.readObjectOrNull<SuraSetting>(
-        offsets[6],
+        offsets[7],
         SuraSettingSchema.deserialize,
         allOffsets,
       ) ??
@@ -201,18 +208,20 @@ P _userSettingsDeserializeProp<P>(
         allOffsets,
       )) as P;
     case 2:
-      return (reader.readString(offset)) as P;
-    case 3:
       return (reader.readLong(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
+      return (reader.readBool(offset)) as P;
+    case 6:
       return (reader.readObjectOrNull<StateModel>(
         offset,
         StateModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 6:
+    case 7:
       return (reader.readObjectOrNull<SuraSetting>(
             offset,
             SuraSettingSchema.deserialize,
@@ -398,6 +407,62 @@ extension UserSettingsQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      increaseAyahFontSizeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'increaseAyahFontSize',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      increaseAyahFontSizeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'increaseAyahFontSize',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      increaseAyahFontSizeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'increaseAyahFontSize',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      increaseAyahFontSizeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'increaseAyahFontSize',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -663,6 +728,20 @@ extension UserSettingsQueryLinks
 
 extension UserSettingsQuerySortBy
     on QueryBuilder<UserSettings, UserSettings, QSortBy> {
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByIncreaseAyahFontSize() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'increaseAyahFontSize', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByIncreaseAyahFontSizeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'increaseAyahFontSize', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy> sortByJsonString() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'jsonString', Sort.asc);
@@ -719,6 +798,20 @@ extension UserSettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByIncreaseAyahFontSize() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'increaseAyahFontSize', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByIncreaseAyahFontSizeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'increaseAyahFontSize', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy> thenByJsonString() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'jsonString', Sort.asc);
@@ -763,6 +856,13 @@ extension UserSettingsQuerySortThenBy
 
 extension UserSettingsQueryWhereDistinct
     on QueryBuilder<UserSettings, UserSettings, QDistinct> {
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByIncreaseAyahFontSize() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'increaseAyahFontSize');
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QDistinct> distinctByJsonString(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -802,6 +902,13 @@ extension UserSettingsQueryProperty
   QueryBuilder<UserSettings, Country?, QQueryOperations> countryProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'country');
+    });
+  }
+
+  QueryBuilder<UserSettings, int, QQueryOperations>
+      increaseAyahFontSizeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'increaseAyahFontSize');
     });
   }
 

@@ -31,7 +31,7 @@ class HomeViewModel extends IndexTrackingViewModel {
     final userSettings = _homeService.userSettings;
     _dialogService.showCustomDialog(
       variant: DialogType.settings,
-      data: SettingsBaseDialog(
+      data: SettingsBaseDialogItem(
         checkboxValue: userSettings!.silentModeEnable,
         title: "Sessiz Mod",
         svgIcon: kiEar,

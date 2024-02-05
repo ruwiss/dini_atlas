@@ -22,6 +22,7 @@ class ContentWidget extends StatefulWidget {
     this.onPlay,
     this.onPause,
     this.onBookmarkTap,
+    this.increaseFontSize = 0,
   });
   final ContentTypes type;
   final int number;
@@ -35,6 +36,7 @@ class ContentWidget extends StatefulWidget {
   final Function()? onPlay;
   final Function()? onPause;
   final Function()? onBookmarkTap;
+  final double increaseFontSize;
 
   @override
   State<ContentWidget> createState() => _QuranSuraItemState();
@@ -115,22 +117,24 @@ class _QuranSuraItemState extends State<ContentWidget> {
     );
   }
 
-  final TextStyle _suraTextStyle = const TextStyle(
-    fontSize: 16,
-    color: kcPrimaryColorDark,
-  );
-
   Widget _suraMeal() {
     return Text(
       widget.text3!,
-      style: _suraTextStyle,
+      style: TextStyle(
+        fontSize: 16 + widget.increaseFontSize,
+        color: kcPrimaryColorDark,
+      ),
     );
   }
 
   Widget _suraTurkish() {
     return Text(
       widget.text2!.fixLatinArabicLetters(),
-      style: _suraTextStyle.copyWith(fontWeight: FontWeight.w300),
+      style: TextStyle(
+        fontSize: 16 + widget.increaseFontSize,
+        color: kcPrimaryColorDark,
+        fontWeight: FontWeight.w300,
+      ),
     );
   }
 
@@ -144,9 +148,10 @@ class _QuranSuraItemState extends State<ContentWidget> {
     return Text(
       text,
       textAlign: TextAlign.end,
-      style: _suraTextStyle.copyWith(
+      style: TextStyle(
+        color: kcPrimaryColorDark,
         fontFamily: "Uthman",
-        fontSize: 22,
+        fontSize: 22 + widget.increaseFontSize,
         height: 2.3,
         fontWeight: FontWeight.bold,
       ),

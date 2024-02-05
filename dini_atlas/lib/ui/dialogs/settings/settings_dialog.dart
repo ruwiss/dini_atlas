@@ -1,4 +1,5 @@
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
+import 'package:dini_atlas/ui/common/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -79,16 +80,8 @@ class SettingsDialog extends StatelessWidget {
   }
 }
 
-class SettingsBaseDialog extends StatefulWidget {
-  final bool checkboxValue;
-  final String title;
-  final String svgIcon;
-  final String? subtitle;
-  final Widget? bottomWidget;
-  final bool showDivider;
-  final bool disabled;
-  final Function(bool value)? onChanged;
-  const SettingsBaseDialog({
+class SettingsBaseDialogItem extends StatefulWidget {
+  const SettingsBaseDialogItem({
     super.key,
     this.checkboxValue = false,
     required this.title,
@@ -96,15 +89,25 @@ class SettingsBaseDialog extends StatefulWidget {
     this.showDivider = true,
     this.subtitle,
     this.bottomWidget,
+    this.actionWidget,
     this.onChanged,
     this.disabled = false,
   });
+  final bool checkboxValue;
+  final String title;
+  final String svgIcon;
+  final String? subtitle;
+  final Widget? bottomWidget;
+  final Widget? actionWidget;
+  final bool showDivider;
+  final bool disabled;
+  final Function(bool value)? onChanged;
 
   @override
-  State<SettingsBaseDialog> createState() => _SettingsBaseDialogState();
+  State<SettingsBaseDialogItem> createState() => _SettingsBaseDialogItemState();
 }
 
-class _SettingsBaseDialogState extends State<SettingsBaseDialog> {
+class _SettingsBaseDialogItemState extends State<SettingsBaseDialogItem> {
   late bool _checkboxValue;
 
   @override
@@ -161,7 +164,7 @@ class _SettingsBaseDialogState extends State<SettingsBaseDialog> {
                         widget.onChanged?.call(value!);
                       },
                     )
-                  : verticalSpaceLarge,
+                  : widget.actionWidget ?? verticalSpaceLarge,
             ],
           ),
           if (widget.bottomWidget != null)
@@ -173,6 +176,79 @@ class _SettingsBaseDialogState extends State<SettingsBaseDialog> {
             verticalSpace(23),
             const Divider(height: 1),
           ]
+        ],
+      ),
+    );
+  }
+}
+
+class FontSizeDialogItem extends StatefulWidget {
+  const FontSizeDialogItem({
+    super.key,
+    required this.min,
+    required this.max,
+    required this.currentValue,
+    this.onChanged,
+    this.title,
+    this.subtitle,
+  });
+  final String? title;
+  final String? subtitle;
+  final int min;
+  final int max;
+  final int currentValue;
+  final Function(int v)? onChanged;
+
+  @override
+  State<FontSizeDialogItem> createState() => _FontSizeDialogItemState();
+}
+
+class _FontSizeDialogItemState extends State<FontSizeDialogItem> {
+  int _fontSize = 0;
+
+  @override
+  void initState() {
+    _fontSize = widget.currentValue;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SettingsBaseDialogItem(
+      title: widget.title ?? "Yazı Boyutu",
+      subtitle: widget.subtitle ?? "Ayet metin boyutunu arttır",
+      svgIcon: kiFont,
+      actionWidget: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: () {
+              if (_fontSize != widget.min) {
+                setState(() => _fontSize--);
+                widget.onChanged?.call(_fontSize);
+              }
+            },
+            child: const Icon(Icons.arrow_left, color: kcGrayColor),
+          ),
+          horizontalSpaceSmall,
+          Text(
+            "$_fontSize",
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: kcPrimaryColor,
+            ),
+          ),
+          horizontalSpaceSmall,
+          GestureDetector(
+            onTap: () {
+              if (_fontSize != widget.max) {
+                setState(() => _fontSize++);
+                widget.onChanged?.call(_fontSize);
+              }
+            },
+            child: const Icon(Icons.arrow_right, color: kcGrayColor),
+          ),
         ],
       ),
     );
