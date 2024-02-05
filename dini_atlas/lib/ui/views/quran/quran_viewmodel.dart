@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/models/quran/ayah_list.dart';
@@ -18,6 +19,8 @@ import 'package:stacked_services/stacked_services.dart';
 
 class QuranViewModel extends BaseViewModel {
   final _player = AudioPlayer();
+  final _navigationService = locator<NavigationService>();
+  final _bottomSheetService = locator<BottomSheetService>();
   final _quranService = locator<QuranService>();
   final _userSettingsService = locator<UserSettingsService>();
   final _favouritesService = locator<FavouritesService>();
@@ -242,9 +245,24 @@ class QuranViewModel extends BaseViewModel {
       notifyListeners();
     } else {
       /// Favorilere ekle
-      // Favoriler ekranına gidecek ve oradan klasör oluşturacak veya klasör
-      // seçecek. Ekleme işlemi orada yapılacak. Eğer buradan oraya gittiyse
-      // Ekleme işleminden sonra geri buraya gelecek.
+      // Nesne oluştur
+      final fav = Favourite()
+        ..number = ayahModel.ayet
+        ..text1 = ayahModel.textAr
+        ..text2 = ayahModel.textOkunus
+        ..text3 = ayahModel.textMeal
+        ..type = EContentTypes.sure.name;
+      final result =
+          await _navigationService.navigateToFavouritesView(favourite: fav);
+      if (result is String) {
+        await _favouritesService.addFavourite(fav..folder = result);
+        _bottomSheetService.showBottomSheet(
+          title: "Favorilere eklendi.",
+          description: "$result isimli klasöre kaydedildi.",
+          confirmButtonTitle: "Tamam",
+        );
+      }
+      _getFavourites();
     }
   }
 

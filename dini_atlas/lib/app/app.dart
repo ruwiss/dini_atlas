@@ -16,6 +16,7 @@ import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/views/quran/quran_view.dart';
 import 'package:dini_atlas/services/local/favorites_service.dart';
+import 'package:dini_atlas/ui/views/favourites/favourites_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -27,6 +28,7 @@ import 'package:dini_atlas/services/local/favorites_service.dart';
       page: QuranView,
       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
     ),
+    MaterialRoute(page: FavouritesView),
 // @stacked-route
   ],
   dependencies: [

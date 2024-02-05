@@ -35,9 +35,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               ? null
               : IconButton(
                   onPressed: () => locator<NavigationService>().back(),
-                  icon: const Icon(Icons.arrow_back),
-                )),
-      actions: actions,
+                  icon: const Icon(Icons.arrow_back))),
+      actions: actions
+          ?.map((e) =>
+              Padding(padding: const EdgeInsets.only(right: 5), child: e))
+          .toList(),
     );
   }
 }

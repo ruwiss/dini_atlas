@@ -40,3 +40,10 @@ const String kiBookmarkChecked = "assets/vectors/bookmark_checked.svg";
 
 const String kiEye = "assets/vectors/eye.svg";
 const String kiRobot = "assets/vectors/robot.svg";
+
+const String kiSearch = "assets/vectors/search.svg";
+const String kiFolder2 = "assets/vectors/folder2.svg";
+const String kiFolderPlus = "assets/vectors/folder_plus.svg";
+const String kiSort = "assets/vectors/sort.svg";
+const String kiMore = "assets/vectors/more.svg";
+const String kiEmptyBox = "assets/vectors/empty_box.svg";
