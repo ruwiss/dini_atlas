@@ -8,11 +8,15 @@ import 'package:stacked_services/stacked_services.dart';
 
 class FavouritesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _bottomSheetService = locator<BottomSheetService>();
   final _favouritesService = locator<FavouritesService>();
 
   List<Favourite>? _favourites;
   List<Favourite>? get favourites => _favourites;
+  List<Favourite>? get getFavouritesCurrentFolder => _favourites
+      ?.where((e) => e.folder == showFolder)
+      .toList()
+      .reversed
+      .toList();
 
   // Tekrarlayan klasörleri filtrele
   List<Favourite> getUniqueFavouritesList() {
@@ -38,11 +42,18 @@ class FavouritesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void init() async {
-    runBusyFuture(getFavourites());
+  String? _showFolder;
+  String? get showFolder => _showFolder;
+  set showFolder(String? value) {
+    _showFolder = value;
+    notifyListeners();
   }
 
-  Future<void> getFavourites() async {
+  void init() async {
+    runBusyFuture(_getFavourites());
+  }
+
+  Future<void> _getFavourites() async {
     _favourites = await _favouritesService.getFavourites();
     notifyListeners();
   }
@@ -50,20 +61,24 @@ class FavouritesViewModel extends BaseViewModel {
   int getItemCountByFolder(String folder) =>
       favourites!.where((e) => e.folder == folder).length;
 
-  void onCreateFolderButtonTap(Favourite favourite) async {
+  void onCreateFolderButtonTap() async {
     final folderName = createFolderInputCtrl.text.trim();
     if (folderName.isEmpty) return;
-    favourite.folder = folderName;
-    await _favouritesService.addFavourite(favourite);
-    _navigationService.back();
-    _bottomSheetService.showBottomSheet(
-      title: "Favorilere eklendi.",
-      description: "$folderName isimli klasöre kaydedildi.",
-      confirmButtonTitle: "Tamam",
-    );
+    _navigationService.back(result: folderName);
   }
 
   void onFolderSelectForSave(Favourite favourite) async {
     _navigationService.back(result: favourite.folder);
+  }
+
+  void onFolderDelete(Favourite favourite) async {
+    await _favouritesService.deleteFolder(favourite.folder);
+    await _getFavourites();
+  }
+
+  void onFavouriteItemDelete(Favourite item) async {
+    await _favouritesService.deleteFavourite(item.id);
+    _favourites!.removeWhere((e) => e == item);
+    notifyListeners();
   }
 }

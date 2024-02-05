@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-enum EContentTypes { sure, hadis, dua }
+enum EContentTypes { ayet, hadis, dua }
 
 class ContentTypes {
   final EContentTypes type;
@@ -27,14 +27,14 @@ class ContentTypes {
     );
   }
 
-  ContentTypes.suraType()
-      : type = EContentTypes.sure,
+  ContentTypes.ayahType()
+      : type = EContentTypes.ayet,
         hidePlayButton = false,
         hideShareButton = false,
         hideBookmarkButton = false;
 
-  ContentTypes.suraTypeFavorite()
-      : type = EContentTypes.sure,
+  ContentTypes.ayahTypeFavorite()
+      : type = EContentTypes.ayet,
         hidePlayButton = true,
         hideShareButton = false,
         hideBookmarkButton = false;

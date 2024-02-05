@@ -12,17 +12,14 @@ class CreateFavouriteFolderWidget extends StatelessWidget {
     if (viewModel.createFolder) {
       return const SizedBox();
     } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _createFolderButton(viewModel),
-          _sortFavouritesButton(viewModel),
-        ],
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: _createFolderButton(viewModel),
       );
     }
   }
 
-   Widget _createFolderButton(FavouritesViewModel viewModel) {
+  Widget _createFolderButton(FavouritesViewModel viewModel) {
     return TextButton.icon(
       onPressed: () => viewModel.createFolder = true,
       icon: SvgPicture.asset(kiFolderPlus),
@@ -37,7 +34,4 @@ class CreateFavouriteFolderWidget extends StatelessWidget {
     );
   }
 
-    Widget _sortFavouritesButton(FavouritesViewModel viewModel) {
-    return IconButton(onPressed: () {}, icon: SvgPicture.asset(kiSort));
-  }
 }

@@ -70,7 +70,7 @@ class QuranView extends StackedView<QuranViewModel> {
             children: [
               if (index == 0) QuranHeader(sura: ayahList.sure),
               ContentWidget(
-                type: ContentTypes.suraType(),
+                type: ContentTypes.ayahType(),
                 number: ayahModel.ayet,
                 text1: suraSetting.showArabicText ? ayahModel.textAr : null,
                 text2:

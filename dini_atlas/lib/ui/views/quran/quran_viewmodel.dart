@@ -28,10 +28,10 @@ class QuranViewModel extends BaseViewModel {
   List<Favourite>? _favourites;
   List<Favourite>? get favourites => _favourites;
   Favourite getFavByAyahId(int ayahId) => favourites!.singleWhere(
-      (e) => e.number == ayahId && e.type == EContentTypes.sure.name);
+      (e) => e.number == ayahId && e.type == EContentTypes.ayet.name);
   bool isInFavourites(int ayahId) =>
       favourites?.any(
-          (e) => e.number == ayahId && e.type == EContentTypes.sure.name) ??
+          (e) => e.number == ayahId && e.type == EContentTypes.ayet.name) ??
       false;
 
   late UserSettings _userSettings;
@@ -251,9 +251,11 @@ class QuranViewModel extends BaseViewModel {
         ..text1 = ayahModel.textAr
         ..text2 = ayahModel.textOkunus
         ..text3 = ayahModel.textMeal
-        ..type = EContentTypes.sure.name;
+        ..type = EContentTypes.ayet.name;
+      // Klasör seçmesi için favoriler ekranına gönder
       final result =
           await _navigationService.navigateToFavouritesView(favourite: fav);
+      // Klasör seçimi sonrası gelen klasör ismiyle kayıt oluştur
       if (result is String) {
         await _favouritesService.addFavourite(fav..folder = result);
         _bottomSheetService.showBottomSheet(
@@ -262,6 +264,7 @@ class QuranViewModel extends BaseViewModel {
           confirmButtonTitle: "Tamam",
         );
       }
+      // Kayıt sonrası favorileri tekrar getir
       _getFavourites();
     }
   }

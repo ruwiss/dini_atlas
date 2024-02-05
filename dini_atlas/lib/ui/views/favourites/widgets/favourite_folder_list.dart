@@ -27,10 +27,9 @@ class FavouriteFolderListView extends StatelessWidget {
             children: [
               if (viewModel.createFolder)
                 _favouriteItem(
-                  viewModel: viewModel,
-                  item: Favourite(),
-                  isCreateFolder: true,
-                ),
+                    viewModel: viewModel,
+                    item: Favourite(),
+                    isCreateFolder: true),
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -43,7 +42,11 @@ class FavouriteFolderListView extends StatelessWidget {
                       highlightColor: Colors.transparent,
                       onTap: () {
                         if (favourite != null) {
+                          // Klasör seçimi (Kayıt için)
                           viewModel.onFolderSelectForSave(item);
+                        } else {
+                          // İçeriği göster
+                          viewModel.showFolder = item.folder;
                         }
                       },
                       child: _favouriteItem(viewModel: viewModel, item: item),
@@ -89,8 +92,7 @@ class FavouriteFolderListView extends StatelessWidget {
                         controller: viewModel.createFolderInputCtrl,
                         autofocus: true,
                         textInputAction: TextInputAction.go,
-                        onSubmitted: (_) =>
-                            viewModel.onCreateFolderButtonTap(favourite!),
+                        onSubmitted: (_) => viewModel.onCreateFolderButtonTap(),
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           isDense: true,
@@ -117,14 +119,23 @@ class FavouriteFolderListView extends StatelessWidget {
           ),
           const Spacer(),
           !isCreateFolder
-              ? InkWell(
-                  borderRadius: BorderRadius.circular(5),
-                  onTap: () {},
+              ? PopupMenuButton(
                   child: SvgPicture.asset(kiMore),
+                  onSelected: (value) {
+                    if (value == "delete") {
+                      viewModel.onFolderDelete(item);
+                    }
+                  },
+                  itemBuilder: (context) => <PopupMenuEntry<String>>[
+                    const PopupMenuItem<String>(
+                      value: "delete",
+                      child: Text('Klasörü Sil'),
+                    ),
+                  ],
                 )
               : InkWell(
                   borderRadius: BorderRadius.circular(5),
-                  onTap: () => viewModel.onCreateFolderButtonTap(favourite!),
+                  onTap: () => viewModel.onCreateFolderButtonTap(),
                   child: const Icon(
                     Icons.check,
                     color: kcPrimaryColor,

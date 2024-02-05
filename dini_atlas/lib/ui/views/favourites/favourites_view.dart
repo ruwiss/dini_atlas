@@ -2,6 +2,7 @@ import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/favourites/widgets/create_folder.dart';
+import 'package:dini_atlas/ui/views/favourites/widgets/favourite_contents.dart';
 import 'package:dini_atlas/ui/views/favourites/widgets/favourite_folder_list.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +21,27 @@ class FavouritesView extends StackedView<FavouritesViewModel> {
     FavouritesViewModel viewModel,
     Widget? child,
   ) {
+    final isFolderPage = viewModel.showFolder == null;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBarWidget(
-        title: favourite != null ? "Klasör Seçin" : "Favoriler",
-        actions: [
-          IconButton(onPressed: () {}, icon: SvgPicture.asset(kiSearch))
-        ],
+        title: !isFolderPage
+            ? viewModel.showFolder!
+            : favourite != null
+                ? "Klasör Seçin"
+                : "Favoriler",
+        hideBackButton: true,
+        leading: IconButton(
+            onPressed: () {
+              // Eğer klasör açılmamışsa sayfayı kapat
+              if (isFolderPage) {
+                Navigator.of(context).pop();
+              } else {
+                // Klasör açılmışsa klasörlere dön
+                viewModel.showFolder = null;
+              }
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: Container(
         padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
@@ -35,7 +50,10 @@ class FavouritesView extends StackedView<FavouritesViewModel> {
             if (favourite != null)
               CreateFavouriteFolderWidget(viewModel: viewModel),
             verticalSpaceSmall,
-            FavouriteFolderListView(viewModel: viewModel, favourite: favourite),
+            isFolderPage
+                ? FavouriteFolderListView(
+                    viewModel: viewModel, favourite: favourite)
+                : FavouriteContentsWidget(viewModel: viewModel),
           ],
         ),
       ),
