@@ -69,7 +69,7 @@ abstract class PrayerNotification {
         NotificationDetails(android: androidNotificationDetails);
     await PushNotification.instance.localNotiPlugin.show(
         1,
-        '${nextPrayer.name} ${nextPrayer.timeValue}  >>  $difference',
+        '${nextPrayer.name} ${nextPrayer.timeValue}  ➜  $difference',
         null,
         notificationDetails);
   }

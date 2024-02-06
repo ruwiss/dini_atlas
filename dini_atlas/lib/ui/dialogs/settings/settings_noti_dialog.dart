@@ -124,6 +124,7 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
                             onTap: (value) {
                               _player.play(AssetSource(e.path));
                               _prayerNotiSettings.warningSoundId = e.id;
+                              debugPrint("Seçilen ses: ${e.id}");
                               setState(() {});
                             },
                           ),

@@ -43,11 +43,13 @@ class PrayerReminderNotification {
 
     bool silentEnabled = false;
 
-    // Sıradaki namaz vaktini bul
+    // Bugüne ait vakitleri filtreleyerek sıradaki namaz vaktini bul
     final index = currentPrayer.items.indexWhere((e) {
       // eğer sessiz mod aktifse
       if (silentMode) {
+        // Filtredeki vakti DateTime'a dönüştür
         final prayerDateTime = e.timeValue.parseTimeAsDateTime();
+        // Şimdiki vakti DateTime'a dönüştür
         final currentDateTime = DateTime(0, 0, 0, now.hour, now.minute);
         // ikisinin farkını dk olarak hesapla
         final diff = currentDateTime.difference(prayerDateTime).inMinutes;
@@ -56,9 +58,9 @@ class PrayerReminderNotification {
         silentEnabled = diff >= -5 && diff <= 30;
       }
 
-      bool value = false;
+      bool returnValue = false;
 
-      // Namaza ait bildirim ayarlarını getir
+      // Filtredeki vakte ait bildirim ayarlarını getir
       final PrayerNotiSettings currentPrayerSetting =
           notiSettings.singleWhere((s) => s.name == e.name);
 
@@ -66,32 +68,33 @@ class PrayerReminderNotification {
       if (currentPrayerSetting.voiceWarningEnable) {
         // Zamanında uyarı
         if (e.timeValue == TimeOfDay.now().toHourMinString()) {
-          debugPrint("Namaz vakti bildirim uyarısı");
           warningSoundId = currentPrayerSetting.warningSoundId;
-          value = true;
+          debugPrint("Namaz vakti bildirim uyarısı - Ses: $warningSoundId");
+          returnValue = true;
+        } else {
+          // Eğer bildirim ayarı etkinse vaktinden önce uyarı yap
+          if (currentPrayerSetting.advancedWarningSoundsEnable) {
+            // Kaç dakika önceden uyarılacak
+            final int time = currentPrayerSetting.advancedVoiceWarningTime;
+
+            // Önceden uyarı olduğu için şimdiki zamana [time] kadar ekleme yap
+            final editedNotTime = TimeOfDay.now()
+                .convertToDateTime()
+                .add(Duration(minutes: time));
+
+            // Vakitler aynı mı?
+            if (e.timeValue.parseTime().toHourMinString() ==
+                editedNotTime.toHourMinString()) {
+              advancedVoiceWarningTime = time;
+              warningSoundId = currentPrayerSetting.warningSoundId;
+              debugPrint(
+                  "Namaz vakti bildirim $time dk önceden uyarı - Ses $warningSoundId");
+              returnValue = true;
+            }
+          }
         }
       }
-
-      // Eğer bildirim ayarı etkinse vaktinden önce uyarı yap
-      if (currentPrayerSetting.advancedWarningSoundsEnable) {
-        // Kaç dakika önceden uyarılacak
-        final int time = currentPrayerSetting.advancedVoiceWarningTime;
-
-        // Önceden uyarı olduğu için şimdiki zamana [time] kadar ekleme yap
-        final editedNotTime =
-            TimeOfDay.now().convertToDateTime().add(Duration(minutes: time));
-
-        // Vakitler aynı mı?
-        if (e.timeValue.parseTime().toHourMinString() ==
-            editedNotTime.toHourMinString()) {
-          advancedVoiceWarningTime = time;
-          warningSoundId = currentPrayerSetting.warningSoundId;
-          debugPrint("Namaz vakti bildirim $time dk önceden uyarı");
-          value = true;
-        }
-      }
-
-      return value;
+      return returnValue;
     });
 
     PrayerSharedPItem? activePrayer;
@@ -99,9 +102,12 @@ class PrayerReminderNotification {
     if (index != -1) activePrayer = currentPrayer.items[index];
 
     if (activePrayer != null) {
+      // Ayarların düzgün çalışması için dinamik kanal adı oluşturuyoruz
+      final String channel =
+          "$ksPrayerReminderNotiChannel${silentEnabled ? '_s' : ''}_$warningSoundId";
       AndroidNotificationDetails androidNotificationDetails =
           AndroidNotificationDetails(
-        "$ksPrayerReminderNotiChannel${silentEnabled ? '_s' : ''}",
+        channel,
         'Ezan Vakti Hatırlatıcı',
         channelDescription: 'Ezan vakti hatırlatıcı bildirimi',
         importance: Importance.max,
