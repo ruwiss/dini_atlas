@@ -2,6 +2,7 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/home/tabs/categories/categories_tab.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/bottom_nav_container.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,18 +55,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _bottomNavigationBar(BuildContext context, HomeViewModel viewModel) {
-    return Container(
-      decoration: BoxDecoration(
-        color: kcBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: kcShadowColor.withOpacity(.2),
-            spreadRadius: 0,
-            blurRadius: 16,
-            offset: const Offset(0, -1),
-          )
-        ],
-      ),
+    return BottomNavContainer(
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,

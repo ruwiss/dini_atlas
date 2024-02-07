@@ -947,6 +947,30 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i7.Future<_i3.UserSettings>);
 
   @override
+  _i7.Future<_i3.UserSettings> setIncreaseFontSizeForAyah(int? size) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setIncreaseFontSizeForAyah,
+          [size],
+        ),
+        returnValue: _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setIncreaseFontSizeForAyah,
+            [size],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setIncreaseFontSizeForAyah,
+            [size],
+          ),
+        )),
+      ) as _i7.Future<_i3.UserSettings>);
+
+  @override
   void setPrayerNotiSettingsForBackgroundTask(
           List<_i3.PrayerNotiSettings>? settingsList) =>
       super.noSuchMethod(

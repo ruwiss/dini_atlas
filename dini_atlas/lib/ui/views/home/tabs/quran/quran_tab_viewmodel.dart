@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 enum QuranTabs {
   sura(0, "Sûre"),
   page(1, "Sayfa"),
-  following(2, "Takipli");
+  traceable(2, "Takipli");
 
   final int id;
   final String name;

@@ -49,3 +49,8 @@ const String kiFolderPlus = "assets/vectors/folder_plus.svg";
 const String kiSort = "assets/vectors/sort.svg";
 const String kiMore = "assets/vectors/more.svg";
 const String kiEmptyBox = "assets/vectors/empty_box.svg";
+
+const String kiPlayDark = "assets/vectors/play_dark.svg";
+const String kiPauseDark= "assets/vectors/pause_dark.svg";
+const String kiPreviousDark= "assets/vectors/previous_dark.svg";
+const String kiForwardDark= "assets/vectors/forward_dark.svg";

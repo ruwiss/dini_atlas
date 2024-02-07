@@ -101,7 +101,6 @@ class QuranService {
     if (reciter == _currentAudioReciter) return Left(_suraAudio!);
     try {
       final response = await _dio.request(reciter.reciterUrl);
-
       // Cevap yoksa veya sunucu hata gönderdiyse
       if (response == null || response.statusCode != 200) {
         return Right(QuranException(response?.statusMessage ?? "Hata"));

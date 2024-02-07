@@ -41,12 +41,14 @@ class QuranSurahList extends StatelessWidget {
 
   Widget _surahItem({required SuraInfo item, bool hideDivider = false}) {
     return InkWell(
+      highlightColor: Colors.transparent,
       onTap: () {
-        if (currentTab != QuranTabs.following) {
-          locator<NavigationService>()
-              .navigateToQuranView(currentTab: currentTab, sura: item);
+        final navService = locator<NavigationService>();
+        if (currentTab != QuranTabs.traceable) {
+          navService.navigateToQuranView(currentTab: currentTab, sura: item);
         } else {
           // Takipli kuran ekranına git
+          navService.navigateToTraceableQuranView(sura: item);
         }
       },
       splashFactory: NoSplash.splashFactory,
@@ -79,19 +81,21 @@ class QuranSurahList extends StatelessWidget {
 
   Text _suraTextView(SuraInfo item) {
     final bool isPage = currentTab == QuranTabs.page;
-    return Text(isPage ? "Sayfa ${item.page}" : item.nameArabic,
-        style: isPage
-            ? const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: kcPrimaryColorLight,
-              )
-            : const TextStyle(
-                fontFamily: "Uthman", // Arabic Font
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-                color: kcPrimaryColorLight,
-              ));
+    return Text(
+      isPage ? "Sayfa ${item.page}" : item.nameArabic,
+      style: isPage
+          ? const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: kcPrimaryColorLight,
+            )
+          : const TextStyle(
+              fontFamily: "Uthman", // Arabic Font
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: kcPrimaryColorLight,
+            ),
+    );
   }
 
   Row _suraInfoView(SuraInfo item) {
@@ -122,7 +126,7 @@ class QuranSurahList extends StatelessWidget {
             color: kcPrimaryColorDark,
           ),
         ),
-        if (currentTab == QuranTabs.following) // takipli kuran
+        if (currentTab == QuranTabs.traceable) // takipli kuran
           const Padding(
             padding: EdgeInsets.only(left: 5),
             child: Text(
