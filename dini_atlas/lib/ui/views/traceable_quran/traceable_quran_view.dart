@@ -19,10 +19,13 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
     TraceableQuranViewModel viewModel,
     Widget? child,
   ) {
+    final bool bismillah =
+        viewModel.currentAyah?.page == null && !viewModel.isBusy;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBarWidget(
         title: sura.name,
+        backgroundColor: bismillah ? kcShadowColor : null,
         actions: [
           IconButton(
             onPressed: viewModel.onSettingsTap,
@@ -33,7 +36,7 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
       body: Center(
         child: viewModel.currentAyah == null
             ? const CircularProgressIndicator()
-            : viewModel.currentAyah?.page == null
+            : bismillah
                 ? _bismillahWidget()
                 : _contentWidget(viewModel),
       ),

@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 const double _tinySize = 5.0;
 const double _smallSize = 10.0;

@@ -29,7 +29,6 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
     return InteractiveViewer(
       clipBehavior: Clip.none,
       transformationController: _interactiveViewerCtrl,
-      constrained: true,
       alignment: Alignment.center,
       child: Container(
         margin: const EdgeInsets.all(15),

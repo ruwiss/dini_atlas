@@ -51,6 +51,10 @@ const String kiMore = "assets/vectors/more.svg";
 const String kiEmptyBox = "assets/vectors/empty_box.svg";
 
 const String kiPlayDark = "assets/vectors/play_dark.svg";
-const String kiPauseDark= "assets/vectors/pause_dark.svg";
-const String kiPreviousDark= "assets/vectors/previous_dark.svg";
-const String kiForwardDark= "assets/vectors/forward_dark.svg";
+const String kiPauseDark = "assets/vectors/pause_dark.svg";
+const String kiPreviousDark = "assets/vectors/previous_dark.svg";
+const String kiForwardDark = "assets/vectors/forward_dark.svg";
+
+const String kiCompassCircle = "assets/vectors/compass_circle.svg";
+const String kiCompassPlaceholder = "assets/vectors/compass_placeholder.svg";
+const String kiCompassKaaba = "assets/vectors/compass_kaaba.svg";

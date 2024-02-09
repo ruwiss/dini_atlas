@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarWidget(
-      {super.key,
-      required this.title,
-      this.actions,
-      this.leading,
-      this.hideBackButton = false});
+  const AppBarWidget({
+    super.key,
+    required this.title,
+    this.actions,
+    this.leading,
+    this.hideBackButton = false,
+    this.backgroundColor,
+  });
   final String title;
   final List<Widget>? actions;
   final Widget? leading;
   final bool hideBackButton;
+  final Color? backgroundColor;
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
@@ -22,6 +25,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
+      backgroundColor: backgroundColor,
       title: Text(
         title,
         style: const TextStyle(

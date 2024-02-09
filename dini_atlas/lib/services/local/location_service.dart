@@ -39,18 +39,25 @@ class LocationService {
     final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
+    final double latitude = position.latitude;
+    final double longtitude = position.longitude;
+
     // Koordinatı placemarka dönüştür
     final List<Placemark> placemarks = await placemarkFromCoordinates(
-      position.latitude,
-      position.longitude,
+      latitude,
+      longtitude,
       localeIdentifier: ksDefaultLocale,
     );
 
     // Placemark üzerinden konum bilgisini getir
     final Placemark location = placemarks.first;
 
+    final locationJson = location.toJson();
+    locationJson['latitude'] = latitude;
+    locationJson['longitude'] = longtitude;
+
     // Nesne oluştur
-    final UserLocation userLocation = UserLocation.fromJson(location.toJson());
+    final UserLocation userLocation = UserLocation.fromJson(locationJson);
 
     if (kDebugMode) {
       print(

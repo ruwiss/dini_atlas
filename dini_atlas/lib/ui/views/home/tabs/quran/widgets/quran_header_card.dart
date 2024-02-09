@@ -58,7 +58,7 @@ class QuranHeaderCard extends StatelessWidget {
               ],
             ),
           ),
-          SvgPicture.asset(kiCardImage),
+          Flexible(child: SvgPicture.asset(kiCardImage, fit: BoxFit.cover)),
         ],
       ),
     );

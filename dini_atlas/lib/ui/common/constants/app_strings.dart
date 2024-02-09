@@ -1,5 +1,6 @@
 // Localhost API url
 const String ksBaseUrl = "http://10.0.2.2:5000";
+//const String ksBaseUrl = "https://192.168.1.104:5000";
 
 // Uygulama başlığı
 const String ksAppName = "Dinî Atlas";

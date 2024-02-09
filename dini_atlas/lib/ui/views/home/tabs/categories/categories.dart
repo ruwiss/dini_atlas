@@ -24,7 +24,7 @@ final List<CategoryItem> categoryItems = [
     name: "Pusula",
     image: kiCompass,
     color: kcListCardColors[0],
-    route: "",
+    route: Routes.compassView,
   ),
   CategoryItem(
     id: "favoriler",

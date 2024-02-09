@@ -33,11 +33,12 @@ class UserSettingsService {
     }
   }
 
-  Future<void> setUserLocationSettings(
-      {required UserLocation location,
-      Country? country,
-      City? city,
-      StateModel? state}) async {
+  Future<void> setUserLocationSettings({
+    required UserLocation location,
+    Country? country,
+    City? city,
+    StateModel? state,
+  }) async {
     try {
       final jsonString = jsonEncode(location.toJson());
       await _db.writeTxn(() async => await _db.userSettings.clear());

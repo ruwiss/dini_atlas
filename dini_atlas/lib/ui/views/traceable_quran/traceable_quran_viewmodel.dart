@@ -127,7 +127,7 @@ class TraceableQuranViewModel extends BaseViewModel {
       });
       debugPrint("Sayfa değişimi: ${nextPage.page}");
       _currentAyah = nextPage;
-      await seekAudio(nextPage.startTime);
+      await runBusyFuture(seekAudio(nextPage.startTime));
       notifyListeners();
     } catch (e) {
       debugPrint("Sonraki sayfa yok: $e");
@@ -157,7 +157,7 @@ class TraceableQuranViewModel extends BaseViewModel {
           suraPlayerModel.pages.where((e) => e.page == prevPage.page).toList();
       pageItems.sort((a, b) => a.ayah.compareTo(b.ayah));
       _currentAyah = pageItems.first;
-      await seekAudio(currentAyah!.startTime);
+      await runBusyFuture(seekAudio(currentAyah!.startTime));
       notifyListeners();
     } catch (e) {
       debugPrint("Önceki sayfa yok: $e");

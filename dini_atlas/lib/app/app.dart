@@ -18,6 +18,7 @@ import 'package:dini_atlas/ui/views/quran/quran_view.dart';
 import 'package:dini_atlas/services/local/favorites_service.dart';
 import 'package:dini_atlas/ui/views/favourites/favourites_view.dart';
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart';
+import 'package:dini_atlas/ui/views/compass/compass_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -31,6 +32,7 @@ import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart';
     ),
     MaterialRoute(page: FavouritesView),
     MaterialRoute(page: TraceableQuranView),
+    MaterialRoute(page: CompassView),
 // @stacked-route
   ],
   dependencies: [

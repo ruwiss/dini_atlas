@@ -1,6 +1,7 @@
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/widgets/location_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
@@ -22,8 +23,10 @@ class StartupView extends StackedView<StartupViewModel> {
           builder: (context) {
             if (viewModel.hasError &&
                 viewModel.modelError is LocationException) {
-              return _locationErrorWidget(
-                  context, viewModel.modelError.message, viewModel);
+              return LocationErrorWidget(
+                message: viewModel.modelError.message,
+                onRetry: viewModel.getDatas,
+              );
             } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -121,35 +124,6 @@ class StartupView extends StackedView<StartupViewModel> {
         ),
       );
     }
-  }
-
-  Widget _locationErrorWidget(
-    BuildContext context,
-    String errorMessage,
-    StartupViewModel viewModel,
-  ) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 250,
-          child: Text(
-            errorMessage,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 18),
-          ),
-        ),
-        verticalSpaceSmall,
-        TextButton.icon(
-          onPressed: viewModel.getDatas,
-          icon: const Icon(Icons.location_disabled),
-          label: const Text(
-            "Yeniden Dene",
-            style: TextStyle(fontSize: 16),
-          ),
-        )
-      ],
-    );
   }
 
   TextButton _startupPrivacyPolicy() {
