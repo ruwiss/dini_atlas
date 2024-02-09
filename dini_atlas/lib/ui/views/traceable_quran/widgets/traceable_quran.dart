@@ -16,43 +16,42 @@ class TraceableQuranWidget extends StatefulWidget {
 }
 
 class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
-  double _containerScale = 1;
+  final _interactiveViewerCtrl = TransformationController();
 
   void _setContainerScale(Size svgSize) {
     final width = screenWidth(context) * .9;
     final diff = width / svgSize.width;
-    _containerScale = diff;
-    setState(() {});
+    _interactiveViewerCtrl.value = Matrix4.diagonal3Values(diff, diff, 1);
   }
 
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
       clipBehavior: Clip.none,
-      child: Transform.scale(
-        scale: _containerScale,
-        child: Container(
-          margin: const EdgeInsets.all(15),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 27),
-          decoration: BoxDecoration(
-              color: kcGrayColorLightSoft,
-              borderRadius: BorderRadius.circular(10)),
-          child: widget.suraPage.x == null
-              ? SvgPicture.network(widget.suraPage.page!)
-              : CustomPaint(
-                  painter: AyahMarkerPainter(
-                    x: double.parse(widget.suraPage.x!),
-                    y: double.parse(widget.suraPage.y!),
-                    polygon: widget.suraPage.polygon!,
-                  ),
-                  child: SizeProviderWidget(
-                    onChildSize: (size) {
-                      _setContainerScale(size);
-                    },
-                    child: SvgPicture.network(widget.suraPage.page!),
-                  ),
+      transformationController: _interactiveViewerCtrl,
+      constrained: true,
+      alignment: Alignment.center,
+      child: Container(
+        margin: const EdgeInsets.all(15),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 27),
+        decoration: BoxDecoration(
+            color: kcGrayColorLightSoft,
+            borderRadius: BorderRadius.circular(10)),
+        child: widget.suraPage.x == null
+            ? SvgPicture.network(widget.suraPage.page!)
+            : CustomPaint(
+                painter: AyahMarkerPainter(
+                  x: double.parse(widget.suraPage.x!),
+                  y: double.parse(widget.suraPage.y!),
+                  polygon: widget.suraPage.polygon!,
                 ),
-        ),
+                child: SizeProviderWidget(
+                  onChildSize: (size) {
+                    _setContainerScale(size);
+                  },
+                  child: SvgPicture.network(widget.suraPage.page!),
+                ),
+              ),
       ),
     );
   }
