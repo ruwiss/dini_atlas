@@ -5,23 +5,24 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:dini_atlas/models/favourite.dart' as _i13;
-import 'package:dini_atlas/models/quran/sura_info.dart' as _i11;
+import 'package:dini_atlas/models/favourite.dart' as _i14;
+import 'package:dini_atlas/models/quran/sura_info.dart' as _i12;
 import 'package:dini_atlas/ui/views/compass/compass_view.dart' as _i8;
 import 'package:dini_atlas/ui/views/favourites/favourites_view.dart' as _i6;
 import 'package:dini_atlas/ui/views/home/home_view.dart' as _i2;
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart'
-    as _i12;
+    as _i13;
+import 'package:dini_atlas/ui/views/kaza/kaza_view.dart' as _i9;
 import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart' as _i4;
 import 'package:dini_atlas/ui/views/quran/quran_view.dart' as _i5;
 import 'package:dini_atlas/ui/views/startup/startup_view.dart' as _i3;
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart'
     as _i7;
-import 'package:flutter/foundation.dart' as _i10;
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/foundation.dart' as _i11;
+import 'package:flutter/material.dart' as _i10;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i14;
+import 'package:stacked_services/stacked_services.dart' as _i15;
 
 class Routes {
   static const homeView = '/home-view';
@@ -38,6 +39,8 @@ class Routes {
 
   static const compassView = '/compass-view';
 
+  static const kazaView = '/kaza-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -46,6 +49,7 @@ class Routes {
     favouritesView,
     traceableQuranView,
     compassView,
+    kazaView,
   };
 }
 
@@ -79,30 +83,34 @@ class StackedRouter extends _i1.RouterBase {
       Routes.compassView,
       page: _i8.CompassView,
     ),
+    _i1.RouteDef(
+      Routes.kazaView,
+      page: _i9.KazaView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.NoInternetView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.NoInternetView(),
         settings: data,
       );
     },
     _i5.QuranView: (data) {
       final args = data.getArgs<QuranViewArguments>(nullOk: false);
-      return _i9.PageRouteBuilder<dynamic>(
+      return _i10.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) => _i5.QuranView(
             key: args.key, sura: args.sura, currentTab: args.currentTab),
         settings: data,
@@ -114,7 +122,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<FavouritesViewArguments>(
         orElse: () => const FavouritesViewArguments(),
       );
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i6.FavouritesView(key: args.key, favourite: args.favourite),
         settings: data,
@@ -122,15 +130,21 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i7.TraceableQuranView: (data) {
       final args = data.getArgs<TraceableQuranViewArguments>(nullOk: false);
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i7.TraceableQuranView(key: args.key, sura: args.sura),
         settings: data,
       );
     },
     _i8.CompassView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.CompassView(),
+        settings: data,
+      );
+    },
+    _i9.KazaView: (data) {
+      return _i10.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i9.KazaView(),
         settings: data,
       );
     },
@@ -150,11 +164,11 @@ class QuranViewArguments {
     required this.currentTab,
   });
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
-  final _i11.SuraInfo sura;
+  final _i12.SuraInfo sura;
 
-  final _i12.QuranTabs currentTab;
+  final _i13.QuranTabs currentTab;
 
   @override
   String toString() {
@@ -181,9 +195,9 @@ class FavouritesViewArguments {
     this.favourite,
   });
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
-  final _i13.Favourite? favourite;
+  final _i14.Favourite? favourite;
 
   @override
   String toString() {
@@ -208,9 +222,9 @@ class TraceableQuranViewArguments {
     required this.sura,
   });
 
-  final _i10.Key? key;
+  final _i11.Key? key;
 
-  final _i11.SuraInfo sura;
+  final _i12.SuraInfo sura;
 
   @override
   String toString() {
@@ -229,7 +243,7 @@ class TraceableQuranViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i14.NavigationService {
+extension NavigatorStateExtension on _i15.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -273,9 +287,9 @@ extension NavigatorStateExtension on _i14.NavigationService {
   }
 
   Future<dynamic> navigateToQuranView({
-    _i10.Key? key,
-    required _i11.SuraInfo sura,
-    required _i12.QuranTabs currentTab,
+    _i11.Key? key,
+    required _i12.SuraInfo sura,
+    required _i13.QuranTabs currentTab,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -292,8 +306,8 @@ extension NavigatorStateExtension on _i14.NavigationService {
   }
 
   Future<dynamic> navigateToFavouritesView({
-    _i10.Key? key,
-    _i13.Favourite? favourite,
+    _i11.Key? key,
+    _i14.Favourite? favourite,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -309,8 +323,8 @@ extension NavigatorStateExtension on _i14.NavigationService {
   }
 
   Future<dynamic> navigateToTraceableQuranView({
-    _i10.Key? key,
-    required _i11.SuraInfo sura,
+    _i11.Key? key,
+    required _i12.SuraInfo sura,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -333,6 +347,20 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.compassView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToKazaView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.kazaView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -382,9 +410,9 @@ extension NavigatorStateExtension on _i14.NavigationService {
   }
 
   Future<dynamic> replaceWithQuranView({
-    _i10.Key? key,
-    required _i11.SuraInfo sura,
-    required _i12.QuranTabs currentTab,
+    _i11.Key? key,
+    required _i12.SuraInfo sura,
+    required _i13.QuranTabs currentTab,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -401,8 +429,8 @@ extension NavigatorStateExtension on _i14.NavigationService {
   }
 
   Future<dynamic> replaceWithFavouritesView({
-    _i10.Key? key,
-    _i13.Favourite? favourite,
+    _i11.Key? key,
+    _i14.Favourite? favourite,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -418,8 +446,8 @@ extension NavigatorStateExtension on _i14.NavigationService {
   }
 
   Future<dynamic> replaceWithTraceableQuranView({
-    _i10.Key? key,
-    required _i11.SuraInfo sura,
+    _i11.Key? key,
+    required _i12.SuraInfo sura,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -442,6 +470,20 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.compassView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithKazaView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.kazaView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

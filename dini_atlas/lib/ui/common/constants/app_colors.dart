@@ -16,6 +16,7 @@ const Color kcGrayColorLight = Color(0x0DF2F2F3);
 const Color kcGrayColorLightSoft = Color(0xFFF9F9F9);
 const Color kcGrayColorSoft = Color(0xFFCBCBCB);
 const Color kcBlueGrayColor = Color(0xFFEDF3F9);
+const Color kcButtonColor = Color(0xFFF1F4FA);
 
 // Purple
 const Color kcPurpleColorDark = Color(0xFF9055FF);

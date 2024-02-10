@@ -38,7 +38,7 @@ final List<CategoryItem> categoryItems = [
     name: "Kaza\nÇetelesi",
     image: kiKaza,
     color: kcListCardColors[2],
-    route: "",
+    route: Routes.kazaView,
   ),
   CategoryItem(
     id: "tesbihat",

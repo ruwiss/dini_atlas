@@ -58,3 +58,5 @@ const String kiForwardDark = "assets/vectors/forward_dark.svg";
 const String kiCompassCircle = "assets/vectors/compass_circle.svg";
 const String kiCompassPlaceholder = "assets/vectors/compass_placeholder.svg";
 const String kiCompassKaaba = "assets/vectors/compass_kaaba.svg";
+
+const String kiAuthEmoji = "assets/vectors/auth_emoji.svg";
