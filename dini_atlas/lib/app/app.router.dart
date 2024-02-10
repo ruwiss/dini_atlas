@@ -129,11 +129,8 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i8.CompassView: (data) {
-      final args = data.getArgs<CompassViewArguments>(
-        orElse: () => const CompassViewArguments(),
-      );
       return _i9.MaterialPageRoute<dynamic>(
-        builder: (context) => _i8.CompassView(key: args.key),
+        builder: (context) => const _i8.CompassView(),
         settings: data,
       );
     },
@@ -229,28 +226,6 @@ class TraceableQuranViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ sura.hashCode;
-  }
-}
-
-class CompassViewArguments {
-  const CompassViewArguments({this.key});
-
-  final _i10.Key? key;
-
-  @override
-  String toString() {
-    return '{"key": "$key"}';
-  }
-
-  @override
-  bool operator ==(covariant CompassViewArguments other) {
-    if (identical(this, other)) return true;
-    return other.key == key;
-  }
-
-  @override
-  int get hashCode {
-    return key.hashCode;
   }
 }
 
@@ -350,16 +325,14 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToCompassView({
-    _i10.Key? key,
+  Future<dynamic> navigateToCompassView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  }) async {
+  ]) async {
     return navigateTo<dynamic>(Routes.compassView,
-        arguments: CompassViewArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -461,16 +434,14 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithCompassView({
-    _i10.Key? key,
+  Future<dynamic> replaceWithCompassView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  }) async {
+  ]) async {
     return replaceWith<dynamic>(Routes.compassView,
-        arguments: CompassViewArguments(key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

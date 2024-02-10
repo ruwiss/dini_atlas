@@ -798,8 +798,6 @@ class MockUserSettingsService extends _i1.Mock
     _i12.Country? country,
     _i13.City? city,
     _i14.StateModel? state,
-    double? latitude,
-    double? longtitude,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -810,8 +808,6 @@ class MockUserSettingsService extends _i1.Mock
             #country: country,
             #city: city,
             #state: state,
-            #latitude: latitude,
-            #longtitude: longtitude,
           },
         ),
         returnValue: _i7.Future<void>.value(),
