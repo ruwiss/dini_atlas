@@ -16,17 +16,18 @@ const String KazaAuthMailValueKey = 'KazaAuthMail';
 const String KazaAuthPass1ValueKey = 'KazaAuthPass1';
 const String KazaAuthPass2ValueKey = 'KazaAuthPass2';
 
-final Map<String, TextEditingController> _KazaViewTextEditingControllers = {};
+final Map<String, TextEditingController> _KazaAuthWidgetTextEditingControllers =
+    {};
 
-final Map<String, FocusNode> _KazaViewFocusNodes = {};
+final Map<String, FocusNode> _KazaAuthWidgetFocusNodes = {};
 
-final Map<String, String? Function(String?)?> _KazaViewTextValidations = {
+final Map<String, String? Function(String?)?> _KazaAuthWidgetTextValidations = {
   KazaAuthMailValueKey: KazaAuthFormValidator.validateEmail,
   KazaAuthPass1ValueKey: KazaAuthFormValidator.validatePasswords,
   KazaAuthPass2ValueKey: KazaAuthFormValidator.validatePasswords,
 };
 
-mixin $KazaView {
+mixin $KazaAuthWidget {
   TextEditingController get kazaAuthMailController =>
       _getFormTextEditingController(KazaAuthMailValueKey);
   TextEditingController get kazaAuthPass1Controller =>
@@ -45,21 +46,21 @@ mixin $KazaView {
     String key, {
     String? initialValue,
   }) {
-    if (_KazaViewTextEditingControllers.containsKey(key)) {
-      return _KazaViewTextEditingControllers[key]!;
+    if (_KazaAuthWidgetTextEditingControllers.containsKey(key)) {
+      return _KazaAuthWidgetTextEditingControllers[key]!;
     }
 
-    _KazaViewTextEditingControllers[key] =
+    _KazaAuthWidgetTextEditingControllers[key] =
         TextEditingController(text: initialValue);
-    return _KazaViewTextEditingControllers[key]!;
+    return _KazaAuthWidgetTextEditingControllers[key]!;
   }
 
   FocusNode _getFormFocusNode(String key) {
-    if (_KazaViewFocusNodes.containsKey(key)) {
-      return _KazaViewFocusNodes[key]!;
+    if (_KazaAuthWidgetFocusNodes.containsKey(key)) {
+      return _KazaAuthWidgetFocusNodes[key]!;
     }
-    _KazaViewFocusNodes[key] = FocusNode();
-    return _KazaViewFocusNodes[key]!;
+    _KazaAuthWidgetFocusNodes[key] = FocusNode();
+    return _KazaAuthWidgetFocusNodes[key]!;
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -111,15 +112,15 @@ mixin $KazaView {
   void disposeForm() {
     // The dispose function for a TextEditingController sets all listeners to null
 
-    for (var controller in _KazaViewTextEditingControllers.values) {
+    for (var controller in _KazaAuthWidgetTextEditingControllers.values) {
       controller.dispose();
     }
-    for (var focusNode in _KazaViewFocusNodes.values) {
+    for (var focusNode in _KazaAuthWidgetFocusNodes.values) {
       focusNode.dispose();
     }
 
-    _KazaViewTextEditingControllers.clear();
-    _KazaViewFocusNodes.clear();
+    _KazaAuthWidgetTextEditingControllers.clear();
+    _KazaAuthWidgetFocusNodes.clear();
   }
 }
 
@@ -147,8 +148,10 @@ extension ValueProperties on FormStateHelper {
       this.formValueMap..addAll({KazaAuthMailValueKey: value}),
     );
 
-    if (_KazaViewTextEditingControllers.containsKey(KazaAuthMailValueKey)) {
-      _KazaViewTextEditingControllers[KazaAuthMailValueKey]?.text = value ?? '';
+    if (_KazaAuthWidgetTextEditingControllers.containsKey(
+        KazaAuthMailValueKey)) {
+      _KazaAuthWidgetTextEditingControllers[KazaAuthMailValueKey]?.text =
+          value ?? '';
     }
   }
 
@@ -157,8 +160,9 @@ extension ValueProperties on FormStateHelper {
       this.formValueMap..addAll({KazaAuthPass1ValueKey: value}),
     );
 
-    if (_KazaViewTextEditingControllers.containsKey(KazaAuthPass1ValueKey)) {
-      _KazaViewTextEditingControllers[KazaAuthPass1ValueKey]?.text =
+    if (_KazaAuthWidgetTextEditingControllers.containsKey(
+        KazaAuthPass1ValueKey)) {
+      _KazaAuthWidgetTextEditingControllers[KazaAuthPass1ValueKey]?.text =
           value ?? '';
     }
   }
@@ -168,8 +172,9 @@ extension ValueProperties on FormStateHelper {
       this.formValueMap..addAll({KazaAuthPass2ValueKey: value}),
     );
 
-    if (_KazaViewTextEditingControllers.containsKey(KazaAuthPass2ValueKey)) {
-      _KazaViewTextEditingControllers[KazaAuthPass2ValueKey]?.text =
+    if (_KazaAuthWidgetTextEditingControllers.containsKey(
+        KazaAuthPass2ValueKey)) {
+      _KazaAuthWidgetTextEditingControllers[KazaAuthPass2ValueKey]?.text =
           value ?? '';
     }
   }
@@ -226,11 +231,11 @@ extension Methods on FormStateHelper {
 
 /// Returns the validation message for the given key
 String? getValidationMessage(String key) {
-  final validatorForKey = _KazaViewTextValidations[key];
+  final validatorForKey = _KazaAuthWidgetTextValidations[key];
   if (validatorForKey == null) return null;
 
   String? validationMessageForKey = validatorForKey(
-    _KazaViewTextEditingControllers[key]!.text,
+    _KazaAuthWidgetTextEditingControllers[key]!.text,
   );
 
   return validationMessageForKey;

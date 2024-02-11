@@ -23,6 +23,9 @@ enum PrayerType {
 class UserSettings {
   Id id = Isar.autoIncrement;
 
+  /// Kullanıcı Giriş Bilgileri
+  UserAuth? userAuth;
+
   /// Kullanıcı konumu jsonString
   late String jsonString;
 
@@ -135,4 +138,12 @@ class SuraSetting {
       ..showMeaningText = showMeaningText ?? this.showMeaningText
       ..playerAutoChange = playerAutoChange ?? this.playerAutoChange;
   }
+}
+
+@embedded
+class UserAuth {
+  late String email;
+  late String password;
+
+  Map<String, dynamic> toJson() => {"mail": email, "password": password};
 }

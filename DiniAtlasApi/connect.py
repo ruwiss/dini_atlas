@@ -10,7 +10,7 @@ def connect_mysql():
             # password="yourpassword"
         )
 
-        cursor = db.cursor(dictionary=True)
+        cursor = db.cursor(dictionary=True, buffered=True)
         return db, cursor
 
     except mysql.connector.Error as err:

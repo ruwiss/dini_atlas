@@ -17,8 +17,8 @@ def kullanici():
         password = helper.md5(data["password"])
 
         cursor.execute(
-            "SELECT id FROM kullanicilar WHERE mail = %s AND password = %s",
-            (mail, password),
+            "SELECT id FROM kullanicilar WHERE mail = %s",
+            (mail,),
         )
         user = cursor.fetchone()
         if user:
@@ -44,9 +44,9 @@ def kullanici():
         )
         user = cursor.fetchone()
         if not user:
-            return jsonify({"success": 0, "message": "Hatalı bilgiler."})
+            return jsonify({"success": 0, "message": "Girdiğiniz bilgiler hatalı"})
         else:
-            return jsonify({"success": 1, "message": "Giriş yapıldı."})
+            return jsonify({"success": 1, "message": "Giriş yapıldı"})
 
 
 @app.route("/kaza", methods=["GET", "POST"])

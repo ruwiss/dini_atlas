@@ -169,6 +169,20 @@ class UserSettingsService {
     }
   }
 
+  Future<UserSettings> setUserAuthInformation(UserAuth userAuth) async {
+    try {
+      final userSettings = await getUserSettings();
+      userSettings!.userAuth = userAuth;
+      this.userSettings = userSettings;
+      // Veriyi kaydet
+      await _db.writeTxn(() async => _db.userSettings.put(userSettings));
+      return userSettings;
+    } catch (e) {
+      throw UserSettingsException(
+          "Kullanıcı giriş bilgileri kaydedilirken bir sorun oluştu $e");
+    }
+  }
+
   // Background Task'da kullanmak üzere bildirim ayarlarını SharedPreferences'a kaydet
   void setPrayerNotiSettingsForBackgroundTask(
       List<PrayerNotiSettings> settingsList) async {

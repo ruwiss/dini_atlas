@@ -20,6 +20,7 @@ import 'package:dini_atlas/ui/views/favourites/favourites_view.dart';
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart';
 import 'package:dini_atlas/ui/views/compass/compass_view.dart';
 import 'package:dini_atlas/ui/views/kaza/kaza_view.dart';
+import 'package:dini_atlas/services/remote/auth_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -50,6 +51,7 @@ import 'package:dini_atlas/ui/views/kaza/kaza_view.dart';
     LazySingleton(classType: FetchTimesService),
     LazySingleton(classType: QuranService),
     LazySingleton(classType: FavouritesService),
+    LazySingleton(classType: AuthService),
 // @stacked-service
   ],
   bottomsheets: [

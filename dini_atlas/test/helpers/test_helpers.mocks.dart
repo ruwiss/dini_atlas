@@ -19,6 +19,7 @@ import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
 import 'package:dini_atlas/models/quran/sura_player.dart' as _i27;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
+import 'package:dini_atlas/services/remote/auth_service.dart' as _i30;
 import 'package:dini_atlas/services/local/favorites_service.dart' as _i28;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i9;
 import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i19;
@@ -971,6 +972,30 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i7.Future<_i3.UserSettings>);
 
   @override
+  _i7.Future<_i3.UserSettings> setUserAuthInformation(_i3.UserAuth? userAuth) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setUserAuthInformation,
+          [userAuth],
+        ),
+        returnValue: _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setUserAuthInformation,
+            [userAuth],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i7.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setUserAuthInformation,
+            [userAuth],
+          ),
+        )),
+      ) as _i7.Future<_i3.UserSettings>);
+
+  @override
   void setPrayerNotiSettingsForBackgroundTask(
           List<_i3.PrayerNotiSettings>? settingsList) =>
       super.noSuchMethod(
@@ -1324,3 +1349,8 @@ class MockFavouritesService extends _i1.Mock implements _i28.FavouritesService {
             _i7.Future<List<_i29.Favourite>>.value(<_i29.Favourite>[]),
       ) as _i7.Future<List<_i29.Favourite>>);
 }
+
+/// A class which mocks [AuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthService extends _i1.Mock implements _i30.AuthService {}
