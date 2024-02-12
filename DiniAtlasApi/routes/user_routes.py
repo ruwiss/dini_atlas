@@ -105,6 +105,6 @@ def kaza_borcu():
             if kaza_borcu:
                 return jsonify({"success": 1, "data": json.loads(kaza_borcu["data"])})
             else:
-                return jsonify({"success": 1, "data": []})
+                return jsonify({"success": 1, "data": {}})
         else:
             return "Error", 401

@@ -10,6 +10,7 @@ import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/services/local/favorites_service.dart';
 import 'package:dini_atlas/services/remote/auth_service.dart';
+import 'package:dini_atlas/services/remote/kaza_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -26,6 +27,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<QuranService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<FavouritesService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<AuthService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<KazaService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -40,6 +42,7 @@ void registerServices() {
   getAndRegisterQuranService();
   getAndRegisterFavoritesService();
   getAndRegisterAuthService();
+  getAndRegisterKazaService();
 // @stacked-mock-register
 }
 
@@ -146,6 +149,13 @@ MockAuthService getAndRegisterAuthService() {
   _removeRegistrationIfExists<AuthService>();
   final service = MockAuthService();
   locator.registerSingleton<AuthService>(service);
+  return service;
+}
+
+MockKazaService getAndRegisterKazaService() {
+  _removeRegistrationIfExists<KazaService>();
+  final service = MockKazaService();
+  locator.registerSingleton<KazaService>(service);
   return service;
 }
 // @stacked-mock-create

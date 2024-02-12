@@ -1,8 +1,10 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
+import 'package:dini_atlas/models/kaza/kaza.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/auth_service.dart';
+import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/auth_widget.form.dart';
 import 'package:stacked/stacked.dart';
 
@@ -25,6 +27,7 @@ class KazaAuthFormValidator {
 class KazaViewModel extends FormViewModel {
   final _authService = locator<AuthService>();
   final _userSettingsService = locator<UserSettingsService>();
+  final _kazaService = locator<KazaService>();
 
   late UserSettings _userSettings;
   bool get isUserLoggedIn => _userSettings.userAuth != null;
@@ -32,12 +35,21 @@ class KazaViewModel extends FormViewModel {
   AuthType _authType = AuthType.login;
   AuthType get authType => _authType;
 
+  late UserAuth _userAuthInformation;
+
+  late Kaza _kaza;
+  Kaza get kaza => _kaza;
+
   void init() async {
     runBusyFuture(_userUserSettings());
   }
 
   Future<void> _userUserSettings() async {
     _userSettings = (await _userSettingsService.getUserSettings())!;
+    if (isUserLoggedIn) {
+      _userAuthInformation = _userSettings.userAuth!;
+      await _getUserKaza();
+    }
   }
 
   void onAuthTypeChange() {
@@ -51,17 +63,20 @@ class KazaViewModel extends FormViewModel {
   }
 
   Future<void> _authUser() async {
-    final userAuth = UserAuth()
+    _userAuthInformation = UserAuth()
       ..email = kazaAuthMailValue!
       ..password = kazaAuthPass1Value!;
 
     final result = await _authService.auth(
-        userAuth: userAuth, isLogin: _authType == AuthType.login);
+        userAuth: _userAuthInformation, isLogin: _authType == AuthType.login);
 
     result.fold(
       (userSettings) {
         _userSettings = userSettings;
         notifyListeners();
+
+        // kullanıcı kaza bilgilerini getir
+        runBusyFuture(_getUserKaza());
       },
       (error) => setError(error.message),
     );
@@ -87,5 +102,11 @@ class KazaViewModel extends FormViewModel {
         runBusyFuture(_authUser());
       }
     }
+  }
+
+  Future<void> _getUserKaza() async {
+    final result = await _kazaService.getUserKaza(_userAuthInformation);
+    _kaza = result ?? Kaza.createEmpty();
+    notifyListeners();
   }
 }

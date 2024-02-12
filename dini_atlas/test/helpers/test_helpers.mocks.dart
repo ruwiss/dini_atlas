@@ -19,11 +19,12 @@ import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
 import 'package:dini_atlas/models/quran/sura_player.dart' as _i27;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
-import 'package:dini_atlas/services/remote/auth_service.dart' as _i30;
+import 'package:dini_atlas/services/remote/kaza_service.dart' as _i31;
 import 'package:dini_atlas/services/local/favorites_service.dart' as _i28;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i9;
 import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i19;
 import 'package:dini_atlas/services/local/user_settings_service.dart' as _i10;
+import 'package:dini_atlas/services/remote/auth_service.dart' as _i30;
 import 'package:dini_atlas/services/remote/dio_service.dart' as _i15;
 import 'package:dini_atlas/services/remote/fetch_times_service.dart' as _i17;
 import 'package:dini_atlas/services/remote/quran_service.dart' as _i22;
@@ -1353,4 +1354,51 @@ class MockFavouritesService extends _i1.Mock implements _i28.FavouritesService {
 /// A class which mocks [AuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthService extends _i1.Mock implements _i30.AuthService {}
+class MockAuthService extends _i1.Mock implements _i30.AuthService {
+  @override
+  _i7.Future<_i20.Either<_i3.UserSettings, _i30.AuthException>> auth({
+    required _i3.UserAuth? userAuth,
+    required bool? isLogin,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #auth,
+          [],
+          {
+            #userAuth: userAuth,
+            #isLogin: isLogin,
+          },
+        ),
+        returnValue: _i7
+            .Future<_i20.Either<_i3.UserSettings, _i30.AuthException>>.value(
+            _i5.dummyValue<_i20.Either<_i3.UserSettings, _i30.AuthException>>(
+          this,
+          Invocation.method(
+            #auth,
+            [],
+            {
+              #userAuth: userAuth,
+              #isLogin: isLogin,
+            },
+          ),
+        )),
+        returnValueForMissingStub: _i7
+            .Future<_i20.Either<_i3.UserSettings, _i30.AuthException>>.value(
+            _i5.dummyValue<_i20.Either<_i3.UserSettings, _i30.AuthException>>(
+          this,
+          Invocation.method(
+            #auth,
+            [],
+            {
+              #userAuth: userAuth,
+              #isLogin: isLogin,
+            },
+          ),
+        )),
+      ) as _i7.Future<_i20.Either<_i3.UserSettings, _i30.AuthException>>);
+}
+
+/// A class which mocks [KazaService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockKazaService extends _i1.Mock implements _i31.KazaService {}

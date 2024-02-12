@@ -148,7 +148,7 @@ class _KazaAuthWidgetState extends State<KazaAuthWidget> with $KazaAuthWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: kcButtonColor,
+        backgroundColor: kcBlueGrayColorSoft,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 33, vertical: 14),
         shape: RoundedRectangleBorder(
