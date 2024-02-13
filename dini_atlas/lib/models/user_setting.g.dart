@@ -39,30 +39,36 @@ const UserSettingsSchema = CollectionSchema(
       name: r'jsonString',
       type: IsarType.string,
     ),
-    r'quranReciterId': PropertySchema(
+    r'lastReadAyah': PropertySchema(
       id: 4,
+      name: r'lastReadAyah',
+      type: IsarType.object,
+      target: r'LastReadAyah',
+    ),
+    r'quranReciterId': PropertySchema(
+      id: 5,
       name: r'quranReciterId',
       type: IsarType.long,
     ),
     r'silentModeEnable': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'silentModeEnable',
       type: IsarType.bool,
     ),
     r'state': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'state',
       type: IsarType.object,
       target: r'StateModel',
     ),
     r'suraSetting': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'suraSetting',
       type: IsarType.object,
       target: r'SuraSetting',
     ),
     r'userAuth': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'userAuth',
       type: IsarType.object,
       target: r'UserAuth',
@@ -80,6 +86,7 @@ const UserSettingsSchema = CollectionSchema(
     r'Country': CountrySchema,
     r'City': CitySchema,
     r'StateModel': StateModelSchema,
+    r'LastReadAyah': LastReadAyahSchema,
     r'SuraSetting': SuraSettingSchema
   },
   getId: _userSettingsGetId,
@@ -109,6 +116,9 @@ int _userSettingsEstimateSize(
     }
   }
   bytesCount += 3 + object.jsonString.length * 3;
+  bytesCount += 3 +
+      LastReadAyahSchema.estimateSize(
+          object.lastReadAyah, allOffsets[LastReadAyah]!, allOffsets);
   {
     final value = object.state;
     if (value != null) {
@@ -150,22 +160,28 @@ void _userSettingsSerialize(
   );
   writer.writeLong(offsets[2], object.increaseAyahFontSize);
   writer.writeString(offsets[3], object.jsonString);
-  writer.writeLong(offsets[4], object.quranReciterId);
-  writer.writeBool(offsets[5], object.silentModeEnable);
+  writer.writeObject<LastReadAyah>(
+    offsets[4],
+    allOffsets,
+    LastReadAyahSchema.serialize,
+    object.lastReadAyah,
+  );
+  writer.writeLong(offsets[5], object.quranReciterId);
+  writer.writeBool(offsets[6], object.silentModeEnable);
   writer.writeObject<StateModel>(
-    offsets[6],
+    offsets[7],
     allOffsets,
     StateModelSchema.serialize,
     object.state,
   );
   writer.writeObject<SuraSetting>(
-    offsets[7],
+    offsets[8],
     allOffsets,
     SuraSettingSchema.serialize,
     object.suraSetting,
   );
   writer.writeObject<UserAuth>(
-    offsets[8],
+    offsets[9],
     allOffsets,
     UserAuthSchema.serialize,
     object.userAuth,
@@ -192,21 +208,27 @@ UserSettings _userSettingsDeserialize(
   object.id = id;
   object.increaseAyahFontSize = reader.readLong(offsets[2]);
   object.jsonString = reader.readString(offsets[3]);
-  object.quranReciterId = reader.readLong(offsets[4]);
-  object.silentModeEnable = reader.readBool(offsets[5]);
+  object.lastReadAyah = reader.readObjectOrNull<LastReadAyah>(
+        offsets[4],
+        LastReadAyahSchema.deserialize,
+        allOffsets,
+      ) ??
+      LastReadAyah();
+  object.quranReciterId = reader.readLong(offsets[5]);
+  object.silentModeEnable = reader.readBool(offsets[6]);
   object.state = reader.readObjectOrNull<StateModel>(
-    offsets[6],
+    offsets[7],
     StateModelSchema.deserialize,
     allOffsets,
   );
   object.suraSetting = reader.readObjectOrNull<SuraSetting>(
-        offsets[7],
+        offsets[8],
         SuraSettingSchema.deserialize,
         allOffsets,
       ) ??
       SuraSetting();
   object.userAuth = reader.readObjectOrNull<UserAuth>(
-    offsets[8],
+    offsets[9],
     UserAuthSchema.deserialize,
     allOffsets,
   );
@@ -237,23 +259,30 @@ P _userSettingsDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readLong(offset)) as P;
+      return (reader.readObjectOrNull<LastReadAyah>(
+            offset,
+            LastReadAyahSchema.deserialize,
+            allOffsets,
+          ) ??
+          LastReadAyah()) as P;
     case 5:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
+      return (reader.readBool(offset)) as P;
+    case 7:
       return (reader.readObjectOrNull<StateModel>(
         offset,
         StateModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 7:
+    case 8:
       return (reader.readObjectOrNull<SuraSetting>(
             offset,
             SuraSettingSchema.deserialize,
             allOffsets,
           ) ??
           SuraSetting()) as P;
-    case 8:
+    case 9:
       return (reader.readObjectOrNull<UserAuth>(
         offset,
         UserAuthSchema.deserialize,
@@ -757,6 +786,13 @@ extension UserSettingsQueryObject
     });
   }
 
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition> lastReadAyah(
+      FilterQuery<LastReadAyah> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'lastReadAyah');
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition> state(
       FilterQuery<StateModel> q) {
     return QueryBuilder.apply(this, (query) {
@@ -971,6 +1007,13 @@ extension UserSettingsQueryProperty
   QueryBuilder<UserSettings, String, QQueryOperations> jsonStringProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'jsonString');
+    });
+  }
+
+  QueryBuilder<UserSettings, LastReadAyah, QQueryOperations>
+      lastReadAyahProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastReadAyah');
     });
   }
 
@@ -2379,3 +2422,269 @@ extension UserAuthQueryFilter
 
 extension UserAuthQueryObject
     on QueryBuilder<UserAuth, UserAuth, QFilterCondition> {}
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+const LastReadAyahSchema = Schema(
+  name: r'LastReadAyah',
+  id: -6122909453311509654,
+  properties: {
+    r'ayah': PropertySchema(
+      id: 0,
+      name: r'ayah',
+      type: IsarType.long,
+    ),
+    r'sura': PropertySchema(
+      id: 1,
+      name: r'sura',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _lastReadAyahEstimateSize,
+  serialize: _lastReadAyahSerialize,
+  deserialize: _lastReadAyahDeserialize,
+  deserializeProp: _lastReadAyahDeserializeProp,
+);
+
+int _lastReadAyahEstimateSize(
+  LastReadAyah object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.sura.length * 3;
+  return bytesCount;
+}
+
+void _lastReadAyahSerialize(
+  LastReadAyah object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeLong(offsets[0], object.ayah);
+  writer.writeString(offsets[1], object.sura);
+}
+
+LastReadAyah _lastReadAyahDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = LastReadAyah();
+  object.ayah = reader.readLong(offsets[0]);
+  object.sura = reader.readString(offsets[1]);
+  return object;
+}
+
+P _lastReadAyahDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readLong(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+extension LastReadAyahQueryFilter
+    on QueryBuilder<LastReadAyah, LastReadAyah, QFilterCondition> {
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> ayahEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'ayah',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+      ayahGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'ayah',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> ayahLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'ayah',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> ayahBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'ayah',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sura',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+      suraGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'sura',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'sura',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'sura',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+      suraStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'sura',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'sura',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'sura',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'sura',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+      suraIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sura',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+      suraIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'sura',
+        value: '',
+      ));
+    });
+  }
+}
+
+extension LastReadAyahQueryObject
+    on QueryBuilder<LastReadAyah, LastReadAyah, QFilterCondition> {}

@@ -44,6 +44,9 @@ class UserSettings {
   /// Kuran okuyucu id
   int quranReciterId = -1;
 
+  /// Son okunan ayet
+  LastReadAyah lastReadAyah = LastReadAyah();
+
   /// Font boyutunu +[value] arttır
   int increaseAyahFontSize = 0;
 
@@ -146,4 +149,10 @@ class UserAuth {
   late String password;
 
   Map<String, dynamic> toJson() => {"mail": email, "password": password};
+}
+
+@embedded
+class LastReadAyah {
+  String sura = "Fâtiha Sûresi";
+  int ayah = 1;
 }

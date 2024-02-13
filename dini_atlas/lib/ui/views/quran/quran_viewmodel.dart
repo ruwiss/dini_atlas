@@ -310,6 +310,26 @@ class QuranViewModel extends BaseViewModel {
     );
   }
 
+  void saveAyahPosition(BuildContext context) async {
+    if (ayahList == null || ayahList == null) return;
+    for (AyahModel ayah in ayahList!.ayetler) {
+      final currentContext = GlobalObjectKey(ayah.ayet).currentContext;
+      if (currentContext == null) continue;
+      final renderBox = currentContext.findRenderObject() as RenderBox;
+      final position = renderBox.localToGlobal(Offset.zero);
+      if (position.dy > 0 && position.dy < MediaQuery.of(context).size.height) {
+        // Görünen ilk eleman
+        if (ayah.ayet != userSettings.lastReadAyah.ayah) {
+          _userSettings =
+              await _userSettingsService.setLastReadAyah(LastReadAyah()
+                ..ayah = ayah.ayet
+                ..sura = ayahList!.sure.isim);
+        }
+        break;
+      }
+    }
+  }
+
   @override
   void dispose() {
     _player.dispose();

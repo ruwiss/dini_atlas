@@ -209,6 +209,20 @@ class UserSettingsService {
     }
   }
 
+  Future<UserSettings> setLastReadAyah(LastReadAyah lastReadAyah) async {
+    try {
+      final userSettings = await getUserSettings();
+      userSettings!.lastReadAyah = lastReadAyah;
+      this.userSettings = userSettings;
+      // Veriyi kaydet
+      await _db.writeTxn(() async => _db.userSettings.put(userSettings));
+      return userSettings;
+    } catch (e) {
+      throw UserSettingsException(
+          "Son okunan ayet kaydedilirken bir sorun oluştu $e");
+    }
+  }
+
   // Background Task'da kullanmak üzere bildirim ayarlarını SharedPreferences'a kaydet
   void setPrayerNotiSettingsForBackgroundTask(
       List<PrayerNotiSettings> settingsList) async {

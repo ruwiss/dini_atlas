@@ -4,7 +4,6 @@ import 'package:dini_atlas/ui/views/traceable_quran/widgets/traceable_quran.dart
 import 'package:dini_atlas/ui/views/traceable_quran/widgets/traceable_quran_audio_widget.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
 

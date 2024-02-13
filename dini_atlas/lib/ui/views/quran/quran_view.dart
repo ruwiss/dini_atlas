@@ -45,17 +45,20 @@ class QuranView extends StackedView<QuranViewModel> {
             ? Text("${viewModel.modelError}")
             : viewModel.isBusy || viewModel.ayahList == null
                 ? Center(child: _loadingWidget())
-                : _quranView(viewModel),
+                : _quranView(context, viewModel),
       ),
     );
   }
 
-  Widget _quranView(QuranViewModel viewModel) {
+  Widget _quranView(BuildContext context, QuranViewModel viewModel) {
     final AyahList ayahList = viewModel.ayahList!;
     return NotificationListener<ScrollNotification>(
       onNotification: (info) {
         if (info.metrics.pixels == info.metrics.maxScrollExtent) {
           viewModel.getAyahList(suraId: sura.suraId, loadMore: true);
+        }
+        if (info is ScrollUpdateNotification) {
+          viewModel.saveAyahPosition(context);
         }
         return true;
       },

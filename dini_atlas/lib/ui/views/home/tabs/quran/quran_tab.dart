@@ -30,12 +30,12 @@ class QuranTab extends StackedView<QuranTabViewModel> {
       child: StreamBuilder<ConnectivityResult>(
           stream: Connectivity().onConnectivityChanged,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && !viewModel.isBusy) {
               if (snapshot.data != ConnectivityResult.none) {
                 return Column(
                   children: [
                     // Son okunan sure bilgisi
-                    const QuranHeaderCard(),
+                    QuranHeaderCard(lastReadAyah: viewModel.lastReadAyah),
                     // Sure listesi filtreleme butonları
                     QuranTabButtons(
                       quranTab: viewModel.currentTab,
@@ -45,15 +45,13 @@ class QuranTab extends StackedView<QuranTabViewModel> {
                       },
                     ),
                     verticalSpaceMedium,
-                    viewModel.isBusy
-                        ? const CircularProgressIndicator(strokeWidth: 3.3)
-                        : viewModel.hasError
-                            ? Center(child: Text(viewModel.modelError))
-                            : QuranSurahList(
-                                sura: viewModel.suraList!,
-                                currentTab: viewModel.currentTab,
-                                scrollController: _scrollController,
-                              ),
+                    viewModel.hasError
+                        ? Center(child: Text(viewModel.modelError))
+                        : QuranSurahList(
+                            sura: viewModel.suraList!,
+                            currentTab: viewModel.currentTab,
+                            scrollController: _scrollController,
+                          ),
                   ],
                 );
               } else {
