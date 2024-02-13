@@ -60,3 +60,6 @@ const String kiCompassPlaceholder = "assets/vectors/compass_placeholder.svg";
 const String kiCompassKaaba = "assets/vectors/compass_kaaba.svg";
 
 const String kiAuthEmoji = "assets/vectors/auth_emoji.svg";
+
+const String kiSound = "assets/vectors/sound.svg";
+const String kiVibrate = "assets/vectors/vibrate.svg";

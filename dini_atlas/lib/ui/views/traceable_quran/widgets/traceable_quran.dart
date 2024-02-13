@@ -26,32 +26,24 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer(
-      clipBehavior: Clip.none,
-      transformationController: _interactiveViewerCtrl,
-      alignment: Alignment.center,
-      child: Container(
-        margin: const EdgeInsets.all(15),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 27),
-        decoration: BoxDecoration(
-            color: kcGrayColorLightSoft,
-            borderRadius: BorderRadius.circular(10)),
-        child: widget.suraPage.x == null
-            ? SvgPicture.network(widget.suraPage.page!)
-            : CustomPaint(
-                painter: AyahMarkerPainter(
-                  x: double.parse(widget.suraPage.x!),
-                  y: double.parse(widget.suraPage.y!),
-                  polygon: widget.suraPage.polygon!,
-                ),
-                child: SizeProviderWidget(
-                  onChildSize: (size) {
-                    _setContainerScale(size);
-                  },
-                  child: SvgPicture.network(widget.suraPage.page!),
-                ),
+    return Container(
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 27),
+      decoration: BoxDecoration(
+          color: kcGrayColorLightSoft, borderRadius: BorderRadius.circular(10)),
+      child: widget.suraPage.x == null
+          ? SvgPicture.network(widget.suraPage.page!)
+          : CustomPaint(
+              painter: AyahMarkerPainter(
+                x: double.parse(widget.suraPage.x!),
+                y: double.parse(widget.suraPage.y!),
+                polygon: widget.suraPage.polygon!,
               ),
-      ),
+              child: SizeProviderWidget(
+                onChildSize: _setContainerScale,
+                child: SvgPicture.network(widget.suraPage.page!),
+              ),
+            ),
     );
   }
 }

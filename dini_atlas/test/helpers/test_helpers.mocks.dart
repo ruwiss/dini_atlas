@@ -7,6 +7,7 @@ import 'dart:async' as _i7;
 import 'dart:ui' as _i8;
 
 import 'package:dini_atlas/models/favourite.dart' as _i29;
+import 'package:dini_atlas/models/kaza/kaza.dart' as _i32;
 import 'package:dini_atlas/models/location_api/city.dart' as _i13;
 import 'package:dini_atlas/models/location_api/country.dart' as _i12;
 import 'package:dini_atlas/models/location_api/state.dart' as _i14;
@@ -19,7 +20,6 @@ import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
 import 'package:dini_atlas/models/quran/sura_player.dart' as _i27;
 import 'package:dini_atlas/models/user_location.dart' as _i11;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
-import 'package:dini_atlas/services/remote/kaza_service.dart' as _i31;
 import 'package:dini_atlas/services/local/favorites_service.dart' as _i28;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i9;
 import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i19;
@@ -27,6 +27,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart' as _i10;
 import 'package:dini_atlas/services/remote/auth_service.dart' as _i30;
 import 'package:dini_atlas/services/remote/dio_service.dart' as _i15;
 import 'package:dini_atlas/services/remote/fetch_times_service.dart' as _i17;
+import 'package:dini_atlas/services/remote/kaza_service.dart' as _i31;
 import 'package:dini_atlas/services/remote/quran_service.dart' as _i22;
 import 'package:dio/dio.dart' as _i16;
 import 'package:flutter/material.dart' as _i6;
@@ -1401,4 +1402,33 @@ class MockAuthService extends _i1.Mock implements _i30.AuthService {
 /// A class which mocks [KazaService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockKazaService extends _i1.Mock implements _i31.KazaService {}
+class MockKazaService extends _i1.Mock implements _i31.KazaService {
+  @override
+  _i7.Future<_i32.Kaza?> getUserKaza(_i3.UserAuth? userAuth) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getUserKaza,
+          [userAuth],
+        ),
+        returnValue: _i7.Future<_i32.Kaza?>.value(),
+        returnValueForMissingStub: _i7.Future<_i32.Kaza?>.value(),
+      ) as _i7.Future<_i32.Kaza?>);
+
+  @override
+  _i7.Future<bool> setUserKaza({
+    required _i3.UserAuth? userAuth,
+    required _i32.Kaza? kaza,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setUserKaza,
+          [],
+          {
+            #userAuth: userAuth,
+            #kaza: kaza,
+          },
+        ),
+        returnValue: _i7.Future<bool>.value(false),
+        returnValueForMissingStub: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
+}

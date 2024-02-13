@@ -1,5 +1,6 @@
 import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
+import 'package:dini_atlas/models/rosary_setting.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,6 +17,7 @@ class IsarService {
         PrayerTimesSchema,
         PrayerNotiSettingsSchema,
         FavouriteSchema,
+        RosarySettingSchema,
       ],
       directory: dir.path,
     );

@@ -19,47 +19,45 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
     TraceableQuranViewModel viewModel,
     Widget? child,
   ) {
-    final bool bismillah =
-        viewModel.currentAyah?.page == null && !viewModel.isBusy;
+    final bool bismillah = viewModel.currentAyah?.page == null;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBarWidget(
-        title: sura.name,
-        backgroundColor: bismillah ? kcShadowColor : null,
-        actions: [
-          IconButton(
-            onPressed: viewModel.onSettingsTap,
-            icon: SvgPicture.asset(kiSettings),
-          ),
-        ],
-      ),
-      body: Center(
-        child: viewModel.currentAyah == null
-            ? const CircularProgressIndicator()
-            : bismillah
-                ? _bismillahWidget()
-                : _contentWidget(viewModel),
-      ),
-    );
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBarWidget(
+          title: sura.name,
+          backgroundColor: bismillah ? kcShadowColor : null,
+          actions: [
+            IconButton(
+              onPressed: viewModel.onSettingsTap,
+              icon: SvgPicture.asset(kiSettings),
+            ),
+          ],
+        ),
+        body: bismillah ? _bismillahWidget() : _contentWidget(viewModel));
   }
 
-  Column _contentWidget(TraceableQuranViewModel viewModel) {
-    return Column(
+  Widget _contentWidget(TraceableQuranViewModel viewModel) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
-        const Spacer(),
-        TraceableQuranWidget(suraPage: viewModel.currentAyah!),
-        const Spacer(),
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: TraceableQuranWidget(suraPage: viewModel.currentAyah!),
+          ),
+        ),
         TraceableQuranAudioWidget(viewModel: viewModel),
       ],
     );
   }
 
-  SvgPicture _bismillahWidget() {
-    return SvgPicture.asset(
-      kiBismillah,
-      colorFilter: const ColorFilter.mode(
-        kcShadowColor,
-        BlendMode.color,
+  Widget _bismillahWidget() {
+    return Center(
+      child: SvgPicture.asset(
+        kiBismillah,
+        colorFilter: const ColorFilter.mode(
+          kcShadowColor,
+          BlendMode.color,
+        ),
       ),
     );
   }

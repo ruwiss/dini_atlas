@@ -2,6 +2,7 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
 import 'package:dini_atlas/models/location_api/country.dart';
 import 'package:dini_atlas/models/location_api/state.dart';
+import 'package:dini_atlas/models/rosary_setting.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
@@ -166,6 +167,31 @@ class UserSettingsService {
     } catch (e) {
       throw UserSettingsException(
           "Ayet font ayarı kaydedilirken bir sorun oluştu $e");
+    }
+  }
+
+  RosarySetting? _rosarySetting;
+  Future<RosarySetting> getRosarySetting() async {
+    try {
+      if (_rosarySetting != null) return _rosarySetting!;
+      final value = await _db.rosarySettings.get(1);
+      _rosarySetting = value ?? RosarySetting();
+      return _rosarySetting!;
+    } catch (e) {
+      throw UserSettingsException(
+          "Tesbih verileri getirilirken bir sorun oluştu $e");
+    }
+  }
+
+  Future<RosarySetting> setRosarySetting(RosarySetting rosarySetting) async {
+    try {
+      await _db
+          .writeTxn(() async => await _db.rosarySettings.put(rosarySetting));
+      _rosarySetting = rosarySetting;
+      return rosarySetting;
+    } catch (e) {
+      throw UserSettingsException(
+          "Tesbih verileri kaydedilirken bir sorun oluştu $e");
     }
   }
 

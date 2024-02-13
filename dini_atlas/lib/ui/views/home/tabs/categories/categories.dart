@@ -45,7 +45,7 @@ final List<CategoryItem> categoryItems = [
     name: "Tesbihat",
     image: kiRosary,
     color: kcListCardColors[3],
-    route: "",
+    route: Routes.rosaryView,
   ),
   CategoryItem(
     id: "dini_gunler",

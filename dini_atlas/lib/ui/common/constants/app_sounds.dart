@@ -15,3 +15,5 @@ final List<NotiSound> kaNotiSounds = [
   NotiSound(id: 4, name: "Ezan 2", path: kaEzan2),
   NotiSound(id: 5, name: "Ezan 3", path: kaEzan3),
 ];
+
+const String kaRosary = "sounds/rosary.mp3";
