@@ -14,9 +14,10 @@ class KazaService {
 
     if (response == null || response.statusCode != 200) return null;
 
-    final data = response.data as Map<String, dynamic>;
+    final data = response.data['data'] as Map<String, dynamic>;
+
     if (data.isEmpty) return null;
-    
+
     return Kaza.fromJson(data);
   }
 

@@ -1,3 +1,5 @@
+import 'package:dini_atlas/extensions/datetime_extensions.dart';
+import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/auth_widget.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/table_widget.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
@@ -16,9 +18,21 @@ class KazaView extends StackedView<KazaViewModel> {
   ) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: const AppBarWidget(title: "Kaza Çetelesi"),
+      appBar: AppBarWidget(
+        title: "Kaza Çetelesi",
+        actions: [
+          if (!viewModel.isBusy && viewModel.isUserLoggedIn)
+            IconButton(
+              onPressed: viewModel.saveKazaData,
+              icon: const Icon(
+                Icons.save,
+                color: kcPrimaryColor,
+              ),
+            )
+        ],
+      ),
       body: Center(
-        child: viewModel.isBusy
+        child: viewModel.isBusy || viewModel.kaza == null
             ? const CircularProgressIndicator()
             : !viewModel.isUserLoggedIn
                 ? KazaAuthWidget(viewModel: viewModel)
@@ -27,9 +41,9 @@ class KazaView extends StackedView<KazaViewModel> {
                         vertical: 50, horizontal: 24),
                     child: Column(
                       children: [
-                        const KazaTableWidget(),
+                        KazaTableWidget(viewModel: viewModel),
                         const Spacer(),
-                        _lastModificationWidget(),
+                        _lastModificationWidget(viewModel.kaza?.lastUpdated),
                         const Spacer(),
                       ],
                     ),
@@ -38,17 +52,19 @@ class KazaView extends StackedView<KazaViewModel> {
     );
   }
 
-  Column _lastModificationWidget() {
-    return const Column(
+  Widget _lastModificationWidget(DateTime? date) {
+    if (date == null) return const SizedBox();
+
+    return Column(
       children: [
-        Text(
+        const Text(
           "Son Kayıt",
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),
-        Text("16/01/2024 23:25"),
+        Text(date.formatDateTimeAsString()),
       ],
     );
   }

@@ -5,8 +5,10 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/auth_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/auth_widget.form.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 enum AuthType { login, register }
 
@@ -25,6 +27,7 @@ class KazaAuthFormValidator {
 }
 
 class KazaViewModel extends FormViewModel {
+  final _bottomSheetService = locator<BottomSheetService>();
   final _authService = locator<AuthService>();
   final _userSettingsService = locator<UserSettingsService>();
   final _kazaService = locator<KazaService>();
@@ -35,16 +38,16 @@ class KazaViewModel extends FormViewModel {
   AuthType _authType = AuthType.login;
   AuthType get authType => _authType;
 
-  late UserAuth _userAuthInformation;
+  UserAuth? _userAuthInformation;
 
-  late Kaza _kaza;
-  Kaza get kaza => _kaza;
+  Kaza? _kaza;
+  Kaza? get kaza => _kaza;
 
   void init() async {
-    runBusyFuture(_userUserSettings());
+    runBusyFuture(_getUserSettings());
   }
 
-  Future<void> _userUserSettings() async {
+  Future<void> _getUserSettings() async {
     _userSettings = (await _userSettingsService.getUserSettings())!;
     if (isUserLoggedIn) {
       _userAuthInformation = _userSettings.userAuth!;
@@ -68,7 +71,7 @@ class KazaViewModel extends FormViewModel {
       ..password = kazaAuthPass1Value!;
 
     final result = await _authService.auth(
-        userAuth: _userAuthInformation, isLogin: _authType == AuthType.login);
+        userAuth: _userAuthInformation!, isLogin: _authType == AuthType.login);
 
     result.fold(
       (userSettings) {
@@ -105,8 +108,36 @@ class KazaViewModel extends FormViewModel {
   }
 
   Future<void> _getUserKaza() async {
-    final result = await _kazaService.getUserKaza(_userAuthInformation);
+    final result = await _kazaService.getUserKaza(_userAuthInformation!);
     _kaza = result ?? Kaza.createEmpty();
     notifyListeners();
+  }
+
+  void updateKaza(Kaza kaza) {
+    _kaza = kaza;
+    notifyListeners();
+  }
+
+  void saveKazaData() async {
+    kaza!.lastUpdated = DateTime.now();
+    setBusy(true);
+    final result = await _kazaService.setUserKaza(
+        userAuth: _userAuthInformation!, kaza: kaza!);
+    setBusy(false);
+    notifyListeners();
+    if (result) {
+      _bottomSheetService.showBottomSheet(
+        title: "Başarılı",
+        description: "Kaza bilgileri kaydedildi",
+        confirmButtonTitle: "Kapat",
+      );
+    } else {
+      _bottomSheetService.showBottomSheet(
+        title: "Bir sorun oluştu",
+        description:
+            "Sanırım sunucuyla ilgili bir problem var. Bilgilerinizi birazdan tekrar kaydetmeyi deneyin. İletişim: $ksMail",
+        confirmButtonTitle: "Anladım",
+      );
+    }
   }
 }

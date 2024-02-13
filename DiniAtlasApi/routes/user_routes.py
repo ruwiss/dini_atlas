@@ -64,13 +64,14 @@ def kaza_borcu():
         user = cursor.fetchone()
         if user:
             cursor.execute(
-                "SELECT id FROM kullanici_kaza_borclari WHERE id = %s", (user["id"],)
+                "SELECT id FROM kullanici_kaza_borclari WHERE user_id = %s",
+                (user["id"],),
             )
             kaza_borcu = cursor.fetchone()
             if kaza_borcu:
                 # Update
                 cursor.execute(
-                    "UPDATE kullanici_kaza_borclari SET data = %s WHERE id = %s",
+                    "UPDATE kullanici_kaza_borclari SET data = %s WHERE user_id = %s",
                     (json.dumps(kaza), user["id"]),
                 )
                 db.commit()

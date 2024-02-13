@@ -38,6 +38,13 @@ extension DateTimeExtensions on DateTime {
     return formattedDate;
   }
 
+  // Verilen tarihi [13 Şubat Salı, 14:52] formatına döndürür
+  String formatDateTimeAsString() {
+    final formatter = DateFormat('dd MMMM EEEE HH:mm', ksDefaultLocale);
+    String formattedDate = formatter.format(this);
+    return formattedDate;
+  }
+
   // DateTime objesini TimeOfDay objesine döndürür
   TimeOfDay toTimeOfDay() => TimeOfDay(hour: hour, minute: minute);
 

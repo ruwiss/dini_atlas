@@ -1,12 +1,17 @@
+import 'package:dini_atlas/models/kaza/kaza.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/kaza/kaza_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class KazaTableWidget extends StatelessWidget {
-  const KazaTableWidget({super.key});
+  const KazaTableWidget({super.key, required this.viewModel});
+  final KazaViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
+    final Kaza? kaza = viewModel.kaza;
+    if (kaza == null) return const SizedBox();
     return Column(
       children: [
         _tableContainer(
@@ -15,50 +20,56 @@ class KazaTableWidget extends StatelessWidget {
             _table1Header(),
             _tableItem(
               text: "Sabah",
-              count: 100,
-              onDecrease: () {},
-              onIncrease: () {},
+              count: kaza.sabah,
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(sabah: kaza.sabah - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(sabah: kaza.sabah + 1)),
             ),
             _tableItem(
               text: "Öğle",
-              count: 100,
+              count: kaza.ogle,
               color: kcGrayColorLightSoft,
-              onDecrease: () {},
-              onIncrease: () {},
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(ogle: kaza.ogle - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(ogle: kaza.ogle + 1)),
             ),
             _tableItem(
               text: "İkindi",
-              count: 100,
-              onDecrease: () {},
-              onIncrease: () {},
+              count: kaza.ikindi,
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(ikindi: kaza.ikindi - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(ikindi: kaza.ikindi + 1)),
             ),
             _tableItem(
               text: "Akşam",
-              count: 100,
+              count: kaza.aksam,
               color: kcGrayColorLightSoft,
-              onDecrease: () {},
-              onIncrease: () {},
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(aksam: kaza.aksam - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(aksam: kaza.aksam + 1)),
             ),
             _tableItem(
               text: "Yatsı",
-              count: 100,
-              onDecrease: () {},
-              onIncrease: () {},
+              count: kaza.yatsi,
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(yatsi: kaza.yatsi - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(yatsi: kaza.yatsi + 1)),
             ),
             _tableItem(
               text: "Vitir",
-              count: 100,
+              count: kaza.vitir,
               color: kcGrayColorLightSoft,
-              onDecrease: () {},
-              onIncrease: () {},
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(vitir: kaza.vitir - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(vitir: kaza.vitir + 1)),
             ),
-            _tableItem(
-              text: "Toplu İşlem",
-              count: 1,
-              isSpecial: true,
-              onDecrease: () {},
-              onIncrease: () {},
-            ),
+            _multipleUpdateWidget(kaza),
           ],
         ),
         verticalSpaceMedium,
@@ -67,13 +78,54 @@ class KazaTableWidget extends StatelessWidget {
             _table2Header(),
             _tableItem(
               text: "Borç",
-              count: 100,
-              onDecrease: () {},
-              onIncrease: () {},
+              count: kaza.oruc,
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(oruc: kaza.oruc - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(oruc: kaza.oruc + 1)),
             ),
           ],
         ),
       ],
+    );
+  }
+
+  StatefulBuilder _multipleUpdateWidget(Kaza kaza) {
+    int count = 1;
+    const List<int> counts = [1, 5, 10, 25, 50, 100];
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return _tableItem(
+          text: "Toplu İşlem",
+          count: count,
+          isSpecial: true,
+          onTapSpecialCount: () {
+            int nextIndex = counts.indexOf(count) + 1;
+            if (nextIndex > counts.length - 1) nextIndex = 0;
+            setState(() => count = counts[nextIndex]);
+          },
+          onDecrease: () => viewModel.updateKaza(
+            kaza.copyWith(
+              sabah: kaza.sabah - count,
+              ogle: kaza.ogle - count,
+              ikindi: kaza.ikindi - count,
+              aksam: kaza.aksam - count,
+              yatsi: kaza.yatsi - count,
+              vitir: kaza.vitir - count,
+            ),
+          ),
+          onIncrease: () => viewModel.updateKaza(
+            kaza.copyWith(
+              sabah: kaza.sabah + count,
+              ogle: kaza.ogle + count,
+              ikindi: kaza.ikindi + count,
+              aksam: kaza.aksam + count,
+              yatsi: kaza.yatsi + count,
+              vitir: kaza.vitir + count,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -104,6 +156,7 @@ class KazaTableWidget extends StatelessWidget {
     required int count,
     Color? color,
     bool isSpecial = false,
+    VoidCallback? onTapSpecialCount,
   }) {
     return _tableCell(
       color: color ?? kcBackgroundColor,
@@ -120,6 +173,7 @@ class KazaTableWidget extends StatelessWidget {
         onDecrease: onDecrease,
         onIncrease: onIncrease,
         isSpecial: isSpecial,
+        onTapSpecialCount: onTapSpecialCount,
       ),
     );
   }
@@ -129,24 +183,30 @@ class KazaTableWidget extends StatelessWidget {
     VoidCallback? onIncrease,
     required int count,
     bool isSpecial = false,
+    VoidCallback? onTapSpecialCount,
   }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: MainAxisSize.min,
       children: [
         _miniButton(text: "-", onTap: onDecrease),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-            color: isSpecial ? kcBlueGrayColorSoft : null,
-            borderRadius: borderRadiusSmall,
-          ),
-          child: Text(
-            "$count",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: isSpecial ? 17 : null,
-              color: isSpecial ? kcGrayColor.withOpacity(.5) : kcGrayColor,
+        InkWell(
+          onTap: () {
+            if (isSpecial) onTapSpecialCount?.call();
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              color: isSpecial ? kcBlueGrayColorSoft : null,
+              borderRadius: borderRadiusSmall,
+            ),
+            child: Text(
+              "$count",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: isSpecial ? 17 : null,
+                color: isSpecial ? kcGrayColor.withOpacity(.5) : kcGrayColor,
+              ),
             ),
           ),
         ),

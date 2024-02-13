@@ -1,12 +1,12 @@
 class Kaza {
-  final int sabah;
-  final int ogle;
-  final int ikindi;
-  final int aksam;
-  final int yatsi;
-  final int vitir;
-  final int oruc;
-  final DateTime? lastUpdated;
+  int sabah;
+  int ogle;
+  int ikindi;
+  int aksam;
+  int yatsi;
+  int vitir;
+  int oruc;
+  DateTime? lastUpdated;
 
   Kaza({
     required this.sabah,
@@ -27,7 +27,9 @@ class Kaza {
         yatsi = json["yatsi"],
         vitir = json["vitir"],
         oruc = json["oruc"],
-        lastUpdated = DateTime.parse(json["lastUpdated"]);
+        lastUpdated = json["lastUpdated"] == null
+            ? null
+            : DateTime.parse(json["lastUpdated"]);
 
   Map<String, dynamic> toJson() => {
         "sabah": sabah,
@@ -49,4 +51,31 @@ class Kaza {
         vitir = 100,
         oruc = 0,
         lastUpdated = null;
+
+  Kaza copyWith({
+    int? sabah,
+    int? ogle,
+    int? ikindi,
+    int? aksam,
+    int? yatsi,
+    int? vitir,
+    int? oruc,
+    DateTime? lastUpdated,
+  }) {
+    int? valueChecker(int? value) => value == null
+        ? null
+        : value.isNegative
+            ? 0
+            : value;
+    return Kaza(
+      sabah: valueChecker(sabah) ?? this.sabah,
+      ogle: valueChecker(ogle) ?? this.ogle,
+      ikindi: valueChecker(ikindi) ?? this.ikindi,
+      aksam: valueChecker(aksam) ?? this.aksam,
+      yatsi: valueChecker(yatsi) ?? this.yatsi,
+      vitir: valueChecker(vitir) ?? this.vitir,
+      oruc: valueChecker(oruc) ?? this.oruc,
+      lastUpdated: lastUpdated ?? this.lastUpdated,
+    );
+  }
 }
