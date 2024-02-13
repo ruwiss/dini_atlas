@@ -26,8 +26,14 @@ class ContentWidget extends StatefulWidget {
   });
   final ContentTypes type;
   final int number;
+
+  /// Arapça
   final String? text1;
+
+  /// Türkçe
   final String? text2;
+
+  // Meal
   final String? text3;
   final String? titleText;
   final bool isPlaying;

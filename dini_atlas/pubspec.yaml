@@ -55,6 +55,7 @@ flutter:
     - assets/vectors/
     - assets/sounds/
     - assets/fonts/
+    - assets/docs/
 
   fonts:
     - family: Poppins

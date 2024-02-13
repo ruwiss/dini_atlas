@@ -12,8 +12,13 @@ class FavouritesService {
     await _db.isar.writeTxn(() async => await _favourites.put(favourite));
   }
 
-  Future<void> deleteFavourite(int id) async {
-    await _db.isar.writeTxn(() async => await _favourites.delete(id));
+  Future<void> deleteFavourite({required int id, required String name}) async {
+    await _db.isar.writeTxn(() async => await _favourites
+        .where()
+        .nameEqualTo(name)
+        .filter()
+        .idEqualTo(id)
+        .deleteFirst());
   }
 
   Future<void> deleteFolder(String folder) async {

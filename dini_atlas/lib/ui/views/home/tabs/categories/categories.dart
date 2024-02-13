@@ -59,7 +59,7 @@ final List<CategoryItem> categoryItems = [
     name: "40 Hadis",
     image: kiBook,
     color: kcListCardColors[5],
-    route: "",
+    route: Routes.fortyHadithsView,
   ),
   CategoryItem(
     id: "camiler",

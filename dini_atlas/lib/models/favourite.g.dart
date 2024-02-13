@@ -22,28 +22,33 @@ const FavouriteSchema = CollectionSchema(
       name: r'folder',
       type: IsarType.string,
     ),
-    r'number': PropertySchema(
+    r'name': PropertySchema(
       id: 1,
+      name: r'name',
+      type: IsarType.string,
+    ),
+    r'number': PropertySchema(
+      id: 2,
       name: r'number',
       type: IsarType.long,
     ),
     r'text1': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'text1',
       type: IsarType.string,
     ),
     r'text2': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'text2',
       type: IsarType.string,
     ),
     r'text3': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'text3',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'type',
       type: IsarType.string,
     )
@@ -54,6 +59,19 @@ const FavouriteSchema = CollectionSchema(
   deserializeProp: _favouriteDeserializeProp,
   idName: r'id',
   indexes: {
+    r'name': IndexSchema(
+      id: 879695947855722453,
+      name: r'name',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'name',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
     r'folder': IndexSchema(
       id: 4117413726152065984,
       name: r'folder',
@@ -83,6 +101,7 @@ int _favouriteEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.folder.length * 3;
+  bytesCount += 3 + object.name.length * 3;
   {
     final value = object.text1;
     if (value != null) {
@@ -112,11 +131,12 @@ void _favouriteSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.folder);
-  writer.writeLong(offsets[1], object.number);
-  writer.writeString(offsets[2], object.text1);
-  writer.writeString(offsets[3], object.text2);
-  writer.writeString(offsets[4], object.text3);
-  writer.writeString(offsets[5], object.type);
+  writer.writeString(offsets[1], object.name);
+  writer.writeLong(offsets[2], object.number);
+  writer.writeString(offsets[3], object.text1);
+  writer.writeString(offsets[4], object.text2);
+  writer.writeString(offsets[5], object.text3);
+  writer.writeString(offsets[6], object.type);
 }
 
 Favourite _favouriteDeserialize(
@@ -128,11 +148,12 @@ Favourite _favouriteDeserialize(
   final object = Favourite();
   object.folder = reader.readString(offsets[0]);
   object.id = id;
-  object.number = reader.readLong(offsets[1]);
-  object.text1 = reader.readStringOrNull(offsets[2]);
-  object.text2 = reader.readStringOrNull(offsets[3]);
-  object.text3 = reader.readStringOrNull(offsets[4]);
-  object.type = reader.readString(offsets[5]);
+  object.name = reader.readString(offsets[1]);
+  object.number = reader.readLong(offsets[2]);
+  object.text1 = reader.readStringOrNull(offsets[3]);
+  object.text2 = reader.readStringOrNull(offsets[4]);
+  object.text3 = reader.readStringOrNull(offsets[5]);
+  object.type = reader.readString(offsets[6]);
   return object;
 }
 
@@ -146,14 +167,16 @@ P _favouriteDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -245,6 +268,51 @@ extension FavouriteQueryWhere
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> nameEqualTo(
+      String name) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'name',
+        value: [name],
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterWhereClause> nameNotEqualTo(
+      String name) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'name',
+              lower: [],
+              upper: [name],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'name',
+              lower: [name],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'name',
+              lower: [name],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'name',
+              lower: [],
+              upper: [name],
+              includeUpper: false,
+            ));
+      }
     });
   }
 
@@ -475,6 +543,136 @@ extension FavouriteQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'name',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'name',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterFilterCondition> nameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
       ));
     });
   }
@@ -1120,6 +1318,18 @@ extension FavouriteQuerySortBy on QueryBuilder<Favourite, Favourite, QSortBy> {
     });
   }
 
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
   QueryBuilder<Favourite, Favourite, QAfterSortBy> sortByNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'number', Sort.asc);
@@ -1207,6 +1417,18 @@ extension FavouriteQuerySortThenBy
     });
   }
 
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
   QueryBuilder<Favourite, Favourite, QAfterSortBy> thenByNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'number', Sort.asc);
@@ -1277,6 +1499,13 @@ extension FavouriteQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Favourite, Favourite, QDistinct> distinctByName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Favourite, Favourite, QDistinct> distinctByNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'number');
@@ -1323,6 +1552,12 @@ extension FavouriteQueryProperty
   QueryBuilder<Favourite, String, QQueryOperations> folderProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'folder');
+    });
+  }
+
+  QueryBuilder<Favourite, String, QQueryOperations> nameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'name');
     });
   }
 

@@ -283,7 +283,7 @@ class FetchTimesService {
       final data = response.data as List;
       final List<ReligiousDays> religiousDays =
           data.map((e) => ReligiousDays.fromJson(e)).toList();
-          
+
       _religiousDays = religiousDays;
       return religiousDays;
     } catch (e) {

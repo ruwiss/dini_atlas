@@ -20,6 +20,8 @@ class FavouriteContentsWidget extends StatelessWidget {
           late final ContentTypes type;
           if (item.type == "ayet") {
             type = ContentTypes.ayahTypeFavorite();
+          } else if (item.type == "hadis") {
+            type = ContentTypes.hadithTypeFavorite();
           }
           return ContentWidget(
             type: type,

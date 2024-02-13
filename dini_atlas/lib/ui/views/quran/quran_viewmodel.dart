@@ -30,8 +30,7 @@ class QuranViewModel extends BaseViewModel {
   Favourite getFavByAyahId(int ayahId) => favourites!.singleWhere(
       (e) => e.number == ayahId && e.type == EContentTypes.ayet.name);
   bool isInFavourites(int ayahId) =>
-      favourites?.any(
-          (e) => e.number == ayahId && e.type == EContentTypes.ayet.name) ??
+      favourites?.any((e) => e.number == ayahId && e.name == _suraInfo.name) ??
       false;
 
   late UserSettings _userSettings;
@@ -78,7 +77,10 @@ class QuranViewModel extends BaseViewModel {
   PlayerState _currentPlayerState = PlayerState.stopped;
   PlayerState get currentPlayerState => _currentPlayerState;
 
+  late SuraInfo _suraInfo;
+
   void init(SuraInfo sura) async {
+    _suraInfo = sura;
     await runBusyFuture(getUserSettings());
     runBusyFuture(getAyahList(suraId: sura.suraId));
     runBusyFuture(_getQuranRecitersList());
@@ -240,13 +242,14 @@ class QuranViewModel extends BaseViewModel {
       /// Favorilerden sil
       // Kayıtlı modeli getir
       final Favourite fav = getFavByAyahId(ayahModel.ayet);
-      await _favouritesService.deleteFavourite(fav.id);
+      await _favouritesService.deleteFavourite(id: fav.id, name: fav.name);
       _favourites?.remove(fav);
       notifyListeners();
     } else {
       /// Favorilere ekle
       // Nesne oluştur
       final fav = Favourite()
+        ..name = _suraInfo.name
         ..number = ayahModel.ayet
         ..text1 = ayahModel.textAr
         ..text2 = ayahModel.textOkunus

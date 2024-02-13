@@ -38,4 +38,16 @@ class ContentTypes {
         hidePlayButton = true,
         hideShareButton = false,
         hideBookmarkButton = false;
+
+  ContentTypes.hadithType()
+      : type = EContentTypes.hadis,
+        hidePlayButton = true,
+        hideShareButton = false,
+        hideBookmarkButton = false;
+
+  ContentTypes.hadithTypeFavorite()
+      : type = EContentTypes.hadis,
+        hidePlayButton = true,
+        hideShareButton = false,
+        hideBookmarkButton = false;
 }

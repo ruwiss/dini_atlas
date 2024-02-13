@@ -13,6 +13,10 @@ class Favourite {
   /// Ayet numarası
   late int number;
 
+  /// Favori ismi
+  @Index()
+  late String name;
+
   /// Arapça
   String? text1;
 
