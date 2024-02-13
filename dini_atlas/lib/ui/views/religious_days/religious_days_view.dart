@@ -30,7 +30,9 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _nameWidget(item.day),
+                        _nameWidget(
+                          item.day.replaceAll("(", "").replaceAll(")", ""),
+                        ),
                         Flexible(child: _timeWidget(item.date)),
                       ],
                     );

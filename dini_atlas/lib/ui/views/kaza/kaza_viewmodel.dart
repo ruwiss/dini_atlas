@@ -2,6 +2,7 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/kaza/kaza.dart';
 import 'package:dini_atlas/models/user_setting.dart';
+import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/auth_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
@@ -27,6 +28,7 @@ class KazaAuthFormValidator {
 }
 
 class KazaViewModel extends FormViewModel {
+  final networkChecker = locator<NetworkChecker>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _authService = locator<AuthService>();
   final _userSettingsService = locator<UserSettingsService>();
@@ -139,5 +141,11 @@ class KazaViewModel extends FormViewModel {
         confirmButtonTitle: "Anladım",
       );
     }
+  }
+
+  @override
+  void dispose() {
+    networkChecker.dispose();
+    super.dispose();
   }
 }
