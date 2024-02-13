@@ -1,6 +1,7 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
@@ -9,14 +10,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class QuranSurahList extends StatelessWidget {
-  const QuranSurahList(
-      {super.key,
-      required this.sura,
-      required this.currentTab,
-      this.scrollController});
+  const QuranSurahList({
+    super.key,
+    required this.sura,
+    required this.currentTab,
+    this.scrollController,
+    required this.lastReadAyah,
+  });
   final List<SuraInfo> sura;
   final QuranTabs currentTab;
   final ScrollController? scrollController;
+  final LastReadAyah lastReadAyah;
 
   @override
   Widget build(BuildContext context) {
@@ -116,14 +120,15 @@ class QuranSurahList extends StatelessWidget {
   }
 
   Row _suraNameView(SuraInfo item) {
+    final bool isLastRead = lastReadAyah.sura == item.name;
     return Row(
       children: [
         Text(
           item.name,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: kcPrimaryColorDark,
+            color: isLastRead ? kcPrimaryColorLight : kcPrimaryColorDark,
           ),
         ),
         if (currentTab == QuranTabs.traceable) // takipli kuran

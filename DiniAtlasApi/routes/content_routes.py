@@ -190,6 +190,10 @@ def kuran_dinle(server, server_folder, id, sure):
 
 @app.route("/dinigunler")
 def dini_gunler():
+    data = helper.daily_json("dini_gunler")
+    if data:
+        return jsonify(data)
+
     id = (datetime.now().year - 2024) + 151
     r = requests.get(f"https://vakithesaplama.diyanet.gov.tr/icerik.php?icerik={id}")
     node = LexborHTMLParser(r.text).css_first("tbody").css("tr")
@@ -207,6 +211,7 @@ def dini_gunler():
             continue
         data.append({"hicri_date": hicri_date, "date": date, "day": day})
 
+    helper.daily_json("dini_gunler", data)
     return jsonify(data)
 
 

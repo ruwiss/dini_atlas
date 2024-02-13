@@ -23,6 +23,7 @@ import 'package:dini_atlas/ui/views/kaza/kaza_view.dart';
 import 'package:dini_atlas/services/remote/auth_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/ui/views/rosary/rosary_view.dart';
+import 'package:dini_atlas/ui/views/religious_days/religious_days_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -39,6 +40,7 @@ import 'package:dini_atlas/ui/views/rosary/rosary_view.dart';
     MaterialRoute(page: CompassView),
     MaterialRoute(page: KazaView),
     MaterialRoute(page: RosaryView),
+    MaterialRoute(page: ReligiousDaysView),
 // @stacked-route
   ],
   dependencies: [

@@ -5,11 +5,13 @@ import 'package:dini_atlas/models/location_api/state.dart';
 import 'package:dini_atlas/models/prayer/eid_prayer.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
+import 'package:dini_atlas/models/religious_days.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/foundation.dart';
 
 import 'dio_service.dart';
@@ -30,6 +32,7 @@ class FetchTimesService {
   final String _stateUrl = "ilceler";
   final String _timesUrl = "vakitler";
   final String _eidTimesUrl = "bayram-namazi";
+  final String _religiousDaysUrl = "/dinigunler";
 
   Future<PrayerTimes?> fetchTimes({UserLocation? userLocation}) async {
     try {
@@ -260,6 +263,29 @@ class FetchTimesService {
       if (kDebugMode) print("- Bayram namazları getirildi.");
 
       return singleEidTime;
+    } catch (e) {
+      throw FetchTimesException(e.toString());
+    }
+  }
+
+  List<ReligiousDays>? _religiousDays;
+
+  Future<List<ReligiousDays>> getReligiousDays() async {
+    try {
+      if (_religiousDays != null) return _religiousDays!;
+
+      final response = await _dio.request("$ksBaseUrl/$_religiousDaysUrl");
+
+      if (response == null || response.statusCode != 200) {
+        throw FetchTimesException("Dini günler getirilirken sorun oluştu.");
+      }
+
+      final data = response.data as List;
+      final List<ReligiousDays> religiousDays =
+          data.map((e) => ReligiousDays.fromJson(e)).toList();
+          
+      _religiousDays = religiousDays;
+      return religiousDays;
     } catch (e) {
       throw FetchTimesException(e.toString());
     }

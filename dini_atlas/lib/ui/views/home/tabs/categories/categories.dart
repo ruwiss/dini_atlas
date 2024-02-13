@@ -52,7 +52,7 @@ final List<CategoryItem> categoryItems = [
     name: "Dini Günler",
     image: kiCalendar,
     color: kcListCardColors[4],
-    route: "",
+    route: Routes.religiousDaysView,
   ),
   CategoryItem(
     id: "40_hadis",

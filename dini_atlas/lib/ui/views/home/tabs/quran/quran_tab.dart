@@ -51,6 +51,7 @@ class QuranTab extends StackedView<QuranTabViewModel> {
                             sura: viewModel.suraList!,
                             currentTab: viewModel.currentTab,
                             scrollController: _scrollController,
+                            lastReadAyah: viewModel.lastReadAyah,
                           ),
                   ],
                 );
