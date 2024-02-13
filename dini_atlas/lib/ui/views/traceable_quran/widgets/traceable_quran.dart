@@ -1,5 +1,4 @@
 import 'package:dini_atlas/models/quran/sura_player.dart';
-import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/widgets/size_provider_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,24 +25,28 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(15),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 27),
-      decoration: BoxDecoration(
-          color: kcGrayColorLightSoft, borderRadius: BorderRadius.circular(10)),
-      child: widget.suraPage.x == null
-          ? SvgPicture.network(widget.suraPage.page!)
-          : CustomPaint(
-              painter: AyahMarkerPainter(
-                x: double.parse(widget.suraPage.x!),
-                y: double.parse(widget.suraPage.y!),
-                polygon: widget.suraPage.polygon!,
-              ),
-              child: SizeProviderWidget(
-                onChildSize: _setContainerScale,
-                child: SvgPicture.network(widget.suraPage.page!),
-              ),
-            ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 65),
+      child: SingleChildScrollView(
+        child: InteractiveViewer(
+          clipBehavior: Clip.none,
+          transformationController: _interactiveViewerCtrl,
+          alignment: Alignment.center,
+          child: widget.suraPage.x == null
+              ? SvgPicture.network(widget.suraPage.page!)
+              : CustomPaint(
+                  painter: AyahMarkerPainter(
+                    x: double.parse(widget.suraPage.x!),
+                    y: double.parse(widget.suraPage.y!),
+                    polygon: widget.suraPage.polygon!,
+                  ),
+                  child: SizeProviderWidget(
+                    onChildSize: _setContainerScale,
+                    child: SvgPicture.network(widget.suraPage.page!),
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }
