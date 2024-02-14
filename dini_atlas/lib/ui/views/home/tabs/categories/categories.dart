@@ -73,7 +73,7 @@ final List<CategoryItem> categoryItems = [
     name: "Canlı\nRadyolar",
     image: kiRadio,
     color: kcListCardColors[7],
-    route: "",
+    route: Routes.radioView,
   ),
   CategoryItem(
     id: "hadisler",

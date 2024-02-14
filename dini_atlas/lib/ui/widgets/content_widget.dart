@@ -23,6 +23,7 @@ class ContentWidget extends StatefulWidget {
     this.onPause,
     this.onBookmarkTap,
     this.increaseFontSize = 0,
+    this.hideDivider = false,
   });
   final ContentTypes type;
   final int number;
@@ -43,6 +44,7 @@ class ContentWidget extends StatefulWidget {
   final Function()? onPause;
   final Function()? onBookmarkTap;
   final double increaseFontSize;
+  final bool hideDivider;
 
   @override
   State<ContentWidget> createState() => _QuranSuraItemState();
@@ -62,7 +64,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15),
+      padding: EdgeInsets.only(top: widget.hideDivider ? 5 : 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -95,7 +97,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
             ),
           ),
           _textViews(),
-          const Divider()
+          if (!widget.hideDivider) const Divider()
         ],
       ),
     );

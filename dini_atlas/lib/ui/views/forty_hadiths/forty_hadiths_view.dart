@@ -35,8 +35,7 @@ class FortyHadithsView extends StackedView<FortyHadithsViewModel> {
                       number: hadith.id,
                       text1: hadith.arabic,
                       text3: hadith.turkish,
-                      onBookmarkTap: () =>
-                          viewModel.toggleFavorite(hadith),
+                      onBookmarkTap: () => viewModel.toggleFavorite(hadith),
                       isSaved: viewModel.isInFavourites(hadith.id),
                     );
                   },

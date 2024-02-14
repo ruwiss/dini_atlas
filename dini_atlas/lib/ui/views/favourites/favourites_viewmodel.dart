@@ -77,7 +77,7 @@ class FavouritesViewModel extends BaseViewModel {
   }
 
   void onFavouriteItemDelete(Favourite item) async {
-    await _favouritesService.deleteFavourite(id: item.id,name: item.name);
+    await _favouritesService.deleteFavourite(id: item.id, name: item.name);
     _favourites!.removeWhere((e) => e == item);
     notifyListeners();
   }

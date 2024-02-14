@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-enum EContentTypes { ayet, hadis, dua }
+enum EContentTypes { ayet, hadis, dua, radio }
 
 class ContentTypes {
   final EContentTypes type;
@@ -50,4 +50,10 @@ class ContentTypes {
         hidePlayButton = true,
         hideShareButton = false,
         hideBookmarkButton = false;
+
+  ContentTypes.radioType()
+      : type = EContentTypes.radio,
+        hidePlayButton = false,
+        hideShareButton = true,
+        hideBookmarkButton = true;
 }
