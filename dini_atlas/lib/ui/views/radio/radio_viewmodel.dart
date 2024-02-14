@@ -1,8 +1,11 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/ui/views/radio/radio_service.dart';
 import 'package:stacked/stacked.dart';
 
 class RadioViewModel extends BaseViewModel {
+  final _networkChecker = locator<NetworkChecker>();
   final _radioService = RadioService.instance;
   final _player = AudioPlayer();
 
@@ -40,6 +43,7 @@ class RadioViewModel extends BaseViewModel {
   @override
   void dispose() {
     _player.dispose();
+    _networkChecker.dispose();
     super.dispose();
   }
 }

@@ -43,7 +43,8 @@ class RadioView extends StackedView<RadioViewModel> {
                           onPause: viewModel.pauseRadio,
                         );
                       },
-                    )),
+                    ),
+                  ),
       ),
     );
   }

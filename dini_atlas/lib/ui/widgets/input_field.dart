@@ -9,12 +9,18 @@ class InputField extends StatefulWidget {
     this.keyboardType,
     this.obscureText = false,
     this.errorText,
+    this.padding,
+    this.onSubmit,
+    this.focusNode,
   });
   final TextEditingController? controller;
   final String? hintText;
   final TextInputType? keyboardType;
   final bool obscureText;
   final String? errorText;
+  final EdgeInsetsGeometry? padding;
+  final Function(String value)? onSubmit;
+  final FocusNode? focusNode;
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -33,9 +39,11 @@ class _InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: widget.focusNode,
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       obscureText: _hidePassword,
+      onFieldSubmitted: widget.onSubmit,
       style: const TextStyle(color: kcPrimaryColorDark),
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -56,7 +64,7 @@ class _InputFieldState extends State<InputField> {
                   size: 22,
                 ),
               ),
-        contentPadding:
+        contentPadding: widget.padding ??
             const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         isDense: true,
         hintText: widget.hintText,

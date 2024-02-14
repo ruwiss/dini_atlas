@@ -80,7 +80,7 @@ final List<CategoryItem> categoryItems = [
     name: "Riyâzu's\nSâlihîn",
     image: kiPaper,
     color: kcListCardColors[8],
-    route: "",
+    route: Routes.riyazusSalihinView,
   ),
   CategoryItem(
     id: "esmaul_husna",

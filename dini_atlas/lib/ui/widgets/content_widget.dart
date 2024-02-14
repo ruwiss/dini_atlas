@@ -34,7 +34,7 @@ class ContentWidget extends StatefulWidget {
   /// Türkçe
   final String? text2;
 
-  // Meal
+  /// Meal
   final String? text3;
   final String? titleText;
   final bool isPlaying;
@@ -84,9 +84,15 @@ class _QuranSuraItemState extends State<ContentWidget> {
                     // Başlık metni
                     if (widget.titleText case final String titleText) ...[
                       horizontalSpaceSmall,
-                      Text(
-                        titleText,
-                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      SizedBox(
+                        width: screenWidth(context) * .46,
+                        child: Text(
+                          titleText,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: false,
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
                       )
                     ]
                   ],
@@ -153,6 +159,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
     if (text.startsWith(bismillah) && text.length > bismillah.length) {
       text = text.replaceAll(bismillah, "");
     }
+    final bool isHadith = widget.type.type == EContentTypes.hadis;
     return Text(
       text,
       textAlign: TextAlign.end,
@@ -160,7 +167,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
         color: kcPrimaryColorDark,
         fontFamily: "Uthman",
         fontSize: 22 + widget.increaseFontSize,
-        height: 2.3,
+        height: isHadith ? 1.5 : 2.3,
         fontWeight: FontWeight.bold,
       ),
     );

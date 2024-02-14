@@ -84,7 +84,7 @@ def hadis(hadis_id=None):
         hadis = cursor.fetchone()
         hadis["arapca"] = helper.remove_html_tags(hadis["arapca"])
         hadis["turkce"] = helper.remove_html_tags(hadis["turkce"])
-        return jsonify(hadis)
+        return jsonify([hadis])
     else:
         cursor.execute(
             "SELECT * FROM riyazus_salihin ORDER BY hadis_id ASC LIMIT %s OFFSET %s",
