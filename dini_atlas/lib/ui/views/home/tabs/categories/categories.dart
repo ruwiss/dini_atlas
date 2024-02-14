@@ -66,7 +66,7 @@ final List<CategoryItem> categoryItems = [
     name: "Yakındaki\nCamiler",
     image: kiMosqueSvg,
     color: kcListCardColors[6],
-    route: "",
+    route: Routes.nearMosquesView,
   ),
   CategoryItem(
     id: "radyolar",
