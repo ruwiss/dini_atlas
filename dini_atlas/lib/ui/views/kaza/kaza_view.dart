@@ -32,22 +32,25 @@ class KazaView extends StackedView<KazaViewModel> {
         ],
       ),
       body: Center(
-        child: viewModel.isBusy || viewModel.kaza == null
+        child: viewModel.isBusy
             ? const CircularProgressIndicator()
             : !viewModel.isUserLoggedIn
                 ? KazaAuthWidget(viewModel: viewModel)
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 50, horizontal: 24),
-                    child: Column(
-                      children: [
-                        KazaTableWidget(viewModel: viewModel),
-                        const Spacer(),
-                        _lastModificationWidget(viewModel.kaza?.lastUpdated),
-                        const Spacer(),
-                      ],
-                    ),
-                  ),
+                : viewModel.kaza == null
+                    ? const CircularProgressIndicator()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 50, horizontal: 24),
+                        child: Column(
+                          children: [
+                            KazaTableWidget(viewModel: viewModel),
+                            const Spacer(),
+                            _lastModificationWidget(
+                                viewModel.kaza?.lastUpdated),
+                            const Spacer(),
+                          ],
+                        ),
+                      ),
       ),
     );
   }
