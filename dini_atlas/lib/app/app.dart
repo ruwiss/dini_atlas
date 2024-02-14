@@ -28,6 +28,7 @@ import 'package:dini_atlas/ui/views/forty_hadiths/forty_hadiths_view.dart';
 import 'package:dini_atlas/ui/views/radio/radio_view.dart';
 import 'package:dini_atlas/ui/views/near_mosques/near_mosques_view.dart';
 import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_view.dart';
+import 'package:dini_atlas/ui/views/esmaul_husna/esmaul_husna_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -49,6 +50,7 @@ import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_view.dart';
     MaterialRoute(page: RadioView),
     MaterialRoute(page: NearMosquesView),
     MaterialRoute(page: RiyazusSalihinView),
+    MaterialRoute(page: EsmaulHusnaView),
 // @stacked-route
   ],
   dependencies: [

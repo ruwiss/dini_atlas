@@ -1,482 +1,482 @@
-{
-    "1": {
+[
+    {
         "text": "el-A’lâ ",
         "mean": "En yüce, en şerefli"
     },
-    "2": {
+    {
         "text": "el-A’lem ",
         "mean": "Her şeyi en iyi bilen"
     },
-    "3": {
+    {
         "text": "el-Alî ",
         "mean": "Şanı, şerefi, izzeti ve kudreti yüce olan"
     },
-    "4": {
+    {
         "text": "el-Âlim ",
         "mean": "Bilen, anlayan, tanıyan"
     },
-    "5": {
+    {
         "text": "el-Alîm ",
         "mean": "Her şeyi çok iyi bilen"
     },
-    "6": {
+    {
         "text": "el-Âhir ",
         "mean": "Varlığının sonu olmayan, ölümsüz, ebedî ve bâkî"
     },
-    "7": {
+    {
         "text": "el-Akrab ",
         "mean": "Bilmesi, görmesi, duyması, haberdâr olması ve yardım etmesi açısından insanlara en yakın olan"
     },
-    "8": {
+    {
         "text": "el-Azîm ",
         "mean": "Zatı, isim, sıfat vefiilleri itibariyle pek ulu, büyük, yüce"
     },
-    "9": {
+    {
         "text": "el-Azîz ",
         "mean": "Üstün, güçlü, kuvvetli, galip, şerefli, değerli, melik"
     },
-    "10": {
+    {
         "text": "el-Bâri’ ",
         "mean": "Yaratan, örneği olmadan varlıkları îcat eden"
     },
-    "11": {
+    {
         "text": "el-Basîr ",
         "mean": "Aydınlık ve karanlıkta küçük ve büyük her şeyi gören"
     },
-    "12": {
+    {
         "text": "el-Bâtın ",
         "mean": "Mâhiyeti akıl ile idrâk olunamayan, hayal iletahayyül edilemeyen, her şeyin iç yüzünü, sırlarını bilen"
     },
-    "13": {
+    {
         "text": "el-Berr ",
         "mean": "İyilik eden, çok lütufkâr, çok merhametli, çok şefkatli"
     },
-    "14": {
+    {
         "text": "Câ’ılûn ",
         "mean": "Yaratan, vâr eden, bir varlıktan başka bir varlık yapan"
     },
-    "15": {
+    {
         "text": "el-Cebbâr ",
         "mean": "Emir ve yasaklarını, hüküm ve kararlarını kullarına yaptırmaya gücü yeten, azgın ve zalimleri kahredici, dertlere derman olan, yaraları sarıp onaran, yaratıklarının hâllerini düzelten"
     },
-    "16": {
+    {
         "text": "el-Ebkâ ",
         "mean": "Verdiği nimetler sürekli ve hep kalıcı olan"
     },
-    "17": {
+    {
         "text": "el-Ehad ",
         "mean": "Eşi, benzeri ve ikincisi bulunmayan bir tek,yegâne"
     },
-    "18": {
+    {
         "text": "el-Ekrem ",
         "mean": "En çok ikram eden"
     },
-    "19": {
+    {
         "text": "el-Evvel ",
         "mean": "Öncesi olmayan, yaratılmamış, ezelî ve kadîmtek varlık"
     },
-    "20": {
+    {
         "text": "Fâil (ûn)",
         "mean": "Yapan, yaratan, vâr eden"
     },
-    "21": {
+    {
         "text": "el-Fettâh ",
         "mean": "İyilik kapılarını açan, en âdil hüküm veren"
     },
-    "22": {
+    {
         "text": "el-Gaffâr ",
         "mean": "Çok affeden, çok bağışlayan, günah ne kadarçok olursa olsun yine bağışlayan"
     },
-    "23": {
+    {
         "text": "el-Gafûr ",
         "mean": "Çok affeden, çok bağışlayan"
     },
-    "24": {
+    {
         "text": "el-Ganî ",
         "mean": "Zengin, hiçbir şeye muhtaç olmayan"
     },
-    "25": {
+    {
         "text": "el-Habîr ",
         "mean": "Her şeyden haberdar olan, gizli aşikâr her şeyibilen, haber veren"
     },
-    "26": {
+    {
         "text": "el-Hâdi’ ",
         "mean": "Hile yapanları cezalandıran"
     },
-    "27": {
+    {
         "text": "el-Hâdî ",
         "mean": "Hidayet eden, doğru yolu gösteren"
     },
-    "28": {
+    {
         "text": "el-Hafî ",
         "mean": "Çok ikram eden, son derece iyilik ve lütuf sahibi,her şeyi bilen, duaları kabul eden"
     },
-    "29": {
+    {
         "text": "Hâfiz (ûn)",
         "mean": "Koruyup gözeten"
     },
-    "30": {
+    {
         "text": "el-Hafîz ",
         "mean": "Varlıkları yok olmaktan koruyan"
     },
-    "31": {
+    {
         "text": "el-Hakîm ",
         "mean": "Hikmet sahibi, her işi, emri ve yasağı yerli yerinde olan"
     },
-    "32": {
+    {
         "text": "el-Hâkim ",
         "mean": "Hükmeden, karar veren, haklıyı haksızı ayıran"
     },
-    "33": {
+    {
         "text": "el-Hakem ",
         "mean": "Hüküm veren, son kararı veren"
     },
-    "34": {
+    {
         "text": "el-Hakk ",
         "mean": "Varlığı, ilâh ve rab oluşu hak olan, eşyayı vareden, hakkı ızhar eden, mülk sahibi, yok olmayan, varlığında şüphe bulunmayan, âdil"
     },
-    "35": {
+    {
         "text": "el-Halîm ",
         "mean": "Çok sakin, hemen öfkelenmeyen, acele etmeyen, teenni ile hareket eden"
     },
-    "36": {
+    {
         "text": "el-Hallâk ",
         "mean": "Mükemmel yaratan, devamlı yaratan"
     },
-    "37": {
+    {
         "text": "el-Hasîb ",
         "mean": "İnsanlara yeten, insanların yaptıklarını koruyup hesaba çeken"
     },
-    "38": {
+    {
         "text": "Hâsib (în)",
         "mean": "İnsanları sorgulayan, hesaba çeken"
     },
-    "39": {
+    {
         "text": "el-Hayr ",
         "mean": "Hayırlı olan, faydalı olan, iyilik eden"
     },
-    "40": {
+    {
         "text": "el-İlâh ",
         "mean": "Ma’bûd, Tanrı"
     },
-    "41": {
+    {
         "text": "el-Kadîr ",
         "mean": "Çok güçlü, çok kuvvetli, istediğini istediği gibi eksiksiz, kusursuz ve tam yapabilen"
     },
-    "42": {
+    {
         "text": "el-Kâdir ",
         "mean": "Güçlü, kuvvetli, her şeye gücü yeten"
     },
-    "43": {
+    {
         "text": "el-Kâfî ",
         "mean": "Kullarına yardım eden, vekil olan, yol gösteren,yaptıklarını bilen, gören, haberdar olan ve hesaba çeken"
     },
-    "44": {
+    {
         "text": "el-Kahhâr ",
         "mean": "Yenilmeyen, daima galip gelen"
     },
-    "45": {
+    {
         "text": "el-Kâhir ",
         "mean": "Galip gelen, zelil eden, güçlü, her şeyi kuşatan,yaratıklarını dilediği gibi yöneten"
     },
-    "46": {
+    {
         "text": "el-Kâim ",
         "mean": "Varlıkları görüp gözeten, koruyan, yöneten"
     },
-    "47": {
+    {
         "text": "el-Karîb ",
         "mean": "Af, mağfireti, rahmeti, bilmesi, görmesi ve duyması itibariyle kullarına yakın olan"
     },
-    "48": {
+    {
         "text": "el-Kâşif ",
         "mean": "Azap, sıkıntı, bela ve dertleri gideren"
     },
-    "49": {
+    {
         "text": "Kâtib (ûn)",
         "mean": "İnsanların yaptıklarını yazan"
     },
-    "50": {
+    {
         "text": "el-Kavî ",
         "mean": "Kuvvetli, kudretli, her şeye gücü yeten"
     },
-    "51": {
+    {
         "text": "el-Kayyûm ",
         "mean": "Zatı ile kaim olana, ezelî ve ebedî, her şeyin varlığı kendisine bağlı, uykusu ve uyuklaması olmayan, varlıkları yöneten, koruyan, ihtiyaçlarını üstlenen"
     },
-    "52": {
+    {
         "text": "el-Kebîr ",
         "mean": "Zatı, isim ve sıfatları, şanı ve şerefi, kadri ve kıymeti, değer ve izzeti pek yüce, ulu ve büyük"
     },
-    "53": {
+    {
         "text": "el-Kerîm ",
         "mean": "Değerli, şerefli, çok nimet veren, nimet ve ihsanı bol olan "
     },
-    "54": {
+    {
         "text": "el-Kuddûs ",
         "mean": "Her türlü çirkinlik, noksanlık ve ayıplardanuzak, tertemiz, bütün kemal sıfatları kendisinde toplayan,güzellik, iyilik ve ihsanlarıyla övülen"
     },
-    "55": {
+    {
         "text": "el-Latîf ",
         "mean": "Yaratıklara karşı yumuşak, çok merhametli, çok lütufkâr, ihsan sahibi, insanlara hak ettiklerinden fazlasını veren her şeyin detayını, sırlarını en iyi bilen, işleri çok hassas düzenleyen, gözle görülmeyen"
     },
-    "56": {
+    {
         "text": "Mâhid (ûn)",
         "mean": "Yeryüzünü yaratıkları için elverişli, yarayışlı ve faydalı olarak yaratan"
     },
-    "57": {
+    {
         "text": "el-Mâlik ",
         "mean": "Bütün varlıkların sahibi"
     },
-    "58": {
+    {
         "text": "el-Mecîd ",
         "mean": "Çok şerefli, çok itibarlı"
     },
-    "59": {
+    {
         "text": "el-Melik ",
         "mean": "Bütün varlıkları yöneten, dilediğini yapan, dilediği gibi hükmeden"
     },
-    "60": {
+    {
         "text": "el-Melîk ",
         "mean": "Çok mülkü olan, her şeyin sahibi ve maliki, onları terbiye edip yetiştiren, mülk ve güç veren"
     },
-    "61": {
+    {
         "text": "el-Metîn ",
         "mean": "Çok kuvvetli, çok dayanıklı, acizliği, zafiyetive gevşekliği olmayan"
     },
-    "62": {
+    {
         "text": "el-Mevlâ ",
         "mean": "Dost, yardımcı, görüp gözeten"
     },
-    "63": {
+    {
         "text": "Mu’azzib (în)",
         "mean": "Suç işleyenleri, zalimleri, günahkârları cezalandıran"
     },
-    "64": {
+    {
         "text": "el-Mu ’ızz ",
         "mean": "İzzet ve şeref, güç ve kuvvet, itibar ve şereflikılan, aziz yapan"
     },
-    "65": {
+    {
         "text": "el-Muhric ",
         "mean": "Bir şeyi açığa çıkaran, bir varlıktan başka birvarlık var eden, gizli şeyleri ortaya çıkaran"
     },
-    "66": {
+    {
         "text": "el-Muhît ",
         "mean": "İlim ve kudretiyle her şeyi kuşatan, her şeyemuttali olan"
     },
-    "67": {
+    {
         "text": "el-Mukît ",
         "mean": "Her şeye gücü yeten, rızık veren, yapılanlarıbilen, koruyan, mükâfat veren"
     },
-    "68": {
+    {
         "text": "el-Muktedir ",
         "mean": "Güçlü, kuvvetli, istediğini istediği gibi yapan"
     },
-    "69": {
+    {
         "text": "el-Musavvir ",
         "mean": "Yaratıklara şekil ve özellik veren"
     },
-    "70": {
+    {
         "text": "Mûsi (ûn)",
         "mean": "Gökleri genişleten"
     },
-    "71": {
+    {
         "text": "el-Mübîn ",
         "mean": "Varlığı aşikâr olan, hakkı ızhar eden, gerçeğibeyan eden"
     },
-    "72": {
+    {
         "text": "Mübrim (ûn)",
         "mean": "Hile ile kötülük yapmaya karar verenleri bilen, onların bu kötülüklerini boşa çıkaran, onları kesin olarak cezalandıran"
     },
-    "73": {
+    {
         "text": "Mübtelî (n)",
         "mean": "Deneyen, imtihan eden, gizli olanları açığa çıkaran"
     },
-    "74": {
+    {
         "text": "el-Mücîb ",
         "mean": "Duaları, istekleri, dilekleri kabul eden, ihtiyaçları karşılayan, sıkıntıları gideren"
     },
-    "75": {
+    {
         "text": "el-Müheymin ",
         "mean": "İnsanların bütün yaptıklarını bilen, koruyan, görüp gözeten"
     },
-    "76": {
+    {
         "text": "el-Mühlik ",
         "mean": "İsyan eden, azan, günaha dalan ve zulmeden fert ve toplumları helâk eden"
     },
-    "77": {
+    {
         "text": "el-Mü’min ",
         "mean": "Yaratıklarına güven veren"
     },
-    "78": {
+    {
         "text": "el-Müneccî ",
         "mean": "Sıkıntı, bela ve azaptan kurtaran"
     },
-    "79": {
+    {
         "text": "el-Münezzil ",
         "mean": "Nimet veren, su, sekînet, melek, kitap vepeygamber indiren"
     },
-    "80": {
+    {
         "text": "el-Münîr ",
         "mean": "Işık veren, aydınlatan"
     },
-    "81": {
+    {
         "text": "Münşi’ (ûn)",
         "mean": "İcat eden, inşa eden, yapan, örneksiz olarak yaratan"
     },
-    "82": {
+    {
         "text": "Müntekım (ûn)",
         "mean": "Suçluları cezalandıran"
     },
-    "83": {
+    {
         "text": "Münzil (în)",
         "mean": "Melek, kitap, su ve sekînet indiren, nimet veren"
     },
-    "84": {
+    {
         "text": "Münzir (în)",
         "mean": "Kullarına fayda ve zarar veren şeyleri bildiren; inkâr ve isyan edenlerin âkibetinin kötü olduğunu haber vererek onları bu davranışlardan sakındıran ve azabı ilekorkutan"
     },
-    "85": {
+    {
         "text": "Mürsil (în)",
         "mean": "vahiy, peygamber, bol yağmur, aşılayıcı rüzgâr,koruyucu melek, âsiler için yıldırımlar ve âfetler gönderen),"
     },
-    "86": {
+    {
         "text": "el-Müste’ân ",
         "mean": "Kendisinden yardım istenen, kendisine sığınılan"
     },
-    "87": {
+    {
         "text": "Müstemi (ûn)",
         "mean": "Sesleri işiten, duyan"
     },
-    "88": {
+    {
         "text": "el-Müte’âl ",
         "mean": "Aşkın, pek yüce, ulu, eksik ve noksanlıklardan berî olan"
     },
-    "89": {
+    {
         "text": "el-Mütekebbir ",
         "mean": "İhtiyaç ve noksanlığı gerektiren her şeyden münezzeh, pek yüce ve ulu"
     },
-    "90": {
+    {
         "text": "el-Müteveffî ",
         "mean": "Yaratıkların canlarını alan"
     },
-    "91": {
+    {
         "text": "en-Nâsır ",
         "mean": "Yardım eden"
     },
-    "92": {
+    {
         "text": "en-Nesîr ",
         "mean": "Çok yardım eden, sürekli yardım eden"
     },
-    "93": {
+    {
         "text": "er-Râfi’ ",
         "mean": "Peygamber ve müminlerin itibar, şan ve şereflerini artıran, göğü yükselten"
     },
-    "94": {
+    {
         "text": "er-Rahîm ",
         "mean": "Çok merhametli"
     },
-    "95": {
+    {
         "text": "er-Rahmân ",
         "mean": "Çok merhametli "
     },
-    "96": {
+    {
         "text": "er-Rakîb ",
         "mean": "İnsanların hâllerini, sözlerini, yaptıklarını ve davranışlarını bilen, haberdar olan, murakabe edip koruyan"
     },
-    "97": {
+    {
         "text": "er-Raûf ",
         "mean": "Çok merhametli, çok şefkatli, çok acıyan"
     },
-    "98": {
+    {
         "text": "er-Rezzâk ",
         "mean": "Bol nimet, maddî ve manevî rızık veren"
     },
-    "99": {
+    {
         "text": "Sâdık (ûn)",
         "mean": "Söz, iş, vad ve va’îdinde doğru olan, her sözünü ve vadini yerine getiren"
     },
-    "100": {
+    {
         "text": "es-Samed ",
         "mean": "Her şeyin kendisine muhtaç olduğu, yöneldiği,her dilek ve isteğin mercii; hiç eksiği, kusuru ve ihtiyacı olmayan ulu, şanlı, dosdoğru, âdil ve güvenilir olan"
     },
-    "101": {
+    {
         "text": "es-Selâm ",
         "mean": "Eksiklik, acizlik, hastalık, ölüm ve benzeri şeylerden salim olan kullarına güven ve selamet veren"
     },
-    "102": {
+    {
         "text": "es-Semî’ ",
         "mean": "Her sözü, bütün konuşulanları en iyi işiten, duyan"
     },
-    "103": {
+    {
         "text": "Şâhid (în)",
         "mean": "Bilen, muttali olan, her şeye tanık olan"
     },
-    "104": {
+    {
         "text": "eş-Şâkir ",
         "mean": "Verdiği nimetlere şükreden ve çalışan kimseyi ödüllendiren"
     },
-    "105": {
+    {
         "text": "eş-Şefî’ ",
         "mean": "Müminlerin yâr ve yardımcısı, azap ve sıkıntılardan koruyucusu olan"
     },
-    "106": {
+    {
         "text": "eş-Şehîd ",
         "mean": "Her şeye muttali olan, gören, bilen, haberdâr olan, her yerde hazır nazır olan, hiçbir şey kendisinden gizlenemeyen, bütün sırlara vakıf olan, her şeyi murakabe eden"
     },
-    "107": {
+    {
         "text": "eş-Şekûr ",
         "mean": "İbadet eden kullarının mükâfatlarını bolca veren, az çok her itaati ödüllendiren"
     },
-    "108": {
+    {
         "text": "eş-Şey ",
         "mean": "Var olan, mevcut"
     },
-    "109": {
+    {
         "text": "et-Tevvâb ",
         "mean": "Sürekli tövbeleri kabul eden"
     },
-    "110": {
+    {
         "text": "el-Vâhid ",
         "mean": "Zatında, isim ve sıfatlarında eşi ve benzeri bulunmayan, tek olan"
     },
-    "111": {
+    {
         "text": "el-Vâlî ",
         "mean": "Koruyup gözeten, yardım eden, işleri deruhte eden"
     },
-    "112": {
+    {
         "text": "el-Vâris ",
         "mean": "Bütün varlıkların sahibi, bâkî ve ebedî olan, herşey kendisine dönen"
     },
-    "113": {
+    {
         "text": "el-Vâsi’ ",
         "mean": "Güçlü, kuvvetli, ilim ve merhameti her şeyi kuşatan, bütün yaratıklara rızık veren, nimet ve ihsanı bol olan"
     },
-    "114": {
+    {
         "text": "el-Vedûd ",
         "mean": "Müminleri çok seven, kulları tarafından çok sevilen"
     },
-    "115": {
+    {
         "text": "el-Vehhâb ",
         "mean": "Karşılıksız çok nimet veren, ikram ve ihsanda devamlı olan, lütfu, ihsanı ve rahmeti bütün kulları kuşatan"
     },
-    "116": {
+    {
         "text": "el-Vekîl ",
         "mean": "Güvenilen, koruyan, yardım eden, görüp gözeten, her şeyin maliki ve yöneticisi olan"
     },
-    "117": {
+    {
         "text": "el-Velî ",
         "mean": "Dost, seven, görüp gözeten, yardım eden"
     },
-    "118": {
+    {
         "text": "ez-Zâhir",
         "mean": "Varlığı her şeyden aşikâr olan, her şeye galip gelen, her şeyden yüce olan"
     },
-    "119": {
+    {
         "text": "Zâri’(ûn)",
         "mean": "Ekinleri, bitkileri yetiştiren, büyüten"
     },
-    "120": {
+    {
         "text": "Hüvallâhüllezî lâ ilâhe illâ hû ",
         "mean": "Kendisinden başka hiç bir ilâh bulunmayan Allah"
     }
-}
+]

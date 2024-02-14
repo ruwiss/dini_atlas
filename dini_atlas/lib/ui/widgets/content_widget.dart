@@ -24,6 +24,7 @@ class ContentWidget extends StatefulWidget {
     this.onBookmarkTap,
     this.increaseFontSize = 0,
     this.hideDivider = false,
+    this.titlePadding,
   });
   final ContentTypes type;
   final int number;
@@ -45,6 +46,7 @@ class ContentWidget extends StatefulWidget {
   final Function()? onBookmarkTap;
   final double increaseFontSize;
   final bool hideDivider;
+  final EdgeInsetsGeometry? titlePadding;
 
   @override
   State<ContentWidget> createState() => _QuranSuraItemState();
@@ -69,7 +71,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 13),
+            padding: widget.titlePadding ?? const EdgeInsets.symmetric(horizontal: 13),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: kcGrayColorMedium,

@@ -87,7 +87,7 @@ final List<CategoryItem> categoryItems = [
     name: "Esma’ül\nHüsna",
     image: kiEsmaulHusna,
     color: kcListCardColors[9],
-    route: "",
+    route: Routes.esmaulHusnaView,
   ),
   CategoryItem(
     id: "dualar",
