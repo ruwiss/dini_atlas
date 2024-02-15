@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
@@ -8,6 +9,7 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_traceable_quran_dialog.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -213,6 +215,17 @@ class TraceableQuranViewModel extends BaseViewModel {
         },
       ),
     );
+  }
+
+  Future<Uint8List> getUint8ListFromUrl(String url) async {
+    final response = await Dio()
+        .get(url, options: Options(responseType: ResponseType.bytes));
+    if (response.statusCode == 200) {
+      final List<int> bytes = response.data;
+      return Uint8List.fromList(bytes);
+    } else {
+      throw Exception('Failed to load SVG');
+    }
   }
 
   @override

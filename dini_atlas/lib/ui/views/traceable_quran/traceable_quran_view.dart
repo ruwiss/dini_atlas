@@ -42,7 +42,7 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        TraceableQuranWidget(suraPage: viewModel.currentAyah!),
+        TraceableQuranWidget(viewModel: viewModel),
         TraceableQuranAudioWidget(viewModel: viewModel),
       ],
     );
