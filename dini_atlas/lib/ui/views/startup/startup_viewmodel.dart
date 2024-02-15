@@ -3,6 +3,7 @@ import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
+import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked/stacked.dart';
@@ -47,6 +48,7 @@ class StartupViewModel extends BaseViewModel {
     } else {
       _navigationService.replaceWithHomeView();
     }
+    await PushNotification.instance.setupNotification();
   }
 
   @override

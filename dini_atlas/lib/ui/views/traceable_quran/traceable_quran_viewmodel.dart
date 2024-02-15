@@ -9,6 +9,7 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
+import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_traceable_quran_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
@@ -218,16 +219,28 @@ class TraceableQuranViewModel extends BaseViewModel {
     );
   }
 
+  Uint8List? _svgFile;
+  String? _svgUrl;
   Future<Uint8List> getUint8ListFromUrl(String url) async {
-    final String urlPart = url.split("/").last;
-    final response = await Dio().get("$ksBaseUrl/kuran/sayfalar/$urlPart",
-        options: Options(responseType: ResponseType.bytes));
+    if (_svgUrl == url) return _svgFile!;
+    final response = await Dio()
+        .get(url, options: Options(responseType: ResponseType.bytes));
     if (response.statusCode == 200) {
       final List<int> bytes = response.data;
-      return Uint8List.fromList(bytes);
+      _svgUrl = url;
+      _svgFile = Uint8List.fromList(bytes);
+      return _svgFile!;
     } else {
       throw Exception('Failed to load SVG');
     }
+  }
+
+  final interactiveViewerCtrl = TransformationController();
+  void setQuranSvgContainerScale(BuildContext context, Size svgSize) async {
+    final width = screenWidth(context) * .9;
+    final diff = width / svgSize.width;
+    await Future.delayed(const Duration(seconds: 1));
+    interactiveViewerCtrl.value = Matrix4.diagonal3Values(diff, diff, 1);
   }
 
   @override

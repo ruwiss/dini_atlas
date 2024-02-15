@@ -38,17 +38,21 @@ class KazaView extends StackedView<KazaViewModel> {
                 ? KazaAuthWidget(viewModel: viewModel)
                 : viewModel.kaza == null
                     ? const CircularProgressIndicator()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 50, horizontal: 24),
-                        child: Column(
-                          children: [
-                            KazaTableWidget(viewModel: viewModel),
-                            const Spacer(),
-                            _lastModificationWidget(
-                                viewModel.kaza?.lastUpdated),
-                            const Spacer(),
-                          ],
+                    : SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 50, horizontal: 24),
+                          child: Column(
+                            children: [
+                              KazaTableWidget(viewModel: viewModel),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 25),
+                                child: _lastModificationWidget(
+                                    viewModel.kaza?.lastUpdated),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
       ),

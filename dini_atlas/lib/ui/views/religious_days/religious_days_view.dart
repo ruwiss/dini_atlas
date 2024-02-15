@@ -31,9 +31,14 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _nameWidget(
-                          item.day.replaceAll("(", "").replaceAll(")", ""),
+                          item.day
+                              .replaceAll("(", "")
+                              .replaceAll(")", "")
+                              .replaceAll(". Gün", ""),
                         ),
-                        Flexible(child: _timeWidget(item.date)),
+                        Flexible(
+                          child: _timeWidget(item.date),
+                        ),
                       ],
                     );
                   },
@@ -53,11 +58,11 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
         border: Border.all(color: kcBlueGrayColorSoft, width: 2.2),
       ),
       child: Text(
-        time,
+        time.replaceAll("i̇", "i"),
         softWrap: false,
         maxLines: 1,
         overflow: TextOverflow.fade,
-        style: const TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 13),
       ),
     );
   }
@@ -85,7 +90,7 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
         softWrap: false,
         style: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 15,
+          fontSize: 13,
           color: kcPrimaryColorDark.withOpacity(.7),
         ),
       ),

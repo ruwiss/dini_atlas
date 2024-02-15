@@ -2,7 +2,6 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:dini_atlas/app/theme.dart';
 import 'package:dini_atlas/services/notification/prayer_notification.dart';
 import 'package:dini_atlas/services/notification/prayer_reminder_notification.dart';
-import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,6 @@ Future<void> main() async {
   setupDialogUi();
   setupBottomSheetUi();
   AppTheme.setStatusBarColor();
-  await PushNotification.instance.setupNotification();
   await AndroidAlarmManager.initialize();
   await AndroidAlarmManager.periodic(
     const Duration(minutes: 1),

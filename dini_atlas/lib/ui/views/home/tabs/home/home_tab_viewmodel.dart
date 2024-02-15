@@ -13,6 +13,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/prayer_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -64,6 +65,8 @@ class HomeTabViewModel extends ReactiveViewModel {
 
     // Tablo için vakitleri getir
     changePrayerTimeIndex();
+
+    FlutterNativeSplash.remove();
   }
 
   Future<void> _getPrayerTimes() async {
