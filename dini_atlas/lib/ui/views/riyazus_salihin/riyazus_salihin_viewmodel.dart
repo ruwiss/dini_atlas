@@ -25,6 +25,7 @@ class RiyazusSalihinViewModel extends BaseViewModel {
 
   int _currentOffset = 0;
   int get currentOffset => _currentOffset;
+  bool _isLastScroll = false;
 
   late List<RiyazusSalihinModel> _riyazusSalihinList;
   List<RiyazusSalihinModel> get riyazusSalihinList => _riyazusSalihinList;
@@ -48,7 +49,8 @@ class RiyazusSalihinViewModel extends BaseViewModel {
     String? filter,
   }) async {
     // Filtreli aramalarda loadmore yapmasın
-    if (filterMode) return;
+    // Eğer gelen veri yoksa tekrar istemesin
+    if (filterMode || _isLastScroll) return;
 
     final bool isFilterSearch = id != null || filter != null;
     if (isFilterSearch) {
@@ -68,6 +70,7 @@ class RiyazusSalihinViewModel extends BaseViewModel {
     // işle
     result.fold(
       (list) {
+        if (loadMore && list.isEmpty) _isLastScroll = true;
         _riyazusSalihinList = list;
         _currentOffset += 5;
       },

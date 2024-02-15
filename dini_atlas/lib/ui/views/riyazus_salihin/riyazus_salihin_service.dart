@@ -21,11 +21,9 @@ class RiyazusSalihinService {
   // Hadisleri getir
   Future<Either<List<RiyazusSalihinModel>, RiyazusSalihinException>>
       getRiyazusSalihin({int offset = 0, int? id, String? filter}) async {
-    final bool isFirstContent =
-        _hadisList != null && id == null && filter == null && offset == 0;
+    final bool isFirstContent = id == null && filter == null && offset == 0;
 
-    if (isFirstContent) Left(_hadisList!);
-
+    if (isFirstContent && _hadisList != null) Left(_hadisList!);
     String hadisUrl = "/hadis/riyazus_salihin";
 
     Map<String, dynamic> args = {};
@@ -55,7 +53,7 @@ class RiyazusSalihinService {
     } else if (offset > 0) {
       _hadisList!.addAll(hadisList);
     }
-
+    if (hadisList.isEmpty) return const Left([]);
     // Eğer filtre uygulandıysa filtreli içeriği döndür, aksi halde kayıtlı içeriği ver
     return Left(isFirstContent || offset > 0 ? _hadisList! : hadisList);
   }
