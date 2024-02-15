@@ -24,7 +24,7 @@ class FirebaseRemoteConfigServiceClass {
 
   Future<void> _setConfigSettings() async => _remoteConfig.setConfigSettings(
         RemoteConfigSettings(
-          fetchTimeout: const Duration(seconds: 10), // zaman aşımı
+          fetchTimeout: const Duration(seconds: 15), // zaman aşımı
           minimumFetchInterval: const Duration(hours: 12), // cache süresi
         ),
       );
@@ -34,6 +34,7 @@ class FirebaseRemoteConfigServiceClass {
           _hostKey: "https://diniatlas.kodlayalim.net",
           _privacyPolicyKey:
               "https://docs.kodlayalim.net/diniatlas_privacy.html",
+          _mailKey: "omer670067@gmail.com"
         },
       );
 

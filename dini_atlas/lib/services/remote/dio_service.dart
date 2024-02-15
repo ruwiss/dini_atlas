@@ -1,9 +1,5 @@
-import 'dart:convert';
-
-import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dio/dio.dart';
-import 'package:crypto/crypto.dart';
 
 enum DioMethod { get, post, patch, delete }
 
@@ -14,10 +10,6 @@ class DioService {
       responseType: ResponseType.json,
       contentType: Headers.jsonContentType,
     );
-
-  String get token => md5
-      .convert(utf8.encode("${DateTime.now().convertYMDtimeString()}-V47R3JNT"))
-      .toString();
 
   Future<Response?> request(
     url, {
@@ -41,7 +33,7 @@ class DioService {
         data: postData,
         queryParameters: queryData,
         options: Options(
-          headers: {"token": token},
+          headers: {"token": ksToken},
         ),
       );
     } on DioException catch (e) {

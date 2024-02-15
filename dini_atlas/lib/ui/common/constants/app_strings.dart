@@ -1,5 +1,9 @@
 //const String ksBaseUrl = "http://10.0.2.2:9976";
 //const String ksBaseUrl = "http://192.168.1.104:9958";
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/services/remote/firebase_remote_config_service.dart';
 
 String ksBaseUrl = FirebaseRemoteConfigServiceClass.i.host;
@@ -21,3 +25,7 @@ const String ksPrayerReminderNotiChannel = "reminder_channel_atlas";
 
 // Mail
 String ksMail = FirebaseRemoteConfigServiceClass.i.mail;
+
+String get ksToken => md5
+    .convert(utf8.encode("${DateTime.now().convertYMDtimeString()}-V47R3JNT"))
+    .toString();

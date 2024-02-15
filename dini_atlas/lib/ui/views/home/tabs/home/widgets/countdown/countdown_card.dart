@@ -80,6 +80,7 @@ class CountdownCard extends StatelessWidget {
         blendMode: BlendMode.screen,
         child: Image.network(
           id == null ? "" : "$ksBaseUrl/aygoruntusu/$id",
+          headers: {"token": ksToken},
           height: 41,
           width: 41,
           cacheHeight: 41,
