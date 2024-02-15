@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 extension StringTimeExtensions on String {
   TimeOfDay parseTime() {
@@ -7,6 +8,18 @@ extension StringTimeExtensions on String {
     int min = int.parse(timeList[1]);
 
     return TimeOfDay(hour: hour, minute: min);
+  }
+
+  // Verilen [16 Haziran 2024 Pazar] şeklindeki tarihi DateTime'a döndürür
+  DateTime convertStringTimeToDateTime() {
+    final format = DateFormat('dd MMMM y EEEE', 'tr_TR');
+    return format.parse(this);
+  }
+
+  // [HH:mm:ss] -> [HH:mm]
+  String parseTimeAsString() {
+    final old = DateFormat('HH:mm:ss').parse(this);
+    return DateFormat('HH:mm').format(old);
   }
 
   DateTime parseTimeAsDateTime() {

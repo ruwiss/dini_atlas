@@ -2,7 +2,9 @@ import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
+import 'package:dini_atlas/models/prayer/eid_prayer.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
@@ -30,6 +32,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   bool locationBusy = false;
 
   List<PrayerTime>? get _prayerTimeList => homeService.prayerTimes?.prayerTimes;
+  EidPrayerTime? get _eidPrayerTime => homeService.prayerTimes?.eidPrayers;
   bool? get nextTimeIsAfterDay => homeService.nextTimeIsAfterDay;
   PrayerType get currentPrayerType => homeService.currentPrayerType;
   List<PrayerNotiSettings>? prayerNotiSettingsList;
@@ -188,5 +191,27 @@ class HomeTabViewModel extends ReactiveViewModel {
         },
       ),
     );
+  }
+
+  String? ifTodayEidPrayerTimeGetTime() {
+    final kurban = _eidPrayerTime?.bayramNamazVakti.kurbanBayramNamaziTarihi;
+    final ramazan = _eidPrayerTime?.bayramNamazVakti.ramazanBayramNamaziTarihi;
+    if (kurban == null || ramazan == null) return null;
+
+    final now = DateTime.now();
+    final kurbanDateTime = kurban.convertStringTimeToDateTime();
+    final ramazanDateTime = ramazan.convertStringTimeToDateTime();
+
+    if (now.isEqualTo(kurbanDateTime)) {
+      final time = _eidPrayerTime?.bayramNamazVakti.kurbanBayramNamaziSaati
+          .parseTimeAsString();
+      return "Kurban Bayramı Namazı: $time";
+    } else if (now.isEqualTo(ramazanDateTime)) {
+      final time = _eidPrayerTime?.bayramNamazVakti.ramazanBayramNamaziSaati
+          .parseTimeAsString();
+      return "Ramazan Bayramı Namazı: $time";
+    } else {
+      return null;
+    }
   }
 }

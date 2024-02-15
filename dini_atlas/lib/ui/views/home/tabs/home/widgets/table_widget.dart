@@ -14,9 +14,18 @@ class TableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? eidPrayer = viewModel.ifTodayEidPrayerTimeGetTime();
     return Column(
       children: [
         _tableHeader(),
+        // Eğer bugün bayram ise namaz saatini göster
+        if (eidPrayer != null) ...[
+          verticalSpace(20),
+          Text(
+            eidPrayer,
+            style: const TextStyle(fontSize: 14, color: kcPrimaryColor),
+          )
+        ],
         verticalSpace(20),
         _tableBody(context),
         verticalSpaceSmall,
@@ -97,9 +106,7 @@ class TableWidget extends StatelessWidget {
       child: Builder(
         key: ValueKey(viewModel.selectedPrayerTime),
         builder: (context) {
-          if (viewModel.selectedPrayerTime == null) {
-            return const SizedBox();
-          }
+          if (viewModel.selectedPrayerTime == null) return const SizedBox();
           return Column(
             children: [
               _tableItem(prayerType: PrayerType.imsak),
@@ -107,10 +114,7 @@ class TableWidget extends StatelessWidget {
               _tableItem(prayerType: PrayerType.ogle),
               _tableItem(prayerType: PrayerType.ikindi),
               _tableItem(prayerType: PrayerType.aksam),
-              _tableItem(
-                prayerType: PrayerType.yatsi,
-                hideDivider: true,
-              ),
+              _tableItem(prayerType: PrayerType.yatsi, hideDivider: true),
             ],
           );
         },
