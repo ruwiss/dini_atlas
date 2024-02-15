@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "584946237586",
+    "project_id": "dini-atlas-5e2da",
+    "storage_bucket": "dini-atlas-5e2da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584946237586:android:3e82a9831cd3fc5792664b",
+        "android_client_info": {
+          "package_name": "com.rw.dini_atlas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoVawUcjFIu_DV-XUoyBWmcL7aTKWgKD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

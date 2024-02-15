@@ -41,4 +41,5 @@ app.register_blueprint(user_app, url_prefix="/kullanici")
 
 if __name__ == "__main__":
     helper.fetch_radios()
-    app.run(debug=True, host="0.0.0.0", port=9976)
+    app.run(debug=True, host="0.0.0.0", port=9958)
+    # app.run(port=9958)

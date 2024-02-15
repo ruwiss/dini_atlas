@@ -3,6 +3,7 @@ import 'package:dini_atlas/app/theme.dart';
 import 'package:dini_atlas/services/notification/prayer_notification.dart';
 import 'package:dini_atlas/services/notification/prayer_reminder_notification.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
+import 'package:dini_atlas/services/remote/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/app/app.bottomsheets.dart';
@@ -12,6 +13,8 @@ import 'package:dini_atlas/app/app.router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 // Dakikalık background-task
 @pragma('vm:entry-point')
@@ -25,6 +28,8 @@ void everyMinuteNotificationController() {
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseRemoteConfigServiceClass.i.init();
   await setupLocator();
   await initializeDateFormatting(ksDefaultLocale);
   setupDialogUi();
