@@ -1,7 +1,5 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:dini_atlas/app/theme.dart';
-import 'package:dini_atlas/services/notification/prayer_notification.dart';
-import 'package:dini_atlas/services/notification/prayer_reminder_notification.dart';
 import 'package:dini_atlas/services/remote/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +13,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-// Dakikalık background-task
-@pragma('vm:entry-point')
-void everyMinuteNotificationController() {
-  // Namaza kaç dk kaldığını gösteren push bildirim
-  PrayerNotification.showPrayerCountdownNotification();
-  // Namaz vakti hatırlatıcı ek bildirim
-  PrayerReminderNotification.showPrayerReminderNotification();
-}
-
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -35,14 +24,6 @@ Future<void> main() async {
   setupBottomSheetUi();
   AppTheme.setStatusBarColor();
   await AndroidAlarmManager.initialize();
-  await AndroidAlarmManager.periodic(
-    const Duration(minutes: 1),
-    1,
-    everyMinuteNotificationController,
-    exact: true,
-    rescheduleOnReboot: true,
-    allowWhileIdle: true,
-  );
   runApp(const MainApp());
 }
 

@@ -8,8 +8,6 @@ import 'package:dini_atlas/models/quran/sura_player.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
-import 'package:dini_atlas/ui/common/constants/app_strings.dart';
-import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_traceable_quran_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
@@ -233,14 +231,6 @@ class TraceableQuranViewModel extends BaseViewModel {
     } else {
       throw Exception('Failed to load SVG');
     }
-  }
-
-  final interactiveViewerCtrl = TransformationController();
-  void setQuranSvgContainerScale(BuildContext context, Size svgSize) async {
-    final width = screenWidth(context) * .9;
-    final diff = width / svgSize.width;
-    await Future.delayed(const Duration(seconds: 1));
-    interactiveViewerCtrl.value = Matrix4.diagonal3Values(diff, diff, 1);
   }
 
   @override

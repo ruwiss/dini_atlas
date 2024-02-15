@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:dini_atlas/models/quran/sura_player.dart';
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_viewmodel.dart';
-import 'package:dini_atlas/ui/widgets/size_provider_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'ayah_marker_painter.dart';
@@ -30,8 +29,6 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
             return SingleChildScrollView(
               child: InteractiveViewer(
                 clipBehavior: Clip.none,
-                transformationController:
-                    widget.viewModel.interactiveViewerCtrl,
                 alignment: Alignment.bottomCenter,
                 child: suraPage.x == null
                     ? SvgPicture.memory(bytes)
@@ -41,14 +38,7 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
                           y: double.parse(suraPage.y!),
                           polygon: suraPage.polygon!,
                         ),
-                        child: SizeProviderWidget(
-                          onChildSize: (svgSize) {
-                            widget.viewModel
-                                .setQuranSvgContainerScale(context, svgSize);
-                          },
-                          child: SvgPicture.memory(bytes),
-                        ),
-                      ),
+                        child: SvgPicture.memory(bytes)),
               ),
             );
           }

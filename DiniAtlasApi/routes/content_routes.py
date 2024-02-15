@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, send_file, Response
+from flask import Blueprint, request, jsonify, Response
 from selectolax.lexbor import LexborHTMLParser
 from datetime import datetime
 from markupsafe import escape
@@ -260,7 +260,6 @@ def ay_goruntusu(img):
     r = requests.get(f"https://namazvakti.diyanet.gov.tr/images/{img}", stream=True)
     if r.status_code == 200:
         image_data = io.BytesIO(r.content)
-
-        return send_file(image_data, mimetype="image/gif")
+        return Response(r.content, mimetype="image/gif")
     else:
         return "Error", 404

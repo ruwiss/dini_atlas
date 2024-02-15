@@ -1,4 +1,17 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'prayer_notification.dart';
+import 'prayer_reminder_notification.dart';
+
+// Dakikalık background-task
+@pragma('vm:entry-point')
+void everyMinuteNotificationController() {
+  // Namaza kaç dk kaldığını gösteren push bildirim
+  PrayerNotification.showPrayerCountdownNotification();
+  // Namaz vakti hatırlatıcı ek bildirim
+  PrayerReminderNotification.showPrayerReminderNotification();
+}
 
 class PushNotification {
   PushNotification._singleton();
@@ -21,6 +34,14 @@ class PushNotification {
         const InitializationSettings(
           android: AndroidInitializationSettings('ic_stat_noti'),
         ),
+      );
+      await AndroidAlarmManager.periodic(
+        const Duration(minutes: 1),
+        1,
+        everyMinuteNotificationController,
+        exact: true,
+        rescheduleOnReboot: true,
+        allowWhileIdle: true,
       );
     }
   }
