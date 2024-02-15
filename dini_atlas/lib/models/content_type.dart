@@ -62,4 +62,16 @@ class ContentTypes {
         hidePlayButton = true,
         hideShareButton = true,
         hideBookmarkButton = true;
+
+  ContentTypes.dualarType()
+      : type = EContentTypes.dua,
+        hidePlayButton = true,
+        hideShareButton = false,
+        hideBookmarkButton = false;
+
+  ContentTypes.dualarTypeFavorite()
+      : type = EContentTypes.dua,
+        hidePlayButton = true,
+        hideShareButton = false,
+        hideBookmarkButton = false;
 }

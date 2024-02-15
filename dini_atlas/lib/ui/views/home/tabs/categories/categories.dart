@@ -94,13 +94,13 @@ final List<CategoryItem> categoryItems = [
     name: "Duâlar",
     image: kiPray,
     color: kcListCardColors[10],
-    route: "",
+    route: Routes.dualarView,
   ),
   CategoryItem(
     id: "cuz",
     name: "Elif Bâ",
     image: kiBook2,
     color: kcListCardColors[11],
-    route: "",
+    route: Routes.elifbaView,
   ),
 ];

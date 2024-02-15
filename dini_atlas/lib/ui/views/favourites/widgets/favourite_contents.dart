@@ -22,6 +22,8 @@ class FavouriteContentsWidget extends StatelessWidget {
             type = ContentTypes.ayahTypeFavorite();
           } else if (item.type == "hadis") {
             type = ContentTypes.hadithTypeFavorite();
+          } else if (item.type == "dua") {
+            type = ContentTypes.dualarTypeFavorite();
           }
           return ContentWidget(
             type: type,

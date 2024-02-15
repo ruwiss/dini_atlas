@@ -71,7 +71,8 @@ class _QuranSuraItemState extends State<ContentWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            padding: widget.titlePadding ?? const EdgeInsets.symmetric(horizontal: 13),
+            padding: widget.titlePadding ??
+                const EdgeInsets.symmetric(horizontal: 13),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: kcGrayColorMedium,
