@@ -45,6 +45,9 @@ extension DateTimeExtensions on DateTime {
     return formattedDate;
   }
 
+  // %Y-%m-%d
+  String convertYMDtimeString() => DateFormat('yyyy-MM-dd').format(this);
+
   // DateTime objesini TimeOfDay objesine döndürür
   TimeOfDay toTimeOfDay() => TimeOfDay(hour: hour, minute: minute);
 

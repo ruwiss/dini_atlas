@@ -5,7 +5,7 @@ from flask import Flask
 import helper
 
 app = Flask(__name__)
-# app.wsgi_app = Middleware(app.wsgi_app)
+app.wsgi_app = Middleware(app.wsgi_app)
 
 app.config["JSON_AS_ASCII"] = False
 app.config["JSONIFY_MIMETYPE"] = "application/json; charset=utf-8"
