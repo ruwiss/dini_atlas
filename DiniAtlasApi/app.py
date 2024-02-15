@@ -2,18 +2,29 @@ from routes.content_routes import app as content_app
 from routes.user_routes import app as user_app
 from routes.middleware import Middleware
 from flask import Flask
+from connect import init_app
 import helper
 
+debug_mode = False
+
 app = Flask(__name__)
-app.wsgi_app = Middleware(app.wsgi_app)
+
+# header { token: md5(datetime(Y:m:d)-V47R3JNT) }
+# app.wsgi_app = Middleware(app.wsgi_app)
 
 app.config["JSON_AS_ASCII"] = False
 app.config["JSONIFY_MIMETYPE"] = "application/json; charset=utf-8"
 
+app.config["DB_HOST"] = "localhost"
+app.config["DB_USER"] = "root" if debug_mode else "kodlayalim_user"
+app.config["DB_PASSWORD"] = None if debug_mode else "Ankara.0660."
+app.config["DB_DATABASE"] = "dini_atlas" if debug_mode else "kodlayalim_diniatlas"
+
 app.register_blueprint(content_app)
 app.register_blueprint(user_app, url_prefix="/kullanici")
 
-# header { token: md5(datetime(Y:m:d)-V47R3JNT) }
+# mysql auto dispose method
+init_app(app)
 
 # GET https://ezanvakti.herokuapp.com/ Ezan Vakitleri
 
@@ -41,5 +52,4 @@ app.register_blueprint(user_app, url_prefix="/kullanici")
 
 if __name__ == "__main__":
     helper.fetch_radios()
-    app.run(debug=True, host="0.0.0.0", port=9958)
-    # app.run(port=9958)
+    app.run(debug=debug_mode, host="0.0.0.0" if debug_mode else None, port=9958)

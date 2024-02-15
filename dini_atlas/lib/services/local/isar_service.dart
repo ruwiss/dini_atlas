@@ -33,7 +33,12 @@ class IsarService {
     debugPrint("Varsayılan vakit bildirim ayarları kaydedildi");
     for (var prayerType in PrayerType.values) {
       if (prayerType == PrayerType.all) continue;
-      final value = PrayerNotiSettings()..name = prayerType.text;
+      PrayerNotiSettings value = PrayerNotiSettings()..name = prayerType.text;
+
+      if (prayerType == PrayerType.gunes) {
+        value.voiceWarningEnable = false;
+        value.advancedWarningSoundsEnable = false;
+      }
       await isar.writeTxn(() async => await isar.prayerNotiSettings.put(value));
     }
   }

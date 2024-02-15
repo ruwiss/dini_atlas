@@ -30,7 +30,7 @@ class RiyazusSalihinView extends StackedView<RiyazusSalihinViewModel> {
                     child: Column(
                       children: [
                         verticalSpaceSmall,
-                        _searchWidget(viewModel),
+                        if (!viewModel.filterMode) _searchWidget(viewModel),
                         verticalSpaceSmall,
                         if (viewModel.filterMode)
                           _cancelFilterButton(viewModel),
@@ -42,20 +42,17 @@ class RiyazusSalihinView extends StackedView<RiyazusSalihinViewModel> {
     );
   }
 
-  Padding _cancelFilterButton(RiyazusSalihinViewModel viewModel) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextButton.icon(
-            onPressed: viewModel.cancelFilter,
-            icon: const Icon(Icons.arrow_back),
-            label: const Text("Geri Dön"),
-          ),
-          const Text("Arama sonuçları"),
-        ],
-      ),
+  Widget _cancelFilterButton(RiyazusSalihinViewModel viewModel) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        TextButton.icon(
+          onPressed: viewModel.cancelFilter,
+          icon: const Icon(Icons.arrow_back),
+          label: const Text("Geri Dön"),
+        ),
+        const Text("Arama sonuçları"),
+      ],
     );
   }
 

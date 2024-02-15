@@ -1,25 +1,30 @@
+from flask import current_app, g
 import mysql.connector
 
 
-def connect_mysql():
-    try:
-        db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            database="dini_atlas",
-            # password="yourpassword"
+def get_db():
+    if "db" not in g:
+        password = current_app.config.get("DB_PASSWORD")
+        g.db = mysql.connector.connect(
+            host=current_app.config["DB_HOST"],
+            user=current_app.config["DB_USER"],
+            password=password if password else None,
+            database=current_app.config["DB_DATABASE"],
         )
+    return g.db
 
-        """ db = mysql.connector.connect(
-            host="localhost",
-            user="kodlayalim_user",
-            database="kodlayalim_diniatlas",
-            password="Ankara.0660.",
-        )  """
 
-        cursor = db.cursor(dictionary=True, buffered=True)
-        return db, cursor
+def get_cursor():
+    db = get_db()
+    return db.cursor(dictionary=True, buffered=True)
 
-    except mysql.connector.Error as err:
-        print(f"Error: {err}")
-        return None, None
+
+def close_db(e=None):
+    db = g.pop("db", None)
+
+    if db is not None:
+        db.close()
+
+
+def init_app(app):
+    app.teardown_appcontext(close_db)

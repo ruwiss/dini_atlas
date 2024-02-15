@@ -1,4 +1,1 @@
-flask
-mysql-connector-python
-requests
-selectolax
+flask mysql-connector-python requests selectolax

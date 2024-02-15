@@ -9,12 +9,14 @@ class FirebaseRemoteConfigServiceClass {
   final String _hostKey = "host";
   final String _privacyPolicyKey = "privacy_policiy";
   final String _mailKey = "mail";
+  final String _securityKey = "security_key";
 
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
   String get host => _remoteConfig.getString(_hostKey);
   String get privacyPolicy => _remoteConfig.getString(_privacyPolicyKey);
   String get mail => _remoteConfig.getString(_mailKey);
+  String get securityKey => _remoteConfig.getString(_securityKey);
 
   Future<void> init() async {
     await _setConfigSettings();
@@ -31,10 +33,11 @@ class FirebaseRemoteConfigServiceClass {
 
   Future<void> _setDefaults() async => _remoteConfig.setDefaults(
         {
-          _hostKey: "https://diniatlas.kodlayalim.net",
+          _hostKey: "https://api.kodlayalim.net/diniatlas",
           _privacyPolicyKey:
               "https://docs.kodlayalim.net/diniatlas_privacy.html",
-          _mailKey: "omer670067@gmail.com"
+          _mailKey: "omer670067@gmail.com",
+          _securityKey: "V47R3JNT"
         },
       );
 

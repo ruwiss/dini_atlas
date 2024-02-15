@@ -1,14 +1,12 @@
-from flask import Blueprint, request, jsonify, send_file
+from flask import Blueprint, request, jsonify, send_file, Response
 from selectolax.lexbor import LexborHTMLParser
 from datetime import datetime
 from markupsafe import escape
 import requests
-import connect
+from connect import get_cursor
 import helper
 import json
 import io
-
-db, cursor = connect.connect_mysql()
 
 app = Blueprint("content_app", __name__)
 
@@ -18,8 +16,16 @@ def index():
     return "OK"
 
 
+@app.route("/kuran/sayfalar/<sayfa>")
+def kuran_sayfalar(sayfa):
+    page_url = f"https://www.mp3quran.net/api/quran_pages_svg/{sayfa}"
+    response = requests.get(page_url)
+    return Response(response.content, mimetype="image/svg+xml")
+
+
 @app.route("/kuran/sureler")
 def sure_listesi():
+    cursor = get_cursor()
     cursor.execute(
         "SELECT DISTINCT sure, isim, isim_ar, ayet_sayisi, yer, cuz, sayfa FROM sureler ORDER BY sure ASC"
     )
@@ -33,7 +39,7 @@ def kuran():
     ayet = int(request.args.get("ayet", 0))
     sayfa = int(request.args.get("sayfa", 0))
     offset = int(request.args.get("offset", 0))
-
+    cursor = get_cursor()
     if sayfa:
         cursor.execute("SELECT * FROM sureler WHERE sayfa = %s", (sayfa,))
         sure_data = cursor.fetchone()
@@ -77,6 +83,7 @@ def kuran():
 @app.route("/hadis/riyazus_salihin")
 @app.route("/hadis/riyazus_salihin/<int:hadis_id>")
 def hadis(hadis_id=None):
+    cursor = get_cursor()
     offset = int(request.args.get("offset", 0))
     limit = 5 if not hadis_id else 1
     if hadis_id:
@@ -105,6 +112,7 @@ def hadis(hadis_id=None):
 
 @app.route("/hadis/riyazus_salihin/ara")
 def hadis_ara():
+    cursor = get_cursor()
     query = request.args.get("query", None)
     offset = int(request.args.get("offset", 0))
     if not query:

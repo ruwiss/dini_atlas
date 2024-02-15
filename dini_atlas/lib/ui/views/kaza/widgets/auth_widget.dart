@@ -42,6 +42,7 @@ class _KazaAuthWidgetState extends State<KazaAuthWidget> with $KazaAuthWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 60),
       children: [
         SvgPicture.asset(kiAuthEmoji),

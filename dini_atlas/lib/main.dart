@@ -45,7 +45,6 @@ Future<void> main() async {
     rescheduleOnReboot: true,
     allowWhileIdle: true,
   );
-
   runApp(const MainApp());
 }
 

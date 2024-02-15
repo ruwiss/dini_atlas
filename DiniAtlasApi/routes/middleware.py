@@ -9,9 +9,9 @@ class Middleware:
 
     def __call__(self, environ, start_response):
         request = Request(environ)
-        token = request.headers["token"]
+        token = request.headers.get("token")
         create_token = helper.md5(f"{datetime.now().strftime('%Y-%m-%d')}-V47R3JNT")
-        if token == create_token:
+        if token and token == create_token:
             environ["access"] = True
             return self.app(environ, start_response)
         else:

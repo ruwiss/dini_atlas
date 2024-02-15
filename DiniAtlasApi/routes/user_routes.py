@@ -1,16 +1,15 @@
 from flask import Blueprint, request, jsonify
 import helper
-import connect
+from connect import get_db, get_cursor
 import json
-
-db, cursor = connect.connect_mysql()
 
 app = Blueprint("user_app", __name__)
 
 
 @app.route("/auth", methods=["GET", "POST"])
 def kullanici():
-    print(request.headers)
+    db = get_db()
+    cursor = get_cursor()
     if request.method == "POST":
         data = request.get_json()
         mail = data["mail"]
@@ -51,6 +50,8 @@ def kullanici():
 
 @app.route("/kaza", methods=["GET", "POST"])
 def kaza_borcu():
+    db = get_db()
+    cursor = get_cursor()
     if request.method == "POST":
         data = request.get_json()
         mail = data["mail"]

@@ -20,7 +20,7 @@ class FortyHadithsView extends StackedView<FortyHadithsViewModel> {
       appBar: const AppBarWidget(title: "40 Hadis"),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: FutureBuilder<List<HadithModel>>(
             future: viewModel.getFortyHadiths(),
             builder: (context, snapshot) {

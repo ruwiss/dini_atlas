@@ -12,81 +12,83 @@ class KazaTableWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Kaza? kaza = viewModel.kaza;
     if (kaza == null) return const SizedBox();
-    return Column(
-      children: [
-        _tableContainer(
-          children: [
-            // Header
-            _table1Header(),
-            _tableItem(
-              text: "Sabah",
-              count: kaza.sabah,
-              onDecrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(sabah: kaza.sabah - 1)),
-              onIncrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(sabah: kaza.sabah + 1)),
-            ),
-            _tableItem(
-              text: "Öğle",
-              count: kaza.ogle,
-              color: kcGrayColorLightSoft,
-              onDecrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(ogle: kaza.ogle - 1)),
-              onIncrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(ogle: kaza.ogle + 1)),
-            ),
-            _tableItem(
-              text: "İkindi",
-              count: kaza.ikindi,
-              onDecrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(ikindi: kaza.ikindi - 1)),
-              onIncrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(ikindi: kaza.ikindi + 1)),
-            ),
-            _tableItem(
-              text: "Akşam",
-              count: kaza.aksam,
-              color: kcGrayColorLightSoft,
-              onDecrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(aksam: kaza.aksam - 1)),
-              onIncrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(aksam: kaza.aksam + 1)),
-            ),
-            _tableItem(
-              text: "Yatsı",
-              count: kaza.yatsi,
-              onDecrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(yatsi: kaza.yatsi - 1)),
-              onIncrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(yatsi: kaza.yatsi + 1)),
-            ),
-            _tableItem(
-              text: "Vitir",
-              count: kaza.vitir,
-              color: kcGrayColorLightSoft,
-              onDecrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(vitir: kaza.vitir - 1)),
-              onIncrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(vitir: kaza.vitir + 1)),
-            ),
-            _multipleUpdateWidget(kaza),
-          ],
-        ),
-        verticalSpaceMedium,
-        _tableContainer(
-          children: [
-            _table2Header(),
-            _tableItem(
-              text: "Borç",
-              count: kaza.oruc,
-              onDecrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(oruc: kaza.oruc - 1)),
-              onIncrease: () =>
-                  viewModel.updateKaza(kaza.copyWith(oruc: kaza.oruc + 1)),
-            ),
-          ],
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _tableContainer(
+            children: [
+              // Header
+              _table1Header(),
+              _tableItem(
+                text: "Sabah",
+                count: kaza.sabah,
+                onDecrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(sabah: kaza.sabah - 1)),
+                onIncrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(sabah: kaza.sabah + 1)),
+              ),
+              _tableItem(
+                text: "Öğle",
+                count: kaza.ogle,
+                color: kcGrayColorLightSoft,
+                onDecrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(ogle: kaza.ogle - 1)),
+                onIncrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(ogle: kaza.ogle + 1)),
+              ),
+              _tableItem(
+                text: "İkindi",
+                count: kaza.ikindi,
+                onDecrease: () => viewModel
+                    .updateKaza(kaza.copyWith(ikindi: kaza.ikindi - 1)),
+                onIncrease: () => viewModel
+                    .updateKaza(kaza.copyWith(ikindi: kaza.ikindi + 1)),
+              ),
+              _tableItem(
+                text: "Akşam",
+                count: kaza.aksam,
+                color: kcGrayColorLightSoft,
+                onDecrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(aksam: kaza.aksam - 1)),
+                onIncrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(aksam: kaza.aksam + 1)),
+              ),
+              _tableItem(
+                text: "Yatsı",
+                count: kaza.yatsi,
+                onDecrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(yatsi: kaza.yatsi - 1)),
+                onIncrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(yatsi: kaza.yatsi + 1)),
+              ),
+              _tableItem(
+                text: "Vitir",
+                count: kaza.vitir,
+                color: kcGrayColorLightSoft,
+                onDecrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(vitir: kaza.vitir - 1)),
+                onIncrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(vitir: kaza.vitir + 1)),
+              ),
+              _multipleUpdateWidget(kaza),
+            ],
+          ),
+          verticalSpaceMedium,
+          _tableContainer(
+            children: [
+              _table2Header(),
+              _tableItem(
+                text: "Borç",
+                count: kaza.oruc,
+                onDecrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(oruc: kaza.oruc - 1)),
+                onIncrease: () =>
+                    viewModel.updateKaza(kaza.copyWith(oruc: kaza.oruc + 1)),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

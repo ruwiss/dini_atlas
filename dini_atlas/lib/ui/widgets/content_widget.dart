@@ -57,8 +57,9 @@ class _QuranSuraItemState extends State<ContentWidget> {
 
   void _shareButton() async {
     final bytes = await shareViewAsImage(_suraKey);
+    if (bytes == null) return;
     Share.shareXFiles([
-      XFile.fromData(bytes!,
+      XFile.fromData(bytes,
           mimeType: "image/png", name: widget.number.toString()),
     ]);
   }
@@ -80,25 +81,23 @@ class _QuranSuraItemState extends State<ContentWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    // Numara görünümü
-                    _ayahNumber(),
-                    // Başlık metni
-                    if (widget.titleText case final String titleText) ...[
-                      horizontalSpaceSmall,
-                      SizedBox(
-                        width: screenWidth(context) * .46,
-                        child: Text(
-                          titleText,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          style: const TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      )
-                    ]
-                  ],
+                Flexible(
+                  child: Row(
+                    children: [
+                      // Numara görünümü
+                      _ayahNumber(),
+                      // Başlık metni
+                      if (widget.titleText case final String titleText) ...[
+                        horizontalSpaceSmall,
+                        Expanded(
+                          child: Text(
+                            titleText,
+                            style: const TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                        )
+                      ]
+                    ],
+                  ),
                 ),
                 // Action Buttons
                 _actionButtons(),
@@ -116,19 +115,22 @@ class _QuranSuraItemState extends State<ContentWidget> {
     return ShareableView(
       builder: (key) {
         _suraKey = key;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Arapça Kısım
-            if (widget.text1 != null) ...[verticalSpace(24), _suraArabic()],
+        return Container(
+          color: kcBackgroundColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Arapça Kısım
+              if (widget.text1 != null) ...[verticalSpace(24), _suraArabic()],
 
-            // Türkçe Okunuş
-            if (widget.text2 != null) ...[verticalSpace(18), _suraTurkish()],
+              // Türkçe Okunuş
+              if (widget.text2 != null) ...[verticalSpace(18), _suraTurkish()],
 
-            // Meal Kısmı
-            if (widget.text3 != null) ...[verticalSpace(8), _suraMeal()],
-            verticalSpace(18),
-          ],
+              // Meal Kısmı
+              if (widget.text3 != null) ...[verticalSpace(8), _suraMeal()],
+              verticalSpace(18),
+            ],
+          ),
         );
       },
     );

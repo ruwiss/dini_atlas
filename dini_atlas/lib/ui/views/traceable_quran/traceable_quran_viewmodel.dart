@@ -8,6 +8,7 @@ import 'package:dini_atlas/models/quran/sura_player.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
+import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_traceable_quran_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
@@ -218,8 +219,9 @@ class TraceableQuranViewModel extends BaseViewModel {
   }
 
   Future<Uint8List> getUint8ListFromUrl(String url) async {
-    final response = await Dio()
-        .get(url, options: Options(responseType: ResponseType.bytes));
+    final String urlPart = url.split("/").last;
+    final response = await Dio().get("$ksBaseUrl/kuran/sayfalar/$urlPart",
+        options: Options(responseType: ResponseType.bytes));
     if (response.statusCode == 200) {
       final List<int> bytes = response.data;
       return Uint8List.fromList(bytes);
