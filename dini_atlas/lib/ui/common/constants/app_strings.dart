@@ -1,4 +1,4 @@
-import 'package:dini_atlas/services/remote/firebase_remote_config_service.dart';
+import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';

@@ -1,4 +1,5 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:dini_atlas/services/remote/google/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'prayer_notification.dart';
@@ -43,6 +44,8 @@ class PushNotification {
         rescheduleOnReboot: true,
         allowWhileIdle: true,
       );
+
+      await FirebaseMessagingService.initFirebaseNotifications();
     }
   }
 }

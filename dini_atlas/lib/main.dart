@@ -1,6 +1,6 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:dini_atlas/app/theme.dart';
-import 'package:dini_atlas/services/remote/firebase_remote_config_service.dart';
+import 'package:dini_atlas/services/remote/google/google_services.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/app/app.bottomsheets.dart';
@@ -17,7 +17,7 @@ Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseRemoteConfigServiceClass.i.init();
+  await GoogleServices.init();
   await setupLocator();
   await initializeDateFormatting(ksDefaultLocale);
   setupDialogUi();
