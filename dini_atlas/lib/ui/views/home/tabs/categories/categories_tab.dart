@@ -33,7 +33,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
             onTap: () {
               locator<NavigationService>().navigateTo(item.route);
               FirebaseAnalytics.instance.logEvent(
-                name: "Kategori Girişi",
+                name: "kategori_giris",
                 parameters: {"name": item.name},
               );
             },

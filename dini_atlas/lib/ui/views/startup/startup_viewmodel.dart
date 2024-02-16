@@ -48,7 +48,7 @@ class StartupViewModel extends BaseViewModel {
       FlutterNativeSplash.remove();
     } else {
       _navigationService.replaceWithHomeView();
-      FirebaseAnalytics.instance.logEvent(name: "İlk Giriş");
+      FirebaseAnalytics.instance.logEvent(name: "giris");
     }
     await PushNotification.instance.setupNotification();
   }

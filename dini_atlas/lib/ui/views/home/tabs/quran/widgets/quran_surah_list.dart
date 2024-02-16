@@ -52,14 +52,14 @@ class QuranSurahList extends StatelessWidget {
         if (currentTab != QuranTabs.traceable) {
           navService.navigateToQuranView(currentTab: currentTab, sura: item);
           FirebaseAnalytics.instance.logEvent(
-            name: "Sûre (Normal)",
+            name: "kuran_sure_normal",
             parameters: {"name": item.name},
           );
         } else {
           // Takipli kuran ekranına git
           navService.navigateToTraceableQuranView(sura: item);
           FirebaseAnalytics.instance.logEvent(
-            name: "Sûre (Takipli)",
+            name: "kuran_sure_takipli",
             parameters: {"name": item.name},
           );
         }
