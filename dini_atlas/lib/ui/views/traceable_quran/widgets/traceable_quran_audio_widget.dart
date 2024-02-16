@@ -12,7 +12,7 @@ class TraceableQuranAudioWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavContainer(
-      backgroundColor: kcBackgroundColor.withOpacity(.6),
+      backgroundColor: kcBackgroundColor.withOpacity(.4),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 18),
         child: Row(

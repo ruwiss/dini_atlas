@@ -32,9 +32,7 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
           ),
         ],
       ),
-      body: Center(
-        child: bismillah ? _bismillahWidget() : _contentWidget(viewModel),
-      ),
+      body: bismillah ? _bismillahWidget() : _contentWidget(viewModel),
     );
   }
 
@@ -49,11 +47,13 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
   }
 
   Widget _bismillahWidget() {
-    return SvgPicture.asset(
-      kiBismillah,
-      colorFilter: const ColorFilter.mode(
-        kcShadowColor,
-        BlendMode.color,
+    return Center(
+      child: SvgPicture.asset(
+        kiBismillah,
+        colorFilter: const ColorFilter.mode(
+          kcShadowColor,
+          BlendMode.color,
+        ),
       ),
     );
   }
