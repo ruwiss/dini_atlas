@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:dini_atlas/app/theme.dart';
 import 'package:dini_atlas/services/remote/google/google_services.dart';
@@ -14,17 +16,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await GoogleServices.init();
-  await setupLocator();
-  await initializeDateFormatting(ksDefaultLocale);
-  setupDialogUi();
-  setupBottomSheetUi();
-  AppTheme.setStatusBarColor();
-  await AndroidAlarmManager.initialize();
-  runApp(const MainApp());
+  runZonedGuarded<Future<void>>(() async {
+    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    await GoogleServices.init();
+    await setupLocator();
+    await initializeDateFormatting(ksDefaultLocale);
+    setupDialogUi();
+    setupBottomSheetUi();
+    AppTheme.setStatusBarColor();
+    await AndroidAlarmManager.initialize();
+    runApp(const MainApp());
+  }, GoogleServices.recordError);
 }
 
 class MainApp extends StatelessWidget {
