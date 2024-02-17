@@ -3,11 +3,11 @@ import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-String ksBaseUrl = FirebaseRemoteConfigServiceClass.i.host;
+String get ksBaseUrl => FirebaseRemoteConfigServiceClass.i.host;
 //String ksBaseUrl = "https://192.168.1.104:9958";
 
 // Gizlilik Politikası
-String ksPrivacyPolicy = FirebaseRemoteConfigServiceClass.i.privacyPolicy;
+String get ksPrivacyPolicy => FirebaseRemoteConfigServiceClass.i.privacyPolicy;
 
 // Uygulama başlığı
 const String ksAppName = "Dinî Atlas";
@@ -22,8 +22,35 @@ const String ksPrayerNotiChannel = "countdown_channel_atlas";
 const String ksPrayerReminderNotiChannel = "reminder_channel_atlas";
 
 // Mail
-String ksMail = FirebaseRemoteConfigServiceClass.i.mail;
+String get ksMail => FirebaseRemoteConfigServiceClass.i.mail;
 
 String get ksToken => md5
     .convert(utf8.encode("${DateTime.now().convertYMDtimeString()}-V47R3JNT"))
     .toString();
+
+// ---- Admob Ads ---- //
+const bool ksShowAdmobAds = true;
+const bool ksShowTestAds = true;
+
+const String ksAdmobAppOpen = "";
+
+/// Sure liste görünümü
+const String ksAdmobBanner1 = "";
+
+/// İçerik liste görünümü
+const String ksAdmobBanner2 = "";
+
+/// Elifba ekranı
+const String ksAdmobBanner3 = "";
+
+/// Kaza ekranı
+const String ksAdmobBanner4 = "";
+
+/// Pusula ekranı
+const String ksAdmobBanner5 = "";
+
+// Sure liste görünümünden içeriğe giderken
+const String ksAdmobInterstitial1 = "";
+
+// Buton aksiyonları için geçiş reklamı
+const String ksAdmobInterstitial2 = "";

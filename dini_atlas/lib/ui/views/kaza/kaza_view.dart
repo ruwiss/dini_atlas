@@ -3,6 +3,7 @@ import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/auth_widget.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/table_widget.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'kaza_viewmodel.dart';
@@ -41,9 +42,13 @@ class KazaView extends StackedView<KazaViewModel> {
                     : SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 50, horizontal: 24),
+                              vertical: 30, horizontal: 24),
                           child: Column(
                             children: [
+                              BannerAdWidget(
+                                bannerAd: viewModel.bannerAd,
+                                padding: const EdgeInsets.only(bottom: 15),
+                              ),
                               KazaTableWidget(viewModel: viewModel),
                               Padding(
                                 padding:

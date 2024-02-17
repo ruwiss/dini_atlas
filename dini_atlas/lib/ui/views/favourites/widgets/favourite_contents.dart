@@ -2,6 +2,7 @@ import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/ui/views/favourites/favourites_viewmodel.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -25,15 +26,20 @@ class FavouriteContentsWidget extends StatelessWidget {
           } else if (item.type == "dua") {
             type = ContentTypes.dualarTypeFavorite();
           }
-          return ContentWidget(
-            type: type,
-            titleText: type.type.name.capitalize(),
-            number: item.number,
-            text1: item.text1,
-            text2: item.text2,
-            text3: item.text3,
-            isSaved: true,
-            onBookmarkTap: () => viewModel.onFavouriteItemDelete(item),
+          return Column(
+            children: [
+              if (index == 0) BannerAdWidget(bannerAd: viewModel.bannerAd),
+              ContentWidget(
+                type: type,
+                titleText: type.type.name.capitalize(),
+                number: item.number,
+                text1: item.text1,
+                text2: item.text2,
+                text3: item.text3,
+                isSaved: true,
+                onBookmarkTap: () => viewModel.onFavouriteItemDelete(item),
+              ),
+            ],
           );
         },
       ),

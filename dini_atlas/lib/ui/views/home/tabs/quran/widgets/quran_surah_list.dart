@@ -13,15 +13,15 @@ import 'package:stacked_services/stacked_services.dart';
 class QuranSurahList extends StatelessWidget {
   const QuranSurahList({
     super.key,
-    required this.sura,
-    required this.currentTab,
+    required this.viewModel,
     this.scrollController,
-    required this.lastReadAyah,
   });
-  final List<SuraInfo> sura;
-  final QuranTabs currentTab;
+  final QuranTabViewModel viewModel;
   final ScrollController? scrollController;
-  final LastReadAyah lastReadAyah;
+
+  List<SuraInfo> get sura => viewModel.suraList!;
+  QuranTabs get currentTab => viewModel.currentTab;
+  LastReadAyah get lastReadAyah => viewModel.lastReadAyah;
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +48,21 @@ class QuranSurahList extends StatelessWidget {
     return InkWell(
       highlightColor: Colors.transparent,
       onTap: () {
+        viewModel.showInterstitalAl();
         final navService = locator<NavigationService>();
         if (currentTab != QuranTabs.traceable) {
-          navService.navigateToQuranView(currentTab: currentTab, sura: item);
+          navService
+              .navigateToQuranView(currentTab: currentTab, sura: item)
+              .then((_) => viewModel.loadInterstitalAd());
           FirebaseAnalytics.instance.logEvent(
             name: "kuran_sure_normal",
             parameters: {"name": item.name},
           );
         } else {
           // Takipli kuran ekranına git
-          navService.navigateToTraceableQuranView(sura: item);
+          navService
+              .navigateToTraceableQuranView(sura: item)
+              .then((_) => viewModel.loadInterstitalAd());
           FirebaseAnalytics.instance.logEvent(
             name: "kuran_sure_takipli",
             parameters: {"name": item.name},

@@ -1,3 +1,4 @@
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +13,7 @@ extension StringTimeExtensions on String {
 
   // Verilen [16 Haziran 2024 Pazar] şeklindeki tarihi DateTime'a döndürür
   DateTime convertStringTimeToDateTime() {
-    final format = DateFormat('dd MMMM y EEEE', 'tr_TR');
+    final format = DateFormat('dd MMMM y EEEE', ksDefaultLocale);
     return format.parse(this);
   }
 

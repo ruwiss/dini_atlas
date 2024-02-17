@@ -1,5 +1,6 @@
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -19,7 +20,7 @@ class ElifbaView extends StackedView<ElifbaViewModel> {
       appBar: const AppBarWidget(title: "Elif Bâ"),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: SingleChildScrollView(
             child: _contentWidget(viewModel),
           ),
@@ -31,6 +32,10 @@ class ElifbaView extends StackedView<ElifbaViewModel> {
   Widget _contentWidget(ElifbaViewModel viewModel) {
     return Column(
       children: [
+        BannerAdWidget(
+          bannerAd: viewModel.bannerAd,
+          padding: const EdgeInsets.only(bottom: 10),
+        ),
         InteractiveViewer(
           child: Image.asset(
               "assets/docs/elifba/${viewModel.currentPageIndex}.png"),
@@ -62,4 +67,10 @@ class ElifbaView extends StackedView<ElifbaViewModel> {
 
   @override
   ElifbaViewModel viewModelBuilder(BuildContext context) => ElifbaViewModel();
+
+  @override
+  void onViewModelReady(ElifbaViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 }

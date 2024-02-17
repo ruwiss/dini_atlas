@@ -2,6 +2,8 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/models/rosary_setting.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -9,6 +11,15 @@ import 'package:stacked/stacked.dart';
 class RosaryViewModel extends BaseViewModel {
   final _player = AudioPlayer();
   final _userSettingsService = locator<UserSettingsService>();
+
+  final _interstitialAdService =
+      AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
+  void _loadInterstitalAd() => _interstitialAdService.loadAd();
+
+  void _showInterstitalAd() {
+    final interstitialAd = _interstitialAdService.interstitialAd;
+    if (interstitialAd != null) interstitialAd.show();
+  }
 
   void init() {
     runBusyFuture(_getRosarySetting());
@@ -22,6 +33,7 @@ class RosaryViewModel extends BaseViewModel {
   final _limitCountController = TextEditingController();
   TextEditingController get limitCountController => _limitCountController;
   void toggleEditMode() {
+    _loadInterstitalAd();
     _limitCountController.text = "";
     _editMode = !_editMode;
     notifyListeners();
@@ -38,8 +50,10 @@ class RosaryViewModel extends BaseViewModel {
     _rosarySetting = await _userSettingsService.getRosarySetting();
   }
 
-  void _setRosarySetting() =>
-      _userSettingsService.setRosarySetting(rosarySetting);
+  void _setRosarySetting() {
+    _showInterstitalAd();
+    _userSettingsService.setRosarySetting(rosarySetting);
+  }
 
   void changeSound() {
     _rosarySetting!.sound = !_rosarySetting!.sound;

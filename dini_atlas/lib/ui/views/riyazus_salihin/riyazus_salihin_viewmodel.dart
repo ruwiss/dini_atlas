@@ -4,7 +4,10 @@ import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/services/local/favorites_service.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -14,6 +17,10 @@ class RiyazusSalihinViewModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
   final _favouritesService = locator<FavouritesService>();
+
+  final _bannerAd = AdmobBannerAdService(adUnitId: ksAdmobBanner2);
+  BannerAd? get bannerAd => _bannerAd.bannerAd;
+  void _loadBannerAd() => _bannerAd.loadAd(onAdLoaded: () => notifyListeners());
 
   final String _name = "Riyazus Salihin";
 
@@ -34,6 +41,7 @@ class RiyazusSalihinViewModel extends BaseViewModel {
   bool get filterMode => _filterMode;
 
   void init() async {
+    _loadBannerAd();
     await runBusyFuture(_getFavourites());
     runBusyFuture(getRiyazusSalihinList());
   }

@@ -1,5 +1,6 @@
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -35,13 +36,22 @@ class DualarView extends StackedView<DualarViewModel> {
                           itemCount: items.length,
                           itemBuilder: (context, index) {
                             final String item = items[index];
-                            return ContentWidget(
-                              number: index + 1,
-                              type: ContentTypes.dualarType(),
-                              text3: item,
-                              isSaved: viewModel.isInFavourites(item),
-                              onBookmarkTap: () =>
-                                  viewModel.toggleFavorite(item, index + 1),
+                            return Column(
+                              children: [
+                                if (index == 0)
+                                  BannerAdWidget(
+                                    bannerAd: viewModel.bannerAd,
+                                    padding: const EdgeInsets.only(top: 8),
+                                  ),
+                                ContentWidget(
+                                  number: index + 1,
+                                  type: ContentTypes.dualarType(),
+                                  text3: item,
+                                  isSaved: viewModel.isInFavourites(item),
+                                  onBookmarkTap: () =>
+                                      viewModel.toggleFavorite(item, index + 1),
+                                ),
+                              ],
                             );
                           },
                         );

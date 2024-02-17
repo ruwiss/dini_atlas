@@ -1,6 +1,7 @@
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:dini_atlas/ui/widgets/input_field.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,11 @@ class RiyazusSalihinView extends StackedView<RiyazusSalihinViewModel> {
                       : "";
                   return Column(
                     children: [
+                      if (index == 0)
+                        BannerAdWidget(
+                          bannerAd: viewModel.bannerAd,
+                          padding: const EdgeInsets.only(top: 12),
+                        ),
                       ContentWidget(
                         type: ContentTypes.hadithType(),
                         titleText: title,

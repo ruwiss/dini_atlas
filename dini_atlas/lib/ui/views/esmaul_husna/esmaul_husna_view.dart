@@ -1,5 +1,6 @@
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -30,15 +31,24 @@ class EsmaulHusnaView extends StackedView<EsmaulHusnaViewModel> {
                     itemCount: dataList.length,
                     itemBuilder: (context, index) {
                       final item = dataList[index];
-                      return ContentWidget(
-                        type: ContentTypes.esmaulHusnaType(),
-                        number: index + 1,
-                        titleText: item.text,
-                        text3: item.mean,
-                        titlePadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
+                      return Column(
+                        children: [
+                          if (index == 0)
+                            BannerAdWidget(
+                              bannerAd: viewModel.bannerAd,
+                              padding: const EdgeInsets.only(top: 8),
+                            ),
+                          ContentWidget(
+                            type: ContentTypes.esmaulHusnaType(),
+                            number: index + 1,
+                            titleText: item.text,
+                            text3: item.mean,
+                            titlePadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 10,
+                            ),
+                          ),
+                        ],
                       );
                     });
               } else if (snapshot.hasError) {
@@ -55,4 +65,10 @@ class EsmaulHusnaView extends StackedView<EsmaulHusnaViewModel> {
   @override
   EsmaulHusnaViewModel viewModelBuilder(BuildContext context) =>
       EsmaulHusnaViewModel();
+
+  @override
+  void onViewModelReady(EsmaulHusnaViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 }

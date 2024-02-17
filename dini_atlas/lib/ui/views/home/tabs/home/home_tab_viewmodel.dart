@@ -12,6 +12,8 @@ import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/prayer_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:dini_atlas/ui/views/home/home_service.dart';
@@ -26,6 +28,15 @@ class HomeTabViewModel extends ReactiveViewModel {
   final _userSettingsService = locator<UserSettingsService>();
   final _locationService = locator<LocationService>();
   final _navigationService = locator<NavigationService>();
+
+  final _interstitialAdService =
+      AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
+
+  void _loadInterstitalAdAndShow() {
+    _interstitialAdService.loadAd(
+      onAdLoaded: () => _interstitialAdService.interstitialAd?.show(),
+    );
+  }
 
   String? currentMoonPhaseImage;
   City? userCity;
@@ -179,12 +190,14 @@ class HomeTabViewModel extends ReactiveViewModel {
       data: SettingsNotiDialog(
         prayerNotiSettings: settings.copyWith(),
         onSave: (settings) async {
+          _loadInterstitalAdAndShow();
           // Tek bir vakit bildirim ayarını güncelle
           await _userSettingsService.setPrayerNotiSettings(
               prayerNotiSettings: settings);
           getAllPrayerNotiSettings();
         },
         onSaveAll: (settings) async {
+          _loadInterstitalAdAndShow();
           // Tüm vakitlerin bildirim ayarlarını güncelle
           await _userSettingsService.setPrayerNotiSettings(
             prayerNotiSettings: settings,

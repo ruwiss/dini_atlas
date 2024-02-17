@@ -1,6 +1,7 @@
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/ui/views/radio/radio_service.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -30,17 +31,27 @@ class RadioView extends StackedView<RadioViewModel> {
                       itemCount: viewModel.radios.length,
                       itemBuilder: (context, index) {
                         final RadioModel radio = viewModel.radios[index];
-                        return ContentWidget(
-                          type: ContentTypes.radioType(),
-                          number: index + 1,
-                          titleText: radio.name,
-                          hideDivider: true,
-                          isPlaying: viewModel.currentPlaying == radio.url,
-                          isPlayerLoading:
-                              viewModel.busy(viewModel.currentPlaying) &&
-                                  viewModel.currentPlaying == radio.url,
-                          onPlay: () => viewModel.playRadio(radio.url),
-                          onPause: viewModel.pauseRadio,
+                        return Column(
+                          children: [
+                            if (index == 0)
+                              BannerAdWidget(
+                                bannerAd: viewModel.bannerAd,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                              ),
+                            ContentWidget(
+                              type: ContentTypes.radioType(),
+                              number: index + 1,
+                              titleText: radio.name,
+                              hideDivider: true,
+                              isPlaying: viewModel.currentPlaying == radio.url,
+                              isPlayerLoading:
+                                  viewModel.busy(viewModel.currentPlaying) &&
+                                      viewModel.currentPlaying == radio.url,
+                              onPlay: () => viewModel.playRadio(radio.url),
+                              onPause: viewModel.pauseRadio,
+                            ),
+                          ],
                         );
                       },
                     ),

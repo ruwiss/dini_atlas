@@ -6,6 +6,7 @@ import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
 import 'package:dini_atlas/ui/views/quran/widgets/quran_header.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -72,6 +73,7 @@ class QuranView extends StackedView<QuranViewModel> {
             key: GlobalObjectKey(ayahModel.ayet),
             children: [
               if (index == 0) QuranHeader(sura: ayahList.sure),
+              if (index == 0) BannerAdWidget(bannerAd: viewModel.bannerAd),
               ContentWidget(
                 increaseFontSize:
                     viewModel.userSettings.increaseAyahFontSize.toDouble(),

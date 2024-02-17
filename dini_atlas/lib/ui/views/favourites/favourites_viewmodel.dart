@@ -1,14 +1,21 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/services/local/favorites_service.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class FavouritesViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _favouritesService = locator<FavouritesService>();
+
+  final _bannerAd = AdmobBannerAdService(adUnitId: ksAdmobBanner2);
+  BannerAd? get bannerAd => _bannerAd.bannerAd;
+  void _loadBannerAd() => _bannerAd.loadAd(onAdLoaded: () => notifyListeners());
 
   List<Favourite>? _favourites;
   List<Favourite>? get favourites => _favourites;
@@ -50,6 +57,7 @@ class FavouritesViewModel extends BaseViewModel {
   }
 
   void init() async {
+    _loadBannerAd();
     runBusyFuture(_getFavourites());
   }
 
@@ -80,5 +88,6 @@ class FavouritesViewModel extends BaseViewModel {
     await _favouritesService.deleteFavourite(id: item.id, name: item.name);
     _favourites!.removeWhere((e) => e == item);
     notifyListeners();
+    if (_favourites!.isEmpty) showFolder = null;
   }
 }

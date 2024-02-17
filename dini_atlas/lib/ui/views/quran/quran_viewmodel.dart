@@ -11,9 +11,12 @@ import 'package:dini_atlas/models/quran/sura_player.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/favorites_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_quran_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -24,6 +27,19 @@ class QuranViewModel extends BaseViewModel {
   final _quranService = locator<QuranService>();
   final _userSettingsService = locator<UserSettingsService>();
   final _favouritesService = locator<FavouritesService>();
+
+  final _bannerAd = AdmobBannerAdService(adUnitId: ksAdmobBanner2);
+  BannerAd? get bannerAd => _bannerAd.bannerAd;
+  void _loadBannerAd() => _bannerAd.loadAd(onAdLoaded: () => notifyListeners());
+
+  final _interstitialAdService =
+      AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
+  void _loadInterstitalAd() => _interstitialAdService.loadAd();
+
+  void _showInterstitalAd() {
+    final interstitialAd = _interstitialAdService.interstitialAd;
+    if (interstitialAd != null) interstitialAd.show();
+  }
 
   List<Favourite>? _favourites;
   List<Favourite>? get favourites => _favourites;
@@ -81,6 +97,8 @@ class QuranViewModel extends BaseViewModel {
 
   void init(SuraInfo sura) async {
     _suraInfo = sura;
+    _loadBannerAd();
+    _loadInterstitalAd();
     await runBusyFuture(getUserSettings());
     runBusyFuture(getAyahList(suraId: sura.suraId));
     runBusyFuture(_getQuranRecitersList());
@@ -260,6 +278,7 @@ class QuranViewModel extends BaseViewModel {
           await _navigationService.navigateToFavouritesView(favourite: fav);
       // Klasör seçimi sonrası gelen klasör ismiyle kayıt oluştur
       if (result is String) {
+        _showInterstitalAd();
         await _favouritesService.addFavourite(fav..folder = result);
         _bottomSheetService.showBottomSheet(
           title: "Favorilere eklendi.",

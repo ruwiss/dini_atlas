@@ -1,3 +1,4 @@
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/home/tabs/categories/categories_tab.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab.dart';
@@ -23,7 +24,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      onViewModelReady: (viewModel) => viewModel.init(_homeService),
+      onViewModelReady: (viewModel) {
+        viewModel.init(_homeService);
+        // Uygulama açılış reklamı kurulumu
+        AdmobAppOpenAdsService.instance.setup();
+      },
       builder: (context, viewModel, child) => Scaffold(
         appBar: AppBarWidget(
           title: ksAppName,

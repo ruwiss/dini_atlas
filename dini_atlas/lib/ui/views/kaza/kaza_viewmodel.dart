@@ -5,9 +5,11 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/auth_service.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/auth_widget.form.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -34,6 +36,19 @@ class KazaViewModel extends FormViewModel {
   final _userSettingsService = locator<UserSettingsService>();
   final _kazaService = locator<KazaService>();
 
+  final _bannerAd = AdmobBannerAdService(adUnitId: ksAdmobBanner4);
+  BannerAd? get bannerAd => _bannerAd.bannerAd;
+  void _loadBannerAd() => _bannerAd.loadAd(onAdLoaded: () => notifyListeners());
+
+  final _interstitialAdService =
+      AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
+
+  void _loadInterstitialAdAndShow() {
+    _interstitialAdService.loadAd(
+      onAdLoaded: () => _interstitialAdService.interstitialAd?.show(),
+    );
+  }
+
   late UserSettings _userSettings;
   bool get isUserLoggedIn => _userSettings.userAuth != null;
 
@@ -46,6 +61,7 @@ class KazaViewModel extends FormViewModel {
   Kaza? get kaza => _kaza;
 
   void init() async {
+    _loadBannerAd();
     runBusyFuture(_getUserSettings());
   }
 
@@ -121,6 +137,7 @@ class KazaViewModel extends FormViewModel {
   }
 
   void saveKazaData() async {
+    _loadInterstitialAdAndShow();
     kaza!.lastUpdated = DateTime.now();
     setBusy(true);
     final result = await _kazaService.setUserKaza(

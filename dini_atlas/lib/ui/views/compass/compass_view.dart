@@ -2,6 +2,7 @@ import 'package:dini_atlas/extensions/num_extensions.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/location_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -58,7 +59,7 @@ class CompassView extends StackedView<CompassViewModel> {
 
   Widget _qiblaCompass(CompassViewModel viewModel) {
     return Padding(
-      padding: paddingMassive,
+      padding: paddingLarge,
       child: StreamBuilder(
         stream: FlutterQiblah.qiblahStream,
         builder: (context, snapshot) {
@@ -79,6 +80,7 @@ class CompassView extends StackedView<CompassViewModel> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                BannerAdWidget(bannerAd: viewModel.bannerAd),
                 Text("Manyetik Alan: %${viewModel.magneticPercentage}"),
                 Text(
                   "${qiblahDirection.offset.toStringAsFixed(3)}°",

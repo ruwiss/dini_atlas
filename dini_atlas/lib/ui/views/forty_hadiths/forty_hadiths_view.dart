@@ -1,5 +1,6 @@
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
+import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -30,13 +31,22 @@ class FortyHadithsView extends StackedView<FortyHadithsViewModel> {
                   itemCount: hadiths.length,
                   itemBuilder: (context, i) {
                     final HadithModel hadith = hadiths[i];
-                    return ContentWidget(
-                      type: ContentTypes.hadithType(),
-                      number: hadith.id,
-                      text1: hadith.arabic,
-                      text3: hadith.turkish,
-                      onBookmarkTap: () => viewModel.toggleFavorite(hadith),
-                      isSaved: viewModel.isInFavourites(hadith.id),
+                    return Column(
+                      children: [
+                        if (i == 0)
+                          BannerAdWidget(
+                            bannerAd: viewModel.bannerAd,
+                            padding: const EdgeInsets.only(top: 10),
+                          ),
+                        ContentWidget(
+                          type: ContentTypes.hadithType(),
+                          number: hadith.id,
+                          text1: hadith.arabic,
+                          text3: hadith.turkish,
+                          onBookmarkTap: () => viewModel.toggleFavorite(hadith),
+                          isSaved: viewModel.isInFavourites(hadith.id),
+                        ),
+                      ],
                     );
                   },
                 );

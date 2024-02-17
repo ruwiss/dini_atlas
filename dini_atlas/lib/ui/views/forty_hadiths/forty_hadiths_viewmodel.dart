@@ -5,7 +5,10 @@ import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/content_type.dart';
 import 'package:dini_atlas/models/favourite.dart';
 import 'package:dini_atlas/services/local/favorites_service.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -16,10 +19,15 @@ class FortyHadithsViewModel extends BaseViewModel {
 
   final _name = "40 Hadis";
 
+  final _bannerAd = AdmobBannerAdService(adUnitId: ksAdmobBanner2);
+  BannerAd? get bannerAd => _bannerAd.bannerAd;
+  void _loadBannerAd() => _bannerAd.loadAd(onAdLoaded: () => notifyListeners());
+
   List<Favourite>? _favourites;
   List<Favourite>? get favourites => _favourites;
 
   void init() {
+    _loadBannerAd();
     runBusyFuture(_getFavourites());
   }
 
