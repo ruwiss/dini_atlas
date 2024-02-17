@@ -21,6 +21,8 @@ class PushNotification {
 
   final localNotiPlugin = FlutterLocalNotificationsPlugin();
 
+  bool _enabled = false;
+
   Future<bool> _requestPermission() async {
     return await localNotiPlugin
             .resolvePlatformSpecificImplementation<
@@ -30,7 +32,7 @@ class PushNotification {
   }
 
   Future<void> setupNotification() async {
-    if (await _requestPermission()) {
+    if (await _requestPermission() && !_enabled) {
       await localNotiPlugin.initialize(
         const InitializationSettings(
           android: AndroidInitializationSettings('ic_stat_noti'),
@@ -46,6 +48,8 @@ class PushNotification {
       );
 
       await GoogleServices.initFirebaseNotifications();
+
+      _enabled = true;
     }
   }
 }

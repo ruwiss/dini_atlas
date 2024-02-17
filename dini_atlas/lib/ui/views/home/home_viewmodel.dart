@@ -1,6 +1,7 @@
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
+import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_dialog.dart';
 import 'package:stacked/stacked.dart';
@@ -16,6 +17,7 @@ class HomeViewModel extends IndexTrackingViewModel {
   bool get showSettingsIcon => currentIndex == 0; // ana sayfa ayarlar butonu
 
   void init(HomeService homeService) async {
+    PushNotification.instance.setupNotification();
     _homeService = homeService;
   }
 

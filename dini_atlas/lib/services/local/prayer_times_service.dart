@@ -31,6 +31,11 @@ class PrayerTimesService {
     return isUpToDate;
   }
 
+  Future<bool> hasPrayerTimes() async {
+    final items = await _db.prayerTimes.count();
+    return items > 0;
+  }
+
   Future<Either<PrayerTimes, bool>> getPrayerTimes() async {
     try {
       if (prayerTimes != null) return Left(prayerTimes!);

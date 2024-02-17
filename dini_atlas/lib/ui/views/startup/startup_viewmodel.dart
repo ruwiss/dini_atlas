@@ -4,6 +4,7 @@ import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
+import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
@@ -20,6 +21,7 @@ class StartupViewModel extends BaseViewModel {
   final _userSettingsService = locator<UserSettingsService>();
   final _fetchTimesService = locator<FetchTimesService>();
   final _bottomSheetService = locator<BottomSheetService>();
+  final _prayerTimesService = locator<PrayerTimesService>();
 
   // Eğer veritabanına daha önce location kayıt edilmediyse, lokasyon bilgilerini al
   void getDatas() async {
@@ -104,18 +106,16 @@ class StartupViewModel extends BaseViewModel {
     }, (r) {});
   }
 
-  // Eğer veritabanına daha önce location kayıt edildiyse, ana sayfaya git
+  // Eğer veritabanına daha önce vakitler kayıt edildiyse, ana sayfaya git
   void checkLocation() async {
-    final location =
-        await runBusyFuture(_userSettingsService.getUserSettings());
-
-    if (location == null) {
-      FlutterNativeSplash.remove();
-    } else {
+    final hasPrayerTimes = await _prayerTimesService.hasPrayerTimes();
+    if (hasPrayerTimes) {
       _navigationService.replaceWithHomeView();
       FirebaseAnalytics.instance.logEvent(name: "giris");
+    } else {
+      FlutterNativeSplash.remove();
     }
-    await PushNotification.instance.setupNotification();
+    PushNotification.instance.setupNotification();
   }
 
   @override
