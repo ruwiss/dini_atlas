@@ -23,7 +23,7 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
       alignment: Alignment.topCenter,
       child: Column(
         children: [
-          verticalSpaceMedium,
+          verticalSpaceTiny,
           FutureBuilder(
             future: widget.viewModel.getUint8ListFromUrl(suraPage.page!),
             builder: (context, snapshot) {
