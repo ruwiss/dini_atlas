@@ -19,8 +19,7 @@ class DualarService {
 
   List? _dailyPrayersList;
 
-  Future<Either<List, GunlukDualarException>>
-      fetchDailyPrayers() async {
+  Future<Either<List, GunlukDualarException>> fetchDailyPrayers() async {
     if (_dailyPrayersList != null) return Left(_dailyPrayersList!);
     final response = await _dio.request("$ksBaseUrl$_dualarUrl");
     if (response == null || response.statusCode != 200) {

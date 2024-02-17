@@ -12,19 +12,19 @@ import 'package:dini_atlas/models/location_api/city.dart' as _i14;
 import 'package:dini_atlas/models/location_api/country.dart' as _i13;
 import 'package:dini_atlas/models/location_api/state.dart' as _i15;
 import 'package:dini_atlas/models/prayer/prayer_time.dart' as _i23;
-import 'package:dini_atlas/models/prayer/prayer_times.dart' as _i19;
+import 'package:dini_atlas/models/prayer/prayer_times.dart' as _i20;
 import 'package:dini_atlas/models/quran/ayah_list.dart' as _i26;
 import 'package:dini_atlas/models/quran/quran_reciter.dart' as _i27;
 import 'package:dini_atlas/models/quran/sura_audio.dart' as _i28;
 import 'package:dini_atlas/models/quran/sura_info.dart' as _i25;
 import 'package:dini_atlas/models/quran/sura_player.dart' as _i29;
-import 'package:dini_atlas/models/religious_days.dart' as _i20;
+import 'package:dini_atlas/models/religious_days.dart' as _i21;
 import 'package:dini_atlas/models/rosary_setting.dart' as _i4;
 import 'package:dini_atlas/models/user_location.dart' as _i12;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
 import 'package:dini_atlas/services/local/favorites_service.dart' as _i30;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i10;
-import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i21;
+import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i22;
 import 'package:dini_atlas/services/local/user_settings_service.dart' as _i11;
 import 'package:dini_atlas/services/remote/auth_service.dart' as _i32;
 import 'package:dini_atlas/services/remote/dio_service.dart' as _i16;
@@ -33,7 +33,7 @@ import 'package:dini_atlas/services/remote/kaza_service.dart' as _i33;
 import 'package:dini_atlas/services/remote/quran_service.dart' as _i24;
 import 'package:dio/dio.dart' as _i17;
 import 'package:flutter/material.dart' as _i7;
-import 'package:fpdart/fpdart.dart' as _i22;
+import 'package:fpdart/fpdart.dart' as _i19;
 import 'package:isar/isar.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
@@ -830,6 +830,16 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i8.Future<void>);
 
   @override
+  _i8.Future<void> removeUserLocationSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #removeUserLocationSettings,
+          [],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
   _i8.Future<_i3.UserSettings> setSilentMode(bool? value) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1123,48 +1133,106 @@ class MockDioService extends _i1.Mock implements _i16.DioService {
 /// See the documentation for Mockito's code generation for more information.
 class MockFetchTimesService extends _i1.Mock implements _i18.FetchTimesService {
   @override
-  _i8.Future<_i19.PrayerTimes?> fetchTimes({_i12.UserLocation? userLocation}) =>
+  _i8.Future<
+      _i19.Either<_i20.PrayerTimes, _i18.FetchTimesException>> fetchTimes(
+          {_i12.UserLocation? userLocation}) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchTimes,
           [],
           {#userLocation: userLocation},
         ),
-        returnValue: _i8.Future<_i19.PrayerTimes?>.value(),
-        returnValueForMissingStub: _i8.Future<_i19.PrayerTimes?>.value(),
-      ) as _i8.Future<_i19.PrayerTimes?>);
+        returnValue: _i8.Future<
+                _i19.Either<_i20.PrayerTimes, _i18.FetchTimesException>>.value(
+            _i6.dummyValue<
+                _i19.Either<_i20.PrayerTimes, _i18.FetchTimesException>>(
+          this,
+          Invocation.method(
+            #fetchTimes,
+            [],
+            {#userLocation: userLocation},
+          ),
+        )),
+        returnValueForMissingStub: _i8.Future<
+                _i19.Either<_i20.PrayerTimes, _i18.FetchTimesException>>.value(
+            _i6.dummyValue<
+                _i19.Either<_i20.PrayerTimes, _i18.FetchTimesException>>(
+          this,
+          Invocation.method(
+            #fetchTimes,
+            [],
+            {#userLocation: userLocation},
+          ),
+        )),
+      ) as _i8.Future<_i19.Either<_i20.PrayerTimes, _i18.FetchTimesException>>);
 
   @override
-  _i8.Future<_i19.PrayerTimes?> updateAndGetTimes() => (super.noSuchMethod(
+  _i8.Future<_i20.PrayerTimes?> updateAndGetTimes() => (super.noSuchMethod(
         Invocation.method(
           #updateAndGetTimes,
           [],
         ),
-        returnValue: _i8.Future<_i19.PrayerTimes?>.value(),
-        returnValueForMissingStub: _i8.Future<_i19.PrayerTimes?>.value(),
-      ) as _i8.Future<_i19.PrayerTimes?>);
+        returnValue: _i8.Future<_i20.PrayerTimes?>.value(),
+        returnValueForMissingStub: _i8.Future<_i20.PrayerTimes?>.value(),
+      ) as _i8.Future<_i20.PrayerTimes?>);
 
   @override
-  _i8.Future<List<_i20.ReligiousDays>> getReligiousDays() =>
+  _i8.Future<List<_i13.Country>> getCountries() => (super.noSuchMethod(
+        Invocation.method(
+          #getCountries,
+          [],
+        ),
+        returnValue: _i8.Future<List<_i13.Country>>.value(<_i13.Country>[]),
+        returnValueForMissingStub:
+            _i8.Future<List<_i13.Country>>.value(<_i13.Country>[]),
+      ) as _i8.Future<List<_i13.Country>>);
+
+  @override
+  _i8.Future<List<_i14.City>> getCities(String? countryId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCities,
+          [countryId],
+        ),
+        returnValue: _i8.Future<List<_i14.City>>.value(<_i14.City>[]),
+        returnValueForMissingStub:
+            _i8.Future<List<_i14.City>>.value(<_i14.City>[]),
+      ) as _i8.Future<List<_i14.City>>);
+
+  @override
+  _i8.Future<List<_i15.StateModel>> getStates(String? cityId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getStates,
+          [cityId],
+        ),
+        returnValue:
+            _i8.Future<List<_i15.StateModel>>.value(<_i15.StateModel>[]),
+        returnValueForMissingStub:
+            _i8.Future<List<_i15.StateModel>>.value(<_i15.StateModel>[]),
+      ) as _i8.Future<List<_i15.StateModel>>);
+
+  @override
+  _i8.Future<List<_i21.ReligiousDays>> getReligiousDays() =>
       (super.noSuchMethod(
         Invocation.method(
           #getReligiousDays,
           [],
         ),
         returnValue:
-            _i8.Future<List<_i20.ReligiousDays>>.value(<_i20.ReligiousDays>[]),
+            _i8.Future<List<_i21.ReligiousDays>>.value(<_i21.ReligiousDays>[]),
         returnValueForMissingStub:
-            _i8.Future<List<_i20.ReligiousDays>>.value(<_i20.ReligiousDays>[]),
-      ) as _i8.Future<List<_i20.ReligiousDays>>);
+            _i8.Future<List<_i21.ReligiousDays>>.value(<_i21.ReligiousDays>[]),
+      ) as _i8.Future<List<_i21.ReligiousDays>>);
 }
 
 /// A class which mocks [PrayerTimesService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPrayerTimesService extends _i1.Mock
-    implements _i21.PrayerTimesService {
+    implements _i22.PrayerTimesService {
   @override
-  set prayerTimes(_i19.PrayerTimes? _prayerTimes) => super.noSuchMethod(
+  set prayerTimes(_i20.PrayerTimes? _prayerTimes) => super.noSuchMethod(
         Invocation.setter(
           #prayerTimes,
           _prayerTimes,
@@ -1173,7 +1241,7 @@ class MockPrayerTimesService extends _i1.Mock
       );
 
   @override
-  bool checkIsTimesUpToDate(_i19.PrayerTimes? prayerTimes) =>
+  bool checkIsTimesUpToDate(_i20.PrayerTimes? prayerTimes) =>
       (super.noSuchMethod(
         Invocation.method(
           #checkIsTimesUpToDate,
@@ -1184,14 +1252,14 @@ class MockPrayerTimesService extends _i1.Mock
       ) as bool);
 
   @override
-  _i8.Future<_i22.Either<_i19.PrayerTimes, bool>> getPrayerTimes() =>
+  _i8.Future<_i19.Either<_i20.PrayerTimes, bool>> getPrayerTimes() =>
       (super.noSuchMethod(
         Invocation.method(
           #getPrayerTimes,
           [],
         ),
-        returnValue: _i8.Future<_i22.Either<_i19.PrayerTimes, bool>>.value(
-            _i6.dummyValue<_i22.Either<_i19.PrayerTimes, bool>>(
+        returnValue: _i8.Future<_i19.Either<_i20.PrayerTimes, bool>>.value(
+            _i6.dummyValue<_i19.Either<_i20.PrayerTimes, bool>>(
           this,
           Invocation.method(
             #getPrayerTimes,
@@ -1199,15 +1267,15 @@ class MockPrayerTimesService extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i22.Either<_i19.PrayerTimes, bool>>.value(
-                _i6.dummyValue<_i22.Either<_i19.PrayerTimes, bool>>(
+            _i8.Future<_i19.Either<_i20.PrayerTimes, bool>>.value(
+                _i6.dummyValue<_i19.Either<_i20.PrayerTimes, bool>>(
           this,
           Invocation.method(
             #getPrayerTimes,
             [],
           ),
         )),
-      ) as _i8.Future<_i22.Either<_i19.PrayerTimes, bool>>);
+      ) as _i8.Future<_i19.Either<_i20.PrayerTimes, bool>>);
 
   @override
   _i8.Future<_i23.PrayerTime?> getPrayerTimesByDay(DateTime? date) =>
@@ -1221,7 +1289,7 @@ class MockPrayerTimesService extends _i1.Mock
       ) as _i8.Future<_i23.PrayerTime?>);
 
   @override
-  _i8.Future<void> setPrayerTimes(_i19.PrayerTimes? prayerTimes) =>
+  _i8.Future<void> setPrayerTimes(_i20.PrayerTimes? prayerTimes) =>
       (super.noSuchMethod(
         Invocation.method(
           #setPrayerTimes,
@@ -1237,17 +1305,17 @@ class MockPrayerTimesService extends _i1.Mock
 /// See the documentation for Mockito's code generation for more information.
 class MockQuranService extends _i1.Mock implements _i24.QuranService {
   @override
-  _i8.Future<_i22.Either<List<_i25.SuraInfo>, _i24.QuranException>>
+  _i8.Future<_i19.Either<List<_i25.SuraInfo>, _i24.QuranException>>
       getSuraList() => (super.noSuchMethod(
             Invocation.method(
               #getSuraList,
               [],
             ),
             returnValue: _i8.Future<
-                    _i22
+                    _i19
                     .Either<List<_i25.SuraInfo>, _i24.QuranException>>.value(
                 _i6.dummyValue<
-                    _i22.Either<List<_i25.SuraInfo>, _i24.QuranException>>(
+                    _i19.Either<List<_i25.SuraInfo>, _i24.QuranException>>(
               this,
               Invocation.method(
                 #getSuraList,
@@ -1255,10 +1323,10 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
               ),
             )),
             returnValueForMissingStub: _i8.Future<
-                    _i22
+                    _i19
                     .Either<List<_i25.SuraInfo>, _i24.QuranException>>.value(
                 _i6.dummyValue<
-                    _i22.Either<List<_i25.SuraInfo>, _i24.QuranException>>(
+                    _i19.Either<List<_i25.SuraInfo>, _i24.QuranException>>(
               this,
               Invocation.method(
                 #getSuraList,
@@ -1266,10 +1334,10 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
               ),
             )),
           ) as _i8
-              .Future<_i22.Either<List<_i25.SuraInfo>, _i24.QuranException>>);
+              .Future<_i19.Either<List<_i25.SuraInfo>, _i24.QuranException>>);
 
   @override
-  _i8.Future<_i22.Either<_i26.AyahList, _i24.QuranException>> getSuraAyahList({
+  _i8.Future<_i19.Either<_i26.AyahList, _i24.QuranException>> getSuraAyahList({
     required int? suraId,
     int? ayah,
     int? offset = 0,
@@ -1285,8 +1353,8 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
           },
         ),
         returnValue:
-            _i8.Future<_i22.Either<_i26.AyahList, _i24.QuranException>>.value(
-                _i6.dummyValue<_i22.Either<_i26.AyahList, _i24.QuranException>>(
+            _i8.Future<_i19.Either<_i26.AyahList, _i24.QuranException>>.value(
+                _i6.dummyValue<_i19.Either<_i26.AyahList, _i24.QuranException>>(
           this,
           Invocation.method(
             #getSuraAyahList,
@@ -1299,8 +1367,8 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i22.Either<_i26.AyahList, _i24.QuranException>>.value(
-                _i6.dummyValue<_i22.Either<_i26.AyahList, _i24.QuranException>>(
+            _i8.Future<_i19.Either<_i26.AyahList, _i24.QuranException>>.value(
+                _i6.dummyValue<_i19.Either<_i26.AyahList, _i24.QuranException>>(
           this,
           Invocation.method(
             #getSuraAyahList,
@@ -1312,19 +1380,19 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
             },
           ),
         )),
-      ) as _i8.Future<_i22.Either<_i26.AyahList, _i24.QuranException>>);
+      ) as _i8.Future<_i19.Either<_i26.AyahList, _i24.QuranException>>);
 
   @override
-  _i8.Future<_i22.Either<List<_i27.QuranReciter>, _i24.QuranException>>
+  _i8.Future<_i19.Either<List<_i27.QuranReciter>, _i24.QuranException>>
       getQuranReciters() => (super.noSuchMethod(
             Invocation.method(
               #getQuranReciters,
               [],
             ),
             returnValue: _i8.Future<
-                _i22.Either<List<_i27.QuranReciter>,
+                _i19.Either<List<_i27.QuranReciter>,
                     _i24.QuranException>>.value(_i6.dummyValue<
-                _i22.Either<List<_i27.QuranReciter>, _i24.QuranException>>(
+                _i19.Either<List<_i27.QuranReciter>, _i24.QuranException>>(
               this,
               Invocation.method(
                 #getQuranReciters,
@@ -1332,9 +1400,9 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
               ),
             )),
             returnValueForMissingStub: _i8.Future<
-                _i22.Either<List<_i27.QuranReciter>,
+                _i19.Either<List<_i27.QuranReciter>,
                     _i24.QuranException>>.value(_i6.dummyValue<
-                _i22.Either<List<_i27.QuranReciter>, _i24.QuranException>>(
+                _i19.Either<List<_i27.QuranReciter>, _i24.QuranException>>(
               this,
               Invocation.method(
                 #getQuranReciters,
@@ -1342,10 +1410,10 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
               ),
             )),
           ) as _i8.Future<
-              _i22.Either<List<_i27.QuranReciter>, _i24.QuranException>>);
+              _i19.Either<List<_i27.QuranReciter>, _i24.QuranException>>);
 
   @override
-  _i8.Future<_i22.Either<_i28.SuraAudio, _i24.QuranException>> getSuraAudio(
+  _i8.Future<_i19.Either<_i28.SuraAudio, _i24.QuranException>> getSuraAudio(
           _i27.QuranReciter? reciter) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1353,8 +1421,8 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
           [reciter],
         ),
         returnValue: _i8
-            .Future<_i22.Either<_i28.SuraAudio, _i24.QuranException>>.value(
-            _i6.dummyValue<_i22.Either<_i28.SuraAudio, _i24.QuranException>>(
+            .Future<_i19.Either<_i28.SuraAudio, _i24.QuranException>>.value(
+            _i6.dummyValue<_i19.Either<_i28.SuraAudio, _i24.QuranException>>(
           this,
           Invocation.method(
             #getSuraAudio,
@@ -1362,18 +1430,18 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
           ),
         )),
         returnValueForMissingStub: _i8
-            .Future<_i22.Either<_i28.SuraAudio, _i24.QuranException>>.value(
-            _i6.dummyValue<_i22.Either<_i28.SuraAudio, _i24.QuranException>>(
+            .Future<_i19.Either<_i28.SuraAudio, _i24.QuranException>>.value(
+            _i6.dummyValue<_i19.Either<_i28.SuraAudio, _i24.QuranException>>(
           this,
           Invocation.method(
             #getSuraAudio,
             [reciter],
           ),
         )),
-      ) as _i8.Future<_i22.Either<_i28.SuraAudio, _i24.QuranException>>);
+      ) as _i8.Future<_i19.Either<_i28.SuraAudio, _i24.QuranException>>);
 
   @override
-  _i8.Future<_i22.Either<_i29.SuraPlayer, _i24.QuranException>> getSuraPlayer(
+  _i8.Future<_i19.Either<_i29.SuraPlayer, _i24.QuranException>> getSuraPlayer(
           String? url) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1381,8 +1449,8 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
           [url],
         ),
         returnValue: _i8
-            .Future<_i22.Either<_i29.SuraPlayer, _i24.QuranException>>.value(
-            _i6.dummyValue<_i22.Either<_i29.SuraPlayer, _i24.QuranException>>(
+            .Future<_i19.Either<_i29.SuraPlayer, _i24.QuranException>>.value(
+            _i6.dummyValue<_i19.Either<_i29.SuraPlayer, _i24.QuranException>>(
           this,
           Invocation.method(
             #getSuraPlayer,
@@ -1390,15 +1458,15 @@ class MockQuranService extends _i1.Mock implements _i24.QuranService {
           ),
         )),
         returnValueForMissingStub: _i8
-            .Future<_i22.Either<_i29.SuraPlayer, _i24.QuranException>>.value(
-            _i6.dummyValue<_i22.Either<_i29.SuraPlayer, _i24.QuranException>>(
+            .Future<_i19.Either<_i29.SuraPlayer, _i24.QuranException>>.value(
+            _i6.dummyValue<_i19.Either<_i29.SuraPlayer, _i24.QuranException>>(
           this,
           Invocation.method(
             #getSuraPlayer,
             [url],
           ),
         )),
-      ) as _i8.Future<_i22.Either<_i29.SuraPlayer, _i24.QuranException>>);
+      ) as _i8.Future<_i19.Either<_i29.SuraPlayer, _i24.QuranException>>);
 }
 
 /// A class which mocks [FavouritesService].
@@ -1463,7 +1531,7 @@ class MockFavouritesService extends _i1.Mock implements _i30.FavouritesService {
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthService extends _i1.Mock implements _i32.AuthService {
   @override
-  _i8.Future<_i22.Either<_i3.UserSettings, _i32.AuthException>> auth({
+  _i8.Future<_i19.Either<_i3.UserSettings, _i32.AuthException>> auth({
     required _i3.UserAuth? userAuth,
     required bool? isLogin,
   }) =>
@@ -1477,8 +1545,8 @@ class MockAuthService extends _i1.Mock implements _i32.AuthService {
           },
         ),
         returnValue: _i8
-            .Future<_i22.Either<_i3.UserSettings, _i32.AuthException>>.value(
-            _i6.dummyValue<_i22.Either<_i3.UserSettings, _i32.AuthException>>(
+            .Future<_i19.Either<_i3.UserSettings, _i32.AuthException>>.value(
+            _i6.dummyValue<_i19.Either<_i3.UserSettings, _i32.AuthException>>(
           this,
           Invocation.method(
             #auth,
@@ -1490,8 +1558,8 @@ class MockAuthService extends _i1.Mock implements _i32.AuthService {
           ),
         )),
         returnValueForMissingStub: _i8
-            .Future<_i22.Either<_i3.UserSettings, _i32.AuthException>>.value(
-            _i6.dummyValue<_i22.Either<_i3.UserSettings, _i32.AuthException>>(
+            .Future<_i19.Either<_i3.UserSettings, _i32.AuthException>>.value(
+            _i6.dummyValue<_i19.Either<_i3.UserSettings, _i32.AuthException>>(
           this,
           Invocation.method(
             #auth,
@@ -1502,7 +1570,7 @@ class MockAuthService extends _i1.Mock implements _i32.AuthService {
             },
           ),
         )),
-      ) as _i8.Future<_i22.Either<_i3.UserSettings, _i32.AuthException>>);
+      ) as _i8.Future<_i19.Either<_i3.UserSettings, _i32.AuthException>>);
 }
 
 /// A class which mocks [KazaService].

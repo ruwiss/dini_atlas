@@ -47,7 +47,7 @@ class CountdownCard extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              viewModel.userCity?.sehirAdi.capitalize() ?? "",
+              viewModel.userStateLocation?.ilceAdiEn.capitalize() ?? "",
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

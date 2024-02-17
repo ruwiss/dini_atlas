@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:dini_atlas/models/location_api/city.dart';
+import 'package:dini_atlas/models/location_api/country.dart';
+import 'package:dini_atlas/models/location_api/state.dart';
+
 class UserLocation {
   String country;
   String city;

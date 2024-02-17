@@ -18,7 +18,7 @@ class HomeTabViewState extends State<HomeTabView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeTabViewModel>.reactive(
       viewModelBuilder: () => HomeTabViewModel(homeService: widget.homeService),
-      onViewModelReady: (viewModel) =>viewModel.init(),
+      onViewModelReady: (viewModel) => viewModel.init(),
       builder: (
         BuildContext context,
         HomeTabViewModel model,

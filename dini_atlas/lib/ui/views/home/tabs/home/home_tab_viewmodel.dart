@@ -3,7 +3,7 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
-import 'package:dini_atlas/models/location_api/city.dart';
+import 'package:dini_atlas/models/location_api/state.dart';
 import 'package:dini_atlas/models/prayer/eid_prayer.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/models/user_setting.dart';
@@ -39,7 +39,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   }
 
   String? currentMoonPhaseImage;
-  City? userCity;
+  StateModel? userStateLocation;
   int? selectedPrayerTime;
   bool locationBusy = false;
 
@@ -72,7 +72,7 @@ class HomeTabViewModel extends ReactiveViewModel {
     _getCurrentMoonPhaseImage();
 
     // Kullanıcı şehrini getir
-    getUserCity();
+    getUserStateLocation();
 
     // Tablo için vakitleri getir
     changePrayerTimeIndex();
@@ -93,7 +93,8 @@ class HomeTabViewModel extends ReactiveViewModel {
       },
       (ifNotUpToDate) async {
         // Asenkron işlem tamamlanana kadar bekleyeceğiz
-        homeService.prayerTimes = await _fetchTimesService.fetchTimes();
+        final fetchResult = await _fetchTimesService.fetchTimes();
+        fetchResult.fold((l) => homeService.prayerTimes = l, (r) => null);
         notifyListeners();
       },
     );
@@ -107,9 +108,9 @@ class HomeTabViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  void getUserCity() async {
+  void getUserStateLocation() async {
     final userSettings = await _userSettingsService.getUserSettings();
-    userCity = userSettings?.city;
+    userStateLocation = userSettings?.state;
     notifyListeners();
   }
 

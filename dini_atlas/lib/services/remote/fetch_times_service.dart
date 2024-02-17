@@ -13,6 +13,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fpdart/fpdart.dart';
 
 import 'dio_service.dart';
 
@@ -34,7 +35,8 @@ class FetchTimesService {
   final String _eidTimesUrl = "bayram-namazi";
   final String _religiousDaysUrl = "/dinigunler";
 
-  Future<PrayerTimes?> fetchTimes({UserLocation? userLocation}) async {
+  Future<Either<PrayerTimes, FetchTimesException>> fetchTimes(
+      {UserLocation? userLocation}) async {
     try {
       // kullanıcı kayıtlı ayarlarını getir
       UserSettings? userSettings = await _userSettings.getUserSettings();
@@ -96,11 +98,11 @@ class FetchTimesService {
 
         if (kDebugMode) print("Vakit bilgileri veritabanına kaydedildi");
 
-        return prayerTimes;
+        return Left(prayerTimes);
       }
-      return null;
+      return Right(FetchTimesException("Vakitler alınırken sorun oluştu"));
     } catch (e) {
-      rethrow;
+      return Right(FetchTimesException(e.toString()));
     }
   }
 
@@ -137,11 +139,11 @@ class FetchTimesService {
     UserLocation userLocation,
   ) async {
     try {
-      // ülke idsini getirm
+      // ülke idsini getirme
       final Country country = await _getUserCountry(userLocation.country);
 
       // sehir idsini getir
-      final City city = await _getUserCity(userLocation.city, country.ulkeId);
+      final City city = await _getUserCity(userLocation.city, country);
 
       // ilce idsini getir
       final StateModel state = await _getUserState(
@@ -159,67 +161,89 @@ class FetchTimesService {
     }
   }
 
+  Future<List<Country>> getCountries() async {
+    final response = await _dio.request("$_baseUrl/$_countryUrl");
+
+    if (response == null || response.statusCode != 200) {
+      throw FetchTimesException("Ülke bilgisi getirilirken sorun oluştu.");
+    }
+
+    final List<Country> countries =
+        (response.data as List).map((e) => Country.fromJson(e)).toList();
+    return countries;
+  }
+
   Future<Country> _getUserCountry(String country) async {
     try {
-      final response = await _dio.request("$_baseUrl/$_countryUrl");
-
-      if (response == null || response.statusCode != 200) {
-        throw FetchTimesException("Ülke bilgisi getirilirken sorun oluştu.");
-      }
-
-      final List<Country> countries =
-          (response.data as List).map((e) => Country.fromJson(e)).toList();
-
+      final countries = await getCountries();
       return countries.singleWhere((e) =>
           e.ulkeAdi == country.toLowerCase() ||
           e.ulkeAdiEn == country.toLowerCase());
     } catch (e) {
-      throw FetchTimesException(e.toString());
+      rethrow;
     }
   }
 
-  Future<City> _getUserCity(String city, String countryId) async {
+  Future<List<City>> getCities(String countryId) async {
+    final response = await _dio.request("$_baseUrl/$_cityUrl/$countryId");
+
+    if (response == null || response.statusCode != 200) {
+      throw FetchTimesException("Şehir bilgisi getirilirken sorun oluştu.");
+    }
+
+    final List<City> cities =
+        (response.data as List).map((e) => City.fromJson(e)).toList();
+    return cities;
+  }
+
+  Future<City> _getUserCity(String city, Country country) async {
     try {
-      final response = await _dio.request("$_baseUrl/$_cityUrl/$countryId");
-
-      if (response == null || response.statusCode != 200) {
-        throw FetchTimesException("Şehir bilgisi getirilirken sorun oluştu.");
-      }
-
-      final List<City> cities =
-          (response.data as List).map((e) => City.fromJson(e)).toList();
-
-      return cities.singleWhere((e) =>
+      final cities = await getCities(country.ulkeId);
+      int foundIndex = cities.indexWhere((e) =>
           e.sehirAdi == city.toLowerCase() ||
           e.sehirAdiEn == city.toLowerCase());
+
+      if (foundIndex == -1) {
+        foundIndex = cities.indexWhere((e) =>
+            e.sehirAdi == country.ulkeAdiEn.toLowerCase() ||
+            e.sehirAdiEn == country.ulkeAdiEn.toLowerCase() ||
+            e.sehirAdi == country.ulkeAdi.toLowerCase());
+      }
+
+      return cities[foundIndex];
     } catch (e) {
-      throw FetchTimesException(e.toString());
+      rethrow;
     }
+  }
+
+  Future<List<StateModel>> getStates(String cityId) async {
+    final response = await _dio.request("$_baseUrl/$_stateUrl/$cityId");
+
+    if (response == null || response.statusCode != 200) {
+      throw FetchTimesException("İlçe bilgisi getirilirken sorun oluştu.");
+    }
+
+    final List<StateModel> states =
+        (response.data as List).map((e) => StateModel.fromJson(e)).toList();
+    return states;
   }
 
   Future<StateModel> _getUserState(
       String city, String state, String cityId) async {
     try {
-      final response = await _dio.request("$_baseUrl/$_stateUrl/$cityId");
+      final states = await getStates(cityId);
 
-      if (response == null || response.statusCode != 200) {
-        throw FetchTimesException("İlçe bilgisi getirilirken sorun oluştu.");
-      }
-
-      final List<StateModel> cities =
-          (response.data as List).map((e) => StateModel.fromJson(e)).toList();
-
-      int foundIndex = cities.indexWhere((e) =>
+      int foundIndex = states.indexWhere((e) =>
           e.ilceAdi == state.toLowerCase() ||
           e.ilceAdiEn == state.toLowerCase());
       if (foundIndex == -1) {
-        foundIndex = cities.indexWhere((e) =>
+        foundIndex = states.indexWhere((e) =>
             e.ilceAdi == city.toLowerCase() ||
             e.ilceAdiEn == city.toLowerCase());
       }
-      return cities[foundIndex];
+      return states[foundIndex];
     } catch (e) {
-      throw FetchTimesException(e.toString());
+      rethrow;
     }
   }
 
@@ -238,7 +262,7 @@ class FetchTimesService {
       if (kDebugMode) print("- Vakit namazları getirildi.");
       return times;
     } catch (e) {
-      throw FetchTimesException(e.toString());
+      rethrow;
     }
   }
 
@@ -264,7 +288,7 @@ class FetchTimesService {
 
       return singleEidTime;
     } catch (e) {
-      throw FetchTimesException(e.toString());
+      rethrow;
     }
   }
 
@@ -287,7 +311,7 @@ class FetchTimesService {
       _religiousDays = religiousDays;
       return religiousDays;
     } catch (e) {
-      throw FetchTimesException(e.toString());
+      rethrow;
     }
   }
 }

@@ -38,10 +38,10 @@ class KazaTableWidget extends StatelessWidget {
             _tableItem(
               text: "İkindi",
               count: kaza.ikindi,
-              onDecrease: () => viewModel
-                  .updateKaza(kaza.copyWith(ikindi: kaza.ikindi - 1)),
-              onIncrease: () => viewModel
-                  .updateKaza(kaza.copyWith(ikindi: kaza.ikindi + 1)),
+              onDecrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(ikindi: kaza.ikindi - 1)),
+              onIncrease: () =>
+                  viewModel.updateKaza(kaza.copyWith(ikindi: kaza.ikindi + 1)),
             ),
             _tableItem(
               text: "Akşam",

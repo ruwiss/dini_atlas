@@ -31,6 +31,7 @@ import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_view.dart';
 import 'package:dini_atlas/ui/views/esmaul_husna/esmaul_husna_view.dart';
 import 'package:dini_atlas/ui/views/dualar/dualar_view.dart';
 import 'package:dini_atlas/ui/views/elifba/elifba_view.dart';
+import 'package:dini_atlas/ui/bottom_sheets/location/location_sheet.dart';
 // @stacked-import
 
 @StackedApp(
@@ -76,6 +77,7 @@ import 'package:dini_atlas/ui/views/elifba/elifba_view.dart';
   ],
   bottomsheets: [
     StackedBottomsheet(classType: AlertSheet),
+    StackedBottomsheet(classType: LocationSheet),
 // @stacked-bottom-sheet
   ],
   dialogs: [
