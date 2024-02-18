@@ -10,8 +10,6 @@ import 'package:dini_atlas/app/app.router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'dart:async';
 
 Future<void> main() async {
@@ -19,13 +17,11 @@ Future<void> main() async {
     () async {
       final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-      await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform);
       await GoogleServices.init();
       await setupLocator();
-      await initializeDateFormatting(ksDefaultLocale);
       setupDialogUi();
       setupBottomSheetUi();
+      await initializeDateFormatting(ksDefaultLocale);
       AppTheme.setStatusBarColor();
       runApp(const BetterFeedback(child: MainApp()));
     },
@@ -44,9 +40,7 @@ class MainApp extends StatelessWidget {
       initialRoute: Routes.startupView,
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
-      navigatorObservers: [
-        StackedService.routeObserver
-      ],
+      navigatorObservers: [StackedService.routeObserver],
     );
   }
 }
