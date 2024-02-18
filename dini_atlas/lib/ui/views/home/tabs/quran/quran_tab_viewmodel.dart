@@ -1,6 +1,7 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
 import 'package:dini_atlas/models/user_setting.dart';
+import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
@@ -19,6 +20,7 @@ enum QuranTabs {
 }
 
 class QuranTabViewModel extends IndexTrackingViewModel {
+  final _networkChecker = locator<NetworkChecker>();
   final _userSettingsService = locator<UserSettingsService>();
   final _quranService = locator<QuranService>();
   List<SuraInfo>? suraList;
@@ -61,5 +63,11 @@ class QuranTabViewModel extends IndexTrackingViewModel {
       suraList = data;
       notifyListeners();
     }, (error) => setError(error.message));
+  }
+
+  @override
+  void dispose() {
+    _networkChecker.dispose();
+    super.dispose();
   }
 }

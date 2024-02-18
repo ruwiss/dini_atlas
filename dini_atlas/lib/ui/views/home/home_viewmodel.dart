@@ -1,10 +1,12 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
+import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_dialog.dart';
-import 'package:disable_battery_optimization/disable_battery_optimization.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:sound_mode/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,6 +16,7 @@ class HomeViewModel extends IndexTrackingViewModel {
   late final HomeService _homeService;
   final _userSettingsService = locator<UserSettingsService>();
   final _dialogService = locator<DialogService>();
+  final _bottomSheetService = locator<BottomSheetService>();
   List<String> get tabItems => [kiHome, kiCategories, kiQuran];
 
   bool get showSettingsIcon => currentIndex == 0; // ana sayfa ayarlar butonu
@@ -22,26 +25,42 @@ class HomeViewModel extends IndexTrackingViewModel {
     _homeService = homeService;
     await PushNotification.instance.setupNotification();
     await _optimizationPermissions();
+    _checkAvailableUpdate();
   }
 
   Future<void> _optimizationPermissions() async {
-    bool isAutoStartEnabled =
-        await DisableBatteryOptimization.isAutoStartEnabled ?? false;
-    bool isBatteryOptimizationDisabled =
-        await DisableBatteryOptimization.isBatteryOptimizationDisabled ?? false;
-
-    if (!isBatteryOptimizationDisabled) {
-      await DisableBatteryOptimization
-          .showDisableManufacturerBatteryOptimizationSettings(
-        "Küçük bir ayar gerekiyor",
-        "Uygulamanın sorunsuz çalışmasını sağlamak için adımları izleyerek Pil Optimizasyonunu devre dışı bırakınız.",
+    final batteryOptimizationValue =
+        await _userSettingsService.disableBatteryOptimizationDialogSetting();
+    if (!batteryOptimizationValue) {
+      final result = await _bottomSheetService.showBottomSheet(
+        title: "Küçük bir ayar gerekli",
+        description:
+            "Vakitlerin düzgün çalışması için bu uygulamanın pil optimizasyonunu kapatmalısınız.",
+        confirmButtonTitle: "Yönlendir",
       );
+      if (result != null && result.confirmed) {
+        await AppSettings.openAppSettings(
+          type: AppSettingsType.batteryOptimization,
+          asAnotherTask: true,
+        );
+      }
     }
-    if (!isAutoStartEnabled) {
-      await DisableBatteryOptimization.showEnableAutoStartSettings(
-        "Başlangıçta çalıştır",
-        "Yeniden başlatmada uygulamanın etkin olması için bu ayarı etkinleştirmelisiniz.",
-      );
+  }
+
+  void _checkAvailableUpdate() async {
+    final info = await InAppUpdate.checkForUpdate();
+    if (info.updateAvailability != UpdateAvailability.updateAvailable) return;
+    if (info.availableVersionCode case final int version) {
+      final int immediateVersion =
+          FirebaseRemoteConfigServiceClass.i.immediateUpdateVersion;
+      if (version >= immediateVersion) {
+        await InAppUpdate.performImmediateUpdate();
+      } else {
+        final result = await InAppUpdate.startFlexibleUpdate();
+        if (result == AppUpdateResult.success) {
+          await InAppUpdate.completeFlexibleUpdate();
+        }
+      }
     }
   }
 

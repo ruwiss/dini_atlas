@@ -10,6 +10,7 @@ class FirebaseRemoteConfigServiceClass {
   final String _privacyPolicyKey = "privacy_policiy";
   final String _mailKey = "mail";
   final String _securityKey = "security_key";
+  final String _immediateUpdateVersionKey = "immediate_update_version";
 
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
@@ -17,6 +18,8 @@ class FirebaseRemoteConfigServiceClass {
   String get privacyPolicy => _remoteConfig.getString(_privacyPolicyKey);
   String get mail => _remoteConfig.getString(_mailKey);
   String get securityKey => _remoteConfig.getString(_securityKey);
+  int get immediateUpdateVersion =>
+      _remoteConfig.getInt(_immediateUpdateVersionKey);
 
   Future<void> init() async {
     await _setConfigSettings();
@@ -37,7 +40,8 @@ class FirebaseRemoteConfigServiceClass {
           _privacyPolicyKey:
               "https://docs.kodlayalim.net/diniatlas_privacy.html",
           _mailKey: "omer670067@gmail.com",
-          _securityKey: "V47R3JNT"
+          _securityKey: "V47R3JNT",
+          _immediateUpdateVersionKey: 1,
         },
       );
 
