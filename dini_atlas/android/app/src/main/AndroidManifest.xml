@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rw.dini_atlas">
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Silent Mode Permission -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
     <!-- GeoLocator -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Local Notifications, Alarm Manager Plus -->

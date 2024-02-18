@@ -20,26 +20,26 @@ class Kaza {
   });
 
   Kaza.fromJson(Map<String, dynamic> json)
-      : sabah = json["sabah"],
-        ogle = json["ogle"],
-        ikindi = json["ikindi"],
-        aksam = json["aksam"],
-        yatsi = json["yatsi"],
-        vitir = json["vitir"],
-        oruc = json["oruc"],
-        lastUpdated = json["lastUpdated"] == null
+      : sabah = json['sabah'],
+        ogle = json['ogle'],
+        ikindi = json['ikindi'],
+        aksam = json['aksam'],
+        yatsi = json['yatsi'],
+        vitir = json['vitir'],
+        oruc = json['oruc'],
+        lastUpdated = json['lastUpdated'] == null
             ? null
-            : DateTime.parse(json["lastUpdated"]);
+            : DateTime.parse(json['lastUpdated']);
 
   Map<String, dynamic> toJson() => {
-        "sabah": sabah,
-        "ogle": ogle,
-        "ikindi": ikindi,
-        "aksam": aksam,
-        "yatsi": yatsi,
-        "vitir": vitir,
-        "oruc": oruc,
-        "lastUpdated": lastUpdated?.toIso8601String(),
+        'sabah': sabah,
+        'ogle': ogle,
+        'ikindi': ikindi,
+        'aksam': aksam,
+        'yatsi': yatsi,
+        'vitir': vitir,
+        'oruc': oruc,
+        'lastUpdated': lastUpdated?.toIso8601String(),
       };
 
   Kaza.createEmpty()

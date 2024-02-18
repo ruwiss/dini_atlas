@@ -830,16 +830,6 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i8.Future<void>);
 
   @override
-  _i8.Future<void> removeUserLocationSettings() => (super.noSuchMethod(
-        Invocation.method(
-          #removeUserLocationSettings,
-          [],
-        ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
-
-  @override
   _i8.Future<_i3.UserSettings> setSilentMode(bool? value) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1250,6 +1240,16 @@ class MockPrayerTimesService extends _i1.Mock
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+
+  @override
+  _i8.Future<bool> hasPrayerTimes() => (super.noSuchMethod(
+        Invocation.method(
+          #hasPrayerTimes,
+          [],
+        ),
+        returnValue: _i8.Future<bool>.value(false),
+        returnValueForMissingStub: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
 
   @override
   _i8.Future<_i19.Either<_i20.PrayerTimes, bool>> getPrayerTimes() =>

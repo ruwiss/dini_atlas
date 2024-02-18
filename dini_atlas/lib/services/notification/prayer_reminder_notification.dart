@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/prayer/prayer_shared_p.dart';
@@ -9,6 +11,8 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sound_mode/sound_mode.dart';
+import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 import 'push_notification.dart';
 import 'dart:convert';
 
@@ -41,23 +45,24 @@ class PrayerReminderNotification {
     final bool silentMode =
         await UserSettingsService.getSilentModeSettingForBackgroundTask();
 
+    debugPrint("Kullanıcı Sessiz Mod Seçeneği: $silentMode");
+
+    final silentModeActivated = prefs.getBool("silentModeActivated") ?? false;
+
+    if (silentMode && !silentModeActivated) {
+      await SoundMode.setSoundMode(RingerModeStatus.silent);
+      prefs.setBool("silentModeActivated", true);
+      debugPrint("silentModeActivated: true");
+    } else if (!silentMode && silentModeActivated) {
+      await SoundMode.setSoundMode(RingerModeStatus.normal);
+      prefs.setBool("silentModeActivated", false);
+      debugPrint("silentModeActivated: false");
+    }
+
     bool silentEnabled = false;
 
     // Bugüne ait vakitleri filtreleyerek sıradaki namaz vaktini bul
     final index = currentPrayer.items.indexWhere((e) {
-      // eğer sessiz mod aktifse
-      if (silentMode) {
-        // Filtredeki vakti DateTime'a dönüştür
-        final prayerDateTime = e.timeValue.parseTimeAsDateTime();
-        // Şimdiki vakti DateTime'a dönüştür
-        final currentDateTime = DateTime(0, 0, 0, now.hour, now.minute);
-        // ikisinin farkını dk olarak hesapla
-        final diff = currentDateTime.difference(prayerDateTime).inMinutes;
-
-        // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa sessiz bildirim göster
-        silentEnabled = diff >= -5 && diff <= 30;
-      }
-
       bool returnValue = false;
 
       // Filtredeki vakte ait bildirim ayarlarını getir
@@ -98,13 +103,31 @@ class PrayerReminderNotification {
     });
 
     PrayerSharedPItem? activePrayer;
+    if (index != -1) {
+      activePrayer = currentPrayer.items[index];
+      // eğer sessiz mod aktifse
+      if (silentMode) {
+        // Filtredeki vakti DateTime'a dönüştür
+        final prayerDateTime = activePrayer.timeValue.parseTimeAsDateTime();
+        // Şimdiki vakti DateTime'a dönüştür
+        final currentDateTime = DateTime(0, 0, 0, now.hour, now.minute);
+        // ikisinin farkını dk olarak hesapla
+        final diff = currentDateTime.difference(prayerDateTime).inMinutes;
 
-    if (index != -1) activePrayer = currentPrayer.items[index];
+        // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa sessiz bildirim göster
+        silentEnabled = diff >= -5 && diff <= 30;
+      }
 
-    if (activePrayer != null) {
+      debugPrint("Sessiz Mod: $silentEnabled");
+
+      // sessiz mod etkinse sesi açıyoruz ve 10 saniye sonra kapatıyoruz
+      // (Bildirimi sesli göstermek için)
+      if (silentModeActivated) {
+        await SoundMode.setSoundMode(RingerModeStatus.normal);
+        await Future.delayed(const Duration(seconds: 5));
+      }
       // Ayarların düzgün çalışması için dinamik kanal adı oluşturuyoruz
-      final String channel =
-          "$ksPrayerReminderNotiChannel${silentEnabled ? '_s' : ''}_$warningSoundId";
+      final String channel = "${ksPrayerReminderNotiChannel}_$warningSoundId";
       AndroidNotificationDetails androidNotificationDetails =
           AndroidNotificationDetails(
         channel,
@@ -117,9 +140,10 @@ class PrayerReminderNotification {
         channelShowBadge: false,
         category: AndroidNotificationCategory.event,
         visibility: NotificationVisibility.public,
-        playSound: !silentEnabled,
+        playSound: true,
         sound: RawResourceAndroidNotificationSound(
-            kaNotiSounds.firstWhere((e) => e.id == warningSoundId).rawPath),
+          kaNotiSounds.firstWhere((e) => e.id == warningSoundId).rawPath,
+        ),
       );
 
       NotificationDetails notificationDetails =
@@ -135,6 +159,12 @@ class PrayerReminderNotification {
           '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}',
           subtitle,
           notificationDetails);
+      if (silentModeActivated) {
+        Future.delayed(
+          const Duration(seconds: 10),
+          () => SoundMode.setSoundMode(RingerModeStatus.silent),
+        );
+      }
     }
   }
 }

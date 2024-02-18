@@ -16,10 +16,10 @@ const String ksAppName = "Dinî Atlas";
 const String ksDefaultLocale = "tr_TR";
 
 // Namaz vakti geri sayım push notification bildirim kanalı
-const String ksPrayerNotiChannel = "countdown_channel_atlas";
+const String ksPrayerNotiChannel = "countdown_channel_atlas_2";
 
 // Namaz vakti ek hatırlatıcı push notification bildirim kanalı
-const String ksPrayerReminderNotiChannel = "reminder_channel_atlas";
+const String ksPrayerReminderNotiChannel = "reminder_channel_atlas_2";
 
 // Mail
 String get ksMail => FirebaseRemoteConfigServiceClass.i.mail;
