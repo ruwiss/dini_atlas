@@ -1,9 +1,7 @@
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:dini_atlas/app/theme.dart';
 import 'package:dini_atlas/services/remote/google/google_services.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:feedback/feedback.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/app/app.bottomsheets.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
@@ -17,20 +15,22 @@ import 'firebase_options.dart';
 import 'dart:async';
 
 Future<void> main() async {
-  runZonedGuarded<Future<void>>(() async {
-    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform);
-    await GoogleServices.init();
-    await setupLocator();
-    await initializeDateFormatting(ksDefaultLocale);
-    setupDialogUi();
-    setupBottomSheetUi();
-    AppTheme.setStatusBarColor();
-    await AndroidAlarmManager.initialize();
-    runApp(const BetterFeedback(child: MainApp()));
-  }, GoogleServices.recordError);
+  runZonedGuarded<Future<void>>(
+    () async {
+      final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+      await Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform);
+      await GoogleServices.init();
+      await setupLocator();
+      await initializeDateFormatting(ksDefaultLocale);
+      setupDialogUi();
+      setupBottomSheetUi();
+      AppTheme.setStatusBarColor();
+      runApp(const BetterFeedback(child: MainApp()));
+    },
+    GoogleServices.recordError,
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -45,8 +45,7 @@ class MainApp extends StatelessWidget {
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
       navigatorObservers: [
-        StackedService.routeObserver,
-        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+        StackedService.routeObserver
       ],
     );
   }

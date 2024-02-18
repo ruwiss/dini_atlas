@@ -1,3 +1,4 @@
+import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/common/constants/app_images.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class SettingsDialog extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(
-            onPressed: () => completer(DialogResponse(confirmed: false)),
+            onPressed: () => locator<NavigationService>().back(),
             icon: const Icon(
               Icons.close,
               size: 33,

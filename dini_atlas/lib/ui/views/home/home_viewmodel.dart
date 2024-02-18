@@ -35,7 +35,7 @@ class HomeViewModel extends IndexTrackingViewModel {
       final result = await _bottomSheetService.showBottomSheet(
         title: "Küçük bir ayar gerekli",
         description:
-            "Vakitlerin düzgün çalışması için bu uygulamanın pil optimizasyonunu kapatmalısınız.",
+            "Vakitlerin düzgün çalışması için bu uygulama için pil optimizasyonunu (Optimize Etme) olarak ayarlamalısınız.",
         confirmButtonTitle: "Yönlendir",
       );
       if (result != null && result.confirmed) {
@@ -76,6 +76,7 @@ class HomeViewModel extends IndexTrackingViewModel {
     final userSettings = _homeService.userSettings;
     _dialogService.showCustomDialog(
       variant: DialogType.settings,
+      barrierDismissible: true,
       data: SettingsBaseDialogItem(
         checkboxValue: userSettings!.silentModeEnable,
         title: "Sessiz Mod",

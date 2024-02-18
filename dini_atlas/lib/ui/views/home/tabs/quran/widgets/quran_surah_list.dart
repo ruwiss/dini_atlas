@@ -5,7 +5,6 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -54,19 +53,11 @@ class QuranSurahList extends StatelessWidget {
           navService
               .navigateToQuranView(currentTab: currentTab, sura: item)
               .then((_) => viewModel.loadInterstitalAd());
-          FirebaseAnalytics.instance.logEvent(
-            name: "kuran_sure_normal",
-            parameters: {"name": item.name},
-          );
         } else {
           // Takipli kuran ekranına git
           navService
               .navigateToTraceableQuranView(sura: item)
               .then((_) => viewModel.loadInterstitalAd());
-          FirebaseAnalytics.instance.logEvent(
-            name: "kuran_sure_takipli",
-            parameters: {"name": item.name},
-          );
         }
       },
       splashFactory: NoSplash.splashFactory,

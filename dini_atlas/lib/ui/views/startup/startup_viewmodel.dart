@@ -8,7 +8,6 @@ import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked/stacked.dart';
 import 'package:dini_atlas/app/app.locator.dart';
@@ -111,7 +110,6 @@ class StartupViewModel extends BaseViewModel {
     final hasPrayerTimes = await _prayerTimesService.hasPrayerTimes();
     if (hasPrayerTimes) {
       _navigationService.replaceWithHomeView();
-      FirebaseAnalytics.instance.logEvent(name: "giris");
     } else {
       FlutterNativeSplash.remove();
     }

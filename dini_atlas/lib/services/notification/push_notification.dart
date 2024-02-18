@@ -38,6 +38,7 @@ class PushNotification {
           android: AndroidInitializationSettings('ic_stat_noti'),
         ),
       );
+      await AndroidAlarmManager.initialize();
       await AndroidAlarmManager.periodic(
         const Duration(minutes: 1),
         1,

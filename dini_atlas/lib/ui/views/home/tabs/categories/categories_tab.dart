@@ -1,7 +1,6 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/home/tabs/categories/categories.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -32,10 +31,6 @@ class _CategoriesTabState extends State<CategoriesTab> {
             borderRadius: BorderRadius.circular(10),
             onTap: () {
               locator<NavigationService>().navigateTo(item.route);
-              FirebaseAnalytics.instance.logEvent(
-                name: "kategori_giris",
-                parameters: {"name": item.name},
-              );
             },
             child: Stack(
               alignment: Alignment.center,

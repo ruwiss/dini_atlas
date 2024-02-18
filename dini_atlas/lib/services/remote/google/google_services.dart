@@ -1,4 +1,3 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/widgets.dart';
 abstract class GoogleServices {
   static Future<void> init() async {
     await FirebaseRemoteConfigServiceClass.i.init();
-    await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
     await _setCrashlytics();
     await MobileAds.instance.initialize();
   }
