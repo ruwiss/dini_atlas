@@ -2,6 +2,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:dini_atlas/app/theme.dart';
 import 'package:dini_atlas/services/remote/google/google_services.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
+import 'package:feedback/feedback.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/app/app.bottomsheets.dart';
@@ -28,7 +29,7 @@ Future<void> main() async {
     setupBottomSheetUi();
     AppTheme.setStatusBarColor();
     await AndroidAlarmManager.initialize();
-    runApp(const MainApp());
+    runApp(const BetterFeedback(child: MainApp()));
   }, GoogleServices.recordError);
 }
 

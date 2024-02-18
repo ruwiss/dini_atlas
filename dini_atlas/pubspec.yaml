@@ -45,6 +45,7 @@ dependencies:
   crypto: ^3.0.3
   in_app_update: ^4.2.2
   feedback: ^3.0.0
+  feedback_gitlab: ^3.0.0
   app_settings: ^5.1.1
 
   # architecture

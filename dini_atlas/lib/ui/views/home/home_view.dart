@@ -41,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
               IconButton(
                 onPressed: viewModel.onSettingsTap,
                 icon: SvgPicture.asset(kiSettings),
-              )
+              ),
           ],
         ),
         body: SafeArea(

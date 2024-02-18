@@ -11,6 +11,8 @@ class FirebaseRemoteConfigServiceClass {
   final String _mailKey = "mail";
   final String _securityKey = "security_key";
   final String _immediateUpdateVersionKey = "immediate_update_version";
+  final String _gitlabProjectIdKey = "gitlab_project_id";
+  final String _gitlabApiTokenKey = "gitlab_api_token";
 
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
@@ -20,6 +22,8 @@ class FirebaseRemoteConfigServiceClass {
   String get securityKey => _remoteConfig.getString(_securityKey);
   int get immediateUpdateVersion =>
       _remoteConfig.getInt(_immediateUpdateVersionKey);
+  String get gitlabProjectId => _remoteConfig.getString(_gitlabProjectIdKey);
+  String get gitlabApiToken => _remoteConfig.getString(_gitlabApiTokenKey);
 
   Future<void> init() async {
     await _setConfigSettings();
@@ -42,6 +46,8 @@ class FirebaseRemoteConfigServiceClass {
           _mailKey: "omer670067@gmail.com",
           _securityKey: "V47R3JNT",
           _immediateUpdateVersionKey: 1,
+          _gitlabProjectIdKey: "55056853",
+          _gitlabApiTokenKey: "glpat-eQXXQp-mRMQ_tTXBs5se",
         },
       );
 
