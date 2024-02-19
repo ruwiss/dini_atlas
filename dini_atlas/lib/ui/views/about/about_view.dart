@@ -70,14 +70,17 @@ class AboutView extends StackedView<AboutViewModel> {
   Padding _aboutTileWidget(
       {required String svg, required String text, VoidCallback? onTap}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: InkWell(
         onTap: onTap,
         borderRadius: borderRadiusMedium,
         highlightColor: kcPrimaryColorLight.withOpacity(.15),
         child: Ink(
-          color: kcGrayColorLightSoft,
-          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: kcGrayColorLightSoft,
+            borderRadius: borderRadiusMedium,
+          ),
+          padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
