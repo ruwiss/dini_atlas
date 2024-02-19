@@ -9,6 +9,7 @@ import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/kaza/widgets/auth_widget.form.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -90,6 +91,8 @@ class KazaViewModel extends FormViewModel {
 
     final result = await _authService.auth(
         userAuth: _userAuthInformation!, isLogin: _authType == AuthType.login);
+
+    FirebaseMessaging.instance.subscribeToTopic("kaza");
 
     result.fold(
       (userSettings) {

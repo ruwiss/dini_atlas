@@ -244,15 +244,6 @@ def dualar():
     data = helper.daily_json("dualar")
     if not data:
         try:
-            r = requests.get("https://diyanet.tv/gunun-duasi")
-            node = LexborHTMLParser(r.text).css(".programlar-icerik-body")
-
-            data = []
-            for i in node:
-                text = i.text().strip()
-                data.append(text)
-            helper.daily_json("dualar", data)
-        except:
             r = requests.get("https://esenler.bel.tr/esenlerde-ramazan/gunun-duasi/")
             node = (
                 LexborHTMLParser(r.text).css_first(".items > .container > ul").css("li")
@@ -261,6 +252,15 @@ def dualar():
             data = []
             for i in node:
                 text = i.css_first(".text").text().strip()
+                data.append(text)
+            helper.daily_json("dualar", data)
+        except:
+            r = requests.get("https://diyanet.tv/gunun-duasi")
+            node = LexborHTMLParser(r.text).css(".programlar-icerik-body")
+
+            data = []
+            for i in node:
+                text = i.text().strip()
                 data.append(text)
             helper.daily_json("dualar", data)
 

@@ -18,17 +18,22 @@ class SubscriptionTab extends StatelessWidget {
             _subscribeItem(
               id: "monthly",
               planText: "AYLIK PLAN",
-              priceText: "30.00 ₺ / Ay",
+              priceText: "10.00 ₺ / Ay",
             ),
             _subscribeItem(
               id: "monthly_3",
               planText: "3 AYLIK PLAN",
-              priceText: "80.00 ₺ / 3 Ay",
+              priceText: "25.00 ₺ / 3 Ay",
+            ),
+            _subscribeItem(
+              id: "yillik_1",
+              planText: "1 YILLIK PLAN",
+              priceText: "100.00 ₺ / 1 Yıl",
             ),
             verticalSpaceMedium,
             _actionButton(
               text: "Devam",
-              onTap: () {},
+              onTap: viewModel.selectedPrice == null ? null : () {},
               color: kcPurpleColorLight,
             ),
             verticalSpaceMedium,
@@ -47,6 +52,7 @@ class SubscriptionTab extends StatelessWidget {
     return MaterialButton(
       onPressed: onTap,
       color: color ?? kcBlueGrayColorSoft,
+      disabledColor: kcBlueGrayColorSoft,
       padding: const EdgeInsets.symmetric(vertical: 12),
       splashColor: kcPrimaryColorLight.withOpacity(.3),
       highlightElevation: 3,
@@ -94,8 +100,8 @@ class SubscriptionTab extends StatelessWidget {
                 Text(
                   planText,
                   style: const TextStyle(
-                    letterSpacing: 1.2,
-                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.1,
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
                     color: kcPrimaryColorDark,
                   ),
@@ -104,10 +110,15 @@ class SubscriptionTab extends StatelessWidget {
                 Text(
                   priceText,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     fontSize: 20,
-                    color: kcPrimaryColorDark,
+                    color: kcPrimaryColor,
                   ),
+                ),
+                verticalSpaceTiny,
+                const Text(
+                  "İstediğiniz zaman iptal edin",
+                  style: TextStyle(fontSize: 14),
                 ),
               ],
             ),

@@ -10,7 +10,9 @@ debug_mode = True
 app = Flask(__name__)
 
 # header { token: md5(datetime(Y:m:d)-V47R3JNT) }
-# app.wsgi_app = Middleware(app.wsgi_app)
+
+if not debug_mode:
+    app.wsgi_app = Middleware(app.wsgi_app)
 
 app.config["JSON_AS_ASCII"] = False
 app.config["JSONIFY_MIMETYPE"] = "application/json; charset=utf-8"
