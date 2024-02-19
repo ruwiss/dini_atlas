@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
         appBar: AppBarWidget(
           title: ksAppName,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: viewModel.onAboutTap,
             icon: SvgPicture.asset(kiMenu),
           ),
           actions: [

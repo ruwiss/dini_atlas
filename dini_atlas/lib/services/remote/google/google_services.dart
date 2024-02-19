@@ -1,7 +1,5 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:dini_atlas/firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,7 +7,14 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_remote_config_service.dart';
 import 'package:flutter/widgets.dart';
 
+import 'dart:async';
+import 'dart:developer';
+
 abstract class GoogleServices {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
   static Future<void> init() async {
     final stopwatch = Stopwatch()..start();
     await Firebase.initializeApp(
@@ -22,6 +27,8 @@ abstract class GoogleServices {
     unawaited(MobileAds.instance.initialize());
     log("Mobile Ads initialized: ${stopwatch.elapsedMilliseconds} ms");
     stopwatch.stop();
+
+    FirebaseAnalytics.instance.logAppOpen();
   }
 
   static Future<void> _setCrashlytics() async {

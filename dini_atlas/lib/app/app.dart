@@ -32,6 +32,7 @@ import 'package:dini_atlas/ui/views/esmaul_husna/esmaul_husna_view.dart';
 import 'package:dini_atlas/ui/views/dualar/dualar_view.dart';
 import 'package:dini_atlas/ui/views/elifba/elifba_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/location/location_sheet.dart';
+import 'package:dini_atlas/ui/views/about/about_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -56,6 +57,10 @@ import 'package:dini_atlas/ui/bottom_sheets/location/location_sheet.dart';
     MaterialRoute(page: EsmaulHusnaView),
     MaterialRoute(page: DualarView),
     MaterialRoute(page: ElifbaView),
+    CustomRoute(
+      page: AboutView,
+      transitionsBuilder: TransitionsBuilders.slideRightWithFade,
+    ),
 // @stacked-route
   ],
   dependencies: [

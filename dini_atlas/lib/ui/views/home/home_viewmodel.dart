@@ -1,6 +1,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
@@ -17,6 +18,7 @@ class HomeViewModel extends IndexTrackingViewModel {
   final _userSettingsService = locator<UserSettingsService>();
   final _dialogService = locator<DialogService>();
   final _bottomSheetService = locator<BottomSheetService>();
+  final _navigationService = locator<NavigationService>();
   List<String> get tabItems => [kiHome, kiCategories, kiQuran];
 
   bool get showSettingsIcon => currentIndex == 0; // ana sayfa ayarlar butonu
@@ -67,6 +69,11 @@ class HomeViewModel extends IndexTrackingViewModel {
   void onSettingsTap() {
     // Home ekranı ayarlar diyaloğu
     _showHomeSettingsDialog();
+  }
+
+  void onAboutTap() {
+    // Hakkımda sayfası
+    _navigationService.navigateToAboutView();
   }
 
   bool get silentModeEnabled =>

@@ -18,7 +18,9 @@ class EsmaulHusnaView extends StackedView<EsmaulHusnaViewModel> {
   ) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: const AppBarWidget(title: "Esma’ül Hüsna",),
+      appBar: const AppBarWidget(
+        title: "Esma’ül Hüsna",
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),

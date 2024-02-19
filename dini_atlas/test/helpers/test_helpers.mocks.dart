@@ -482,6 +482,7 @@ class MockBottomSheetService extends _i1.Mock
     Duration? enterBottomSheetDuration,
     bool? ignoreSafeArea,
     bool? useRootNavigator = false,
+    double? elevation = 1.0,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -499,6 +500,7 @@ class MockBottomSheetService extends _i1.Mock
             #enterBottomSheetDuration: enterBottomSheetDuration,
             #ignoreSafeArea: ignoreSafeArea,
             #useRootNavigator: useRootNavigator,
+            #elevation: elevation,
           },
         ),
         returnValue: _i8.Future<_i5.SheetResponse<dynamic>?>.value(),
@@ -521,6 +523,7 @@ class MockBottomSheetService extends _i1.Mock
     String? additionalButtonTitle,
     bool? takesInput = false,
     _i9.Color? barrierColor = const _i9.Color(2315255808),
+    double? elevation = 1.0,
     bool? barrierDismissible = true,
     bool? isScrollControlled = false,
     String? barrierLabel = r'',
@@ -550,6 +553,7 @@ class MockBottomSheetService extends _i1.Mock
             #additionalButtonTitle: additionalButtonTitle,
             #takesInput: takesInput,
             #barrierColor: barrierColor,
+            #elevation: elevation,
             #barrierDismissible: barrierDismissible,
             #isScrollControlled: isScrollControlled,
             #barrierLabel: barrierLabel,
@@ -1081,6 +1085,17 @@ class MockUserSettingsService extends _i1.Mock
           ),
         )),
       ) as _i8.Future<_i3.UserSettings>);
+
+  @override
+  _i8.Future<bool> disableBatteryOptimizationDialogSetting() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #disableBatteryOptimizationDialogSetting,
+          [],
+        ),
+        returnValue: _i8.Future<bool>.value(false),
+        returnValueForMissingStub: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
 
   @override
   void setPrayerNotiSettingsForBackgroundTask(
