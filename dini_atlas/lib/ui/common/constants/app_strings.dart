@@ -13,6 +13,10 @@ String get ksPrivacyPolicy => FirebaseRemoteConfigServiceClass.i.privacyPolicy;
 // Uygulama başlığı
 const String ksAppName = "Dinî Atlas";
 
+// Uygulama paket adı
+const String ksAppPackageName = "com.rw.dini_atlas";
+String get ksAppUrl => "https://play.google.com/store/apps/details?id=$ksAppPackageName";
+
 // Dil (Location Service)
 const String ksDefaultLocale = "tr_TR";
 

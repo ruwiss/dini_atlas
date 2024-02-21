@@ -67,3 +67,5 @@ const String kiVibrate = "assets/vectors/vibrate.svg";
 const String kiAboutShare = "assets/vectors/about_share.svg";
 const String kiAboutStar = "assets/vectors/about_star.svg";
 const String kiAboutPrivacyPolicy = "assets/vectors/about_privacy_policy.svg";
+
+const String kiCompassCalibration = "assets/images/compass_calibration.gif";

@@ -1,8 +1,10 @@
+import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -10,10 +12,13 @@ import 'package:stacked/stacked.dart';
 import 'dart:math' as math;
 import 'dart:async';
 
+import 'package:stacked_services/stacked_services.dart';
+
 enum CompassType { compass, map }
 
 class CompassViewModel extends BaseViewModel {
   final _userSettingsService = locator<UserSettingsService>();
+  final _dialogService = locator<DialogService>();
 
   final _bannerAd = AdmobBannerAdService(adUnitId: ksAdmobBanner5);
   BannerAd? get bannerAd => _bannerAd.bannerAd;
@@ -32,6 +37,8 @@ class CompassViewModel extends BaseViewModel {
 
   CompassType _compassType = CompassType.compass;
   CompassType get compassType => _compassType;
+
+  bool _shownCalibrationInfo = false;
 
   void setCompassType(CompassType type) {
     _compassType = type;
@@ -72,7 +79,21 @@ class CompassViewModel extends BaseViewModel {
       final y = event.y;
       final z = event.z;
       magneticPercentage = math.sqrt((x * x) + (y * y) + (z * z)).toInt();
+      if (magneticPercentage > 55 && !_shownCalibrationInfo) {
+        _showCalibrationInfo();
+      }
     });
+  }
+
+  void _showCalibrationInfo() async {
+    _shownCalibrationInfo = true;
+    _dialogService.showCustomDialog(
+      variant: DialogType.settings,
+      title: "Kalibrasyon",
+      description:
+          "Eğer bir manyetik alandaysanız oradan uzaklaşın ve resimdeki kalibrasyon hareketini uygulayın.",
+      data: Image.asset(kiCompassCalibration),
+    );
   }
 
   @override

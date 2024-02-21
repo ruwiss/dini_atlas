@@ -1,8 +1,11 @@
+import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/about/about_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutTab extends StatelessWidget {
   const AboutTab({super.key, required this.viewModel});
@@ -38,17 +41,20 @@ class AboutTab extends StatelessWidget {
         _aboutTileWidget(
           svg: kiAboutShare,
           text: "Paylaş",
-          onTap: () {},
+          onTap: () => Share.shareUri(Uri.parse(ksAppUrl)),
         ),
         _aboutTileWidget(
           svg: kiAboutStar,
           text: "Değerlendir",
-          onTap: () {},
+          onTap: () => launchUrl(Uri.parse(ksAppUrl)),
         ),
         _aboutTileWidget(
           svg: kiAboutPrivacyPolicy,
           text: "Gizlilik Politikası",
-          onTap: () {},
+          onTap: () => launchUrl(
+            Uri.parse(FirebaseRemoteConfigServiceClass.i.privacyPolicy),
+            mode: LaunchMode.externalApplication,
+          ),
         ),
       ],
     );
@@ -89,10 +95,20 @@ class AboutTab extends StatelessWidget {
       onTap: viewModel.onRemoveAdsButtonTap,
       borderRadius: BorderRadius.circular(15),
       highlightColor: kcPrimaryColorLight.withOpacity(.2),
-      child: const Card(
-        surfaceTintColor: kcGrayColorLightSoft,
-        elevation: 2.5,
-        child: Padding(
+      child: Container(
+        margin: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: kcBlueGrayColorSoft,
+          boxShadow: [
+            BoxShadow(
+              color: kcPrimaryColor.withOpacity(.5),
+              blurRadius: 5.0,
+              offset: const Offset(0, 0),
+            )
+          ],
+        ),
+        child: const Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

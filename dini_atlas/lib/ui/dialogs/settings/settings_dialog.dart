@@ -26,6 +26,8 @@ class SettingsDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _headerWidget(context),
+          if (request.description case final String description)
+            _descriptionWidget(description),
           Container(
             constraints: BoxConstraints(maxHeight: screenHeight(context) * .7),
             width: double.infinity,
@@ -36,6 +38,17 @@ class SettingsDialog extends StatelessWidget {
             child: data,
           )
         ],
+      ),
+    );
+  }
+
+  Widget _descriptionWidget(String description) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Text(
+        description,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 16, color: kcGrayColor),
       ),
     );
   }
