@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
@@ -15,6 +17,8 @@ import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:stacked/stacked.dart';
@@ -39,6 +43,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   }
 
   String? currentMoonPhaseImage;
+  Uint8List? currentMoonImage;
   StateModel? userStateLocation;
   int? selectedPrayerTime;
   bool locationBusy = false;
@@ -102,10 +107,25 @@ class HomeTabViewModel extends ReactiveViewModel {
     notifyListeners();
   }
 
-  void _getCurrentMoonPhaseImage() {
-    currentMoonPhaseImage =
-        homeService.getTimesByDay(DateTime.now()).ayinSekliUrl.split("/").last;
-    notifyListeners();
+  void _getCurrentMoonPhaseImage() async {
+    try {
+      currentMoonPhaseImage = homeService
+          .getTimesByDay(DateTime.now())
+          .ayinSekliUrl
+          .split("/")
+          .last;
+      final result = await Dio().get(
+        "$ksBaseUrl/aygoruntusu/$currentMoonPhaseImage",
+        options: Options(
+          responseType: ResponseType.bytes,
+          headers: {"token": ksToken},
+        ),
+      );
+      currentMoonImage = result.data;
+      notifyListeners();
+    } catch (e) {
+      debugPrint("Ay resmi getirilemedi: $e");
+    }
   }
 
   void getUserStateLocation() async {

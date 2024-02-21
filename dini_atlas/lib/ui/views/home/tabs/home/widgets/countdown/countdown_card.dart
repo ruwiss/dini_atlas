@@ -71,23 +71,22 @@ class CountdownCard extends StatelessWidget {
     );
   }
 
-  Positioned _liveMoon() {
-    final String? id = viewModel.currentMoonPhaseImage;
+  Widget _liveMoon() {
     return Positioned(
       top: 3,
       right: 7,
-      child: BlendMask(
-        blendMode: BlendMode.screen,
-        child: Image.network(
-          id == null ? "" : "$ksBaseUrl/aygoruntusu/$id",
-          headers: {"token": ksToken},
-          height: 41,
-          width: 41,
-          cacheHeight: 41,
-          cacheWidth: 41,
-          errorBuilder: (_, __, ___) => const SizedBox(),
-        ),
-      ),
+      child: viewModel.currentMoonImage == null
+          ? const SizedBox()
+          : BlendMask(
+              blendMode: BlendMode.screen,
+              child: Image.memory(viewModel.currentMoonImage!,
+                height: 41,
+                width: 41,
+                cacheHeight: 41,
+                cacheWidth: 41,
+                errorBuilder: (_, __, ___) => const SizedBox(),
+              ),
+            ),
     );
   }
 
