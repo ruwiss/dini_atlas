@@ -1,11 +1,9 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/app_sounds.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 import '../../views/home/tabs/home/widgets/selectable_button.dart';
 import '../../views/home/tabs/home/widgets/selectable_tile.dart';
@@ -37,8 +35,6 @@ class SettingsNotiDialog extends StatefulWidget {
 
 class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
   final _player = AudioPlayer();
-
-  final _navigationService = locator<NavigationService>();
   late PrayerNotiSettings _prayerNotiSettings;
 
   @override
@@ -149,7 +145,7 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
         ElevatedButton(
           onPressed: () {
             widget.onSaveAll?.call(_prayerNotiSettings);
-            _navigationService.back();
+            Navigator.of(context, rootNavigator: true).pop();
           },
           child: const Text(
             "Tümüne Uygula",
@@ -159,7 +155,7 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
         ElevatedButton(
           onPressed: () {
             widget.onSave?.call(_prayerNotiSettings);
-            _navigationService.back();
+            Navigator.of(context, rootNavigator: true).pop();
           },
           style: ElevatedButton.styleFrom(backgroundColor: kcPurpleColorMedium),
           child: const Text(

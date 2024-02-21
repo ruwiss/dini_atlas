@@ -10,26 +10,28 @@ class AboutTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        verticalSpaceLarge,
-        _logoView(),
-        verticalSpace(20),
-        _versionNumberView(),
-        verticalSpace(35),
-        _subscriptionButton(viewModel),
-        verticalSpaceLarge,
-        _aboutTiles(),
-        const Spacer(),
-        Text(
-          ksMail,
-          style: const TextStyle(fontSize: 13),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          verticalSpaceMedium,
+          _logoView(),
+          verticalSpace(15),
+          _versionNumberView(),
+          verticalSpace(30),
+          _subscriptionButton(viewModel),
+          verticalSpace(30),
+          _aboutTiles(),
+          verticalSpaceMedium,
+          Text(
+            ksMail,
+            style: const TextStyle(fontSize: 13),
+          ),
+          verticalSpaceSmall,
+        ],
+      ),
     );
   }
 
-  
   Column _aboutTiles() {
     return Column(
       children: [

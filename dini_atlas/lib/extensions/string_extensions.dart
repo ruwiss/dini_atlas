@@ -1,3 +1,4 @@
+import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +16,10 @@ extension StringTimeExtensions on String {
   DateTime convertStringTimeToDateTime() {
     final format = DateFormat('dd MMMM y EEEE', ksDefaultLocale);
     return format.parse(this);
+  }
+
+  String parseDateTimeStringAsString() {
+    return DateTime.parse(this).convertDMYtimeString();
   }
 
   // [HH:mm:ss] -> [HH:mm]

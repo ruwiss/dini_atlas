@@ -33,6 +33,7 @@ import 'package:dini_atlas/ui/views/dualar/dualar_view.dart';
 import 'package:dini_atlas/ui/views/elifba/elifba_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/location/location_sheet.dart';
 import 'package:dini_atlas/ui/views/about/about_view.dart';
+import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -78,6 +79,7 @@ import 'package:dini_atlas/ui/views/about/about_view.dart';
     LazySingleton(classType: FavouritesService),
     LazySingleton(classType: AuthService),
     LazySingleton(classType: KazaService),
+    LazySingleton(classType: InAppPurchaseService),
 // @stacked-service
   ],
   bottomsheets: [

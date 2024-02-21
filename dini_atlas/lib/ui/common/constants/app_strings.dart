@@ -6,7 +6,6 @@ import 'dart:convert';
 const String ksAppVersion = "1.0.0";
 
 String get ksBaseUrl => FirebaseRemoteConfigServiceClass.i.host;
-//String ksBaseUrl = "https://192.168.1.104:9958";
 
 // Gizlilik Politikası
 String get ksPrivacyPolicy => FirebaseRemoteConfigServiceClass.i.privacyPolicy;
@@ -30,8 +29,11 @@ String get ksToken => md5
     .convert(utf8.encode("${DateTime.now().convertYMDtimeString()}-V47R3JNT"))
     .toString();
 
+// In App Purchase - Revenue Cat API
+const String ksIapKey = "goog_PFeLaPWmemAgKUHceFfGGuAQTHt";
+
 // ---- Admob Ads ---- //
-const bool ksShowAdmobAds = true;
+bool ksShowAdmobAds = true;
 const bool ksShowTestAds = true;
 
 const String ksAdmobAppOpen = "";

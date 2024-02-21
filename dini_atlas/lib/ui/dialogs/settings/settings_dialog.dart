@@ -1,4 +1,3 @@
-import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/common/constants/app_images.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class SettingsDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _headerWidget(),
+          _headerWidget(context),
           Container(
             constraints: BoxConstraints(maxHeight: screenHeight(context) * .7),
             width: double.infinity,
@@ -41,7 +40,7 @@ class SettingsDialog extends StatelessWidget {
     );
   }
 
-  Container _headerWidget() {
+  Container _headerWidget(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: const BoxDecoration(
@@ -68,7 +67,7 @@ class SettingsDialog extends StatelessWidget {
           ),
           const Spacer(),
           IconButton(
-            onPressed: () => locator<NavigationService>().back(),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
             icon: const Icon(
               Icons.close,
               size: 33,

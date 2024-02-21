@@ -11,6 +11,7 @@ import 'package:stacked_services/src/dialog/dialog_service.dart';
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
+import '../services/remote/google/in_app_purchase_service.dart';
 import '../services/local/favorites_service.dart';
 import '../services/local/isar_service.dart';
 import '../services/local/location_service.dart';
@@ -51,4 +52,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => FavouritesService());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => KazaService());
+  locator.registerLazySingleton(() => InAppPurchaseService());
 }

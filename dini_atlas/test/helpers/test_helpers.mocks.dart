@@ -22,6 +22,7 @@ import 'package:dini_atlas/models/religious_days.dart' as _i21;
 import 'package:dini_atlas/models/rosary_setting.dart' as _i4;
 import 'package:dini_atlas/models/user_location.dart' as _i12;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
+import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart' as _i35;
 import 'package:dini_atlas/services/local/favorites_service.dart' as _i30;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i10;
 import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i22;
@@ -1621,3 +1622,9 @@ class MockKazaService extends _i1.Mock implements _i33.KazaService {
         returnValueForMissingStub: _i8.Future<bool>.value(false),
       ) as _i8.Future<bool>);
 }
+
+/// A class which mocks [InAppPurchaseService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockInAppPurchaseService extends _i1.Mock
+    implements _i35.InAppPurchaseService {}

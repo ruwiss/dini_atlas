@@ -1,3 +1,4 @@
+import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/widgets.dart';
 
 import 'dart:async';
 import 'dart:developer';
+
+import 'in_app_purchase_service.dart';
 
 abstract class GoogleServices {
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
@@ -24,6 +27,8 @@ abstract class GoogleServices {
     log("Firebase Remote Config initialized: ${stopwatch.elapsedMilliseconds} ms");
     await _setCrashlytics();
     log("Crashlytics record errors: ${stopwatch.elapsedMilliseconds} ms");
+    await locator<InAppPurchaseService>().init();
+    log("In App Purchases initialized: ${stopwatch.elapsedMilliseconds} ms");
     unawaited(MobileAds.instance.initialize());
     log("Mobile Ads initialized: ${stopwatch.elapsedMilliseconds} ms");
     stopwatch.stop();

@@ -1,4 +1,3 @@
-import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/about/tabs/about_tab.dart';
 import 'package:dini_atlas/ui/views/about/tabs/subscription_tab.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
@@ -29,7 +28,7 @@ class AboutView extends StackedView<AboutViewModel> {
       ),
       body: Center(
         child: Padding(
-          padding: paddingLarge,
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: !showSubscriptionView
               // Hakkımda Sayfası
               ? AboutTab(viewModel: viewModel)

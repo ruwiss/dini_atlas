@@ -17,8 +17,8 @@ Future<void> main() async {
     () async {
       final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-      await GoogleServices.init();
       await setupLocator();
+      await GoogleServices.init();
       setupDialogUi();
       setupBottomSheetUi();
       await initializeDateFormatting(ksDefaultLocale);

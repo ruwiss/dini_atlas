@@ -1,7 +1,9 @@
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/about/about_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class SubscriptionTab extends StatelessWidget {
   const SubscriptionTab({super.key, required this.viewModel});
@@ -9,42 +11,55 @@ class SubscriptionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _subscribeItem(
-              id: "monthly",
-              planText: "AYLIK PLAN",
-              priceText: "10.00 ₺ / Ay",
-            ),
-            _subscribeItem(
-              id: "monthly_3",
-              planText: "3 AYLIK PLAN",
-              priceText: "25.00 ₺ / 3 Ay",
-            ),
-            _subscribeItem(
-              id: "yillik_1",
-              planText: "1 YILLIK PLAN",
-              priceText: "100.00 ₺ / 1 Yıl",
-            ),
-            verticalSpaceMedium,
-            _actionButton(
-              text: "Devam",
-              onTap: viewModel.selectedPrice == null ? null : () {},
-              color: kcPurpleColorLight,
-            ),
-            verticalSpaceMedium,
-            _actionButton(
-              text: "Geri Getir",
-              onTap: () {},
-            ),
-          ],
+    if (viewModel.isBusy) {
+      return const CircularProgressIndicator();
+    } else {
+      return Align(
+        alignment: Alignment.topCenter,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (viewModel.customerInfo case final CustomerInfo customerInfo)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    "${viewModel.hasSubscription ? 'Abonelik Bitiş' : 'Sona Erdi'}: ${customerInfo.latestExpirationDate!.parseDateTimeStringAsString()}",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ...List.generate(
+                viewModel.packages.length,
+                (index) {
+                  final item =
+                      SubscriptionItem.fromPackage(viewModel.packages[index]);
+                  return _subscribeItem(
+                    id: item.id,
+                    planText: item.name,
+                    priceText: item.price,
+                    purchased: viewModel.isPurchased(item),
+                  );
+                },
+              ),
+              verticalSpaceMedium,
+              _actionButton(
+                text: "Devam",
+                onTap: viewModel.selectedPrice == null
+                    ? null
+                    : viewModel.onSelectSubscription,
+                color: kcPurpleColorLight,
+              ),
+              verticalSpace(15),
+              _actionButton(
+                text: "Geri Getir",
+                onTap: viewModel.onSelectRestore,
+              ),
+              verticalSpaceMedium,
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   Widget _actionButton(
@@ -68,17 +83,19 @@ class SubscriptionTab extends StatelessWidget {
     );
   }
 
-  Widget _subscribeItem(
-      {required String id,
-      required String planText,
-      required String priceText}) {
+  Widget _subscribeItem({
+    required String id,
+    required String planText,
+    required String priceText,
+    bool purchased = false,
+  }) {
     return InkWell(
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       onTap: () => viewModel.onSelectPrice(id),
       child: Container(
         padding: paddingMedium,
-        margin: const EdgeInsets.symmetric(vertical: 12),
+        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
         decoration: BoxDecoration(
           color: kcBackgroundColor,
           borderRadius: borderRadiusMedium,
@@ -109,23 +126,33 @@ class SubscriptionTab extends StatelessWidget {
                 verticalSpaceSmall,
                 Text(
                   priceText,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
-                    color: kcPrimaryColor,
+                    color: purchased ? kcGrayColor : kcPrimaryColor,
                   ),
                 ),
                 verticalSpaceTiny,
-                const Text(
-                  "İstediğiniz zaman iptal edin",
-                  style: TextStyle(fontSize: 14),
+                Text(
+                  purchased
+                      ? "✔️ Abone olundu"
+                      : viewModel.hasSubscription
+                          ? "Aboneliğinizi yükseltin"
+                          : "İstediğiniz zaman iptal edin",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: purchased ? Colors.green : null,
+                    fontWeight: purchased ? FontWeight.w500 : null,
+                  ),
                 ),
               ],
             ),
             CircleAvatar(
-              backgroundColor: viewModel.selectedPrice == id
-                  ? kcPurpleColorMedium
-                  : kcBlueGrayColor,
+              backgroundColor: purchased
+                  ? Colors.green
+                  : viewModel.selectedPrice == id
+                      ? kcPurpleColorMedium
+                      : kcBlueGrayColor,
               radius: 12,
               child: const Icon(Icons.check),
             ),

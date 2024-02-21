@@ -25,7 +25,7 @@ class LocationErrorWidget extends StatelessWidget {
         verticalSpaceSmall,
         TextButton.icon(
           onPressed: onRetry,
-          icon: const Icon(Icons.location_disabled),
+          icon: const Icon(Icons.location_on),
           label: const Text(
             "Yeniden Dene",
             style: TextStyle(fontSize: 16),
