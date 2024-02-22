@@ -31,6 +31,12 @@ extension DateTimeExtensions on DateTime {
     return text;
   }
 
+  // Iki tarih farkı String olarak dk olarak döndürür
+  int differenceToStringMinutesForPushNotification(DateTime other) {
+    Duration difference = this.difference(other);
+    return difference.inMinutes;
+  }
+
   // Verilen tarihi [Cumartesi, Ocak 09] formatına döndürür
   String formatAsWeekMonthDay() {
     final formatter = DateFormat('EEEE, MMMM dd', ksDefaultLocale);

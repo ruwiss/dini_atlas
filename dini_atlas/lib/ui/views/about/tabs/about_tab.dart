@@ -63,7 +63,7 @@ class AboutTab extends StatelessWidget {
   Padding _aboutTileWidget(
       {required String svg, required String text, VoidCallback? onTap}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 7),
       child: InkWell(
         onTap: onTap,
         borderRadius: borderRadiusMedium,

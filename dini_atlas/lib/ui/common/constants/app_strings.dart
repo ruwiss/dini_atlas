@@ -15,16 +15,17 @@ const String ksAppName = "Dinî Atlas";
 
 // Uygulama paket adı
 const String ksAppPackageName = "com.rw.dini_atlas";
-String get ksAppUrl => "https://play.google.com/store/apps/details?id=$ksAppPackageName";
+String get ksAppUrl =>
+    "https://play.google.com/store/apps/details?id=$ksAppPackageName";
 
 // Dil (Location Service)
 const String ksDefaultLocale = "tr_TR";
 
 // Namaz vakti geri sayım push notification bildirim kanalı
-const String ksPrayerNotiChannel = "countdown_channel_atlas_2";
+const String ksPrayerNotiChannel = "countdown_channel_atlas_3";
 
 // Namaz vakti ek hatırlatıcı push notification bildirim kanalı
-const String ksPrayerReminderNotiChannel = "reminder_channel_atlas_2";
+const String ksPrayerReminderNotiChannel = "reminder_channel_atlas_3";
 
 // Mail
 String get ksMail => FirebaseRemoteConfigServiceClass.i.mail;

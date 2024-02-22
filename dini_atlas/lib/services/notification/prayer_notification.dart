@@ -46,12 +46,17 @@ abstract class PrayerNotification {
     // Sıradaki namaza ne kadar kaldı hesapla
     final difference =
         prayerTime.differenceToStringForPushNotification(nowAsTime);
-
-    const AndroidNotificationDetails androidNotificationDetails =
+    final differenceMinutes =
+        prayerTime.differenceToStringMinutesForPushNotification(nowAsTime);
+    print("dk/dk$differenceMinutes");
+    AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       ksPrayerNotiChannel,
       'Dini Atlas Ezan Vakti',
       channelDescription: 'Ezan vakti bildirim göstergesi',
+      icon:
+          differenceMinutes <= 60 ? '@drawable/dk$differenceMinutes' : null,
+      subText: '${nextPrayer.name} ${nextPrayer.timeValue}',
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
@@ -65,12 +70,9 @@ abstract class PrayerNotification {
       category: AndroidNotificationCategory.event,
       visibility: NotificationVisibility.public,
     );
-    const NotificationDetails notificationDetails =
+    NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
-    await PushNotification.instance.localNotiPlugin.show(
-        1,
-        '${nextPrayer.name} ${nextPrayer.timeValue}  ➜  $difference',
-        null,
-        notificationDetails);
+    await PushNotification.instance.localNotiPlugin
+        .show(1, '$difference kaldı.', null, notificationDetails);
   }
 }
