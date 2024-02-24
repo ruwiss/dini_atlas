@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center|top" android:orientation="vertical" android:id="@+id/kokL" android:background="@drawable/widget_2x2" android:layout_width="160.0dip" android:layout_height="160.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/linearLayout1" android:layout_width="160.0dip" android:layout_height="160.0dip" android:layout_marginTop="2.0dip">
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="150.0dip" android:layout_height="fill_parent" android:layout_marginLeft="12.0dip">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0.0dip"
+                android:textColor="#ffffffff"
+                android:textSize="24.0dip" />
+            <TextView android:textSize="40.0dip" android:textStyle="bold" android:textColor="#ffebcd01" android:id="@+id/textView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="5.0dip" android:text="00:00" />
+            <TextView android:textSize="15.0dip" android:textColor="#ffffffff" android:gravity="right" android:id="@+id/textView20" android:layout_width="85.0dip" android:layout_height="wrap_content" android:layout_marginTop="-8.0dip" android:text="dk" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
