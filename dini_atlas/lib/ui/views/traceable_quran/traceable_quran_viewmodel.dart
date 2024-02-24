@@ -17,6 +17,8 @@ import 'package:stacked_services/stacked_services.dart';
 class TraceableQuranViewModel extends BaseViewModel {
   final _player = AudioPlayer();
   final _dialogService = locator<DialogService>();
+  final _navigationService = locator<NavigationService>();
+  final _bottomSheetService = locator<BottomSheetService>();
   final _userSettingsService = locator<UserSettingsService>();
   final _quranService = locator<QuranService>();
 
@@ -87,7 +89,17 @@ class TraceableQuranViewModel extends BaseViewModel {
         _currentAyah = l.pages.first;
         await playAudio();
       }, (er) async => debugPrint(er.message));
-    }, (err) async => debugPrint(err.message));
+    }, (err) async {
+      debugPrint(err.message);
+      await _bottomSheetService.showBottomSheet(
+        title: "Sorun oldu 🙁",
+        description:
+            "Seçili okuyucunun verilerine şuanda ulaşılamıyor. Başka bir okuyucu seçer misiniz?",
+        confirmButtonTitle: "Seç",
+      );
+      _navigationService.back();
+      onSettingsTap();
+    });
   }
 
   Future<void> playAudio() async {

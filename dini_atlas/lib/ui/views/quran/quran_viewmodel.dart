@@ -224,7 +224,16 @@ class QuranViewModel extends BaseViewModel {
         // Oynatma sonrasında otomatik oynatmayı kontrol altında tutmak için
         _isFirstPlaying = false;
       }, (e) async => debugPrint(e.message));
-    }, (e) async => debugPrint(e.message));
+    }, (e) async {
+      debugPrint(e.message);
+      await _bottomSheetService.showBottomSheet(
+        title: "Sorun oldu 🙁",
+        description:
+            "Seçili okuyucunun verilerine şuanda ulaşılamıyor. Başka bir okuyucu seçer misiniz?",
+        confirmButtonTitle: "Seç",
+      );
+      onSettingsTap();
+    });
 
     setBusyForObject(playingAyahId, false);
   }

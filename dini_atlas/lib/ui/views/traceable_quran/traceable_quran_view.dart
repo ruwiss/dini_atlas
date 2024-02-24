@@ -24,7 +24,6 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBarWidget(
         title: sura.name,
-        backgroundColor: bismillah ? kcShadowColor : null,
         actions: [
           IconButton(
             onPressed: viewModel.onSettingsTap,
@@ -50,10 +49,7 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
     return Center(
       child: SvgPicture.asset(
         kiBismillah,
-        colorFilter: const ColorFilter.mode(
-          kcShadowColor,
-          BlendMode.color,
-        ),
+        colorFilter: const ColorFilter.mode(kcShadowColor, BlendMode.srcIn),
       ),
     );
   }
