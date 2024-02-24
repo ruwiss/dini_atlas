@@ -1,4 +1,5 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:dini_atlas/services/local/app_widget_service.dart';
 import 'package:dini_atlas/services/remote/google/google_services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -12,6 +13,8 @@ void everyMinuteNotificationController() {
   PrayerNotification.showPrayerCountdownNotification();
   // Namaz vakti hatırlatıcı ek bildirim
   PrayerReminderNotification.showPrayerReminderNotification();
+  // Update Home Widgets
+  AppWidgetService.updateAvailableHomeWidgets();
 }
 
 class PushNotification {

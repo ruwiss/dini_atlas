@@ -50,11 +50,6 @@ class NativeWidgetView extends StackedView<NativeWidgetViewModel> {
                 reversedRow: true,
                 onTap: () => AppWidgetService.configureBigWidget(widgetId),
               ),
-              verticalSpaceLarge,
-              const ElevatedButton(
-                onPressed: AppWidgetService.cancelConfiguration,
-                child: Text("İPTAL ET"),
-              )
             ],
           ),
         ),

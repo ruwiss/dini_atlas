@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rw.dini_atlas">
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Disable Battery Optimizations -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <!-- Silent Mode Permission -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <!-- GeoLocator -->
@@ -17,6 +19,7 @@
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <!-- In App Billing -->
     <uses-permission android:name="com.android.vending.BILLING" />
+
 
     <application
         android:label="Dini Atlas"
@@ -61,7 +64,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/prayer_widgets" />
+                android:resource="@xml/prayer_widget_big" />
         </receiver>
         <!-- App Widget Receiver For Listen to Widget Event (2x2 Widget) -->
         <receiver android:exported="true" android:name="PrayerMiniWidgetProvider">
@@ -70,7 +73,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/prayer_widgets" />
+                android:resource="@xml/prayer_widget_mini" />
         </receiver>
 
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->

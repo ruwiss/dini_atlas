@@ -9,6 +9,7 @@ import 'package:dini_atlas/services/remote/google/firebase_remote_config_service
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_dialog.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sound_mode/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -33,9 +34,9 @@ class HomeViewModel extends IndexTrackingViewModel {
   }
 
   Future<void> _optimizationPermissions() async {
-    final batteryOptimizationValue =
-        await _userSettingsService.disableBatteryOptimizationDialogSetting();
-    if (!batteryOptimizationValue) {
+    final permGranted = await Permission.ignoreBatteryOptimizations.isGranted;
+
+    if (!permGranted) {
       final result = await _bottomSheetService.showBottomSheet(
         title: "Küçük bir ayar gerekli",
         description:
@@ -43,10 +44,7 @@ class HomeViewModel extends IndexTrackingViewModel {
         confirmButtonTitle: "Yönlendir",
       );
       if (result != null && result.confirmed) {
-        await AppSettings.openAppSettings(
-          type: AppSettingsType.batteryOptimization,
-          asAnotherTask: true,
-        );
+        Permission.ignoreBatteryOptimizations.request();
       }
     }
   }

@@ -13,6 +13,7 @@ class LocationErrorWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        verticalSpaceMedium,
         Image.asset(kiEnableGps),
         const Spacer(),
         Icon(Icons.map, color: kcGrayColor.withOpacity(.6), size: 50),

@@ -10,14 +10,17 @@ extension DateTimeExtensions on DateTime {
   }
 
   // Iki tarih farkı String olarak [00:00:00] formatında döndürür
-  String differenceToString(DateTime other) {
+  String differenceToString(DateTime other, {bool withSeconds = true}) {
     String formatTwoDigits(int number) => number.toString().padLeft(2, '0');
     Duration difference = this.difference(other);
     int hours = difference.inHours;
     int minutes = (difference.inMinutes % 60);
     int seconds = (difference.inSeconds % 60);
-
-    return '${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}';
+    if (withSeconds) {
+      return '${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}';
+    } else {
+      return '${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}';
+    }
   }
 
   // Iki tarih farkı String olarak [1 sa 2 dk] olarak döndürür

@@ -223,16 +223,6 @@ class UserSettingsService {
     }
   }
 
-  // Tek seferlik pil optimizasyonunu kapatın uyarısını göstermek için
-  Future<bool> disableBatteryOptimizationDialogSetting() async {
-    const String key = "disableOptimizationDialog";
-    final prefs = await SharedPreferences.getInstance();
-    final value = prefs.getBool(key) ?? false;
-
-    if (!value) prefs.setBool(key, true);
-    return value;
-  }
-
   // Background Task'da kullanmak üzere bildirim ayarlarını SharedPreferences'a kaydet
   void setPrayerNotiSettingsForBackgroundTask(
       List<PrayerNotiSettings> settingsList) async {

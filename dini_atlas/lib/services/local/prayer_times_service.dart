@@ -1,10 +1,12 @@
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/prayer/prayer_shared_p.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:dini_atlas/models/prayer/prayer_times.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -103,5 +105,44 @@ class PrayerTimesService {
   static PrayerSharedP getPrayerByDay(
       List<PrayerSharedP> times, DateTime date) {
     return times.singleWhere((e) => e.date.isEqualTo(date));
+  }
+
+  static Future<
+      ({
+        PrayerSharedPItem item,
+        bool isNextDay,
+        PrayerSharedP prayerTimes
+      })?> calculateSharedPrefNextPrayerTime() async {
+    final List<PrayerSharedP>? prayerTimes =
+        await getPrayerTimesFromSharedPreferences();
+
+    if (prayerTimes == null) return null;
+
+    final DateTime now = DateTime.now();
+
+    // Mevcut namaz sonraki gün mü?
+    bool isNextDay = false;
+
+    // Bugünün vakitleri
+    final currentDay = PrayerTimesService.getPrayerByDay(prayerTimes, now);
+
+    // Sıradaki namaz vakti
+    final PrayerSharedPItem nextPrayer = currentDay.items.firstWhere(
+      (e) {
+        double tCurrent = e.timeValue.parseTime().toDouble();
+        double tNow = TimeOfDay.now().toDouble();
+        return tCurrent > tNow;
+      },
+      orElse: () {
+        // Vakit sonraki güne ait, o zaman imsak vaktini döndür
+        isNextDay = true;
+        return PrayerTimesService.getPrayerByDay(
+                prayerTimes, now.add(const Duration(days: 1)))
+            .items
+            .singleWhere((e) => e.name == "İmsak");
+      },
+    );
+
+    return (item: nextPrayer, isNextDay: isNextDay, prayerTimes: currentDay);
   }
 }
