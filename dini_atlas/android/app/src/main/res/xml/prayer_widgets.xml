@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider android:minWidth="320.0dip" android:minHeight="145.0dip"
-  android:updatePeriodMillis="60000" android:initialLayout="@layout/yeni_widget_4x2"
-  android:previewImage="@drawable/widget_4x2_preview" android:resizeMode="horizontal|vertical"
+  android:updatePeriodMillis="60000" android:initialLayout="@layout/yeni_buyuk_widget"
+  android:previewImage="@drawable/widget_prev" android:resizeMode="horizontal|vertical"
   android:minResizeWidth="42.0dip" android:minResizeHeight="42.0dip"
-  android:initialKeyguardLayout="@layout/yeni_widget_4x2"
+  android:initialKeyguardLayout="@layout/yeni_buyuk_widget"
   android:widgetCategory="home_screen|keyguard"
   android:configure="com.rw.dini_atlas.MainActivity"
   xmlns:android="http://schemas.android.com/apk/res/android" />

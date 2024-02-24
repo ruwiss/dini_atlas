@@ -34,6 +34,7 @@ import 'package:dini_atlas/ui/views/elifba/elifba_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/location/location_sheet.dart';
 import 'package:dini_atlas/ui/views/about/about_view.dart';
 import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
+import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -62,6 +63,7 @@ import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
       page: AboutView,
       transitionsBuilder: TransitionsBuilders.slideRightWithFade,
     ),
+    MaterialRoute(page: NativeWidgetView),
 // @stacked-route
   ],
   dependencies: [

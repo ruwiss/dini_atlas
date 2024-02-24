@@ -79,7 +79,8 @@ class CountdownCard extends StatelessWidget {
           ? const SizedBox()
           : BlendMask(
               blendMode: BlendMode.screen,
-              child: Image.memory(viewModel.currentMoonImage!,
+              child: Image.memory(
+                viewModel.currentMoonImage!,
                 height: 41,
                 width: 41,
                 cacheHeight: 41,

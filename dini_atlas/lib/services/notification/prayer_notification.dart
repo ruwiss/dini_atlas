@@ -48,14 +48,12 @@ abstract class PrayerNotification {
         prayerTime.differenceToStringForPushNotification(nowAsTime);
     final differenceMinutes =
         prayerTime.differenceToStringMinutesForPushNotification(nowAsTime);
-    print("dk/dk$differenceMinutes");
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       ksPrayerNotiChannel,
       'Dini Atlas Ezan Vakti',
       channelDescription: 'Ezan vakti bildirim göstergesi',
-      icon:
-          differenceMinutes <= 60 ? '@drawable/dk$differenceMinutes' : null,
+      icon: differenceMinutes <= 60 ? '@drawable/dk$differenceMinutes' : null,
       subText: '${nextPrayer.name} ${nextPrayer.timeValue}',
       importance: Importance.max,
       priority: Priority.high,

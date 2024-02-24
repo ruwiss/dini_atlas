@@ -1,4 +1,5 @@
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
+import 'package:dini_atlas/ui/common/constants/app_images.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,8 @@ class LocationErrorWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Image.asset(kiEnableGps),
+        const Spacer(),
         Icon(Icons.map, color: kcGrayColor.withOpacity(.6), size: 50),
         verticalSpaceMedium,
         SizedBox(
@@ -30,7 +33,8 @@ class LocationErrorWidget extends StatelessWidget {
             "Yeniden Dene",
             style: TextStyle(fontSize: 16),
           ),
-        )
+        ),
+        const Spacer(),
       ],
     );
   }

@@ -11,7 +11,6 @@ import 'package:stacked_services/src/dialog/dialog_service.dart';
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
-import '../services/remote/google/in_app_purchase_service.dart';
 import '../services/local/favorites_service.dart';
 import '../services/local/isar_service.dart';
 import '../services/local/location_service.dart';
@@ -21,6 +20,7 @@ import '../services/local/user_settings_service.dart';
 import '../services/remote/auth_service.dart';
 import '../services/remote/dio_service.dart';
 import '../services/remote/fetch_times_service.dart';
+import '../services/remote/google/in_app_purchase_service.dart';
 import '../services/remote/kaza_service.dart';
 import '../services/remote/quran_service.dart';
 

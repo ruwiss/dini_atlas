@@ -22,7 +22,6 @@ import 'package:dini_atlas/models/religious_days.dart' as _i21;
 import 'package:dini_atlas/models/rosary_setting.dart' as _i4;
 import 'package:dini_atlas/models/user_location.dart' as _i12;
 import 'package:dini_atlas/models/user_setting.dart' as _i3;
-import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart' as _i35;
 import 'package:dini_atlas/services/local/favorites_service.dart' as _i30;
 import 'package:dini_atlas/services/local/isar_service.dart' as _i10;
 import 'package:dini_atlas/services/local/prayer_times_service.dart' as _i22;
@@ -30,6 +29,8 @@ import 'package:dini_atlas/services/local/user_settings_service.dart' as _i11;
 import 'package:dini_atlas/services/remote/auth_service.dart' as _i32;
 import 'package:dini_atlas/services/remote/dio_service.dart' as _i16;
 import 'package:dini_atlas/services/remote/fetch_times_service.dart' as _i18;
+import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart'
+    as _i35;
 import 'package:dini_atlas/services/remote/kaza_service.dart' as _i33;
 import 'package:dini_atlas/services/remote/quran_service.dart' as _i24;
 import 'package:dio/dio.dart' as _i17;
@@ -38,6 +39,7 @@ import 'package:fpdart/fpdart.dart' as _i19;
 import 'package:isar/isar.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:purchases_flutter/purchases_flutter.dart' as _i36;
 import 'package:stacked_services/stacked_services.dart' as _i5;
 
 // ignore_for_file: type=lint
@@ -1627,4 +1629,130 @@ class MockKazaService extends _i1.Mock implements _i33.KazaService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockInAppPurchaseService extends _i1.Mock
-    implements _i35.InAppPurchaseService {}
+    implements _i35.InAppPurchaseService {
+  @override
+  List<_i36.EntitlementInfo> get entitlements => (super.noSuchMethod(
+        Invocation.getter(#entitlements),
+        returnValue: <_i36.EntitlementInfo>[],
+        returnValueForMissingStub: <_i36.EntitlementInfo>[],
+      ) as List<_i36.EntitlementInfo>);
+
+  @override
+  List<_i36.Offering> get offers => (super.noSuchMethod(
+        Invocation.getter(#offers),
+        returnValue: <_i36.Offering>[],
+        returnValueForMissingStub: <_i36.Offering>[],
+      ) as List<_i36.Offering>);
+
+  @override
+  bool get hasSubscription => (super.noSuchMethod(
+        Invocation.getter(#hasSubscription),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  void listen() => super.noSuchMethod(
+        Invocation.method(
+          #listen,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i8.Future<void> init() => (super.noSuchMethod(
+        Invocation.method(
+          #init,
+          [],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  _i8.Future<void> updatePurchaseStatus(_i36.CustomerInfo? customerInfo) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updatePurchaseStatus,
+          [customerInfo],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  _i8.Future<void> fetchOffers() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchOffers,
+          [],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  _i8.Future<bool> purchasePackage(_i36.Package? package) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #purchasePackage,
+          [package],
+        ),
+        returnValue: _i8.Future<bool>.value(false),
+        returnValueForMissingStub: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
+
+  @override
+  _i8.Future<bool> restoreTransactions() => (super.noSuchMethod(
+        Invocation.method(
+          #restoreTransactions,
+          [],
+        ),
+        returnValue: _i8.Future<bool>.value(false),
+        returnValueForMissingStub: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}

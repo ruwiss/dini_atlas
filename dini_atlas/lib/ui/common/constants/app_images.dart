@@ -69,3 +69,8 @@ const String kiAboutStar = "assets/vectors/about_star.svg";
 const String kiAboutPrivacyPolicy = "assets/vectors/about_privacy_policy.svg";
 
 const String kiCompassCalibration = "assets/images/compass_calibration.gif";
+
+const String kiHomeWidgetPrevBig = "assets/images/widget_buyuk_preview.webp";
+const String kiHomeWidgetPrevSmall = "assets/images/widget_kucuk_preview.webp";
+
+const String kiEnableGps = "assets/images/enable_gps.webp";

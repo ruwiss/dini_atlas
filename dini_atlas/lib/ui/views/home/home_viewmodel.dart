@@ -2,6 +2,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
+import 'package:dini_atlas/services/local/app_widget_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
@@ -25,6 +26,7 @@ class HomeViewModel extends IndexTrackingViewModel {
 
   void init(HomeService homeService) async {
     _homeService = homeService;
+    AppWidgetService.init(); // Home Widgets
     await PushNotification.instance.setupNotification();
     await _optimizationPermissions();
     _checkAvailableUpdate();
