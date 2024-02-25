@@ -1,5 +1,7 @@
+import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/models/religious_days.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -22,23 +24,21 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
         child: viewModel.isBusy
             ? const Text("Yükleniyor")
             : Padding(
-                padding: const EdgeInsets.only(left: 22, right: 22, top: 25),
+                padding: const EdgeInsets.only(left: 22, right: 22),
                 child: ListView.separated(
                   itemCount: viewModel.religiousDays.length,
                   itemBuilder: (context, index) {
                     final ReligiousDays item = viewModel.religiousDays[index];
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    return Column(
                       children: [
-                        _nameWidget(
-                          item.day
-                              .replaceAll("(", "")
-                              .replaceAll(")", "")
-                              .replaceAll(". Gün", ""),
+                        ListTile(
+                          title: _nameWidget(item.day),
+                          subtitle: Text("  ${item.date}",
+                              style: const TextStyle(fontSize: 13)),
+                          trailing: _timeWidget(item.dateTime),
                         ),
-                        Flexible(
-                          child: _timeWidget(item.date),
-                        ),
+                        if (index == viewModel.religiousDays.length - 1)
+                          verticalSpaceMedium,
                       ],
                     );
                   },
@@ -50,18 +50,24 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
     );
   }
 
-  Widget _timeWidget(String time) {
+  Widget _timeWidget(DateTime time) {
+    final isToday = time.isEqualTo(DateTime.now());
+    final diff = time.differenceToIntDays(DateTime.now());
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: kcBlueGrayColorSoft, width: 2.2),
+        border: Border.all(
+          color: isToday ? kcPurpleColorMedium : kcBlueGrayColorSoft,
+          width: 2.2,
+        ),
       ),
       child: Text(
-        time.replaceAll("i̇", "i"),
-        softWrap: false,
-        maxLines: 1,
-        overflow: TextOverflow.fade,
+        isToday
+            ? 'Bugün'
+            : diff.isNegative
+                ? '${diff.abs()} gün önce'
+                : '$diff gün sonra',
         style: const TextStyle(fontSize: 13),
       ),
     );

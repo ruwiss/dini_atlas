@@ -9,6 +9,12 @@ extension DateTimeExtensions on DateTime {
     return year == date2.year && month == date2.month && day == date2.day;
   }
 
+  // Iki tarih farkı String olarak gün bakımından döndürur
+  int differenceToIntDays(DateTime other) {
+    Duration difference = this.difference(other);
+    return difference.inDays;
+  }
+
   // Iki tarih farkı String olarak [00:00:00] formatında döndürür
   String differenceToString(DateTime other, {bool withSeconds = true}) {
     String formatTwoDigits(int number) => number.toString().padLeft(2, '0');
