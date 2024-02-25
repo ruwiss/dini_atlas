@@ -114,7 +114,7 @@ class PrayerReminderNotification {
         // ikisinin farkını dk olarak hesapla
         final diff = currentDateTime.difference(prayerDateTime).inMinutes;
 
-        // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa sessiz bildirim göster
+        // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa cihazı sessize alma modu
         silentEnabled = diff >= -5 && diff <= 30;
       }
 
@@ -122,9 +122,9 @@ class PrayerReminderNotification {
 
       // sessiz mod etkinse sesi açıyoruz ve 10 saniye sonra kapatıyoruz
       // (Bildirimi sesli göstermek için)
-      if (silentModeActivated) {
+      if (silentModeActivated && silentEnabled) {
         await SoundMode.setSoundMode(RingerModeStatus.normal);
-        await Future.delayed(const Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 10));
       }
       // Ayarların düzgün çalışması için dinamik kanal adı oluşturuyoruz
       final String channel = "${ksPrayerReminderNotiChannel}_$warningSoundId";
@@ -159,9 +159,9 @@ class PrayerReminderNotification {
           '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}',
           subtitle,
           notificationDetails);
-      if (silentModeActivated) {
+      if (silentModeActivated && silentEnabled) {
         Future.delayed(
-          const Duration(seconds: 10),
+          const Duration(seconds: 15),
           () => SoundMode.setSoundMode(RingerModeStatus.silent),
         );
       }
