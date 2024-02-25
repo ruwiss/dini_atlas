@@ -18,8 +18,9 @@ import 'dart:convert';
 
 class PrayerReminderNotification {
   static void showPrayerReminderNotification() async {
-    // Bildirim ayarlarını getir
     final prefs = await SharedPreferences.getInstance();
+
+    // Bildirim ayarlarını getir
     final List<String>? notiSettingsString =
         prefs.getStringList("userNotiSettings");
     if (notiSettingsString == null) return;
@@ -32,6 +33,7 @@ class PrayerReminderNotification {
         await PrayerTimesService.getPrayerTimesFromSharedPreferences();
 
     final DateTime now = DateTime.now();
+    final dateNowAsToday = DateTime(now.year, now.month, now.day);
 
     // Bugüne ait namaz vakitlerini filtrele
     final PrayerSharedP currentPrayer =
@@ -105,6 +107,15 @@ class PrayerReminderNotification {
     PrayerSharedPItem? activePrayer;
     if (index != -1) {
       activePrayer = currentPrayer.items[index];
+
+      // Eğer bu vakitte bildirim gönderdiysen tekrar gönderme (Sorun çözümü)
+      final reminderNotiValue = prefs.getString('reminderNotiValue');
+      final reminderValueNow =
+          "$dateNowAsToday${activePrayer.name}"; // tarih + vakit
+      if (reminderNotiValue == reminderValueNow) return;
+      // Eğer bildirim gönderilmediyse gönderildi olarak prefs'e kaydet
+      prefs.setString('reminderNotiValue', reminderValueNow);
+
       // eğer sessiz mod aktifse
       if (silentMode) {
         // Filtredeki vakti DateTime'a dönüştür
