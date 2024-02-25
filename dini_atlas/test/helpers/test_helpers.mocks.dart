@@ -1090,17 +1090,6 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i8.Future<_i3.UserSettings>);
 
   @override
-  _i8.Future<bool> disableBatteryOptimizationDialogSetting() =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #disableBatteryOptimizationDialogSetting,
-          [],
-        ),
-        returnValue: _i8.Future<bool>.value(false),
-        returnValueForMissingStub: _i8.Future<bool>.value(false),
-      ) as _i8.Future<bool>);
-
-  @override
   void setPrayerNotiSettingsForBackgroundTask(
           List<_i3.PrayerNotiSettings>? settingsList) =>
       super.noSuchMethod(

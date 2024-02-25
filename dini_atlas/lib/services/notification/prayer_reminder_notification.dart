@@ -44,24 +44,35 @@ class PrayerReminderNotification {
 
     // Sessiz Mod durumunu getir
     // Namazdan 5 dk önce ve 30 dk sonraya kadar
-    final bool silentMode =
+    final bool silentModeSettingValue =
         await UserSettingsService.getSilentModeSettingForBackgroundTask();
 
-    debugPrint("Kullanıcı Sessiz Mod Seçeneği: $silentMode");
+    debugPrint("Kullanıcı Sessiz Mod Seçeneği: $silentModeSettingValue");
 
-    final silentModeActivated = prefs.getBool("silentModeActivated") ?? false;
+    bool silentModeActivated = prefs.getBool("silentModeActivated") ?? false;
 
-    if (silentMode && !silentModeActivated) {
-      await SoundMode.setSoundMode(RingerModeStatus.silent);
-      prefs.setBool("silentModeActivated", true);
-      debugPrint("silentModeActivated: true");
-    } else if (!silentMode && silentModeActivated) {
-      await SoundMode.setSoundMode(RingerModeStatus.normal);
-      prefs.setBool("silentModeActivated", false);
-      debugPrint("silentModeActivated: false");
+    // Sessiz mod için sıradaki namaz vaktini bul
+    final result = await PrayerTimesService.calculateSharedPrefNextPrayerTime();
+
+    // eğer sessiz mod aktifse
+    if (silentModeSettingValue) {
+      // Filtredeki vakti DateTime'a dönüştür
+      final prayerDateTime = result!.item.timeValue.parseTimeAsDateTime();
+      // Şimdiki vakti DateTime'a dönüştür
+      final currentDateTime = DateTime(0, 0, 0, now.hour, now.minute);
+      // ikisinin farkını dk olarak hesapla
+      final diff = currentDateTime.difference(prayerDateTime).inMinutes;
+
+      // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa cihazı sessize alma modu
+      if (diff >= -5 && diff <= 30) {
+        await SoundMode.setSoundMode(RingerModeStatus.silent);
+        prefs.setBool("silentModeActivated", true);
+        silentModeActivated = true;
+        debugPrint("silentModeActivated: true");
+      } else if (silentModeActivated) {
+        await SoundMode.setSoundMode(RingerModeStatus.normal);
+      }
     }
-
-    bool silentEnabled = false;
 
     // Bugüne ait vakitleri filtreleyerek sıradaki namaz vaktini bul
     final index = currentPrayer.items.indexWhere((e) {
@@ -116,25 +127,11 @@ class PrayerReminderNotification {
       // Eğer bildirim gönderilmediyse gönderildi olarak prefs'e kaydet
       prefs.setString('reminderNotiValue', reminderValueNow);
 
-      // eğer sessiz mod aktifse
-      if (silentMode) {
-        // Filtredeki vakti DateTime'a dönüştür
-        final prayerDateTime = activePrayer.timeValue.parseTimeAsDateTime();
-        // Şimdiki vakti DateTime'a dönüştür
-        final currentDateTime = DateTime(0, 0, 0, now.hour, now.minute);
-        // ikisinin farkını dk olarak hesapla
-        final diff = currentDateTime.difference(prayerDateTime).inMinutes;
-
-        // Şimdiki zaman namaz vakti -5 dk ve +30 dk arasındaysa cihazı sessize alma modu
-        silentEnabled = diff >= -5 && diff <= 30;
-      }
-
-      debugPrint("Sessiz Mod: $silentEnabled");
-
       // sessiz mod etkinse sesi açıyoruz ve 10 saniye sonra kapatıyoruz
       // (Bildirimi sesli göstermek için)
-      if (silentModeActivated && silentEnabled) {
+      if (silentModeActivated) {
         await SoundMode.setSoundMode(RingerModeStatus.normal);
+        debugPrint("Sessiz mod bildirim için kapatıldı");
         await Future.delayed(const Duration(seconds: 10));
       }
       // Ayarların düzgün çalışması için dinamik kanal adı oluşturuyoruz
@@ -170,11 +167,12 @@ class PrayerReminderNotification {
           '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}',
           subtitle,
           notificationDetails);
-      if (silentModeActivated && silentEnabled) {
-        Future.delayed(
+      if (silentModeActivated) {
+        await Future.delayed(
           const Duration(seconds: 15),
           () => SoundMode.setSoundMode(RingerModeStatus.silent),
         );
+        debugPrint("Sessiz mod geri açıldı");
       }
     }
   }

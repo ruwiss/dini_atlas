@@ -311,7 +311,6 @@ class FetchTimesService {
       _religiousDays = religiousDays;
       return religiousDays;
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
