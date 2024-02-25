@@ -111,34 +111,3 @@ def kaza_borcu():
                 return jsonify({"success": 1, "data": {}})
         else:
             return "Error", 401
-
-
-@app.route("/purchases", methods=["GET", "POST"])
-def purchases():
-    cursor = get_cursor()
-    if request.method == "POST":
-        db = get_db()
-        data = request.get_json()
-        device_id = data["device_id"]
-        plan = data["plan"]
-        start_date = datetime.now()
-
-        cursor.execute(
-            "INSERT INTO purchases (device_id, plan, start_date) VALUES (%s, %s, %s)",
-            (device_id, plan, start_date),
-        )
-        db.commit()
-        return jsonify({"success": 1})
-    else:
-        device_id = request.args.get("device_id")
-        cursor.execute(
-            "SELECT * FROM purchases WHERE device_id = %s ORDER BY id DESC LIMIT 1",
-            (device_id,),
-        )
-        purchase = cursor.fetchone()
-        if purchase:
-            return jsonify({"success": 1, "purchase": purchase})
-        else:
-            return jsonify(
-                {"success": 0, "message": "Bir aboneliğiniz bulunmamaktadır."}
-            )

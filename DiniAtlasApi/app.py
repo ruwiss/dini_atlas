@@ -5,7 +5,7 @@ from flask import Flask
 from connect import init_app
 import helper
 
-debug_mode = True
+debug_mode = False
 
 app = Flask(__name__)
 
