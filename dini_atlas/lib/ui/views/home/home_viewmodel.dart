@@ -1,4 +1,3 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
@@ -40,7 +39,7 @@ class HomeViewModel extends IndexTrackingViewModel {
       final result = await _bottomSheetService.showBottomSheet(
         title: "Küçük bir ayar gerekli",
         description:
-            "Vakitlerin düzgün çalışması için bu uygulama için pil optimizasyonunu (Optimize Etme) olarak ayarlamalısınız.",
+            "Vakitlerin düzgün çalışması pil optimizasyonu ayarı gereklidir. Gelecek olan izin isteğini kabul ediniz.",
         confirmButtonTitle: "Yönlendir",
       );
       if (result != null && result.confirmed) {

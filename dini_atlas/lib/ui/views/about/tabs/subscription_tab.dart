@@ -21,13 +21,14 @@ class SubscriptionTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (viewModel.customerInfo case final CustomerInfo customerInfo)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    "${viewModel.hasSubscription ? 'Abonelik Bitiş' : 'Sona Erdi'}: ${customerInfo.latestExpirationDate!.parseDateTimeStringAsString()}",
-                    textAlign: TextAlign.center,
+                if (customerInfo.latestExpirationDate != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                      "${viewModel.hasSubscription ? 'Abonelik Bitiş' : 'Sona Erdi'}: ${customerInfo.latestExpirationDate!.parseDateTimeStringAsString()}",
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
               ...List.generate(
                 viewModel.packages.length,
                 (index) {
