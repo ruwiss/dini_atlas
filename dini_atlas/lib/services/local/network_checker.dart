@@ -13,7 +13,8 @@ class NetworkChecker with ListenableServiceMixin {
   final _navigationService = locator<NavigationService>();
 
   final Connectivity _connectivity = Connectivity();
-  late StreamSubscription<ConnectivityResult> subscription;
+  StreamSubscription<ConnectivityResult>? _subscription;
+  StreamSubscription<ConnectivityResult> get subscription => _subscription!;
   ConnectivityResult currentConnectivity = ConnectivityResult.other;
 
   NetworkChecker() {
@@ -27,7 +28,7 @@ class NetworkChecker with ListenableServiceMixin {
     _notify();
 
     // sürekli kontrol
-    subscription =
+    _subscription =
         _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
       currentConnectivity = result;
       _notify();
@@ -44,5 +45,5 @@ class NetworkChecker with ListenableServiceMixin {
     }
   }
 
-  void dispose() => subscription.cancel();
+  void dispose() => _subscription?.cancel();
 }

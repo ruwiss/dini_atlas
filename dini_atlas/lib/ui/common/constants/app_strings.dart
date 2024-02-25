@@ -22,10 +22,10 @@ String get ksAppUrl =>
 const String ksDefaultLocale = "tr_TR";
 
 // Namaz vakti geri sayım push notification bildirim kanalı
-const String ksPrayerNotiChannel = "countdown_channel_atlas_3";
+const String ksPrayerNotiChannel = "countdown_channel_atlas_4";
 
 // Namaz vakti ek hatırlatıcı push notification bildirim kanalı
-const String ksPrayerReminderNotiChannel = "reminder_channel_atlas_3";
+const String ksPrayerReminderNotiChannel = "reminder_channel_atlas_4";
 
 // Mail
 String get ksMail => FirebaseRemoteConfigServiceClass.i.mail;
