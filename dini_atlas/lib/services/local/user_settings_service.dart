@@ -21,6 +21,8 @@ class UserSettingsService {
   final _db = locator<IsarService>().isar;
   UserSettings? userSettings;
 
+  bool isZoomInfoShown = false;
+
   Future<UserSettings?> getUserSettings() async {
     try {
       if (this.userSettings != null) return this.userSettings;

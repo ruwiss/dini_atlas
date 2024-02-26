@@ -15,8 +15,12 @@ class RosaryCountSetWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            "SET",
-            style: TextStyle(fontSize: 13, color: kcPrimaryColor),
+            "TUR",
+            style: TextStyle(
+              fontSize: 14,
+              color: kcPrimaryColor,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           verticalSpaceTiny,
           CircleAvatar(

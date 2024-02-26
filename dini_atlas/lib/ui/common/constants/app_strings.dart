@@ -5,7 +5,11 @@ import 'dart:convert';
 
 const String ksAppVersion = "1.0.0";
 
-String get ksBaseUrl => FirebaseRemoteConfigServiceClass.i.host;
+const bool ksTestMode = true;
+
+String get ksBaseUrl => ksTestMode
+    ? "http://192.168.1.106:9958"
+    : FirebaseRemoteConfigServiceClass.i.host;
 
 // Gizlilik Politikası
 String get ksPrivacyPolicy => FirebaseRemoteConfigServiceClass.i.privacyPolicy;
@@ -39,7 +43,6 @@ const String ksIapKey = "goog_PFeLaPWmemAgKUHceFfGGuAQTHt";
 
 // ---- Admob Ads ---- //
 bool ksShowAdmobAds = true;
-const bool ksShowTestAds = true;
 
 const String ksAdmobAppOpen = "";
 

@@ -22,7 +22,8 @@ class TraceableQuranAudioWidget extends StatelessWidget {
               onPressed: viewModel.previousAudio,
               icon: SvgPicture.asset(kiPreviousDark),
             ),
-            viewModel.currentPlayerState == PlayerState.paused
+            viewModel.currentPlayerState == PlayerState.paused ||
+                    viewModel.currentPlayerState == PlayerState.stopped
                 ? IconButton(
                     onPressed: viewModel.playAudio,
                     icon: SvgPicture.asset(kiPlayDark),

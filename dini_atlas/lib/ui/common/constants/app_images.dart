@@ -74,3 +74,4 @@ const String kiHomeWidgetPrevBig = "assets/images/widget_buyuk_preview.webp";
 const String kiHomeWidgetPrevSmall = "assets/images/widget_kucuk_preview.webp";
 
 const String kiEnableGps = "assets/images/enable_gps.webp";
+const String kiZoomInfo = "assets/images/zoom_info.png";

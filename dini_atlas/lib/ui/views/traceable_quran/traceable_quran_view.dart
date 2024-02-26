@@ -31,17 +31,28 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
           ),
         ],
       ),
-      body: bismillah ? _bismillahWidget() : _contentWidget(viewModel),
+      body: viewModel.isBusy
+          ? const Center(child: CircularProgressIndicator())
+          : Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                bismillah
+                    ? _bismillahWidget()
+                    : TraceableQuranWidget(viewModel: viewModel),
+                _zoomInfoView(viewModel),
+                TraceableQuranAudioWidget(viewModel: viewModel),
+              ],
+            ),
     );
   }
 
-  Widget _contentWidget(TraceableQuranViewModel viewModel) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        TraceableQuranWidget(viewModel: viewModel),
-        TraceableQuranAudioWidget(viewModel: viewModel),
-      ],
+  Widget _zoomInfoView(TraceableQuranViewModel viewModel) {
+    bool visible = viewModel.isZoomInfoShown == false;
+    return Positioned.fill(
+      child: AnimatedSwitcher(
+        duration: const Duration(seconds: 2),
+        child: visible ? Image.asset(kiZoomInfo) : const SizedBox(),
+      ),
     );
   }
 

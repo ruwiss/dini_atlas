@@ -23,28 +23,43 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
       body: Center(
         child: viewModel.isBusy
             ? const Text("Yükleniyor")
-            : Padding(
-                padding: const EdgeInsets.only(left: 22, right: 22),
-                child: ListView.separated(
-                  itemCount: viewModel.religiousDays.length,
-                  itemBuilder: (context, index) {
-                    final ReligiousDays item = viewModel.religiousDays[index];
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: _nameWidget(item.day),
-                          subtitle: Text("  ${item.date}",
-                              style: const TextStyle(fontSize: 13)),
-                          trailing: _timeWidget(item.dateTime),
+            : ListView.separated(
+                itemCount: viewModel.religiousDays.length,
+                itemBuilder: (context, index) {
+                  final ReligiousDays item = viewModel.religiousDays[index];
+                  return Column(
+                    children: [
+                      ListTile(
+                        title: _nameWidget(item.day),
+                        subtitle: Text(
+                          "  ${item.hicriDate}",
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: kcGrayColor,
+                          ),
                         ),
-                        if (index == viewModel.religiousDays.length - 1)
-                          verticalSpaceMedium,
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      const Divider(color: kcBlueGrayColorSoft),
-                ),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            _timeWidget(item.dateTime),
+                            Text(
+                              item.date,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: kcGrayColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (index == viewModel.religiousDays.length - 1)
+                        verticalSpaceMedium,
+                    ],
+                  );
+                },
+                separatorBuilder: (context, index) =>
+                    const Divider(color: kcBlueGrayColorSoft),
               ),
       ),
     );
@@ -96,8 +111,8 @@ class ReligiousDaysView extends StackedView<ReligiousDaysViewModel> {
         softWrap: false,
         style: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 13,
-          color: kcPrimaryColorDark.withOpacity(.7),
+          fontSize: 15,
+          color: kcPrimaryColorDark.withOpacity(.9),
         ),
       ),
     );

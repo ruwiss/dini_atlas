@@ -20,7 +20,6 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
     final SuraPage suraPage = widget.viewModel.currentAyah!;
     return InteractiveViewer(
       clipBehavior: Clip.none,
-      alignment: Alignment.topCenter,
       child: Column(
         children: [
           verticalSpaceTiny,
@@ -35,13 +34,16 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
                 return SingleChildScrollView(
                   child: suraPage.x == null
                       ? SvgPicture.memory(bytes)
-                      : CustomPaint(
-                          painter: AyahMarkerPainter(
-                            x: double.parse(suraPage.x!),
-                            y: double.parse(suraPage.y!),
-                            polygon: suraPage.polygon!,
-                          ),
-                          child: SvgPicture.memory(bytes)),
+                      : Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: CustomPaint(
+                              painter: AyahMarkerPainter(
+                                x: double.parse(suraPage.x!),
+                                y: double.parse(suraPage.y!),
+                                polygon: suraPage.polygon!,
+                              ),
+                              child: SvgPicture.memory(bytes)),
+                        ),
                 );
               }
               return const Text("Yükleniyor");

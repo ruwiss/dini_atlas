@@ -33,9 +33,9 @@ class HomeViewModel extends IndexTrackingViewModel {
   }
 
   Future<void> _optimizationPermissions() async {
-    final permGranted = await Permission.ignoreBatteryOptimizations.isGranted;
-
-    if (!permGranted) {
+    final batteryPerm = await Permission.ignoreBatteryOptimizations.isGranted;
+    final exactAlarmPerm = await Permission.scheduleExactAlarm.isGranted;
+    if (!batteryPerm || !exactAlarmPerm) {
       final result = await _bottomSheetService.showBottomSheet(
         title: "Küçük bir ayar gerekli",
         description:
@@ -43,7 +43,8 @@ class HomeViewModel extends IndexTrackingViewModel {
         confirmButtonTitle: "Yönlendir",
       );
       if (result != null && result.confirmed) {
-        Permission.ignoreBatteryOptimizations.request();
+        await Permission.ignoreBatteryOptimizations.request();
+        await Permission.scheduleExactAlarm.request();
       }
     }
   }

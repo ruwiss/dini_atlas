@@ -33,7 +33,7 @@ extension DateTimeExtensions on DateTime {
   String differenceToStringForPushNotification(DateTime other) {
     Duration difference = this.difference(other);
     int hours = difference.inHours;
-    int minutes = (difference.inMinutes % 60);
+    int minutes = (difference.inMinutes % 60) - 1;
 
     String text = "$minutes dk";
     if (hours > 0) text = "$hours sa $minutes dk";
@@ -43,7 +43,7 @@ extension DateTimeExtensions on DateTime {
   // Iki tarih farkı String olarak dk olarak döndürür
   int differenceToStringMinutesForPushNotification(DateTime other) {
     Duration difference = this.difference(other);
-    return difference.inMinutes;
+    return difference.inMinutes - 1;
   }
 
   // Verilen tarihi [Cumartesi, Ocak 09] formatına döndürür

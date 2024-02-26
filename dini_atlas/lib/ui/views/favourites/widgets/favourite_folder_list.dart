@@ -17,7 +17,9 @@ class FavouriteFolderListView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (viewModel.isBusy) {
       return const SizedBox();
-    } else if (viewModel.favourites!.isEmpty && !viewModel.createFolder) {
+    } else if (viewModel.favourites!.isEmpty &&
+        !viewModel.createFolder &&
+        favourite == null) {
       return const NoFavouriteWidget();
     } else {
       return Expanded(

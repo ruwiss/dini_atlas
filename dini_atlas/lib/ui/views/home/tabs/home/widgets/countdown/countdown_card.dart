@@ -96,30 +96,32 @@ class CountdownCard extends StatelessWidget {
         left: 20, child: CountDownWidget(homeService: homeService));
   }
 
-  Stack _cardView() {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          height: 105,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: borderRadiusMedium,
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [kcPurpleColorDark, kcPurpleColorMedium],
+  Widget _cardView() {
+    return ClipRRect(
+      borderRadius: borderRadiusMedium,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            height: 105,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [kcPurpleColorDark, kcPurpleColorMedium],
+              ),
             ),
           ),
-        ),
-        Positioned.fill(
-          child: BlendMask(
-            opacity: .1,
-            blendMode: BlendMode.luminosity,
-            child: Image.asset(kiMosque, fit: BoxFit.cover),
-          ),
-        )
-      ],
+          Positioned.fill(
+            child: BlendMask(
+              opacity: .1,
+              blendMode: BlendMode.luminosity,
+              child: Image.asset(kiMosque, fit: BoxFit.cover),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

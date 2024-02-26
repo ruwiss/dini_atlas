@@ -36,10 +36,12 @@ class TraceableQuranViewModel extends BaseViewModel {
   SuraPage? _currentAyah;
   SuraPage? get currentAyah => _currentAyah;
 
-  PlayerState _currentPlayerState = PlayerState.playing;
+  PlayerState _currentPlayerState = PlayerState.stopped;
   PlayerState get currentPlayerState => _currentPlayerState;
 
   late SuraInfo _suraInfo;
+
+  bool? isZoomInfoShown;
 
   void init(SuraInfo sura) async {
     _suraInfo = sura;
@@ -49,9 +51,9 @@ class TraceableQuranViewModel extends BaseViewModel {
     _playerListener();
   }
 
-  Future<void> _getUserSettings() async => await _userSettingsService
-      .getUserSettings()
-      .then((value) => _userSettings = value!);
+  Future<void> _getUserSettings() async {
+    _userSettings = await _userSettingsService.getUserSettings();
+  }
 
   Future<void> _getQuranRecitersList() async {
     // Kuran okuyucu listesini getir
@@ -72,6 +74,8 @@ class TraceableQuranViewModel extends BaseViewModel {
     }
   }
 
+  int _suraErrCount = 0;
+
   Future<void> _getSuraUrlList(SuraInfo sura) async {
     final currentReciterId = userSettings.quranReciterId;
     final result =
@@ -87,8 +91,21 @@ class TraceableQuranViewModel extends BaseViewModel {
       await playerResult.fold((l) async {
         _suraPlayerModel = l;
         _currentAyah = l.pages.first;
-        await playAudio();
-      }, (er) async => debugPrint(er.message));
+      }, (er) async {
+        debugPrint(er.message);
+        _suraErrCount++;
+        if (_suraErrCount < 3) {
+          _getSuraUrlList;
+        } else {
+          _navigationService.back();
+          _bottomSheetService.showBottomSheet(
+            title: "Sorun oldu 🙁",
+            description:
+                "Sunucuyla ilgili bir sorun oluştu. Biraz bekleyip tekrar deneyin.",
+            confirmButtonTitle: "Seç",
+          );
+        }
+      });
     }, (err) async {
       debugPrint(err.message);
       await _bottomSheetService.showBottomSheet(
@@ -202,6 +219,23 @@ class TraceableQuranViewModel extends BaseViewModel {
               ..ayah = ayahItem.ayah
               ..sura = _suraInfo.name)
             .then((value) => _userSettings = value);
+      }
+
+      final one = _suraPlayerModel?.pages[0];
+      final two = _suraPlayerModel?.pages[1];
+      final first = one?.page != null ? one : two;
+
+      if (_currentAyah?.ayah == first?.ayah) {
+        // İlk okunan ayet, zoom bilgisi göster
+        if (!_userSettingsService.isZoomInfoShown) {
+          isZoomInfoShown = false;
+          notifyListeners();
+          Future.delayed(const Duration(seconds: 4), () {
+            _userSettingsService.isZoomInfoShown = true;
+            isZoomInfoShown = true;
+            notifyListeners();
+          });
+        }
       }
     });
     // Oynatıcı durumunu dinle (durdu / başladı gibi)
