@@ -16,11 +16,13 @@ extension DateTimeExtensions on DateTime {
   }
 
   // Iki tarih farkı String olarak [00:00:00] formatında döndürür
-  String differenceToString(DateTime other, {bool withSeconds = true}) {
+  String differenceToString(DateTime other,
+      {bool withSeconds = true, bool eksiBir = false}) {
     String formatTwoDigits(int number) => number.toString().padLeft(2, '0');
     Duration difference = this.difference(other);
     int hours = difference.inHours;
     int minutes = (difference.inMinutes % 60);
+    if (eksiBir) minutes--;
     int seconds = (difference.inSeconds % 60);
     if (withSeconds) {
       return '${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}';

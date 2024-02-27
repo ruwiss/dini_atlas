@@ -50,8 +50,8 @@ abstract class AppWidgetService {
     final DateTime nowAsTime = DateTime(0, 0, 0, now.hour, now.minute);
 
     // Sıradaki namaza ne kadar kaldı hesapla [00:00]
-    final difference =
-        prayerTime.differenceToString(nowAsTime, withSeconds: false);
+    final difference = prayerTime.differenceToString(nowAsTime,
+        withSeconds: false, eksiBir: true);
     final differenceMinutes =
         prayerTime.differenceToStringMinutesForPushNotification(nowAsTime);
     final bool moreThanOneHour = differenceMinutes >= 60;

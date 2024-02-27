@@ -230,7 +230,7 @@ class TraceableQuranViewModel extends BaseViewModel {
         if (!_userSettingsService.isZoomInfoShown) {
           isZoomInfoShown = false;
           notifyListeners();
-          Future.delayed(const Duration(seconds: 4), () {
+          Future.delayed(const Duration(milliseconds: 3500), () {
             _userSettingsService.isZoomInfoShown = true;
             isZoomInfoShown = true;
             notifyListeners();

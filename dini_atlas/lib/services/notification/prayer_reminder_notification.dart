@@ -86,7 +86,7 @@ class PrayerReminderNotification {
       if (currentPrayerSetting.voiceWarningEnable) {
         // Zamanında uyarı
         if (e.timeValue == TimeOfDay.now().toHourMinString()) {
-          warningSoundId = currentPrayerSetting.warningSoundId;
+        warningSoundId = currentPrayerSetting.warningSoundId;
           debugPrint("Namaz vakti bildirim uyarısı - Ses: $warningSoundId");
           returnValue = true;
         } else {
@@ -129,7 +129,7 @@ class PrayerReminderNotification {
 
       // sessiz mod etkinse sesi açıyoruz ve 10 saniye sonra kapatıyoruz
       // (Bildirimi sesli göstermek için)
-      if (silentModeActivated) {
+      if (silentModeActivated && silentModeSettingValue) {
         await SoundMode.setSoundMode(RingerModeStatus.normal);
         debugPrint("Sessiz mod bildirim için kapatıldı");
         await Future.delayed(const Duration(seconds: 10));
@@ -167,7 +167,7 @@ class PrayerReminderNotification {
           '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}',
           subtitle,
           notificationDetails);
-      if (silentModeActivated) {
+      if (silentModeActivated && silentModeSettingValue) {
         await Future.delayed(
           const Duration(seconds: 15),
           () => SoundMode.setSoundMode(RingerModeStatus.silent),

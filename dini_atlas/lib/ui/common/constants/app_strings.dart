@@ -3,11 +3,9 @@ import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-const String ksAppVersion = "1.0.0";
+const String ksAppVersion = "1.0.1";
 
-const bool ksTestMode = true;
-
-String get ksBaseUrl => ksTestMode
+String get ksBaseUrl => true
     ? "http://192.168.1.106:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
@@ -42,6 +40,7 @@ String get ksToken => md5
 const String ksIapKey = "goog_PFeLaPWmemAgKUHceFfGGuAQTHt";
 
 // ---- Admob Ads ---- //
+const bool ksTestAds = true;
 bool ksShowAdmobAds = true;
 
 const String ksAdmobAppOpen = "";

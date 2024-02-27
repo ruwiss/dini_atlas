@@ -14,7 +14,7 @@ class AdmobBannerAdService {
   void loadAd({VoidCallback? onAdLoaded}) {
     if (!ksShowAdmobAds) return;
     _bannerAd = BannerAd(
-      adUnitId: ksTestMode ? _testAdUnitId : adUnitId,
+      adUnitId: ksTestAds ? _testAdUnitId : adUnitId,
       request: const AdRequest(),
       size: AdSize.banner,
       listener: BannerAdListener(
@@ -44,7 +44,7 @@ class AdmobInterstitialAdService {
   void loadAd({VoidCallback? onAdLoaded}) {
     if (!ksShowAdmobAds) return;
     InterstitialAd.load(
-      adUnitId: ksTestMode ? _testAdUnitId : adUnitId,
+      adUnitId: ksTestAds ? _testAdUnitId : adUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
@@ -75,7 +75,7 @@ class AdmobAppOpenAdsService {
   void setup() async {
     if (!ksShowAdmobAds) return;
     await AppOpenAd.load(
-      adUnitId: ksTestMode ? _testAdUnitId : ksAdmobAppOpen,
+      adUnitId: ksTestAds ? _testAdUnitId : ksAdmobAppOpen,
       orientation: AppOpenAd.orientationPortrait,
       request: const AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(

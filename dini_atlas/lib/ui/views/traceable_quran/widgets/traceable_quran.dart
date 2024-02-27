@@ -32,6 +32,7 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
               } else if (snapshot.hasData) {
                 final Uint8List bytes = snapshot.data!;
                 return SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
                   child: suraPage.x == null
                       ? SvgPicture.memory(bytes)
                       : Padding(

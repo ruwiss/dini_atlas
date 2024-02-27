@@ -6,7 +6,6 @@ import requests
 from connect import get_cursor
 import helper
 import json
-import io
 
 app = Blueprint("content_app", __name__)
 
@@ -271,7 +270,6 @@ def dualar():
 def ay_goruntusu(img):
     r = requests.get(f"https://namazvakti.diyanet.gov.tr/images/{img}", stream=True)
     if r.status_code == 200:
-        image_data = io.BytesIO(r.content)
         return Response(r.content, mimetype="image/gif")
     else:
         return "Error", 404
