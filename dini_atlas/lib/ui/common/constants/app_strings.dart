@@ -3,9 +3,9 @@ import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-const String ksAppVersion = "1.0.1";
+const String ksAppVersion = "1.0.3";
 
-String get ksBaseUrl => true
+String get ksBaseUrl => false
     ? "http://192.168.1.106:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
@@ -40,28 +40,28 @@ String get ksToken => md5
 const String ksIapKey = "goog_PFeLaPWmemAgKUHceFfGGuAQTHt";
 
 // ---- Admob Ads ---- //
-const bool ksTestAds = true;
+const bool ksTestAds = false;
 bool ksShowAdmobAds = true;
 
-const String ksAdmobAppOpen = "";
+const String ksAdmobAppOpen = "ca-app-pub-1923752572867502/5356388948";
 
 /// Sure liste görünümü
-const String ksAdmobBanner1 = "";
+const String ksAdmobBanner1 = "ca-app-pub-1923752572867502/8337775502";
 
 /// İçerik liste görünümü
-const String ksAdmobBanner2 = "";
+const String ksAdmobBanner2 = "ca-app-pub-1923752572867502/5515584315";
 
 /// Elifba ekranı
-const String ksAdmobBanner3 = "";
+const String ksAdmobBanner3 = "ca-app-pub-1923752572867502/3085448826";
 
 /// Kaza ekranı
-const String ksAdmobBanner4 = "";
+const String ksAdmobBanner4 = "ca-app-pub-1923752572867502/1772367150";
 
 /// Pusula ekranı
-const String ksAdmobBanner5 = "";
+const String ksAdmobBanner5 = "ca-app-pub-1923752572867502/9425881498";
 
 // Sure liste görünümünden içeriğe giderken
-const String ksAdmobInterstitial1 = "";
+const String ksAdmobInterstitial1 = "ca-app-pub-1923752572867502/5647446257";
 
 // Buton aksiyonları için geçiş reklamı
-const String ksAdmobInterstitial2 = "";
+const String ksAdmobInterstitial2 = "ca-app-pub-1923752572867502/4206958804";

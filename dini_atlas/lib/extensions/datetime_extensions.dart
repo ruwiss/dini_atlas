@@ -19,10 +19,10 @@ extension DateTimeExtensions on DateTime {
   String differenceToString(DateTime other,
       {bool withSeconds = true, bool eksiBir = false}) {
     String formatTwoDigits(int number) => number.toString().padLeft(2, '0');
+    if (eksiBir) other = other.subtract(const Duration(minutes: 1));
     Duration difference = this.difference(other);
     int hours = difference.inHours;
     int minutes = (difference.inMinutes % 60);
-    if (eksiBir) minutes--;
     int seconds = (difference.inSeconds % 60);
     if (withSeconds) {
       return '${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}';
