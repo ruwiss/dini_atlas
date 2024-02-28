@@ -86,7 +86,7 @@ class PrayerReminderNotification {
       if (currentPrayerSetting.voiceWarningEnable) {
         // Zamanında uyarı
         if (e.timeValue == TimeOfDay.now().toHourMinString()) {
-        warningSoundId = currentPrayerSetting.warningSoundId;
+          warningSoundId = currentPrayerSetting.warningSoundId;
           debugPrint("Namaz vakti bildirim uyarısı - Ses: $warningSoundId");
           returnValue = true;
         } else {
@@ -162,11 +162,12 @@ class PrayerReminderNotification {
       final String? subtitle =
           alertBefore ? '$advancedVoiceWarningTime dk kaldı' : null;
 
-      await PushNotification.instance.localNotiPlugin.show(
-          2,
-          '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}',
-          subtitle,
-          notificationDetails);
+      final alertMessage = activePrayer.name == PrayerType.gunes.name
+          ? '${activePrayer.name} ${alertBefore ? "Doğuyor.." : "Doğdu"}'
+          : '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}';
+
+      await PushNotification.instance.localNotiPlugin
+          .show(2, alertMessage, subtitle, notificationDetails);
       if (silentModeActivated && silentModeSettingValue) {
         await Future.delayed(
           const Duration(seconds: 15),

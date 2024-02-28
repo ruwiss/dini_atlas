@@ -1,5 +1,6 @@
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:dini_atlas/extensions/string_extensions.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
@@ -22,13 +23,17 @@ abstract class PrayerNotification {
         prayerTime.differenceToStringForPushNotification(nowAsTime);
     final differenceMinutes =
         prayerTime.differenceToStringMinutesForPushNotification(nowAsTime);
+
+    final subText = result.item.name != PrayerType.imsak.name
+        ? '${result.item.name} ${result.item.timeValue}'
+        : null;
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       ksPrayerNotiChannel,
       'Dini Atlas Ezan Vakti',
       channelDescription: 'Ezan vakti bildirim göstergesi',
       icon: differenceMinutes <= 60 ? '@drawable/dk$differenceMinutes' : null,
-      subText: '${result.item.name} ${result.item.timeValue}',
+      subText: subText,
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
