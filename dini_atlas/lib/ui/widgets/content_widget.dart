@@ -137,7 +137,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
   }
 
   Widget _suraMeal() {
-    return Text(
+    return SelectableText(
       widget.text3!,
       style: TextStyle(
         fontSize: 16 + widget.increaseFontSize,
@@ -147,7 +147,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
   }
 
   Widget _suraTurkish() {
-    return Text(
+    return SelectableText(
       widget.text2!.fixLatinArabicLetters(),
       style: TextStyle(
         fontSize: 16 + widget.increaseFontSize,
@@ -165,7 +165,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
       text = text.replaceAll(bismillah, "");
     }
     final bool isHadith = widget.type.type == EContentTypes.hadis;
-    return Text(
+    return SelectableText(
       text,
       textAlign: TextAlign.end,
       style: TextStyle(

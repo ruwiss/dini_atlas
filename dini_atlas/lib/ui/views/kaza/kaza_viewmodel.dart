@@ -16,6 +16,8 @@ import 'package:stacked_services/stacked_services.dart';
 
 enum AuthType { login, register }
 
+enum KazaType { sabah, ogle, ikindi, aksam, yatsi, vitir, oruc }
+
 class KazaAuthFormValidator {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) return null;
@@ -59,6 +61,7 @@ class KazaViewModel extends FormViewModel {
   UserAuth? _userAuthInformation;
 
   Kaza? _kaza;
+  Kaza? _oldKaza;
   Kaza? get kaza => _kaza;
 
   void init() async {
@@ -131,6 +134,7 @@ class KazaViewModel extends FormViewModel {
   Future<void> _getUserKaza() async {
     final result = await _kazaService.getUserKaza(_userAuthInformation!);
     _kaza = result ?? Kaza.createEmpty();
+    _oldKaza = kaza;
     notifyListeners();
   }
 
@@ -153,6 +157,7 @@ class KazaViewModel extends FormViewModel {
         description: "Kaza bilgileri kaydedildi",
         confirmButtonTitle: "Kapat",
       );
+      _oldKaza = kaza;
     } else {
       _bottomSheetService.showBottomSheet(
         title: "Bir sorun oluştu",
@@ -161,6 +166,32 @@ class KazaViewModel extends FormViewModel {
         confirmButtonTitle: "Anladım",
       );
     }
+  }
+
+  final List<int> _kazaMultiCounts = [1, 5, 10, 25, 50, 100];
+  int _kazaMultiCount = 1;
+  int get kazaMultiCount => _kazaMultiCount;
+
+  void changeKazaMultiCount() {
+    int nextIndex = _kazaMultiCounts.indexOf(_kazaMultiCount) + 1;
+    if (nextIndex > _kazaMultiCounts.length - 1) nextIndex = 0;
+    _kazaMultiCount = _kazaMultiCounts[nextIndex];
+    notifyListeners();
+  }
+
+  int? findDifference(KazaType kazaType) {
+    if (kaza == null || _oldKaza == null) return null;
+    final val = switch (kazaType) {
+      KazaType.sabah => kaza!.sabah - _oldKaza!.sabah,
+      KazaType.ogle => kaza!.ogle - _oldKaza!.ogle,
+      KazaType.ikindi => kaza!.ikindi - _oldKaza!.ikindi,
+      KazaType.aksam => kaza!.aksam - _oldKaza!.aksam,
+      KazaType.yatsi => kaza!.yatsi - _oldKaza!.yatsi,
+      KazaType.vitir => kaza!.vitir - _oldKaza!.vitir,
+      KazaType.oruc => kaza!.oruc - _oldKaza!.oruc,
+    };
+    if (val == 0) return null;
+    return val;
   }
 
   @override

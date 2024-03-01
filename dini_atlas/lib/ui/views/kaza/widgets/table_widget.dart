@@ -21,6 +21,7 @@ class KazaTableWidget extends StatelessWidget {
             _tableItem(
               text: "Sabah",
               count: kaza.sabah,
+              difference: viewModel.findDifference(KazaType.sabah),
               onDecrease: () =>
                   viewModel.updateKaza(kaza.copyWith(sabah: kaza.sabah - 1)),
               onIncrease: () =>
@@ -29,6 +30,7 @@ class KazaTableWidget extends StatelessWidget {
             _tableItem(
               text: "Öğle",
               count: kaza.ogle,
+              difference: viewModel.findDifference(KazaType.ogle),
               color: kcGrayColorLightSoft,
               onDecrease: () =>
                   viewModel.updateKaza(kaza.copyWith(ogle: kaza.ogle - 1)),
@@ -38,6 +40,7 @@ class KazaTableWidget extends StatelessWidget {
             _tableItem(
               text: "İkindi",
               count: kaza.ikindi,
+              difference: viewModel.findDifference(KazaType.ikindi),
               onDecrease: () =>
                   viewModel.updateKaza(kaza.copyWith(ikindi: kaza.ikindi - 1)),
               onIncrease: () =>
@@ -46,6 +49,7 @@ class KazaTableWidget extends StatelessWidget {
             _tableItem(
               text: "Akşam",
               count: kaza.aksam,
+              difference: viewModel.findDifference(KazaType.aksam),
               color: kcGrayColorLightSoft,
               onDecrease: () =>
                   viewModel.updateKaza(kaza.copyWith(aksam: kaza.aksam - 1)),
@@ -55,6 +59,7 @@ class KazaTableWidget extends StatelessWidget {
             _tableItem(
               text: "Yatsı",
               count: kaza.yatsi,
+              difference: viewModel.findDifference(KazaType.yatsi),
               onDecrease: () =>
                   viewModel.updateKaza(kaza.copyWith(yatsi: kaza.yatsi - 1)),
               onIncrease: () =>
@@ -63,6 +68,7 @@ class KazaTableWidget extends StatelessWidget {
             _tableItem(
               text: "Vitir",
               count: kaza.vitir,
+              difference: viewModel.findDifference(KazaType.vitir),
               color: kcGrayColorLightSoft,
               onDecrease: () =>
                   viewModel.updateKaza(kaza.copyWith(vitir: kaza.vitir - 1)),
@@ -90,42 +96,33 @@ class KazaTableWidget extends StatelessWidget {
     );
   }
 
-  StatefulBuilder _multipleUpdateWidget(Kaza kaza) {
-    int count = 1;
-    const List<int> counts = [1, 5, 10, 25, 50, 100];
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return _tableItem(
-          text: "Toplu İşlem",
-          count: count,
-          isSpecial: true,
-          onTapSpecialCount: () {
-            int nextIndex = counts.indexOf(count) + 1;
-            if (nextIndex > counts.length - 1) nextIndex = 0;
-            setState(() => count = counts[nextIndex]);
-          },
-          onDecrease: () => viewModel.updateKaza(
-            kaza.copyWith(
-              sabah: kaza.sabah - count,
-              ogle: kaza.ogle - count,
-              ikindi: kaza.ikindi - count,
-              aksam: kaza.aksam - count,
-              yatsi: kaza.yatsi - count,
-              vitir: kaza.vitir - count,
-            ),
-          ),
-          onIncrease: () => viewModel.updateKaza(
-            kaza.copyWith(
-              sabah: kaza.sabah + count,
-              ogle: kaza.ogle + count,
-              ikindi: kaza.ikindi + count,
-              aksam: kaza.aksam + count,
-              yatsi: kaza.yatsi + count,
-              vitir: kaza.vitir + count,
-            ),
-          ),
-        );
-      },
+  Widget _multipleUpdateWidget(Kaza kaza) {
+    final int count = viewModel.kazaMultiCount;
+    return _tableItem(
+      text: "Toplu İşlem",
+      count: count,
+      isSpecial: true,
+      onTapSpecialCount: viewModel.changeKazaMultiCount,
+      onDecrease: () => viewModel.updateKaza(
+        kaza.copyWith(
+          sabah: kaza.sabah - count,
+          ogle: kaza.ogle - count,
+          ikindi: kaza.ikindi - count,
+          aksam: kaza.aksam - count,
+          yatsi: kaza.yatsi - count,
+          vitir: kaza.vitir - count,
+        ),
+      ),
+      onIncrease: () => viewModel.updateKaza(
+        kaza.copyWith(
+          sabah: kaza.sabah + count,
+          ogle: kaza.ogle + count,
+          ikindi: kaza.ikindi + count,
+          aksam: kaza.aksam + count,
+          yatsi: kaza.yatsi + count,
+          vitir: kaza.vitir + count,
+        ),
+      ),
     );
   }
 
@@ -154,12 +151,14 @@ class KazaTableWidget extends StatelessWidget {
     VoidCallback? onIncrease,
     required String text,
     required int count,
+    int? difference,
     Color? color,
     bool isSpecial = false,
     VoidCallback? onTapSpecialCount,
   }) {
     return _tableCell(
       color: color ?? kcBackgroundColor,
+      difference: difference,
       item1: Text(
         text,
         style: TextStyle(
@@ -250,6 +249,7 @@ class KazaTableWidget extends StatelessWidget {
       children: [
         _tableCell(
           item1: const Text("ORUÇ BORCU", textAlign: TextAlign.center),
+          difference: viewModel.findDifference(KazaType.oruc),
           color: kcBlueGrayColorSoft,
         ),
         const Divider(height: 0, thickness: 1.2),
@@ -260,16 +260,33 @@ class KazaTableWidget extends StatelessWidget {
   Widget _tableCell({
     required Widget item1,
     Widget? item2,
+    int? difference,
     Color color = kcBlueGrayColorSoft,
   }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       color: color,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(flex: 3, child: item1),
-          if (item2 != null) Expanded(flex: 2, child: item2)
+          Expanded(
+            flex: 3,
+            child: Stack(
+              children: [
+                item1,
+                if (difference case final int diff)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      diff.isNegative ? "$diff    " : "+$diff    ",
+                      style: TextStyle(
+                          color: diff.isNegative ? Colors.red : Colors.green),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          if (item2 != null) Expanded(flex: 2, child: item2),
         ],
       ),
     );

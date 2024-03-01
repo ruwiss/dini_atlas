@@ -27,6 +27,7 @@ class QuranSurahList extends StatelessWidget {
     return Flexible(
       child: ListView.builder(
         shrinkWrap: true,
+        primary: false,
         controller: scrollController,
         itemCount: sura.length,
         itemBuilder: (context, index) {
