@@ -41,7 +41,7 @@ String get ksToken => md5
 const String ksIapKey = "goog_PFeLaPWmemAgKUHceFfGGuAQTHt";
 
 // ---- Admob Ads ---- //
-const bool ksTestAds = true;
+const bool ksTestAds = false;
 bool ksShowAdmobAds = true;
 
 const String ksAdmobAppOpen = "ca-app-pub-1923752572867502/5356388948";
