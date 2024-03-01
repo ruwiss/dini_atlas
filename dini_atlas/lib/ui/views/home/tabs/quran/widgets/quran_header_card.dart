@@ -30,9 +30,8 @@ class _QuranSuraHeaderState extends State<QuranSuraHeader>
 
   void _setAnimation() {
     if (widget.visible) {
-      _animationController.forward().then((_) {
-        setState(() => _showHeader = true);
-      });
+      setState(() => _showHeader = true);
+      _animationController.forward();
     } else {
       _animationController.reverse().then((_) {
         setState(() => _showHeader = false);
@@ -49,66 +48,68 @@ class _QuranSuraHeaderState extends State<QuranSuraHeader>
   @override
   Widget build(BuildContext context) {
     _setAnimation();
-    if (!_showHeader) {
-      return const SizedBox();
-    } else if (widget.lastReadAyah case final LastReadAyah lastReadAyah) {
+    if (widget.lastReadAyah case final LastReadAyah lastReadAyah) {
       return FadeTransition(
         opacity: _animationController,
-        child: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(vertical: 17),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: const LinearGradient(colors: [
-              kcPurpleColorMedium,
-              kcPurpleColorDark,
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: paddingMedium,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        child: !_showHeader
+            ? const SizedBox()
+            : Container(
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(vertical: 17),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: const LinearGradient(colors: [
+                    kcPurpleColorMedium,
+                    kcPurpleColorDark,
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(kiReadme),
-                        horizontalSpace(8),
-                        const Text(
-                          "Son Okunan",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: kcOnPrimaryColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )
-                      ],
-                    ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 4),
-                      child: Text(
-                        lastReadAyah.sura,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: kcOnPrimaryColor,
-                        ),
+                      padding: paddingMedium,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(kiReadme),
+                              horizontalSpace(8),
+                              const Text(
+                                "Son Okunan",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: kcOnPrimaryColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 4),
+                            child: Text(
+                              lastReadAyah.sura,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: kcOnPrimaryColor,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "Ayet No: ${lastReadAyah.ayah}",
+                            style: const TextStyle(
+                                fontSize: 14, color: kcOnPrimaryColor),
+                          )
+                        ],
                       ),
                     ),
-                    Text(
-                      "Ayet No: ${lastReadAyah.ayah}",
-                      style: const TextStyle(
-                          fontSize: 14, color: kcOnPrimaryColor),
-                    )
+                    Flexible(
+                        child:
+                            SvgPicture.asset(kiCardImage, fit: BoxFit.cover)),
                   ],
                 ),
               ),
-              Flexible(child: SvgPicture.asset(kiCardImage, fit: BoxFit.cover)),
-            ],
-          ),
-        ),
       );
     } else {
       return const SizedBox();
