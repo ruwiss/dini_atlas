@@ -117,8 +117,16 @@ def hadis_ara():
     if not query:
         return jsonify([])
     cursor.execute(
-        f"""SELECT * FROM riyazus_salihin WHERE turkce LIKE %s LIMIT 5 OFFSET %s;""",
-        (f"%{query}%", offset),
+        f"""
+        SELECT * FROM riyazus_salihin WHERE baslik LIKE %s OR turkce LIKE %s
+        ORDER BY CASE
+        WHEN baslik LIKE %s
+        THEN 1
+        WHEN turkce LIKE %s
+        THEN 2
+        ELSE 3
+        END LIMIT 5 OFFSET %s;""",
+        (f"%{query}%", f"%{query}%", f"%{query}%", f"%{query}%", offset),
     )
     hadisler = cursor.fetchall()
     cleaned_hadisler = [

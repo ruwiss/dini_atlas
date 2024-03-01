@@ -117,19 +117,24 @@ class _QuranSuraItemState extends State<ContentWidget> {
         _suraKey = key;
         return Container(
           color: kcBackgroundColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Arapça Kısım
-              if (widget.text1 != null) ...[verticalSpace(24), _suraArabic()],
+          child: SelectionArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Arapça Kısım
+                if (widget.text1 != null) ...[verticalSpace(24), _suraArabic()],
 
-              // Türkçe Okunuş
-              if (widget.text2 != null) ...[verticalSpace(18), _suraTurkish()],
+                // Türkçe Okunuş
+                if (widget.text2 != null) ...[
+                  verticalSpace(18),
+                  _suraTurkish()
+                ],
 
-              // Meal Kısmı
-              if (widget.text3 != null) ...[verticalSpace(8), _suraMeal()],
-              verticalSpace(18),
-            ],
+                // Meal Kısmı
+                if (widget.text3 != null) ...[verticalSpace(8), _suraMeal()],
+                verticalSpace(18),
+              ],
+            ),
           ),
         );
       },
@@ -137,7 +142,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
   }
 
   Widget _suraMeal() {
-    return SelectableText(
+    return Text(
       widget.text3!,
       style: TextStyle(
         fontSize: 16 + widget.increaseFontSize,
@@ -147,7 +152,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
   }
 
   Widget _suraTurkish() {
-    return SelectableText(
+    return Text(
       widget.text2!.fixLatinArabicLetters(),
       style: TextStyle(
         fontSize: 16 + widget.increaseFontSize,
@@ -165,7 +170,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
       text = text.replaceAll(bismillah, "");
     }
     final bool isHadith = widget.type.type == EContentTypes.hadis;
-    return SelectableText(
+    return Text(
       text,
       textAlign: TextAlign.end,
       style: TextStyle(
