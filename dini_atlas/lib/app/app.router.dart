@@ -297,9 +297,12 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i19.AboutView: (data) {
+      final args = data.getArgs<AboutViewArguments>(
+        orElse: () => const AboutViewArguments(),
+      );
       return _i21.PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            const _i19.AboutView(),
+        pageBuilder: (context, animation, secondaryAnimation) => _i19.AboutView(
+            key: args.key, showSubscriptionView: args.showSubscriptionView),
         settings: data,
         transitionsBuilder:
             data.transition ?? _i1.TransitionsBuilders.slideRightWithFade,
@@ -405,6 +408,34 @@ class TraceableQuranViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ sura.hashCode;
+  }
+}
+
+class AboutViewArguments {
+  const AboutViewArguments({
+    this.key,
+    this.showSubscriptionView = false,
+  });
+
+  final _i22.Key? key;
+
+  final bool showSubscriptionView;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "showSubscriptionView": "$showSubscriptionView"}';
+  }
+
+  @override
+  bool operator ==(covariant AboutViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key &&
+        other.showSubscriptionView == showSubscriptionView;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ showSubscriptionView.hashCode;
   }
 }
 
@@ -685,14 +716,18 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToAboutView([
+  Future<dynamic> navigateToAboutView({
+    _i22.Key? key,
+    bool showSubscriptionView = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.aboutView,
+        arguments: AboutViewArguments(
+            key: key, showSubscriptionView: showSubscriptionView),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -965,14 +1000,18 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithAboutView([
+  Future<dynamic> replaceWithAboutView({
+    _i22.Key? key,
+    bool showSubscriptionView = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.aboutView,
+        arguments: AboutViewArguments(
+            key: key, showSubscriptionView: showSubscriptionView),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

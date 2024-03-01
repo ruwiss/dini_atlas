@@ -1,6 +1,22 @@
+import 'package:dini_atlas/app/app.dialogs.dart';
+import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+// 10 Kere Videolu reklam görürse reklamları kaldır diyaloğunu göster
+void checkCountAndShowRemoveAdsDialog() async {
+  final prefs = await SharedPreferences.getInstance();
+  if ((prefs.getInt('adCounter') ?? 0) >= 10) {
+    await locator<DialogService>().showCustomDialog(
+      variant: DialogType.removeAds,
+      barrierDismissible: true,
+    );
+    prefs.remove('adCounter');
+  }
+}
 
 class AdmobBannerAdService {
   final String adUnitId;
@@ -51,6 +67,12 @@ class AdmobInterstitialAdService {
         onAdLoaded: (ad) {
           if (!ksShowAdmobAds) return;
           debugPrint('$ad loaded.');
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) =>
+                checkCountAndShowRemoveAdsDialog(),
+          );
+
           _interstitialAd = ad;
           onAdLoaded?.call();
         },
@@ -83,6 +105,12 @@ class AdmobAppOpenAdsService {
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {
           if (!ksShowAdmobAds) return;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) =>
+                checkCountAndShowRemoveAdsDialog(),
+          );
+
           _appOpenAd = ad;
         },
         onAdFailedToLoad: (error) {

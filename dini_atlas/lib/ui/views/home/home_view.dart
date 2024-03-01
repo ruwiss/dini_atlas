@@ -74,10 +74,9 @@ class _HomeViewState extends State<HomeView> {
             icon: SvgPicture.asset(
               viewModel.tabItems[index],
               colorFilter: ColorFilter.mode(
-                  viewModel.isIndexSelected(index)
-                      ? kcPrimaryColor
-                      : kcGrayColor,
-                  BlendMode.srcIn),
+                viewModel.isIndexSelected(index) ? kcPrimaryColor : kcGrayColor,
+                BlendMode.srcIn,
+              ),
             ),
             label: viewModel.tabItems[index],
           ),

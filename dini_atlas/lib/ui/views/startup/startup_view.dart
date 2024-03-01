@@ -36,9 +36,9 @@ class StartupView extends StackedView<StartupViewModel> {
                   verticalSpaceMedium,
                   const Spacer(),
                   _startupTitle(context),
-                  verticalSpaceLarge,
-                  _startupImage(context),
                   verticalSpace(40),
+                  _startupImage(context),
+                  verticalSpace(30),
                   viewModel.isBusy
                       ? const CircularProgressIndicator()
                       : _actionButtons(context, viewModel),
@@ -66,7 +66,7 @@ class StartupView extends StackedView<StartupViewModel> {
         _startupButton(
           context,
           text: "Manuel Seçim",
-          color: kcPurpleColorDarkSoft.withOpacity(.5),
+          color: kcPrimaryColor.withOpacity(.5),
           onTap: viewModel.manuelFetchLocationCountry,
         ),
       ],
@@ -168,10 +168,7 @@ class StartupView extends StackedView<StartupViewModel> {
   }
 
   @override
-  StartupViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      StartupViewModel();
+  StartupViewModel viewModelBuilder(BuildContext context) => StartupViewModel();
 
   @override
   void onViewModelReady(StartupViewModel viewModel) =>

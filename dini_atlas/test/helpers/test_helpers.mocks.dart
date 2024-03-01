@@ -877,6 +877,29 @@ class MockUserSettingsService extends _i1.Mock
       ) as _i8.Future<_i3.UserSettings>);
 
   @override
+  _i8.Future<_i3.UserSettings> setAlarmMode(bool? value) => (super.noSuchMethod(
+        Invocation.method(
+          #setAlarmMode,
+          [value],
+        ),
+        returnValue: _i8.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setAlarmMode,
+            [value],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i8.Future<_i3.UserSettings>.value(_FakeUserSettings_1(
+          this,
+          Invocation.method(
+            #setAlarmMode,
+            [value],
+          ),
+        )),
+      ) as _i8.Future<_i3.UserSettings>);
+
+  @override
   _i8.Future<_i3.UserSettings> setQuranReciter(int? id) => (super.noSuchMethod(
         Invocation.method(
           #setQuranReciter,

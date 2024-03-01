@@ -12,6 +12,10 @@ class AboutViewModel extends IndexTrackingViewModel {
   bool _showSubscriptionView = false;
   bool get showSubscriptionView => _showSubscriptionView;
 
+  void init({bool showSubscriptionView = false}) {
+    _showSubscriptionView = showSubscriptionView;
+  }
+
   List<EntitlementInfo> get entitlements => _iapService.entitlements;
   List<Offering> get offers => _iapService.offers;
   List<Package> get packages => offers

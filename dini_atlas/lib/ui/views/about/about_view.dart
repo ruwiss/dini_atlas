@@ -7,7 +7,8 @@ import 'package:stacked/stacked.dart';
 import 'about_viewmodel.dart';
 
 class AboutView extends StackedView<AboutViewModel> {
-  const AboutView({super.key});
+  const AboutView({super.key, this.showSubscriptionView = false});
+  final bool showSubscriptionView;
 
   @override
   Widget builder(
@@ -41,4 +42,10 @@ class AboutView extends StackedView<AboutViewModel> {
 
   @override
   AboutViewModel viewModelBuilder(BuildContext context) => AboutViewModel();
+
+  @override
+  void onViewModelReady(AboutViewModel viewModel) {
+    viewModel.init(showSubscriptionView: showSubscriptionView);
+    super.onViewModelReady(viewModel);
+  }
 }

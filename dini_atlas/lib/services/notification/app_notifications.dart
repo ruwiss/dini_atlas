@@ -38,13 +38,12 @@ void periodicTimerController() async {
   } else {
     debugPrint("Periodic Fired");
   }
-    // Namaza kaç dk kaldığını gösteren push bildirim
+  // Namaza kaç dk kaldığını gösteren push bildirim
   await PrayerNotification.showPrayerCountdownNotification();
   // Namaz vakti hatırlatıcı ek bildirim
   await PrayerReminderNotification.showPrayerReminderNotification();
   // Update Home Widgets
   await AppWidgetService.updateHomeWidgetsIfAvailable();
-
 }
 
 class AppNotifications {

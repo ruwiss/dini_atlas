@@ -35,6 +35,7 @@ import 'package:dini_atlas/ui/bottom_sheets/location/location_sheet.dart';
 import 'package:dini_atlas/ui/views/about/about_view.dart';
 import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
 import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart';
+import 'package:dini_atlas/ui/dialogs/remove_ads/remove_ads_dialog.dart';
 // @stacked-import
 
 @StackedApp(
@@ -91,6 +92,7 @@ import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart';
   ],
   dialogs: [
     StackedDialog(classType: SettingsDialog),
+    StackedDialog(classType: RemoveAdsDialog),
 // @stacked-dialog
   ],
 )
