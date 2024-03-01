@@ -280,6 +280,7 @@ class KazaTableWidget extends StatelessWidget {
                     child: Text(
                       diff.isNegative ? "$diff    " : "+$diff    ",
                       style: TextStyle(
+                          fontSize: 14,
                           color: diff.isNegative ? Colors.red : Colors.green),
                     ),
                   ),
