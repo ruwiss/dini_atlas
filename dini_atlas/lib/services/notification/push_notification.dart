@@ -75,6 +75,7 @@ class PushNotification {
       final bool alarmMode = prefs.getBool('alarmMode') ?? true;
 
       if (alarmMode) {
+        _cancelLastAlarm();
         final alarmId = alarmModeId;
         await AndroidAlarmManager.oneShot(
           const Duration(minutes: 1),
@@ -105,18 +106,22 @@ class PushNotification {
     }
   }
 
+  void _cancelLastAlarm() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastId = prefs.getInt('lastAlarmId');
+    if (lastId case final int last) {
+      try {
+        await AndroidAlarmManager.cancel(last);
+      } catch (e) {
+        // etkin alarm yok
+      }
+    }
+  }
+
   Future<void> setAlarmMode(bool value) async {
     // Eğer alarm modu değilse ve alarm yapılacaksa önceki process'i kapat
     if (value) {
-      final prefs = await SharedPreferences.getInstance();
-      final lastId = prefs.getInt('lastAlarmId');
-      if (lastId case final int last) {
-        try {
-          await AndroidAlarmManager.cancel(last);
-        } catch (e) {
-          // etkin alarm yok
-        }
-      }
+      _cancelLastAlarm();
     } else {
       await AndroidAlarmManager.cancel(normalModeId);
     }

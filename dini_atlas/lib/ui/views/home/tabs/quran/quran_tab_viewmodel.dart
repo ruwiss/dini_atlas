@@ -6,6 +6,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:stacked/stacked.dart';
@@ -24,6 +25,18 @@ class QuranTabViewModel extends IndexTrackingViewModel {
   final _networkChecker = locator<NetworkChecker>();
   final _userSettingsService = locator<UserSettingsService>();
   final _quranService = locator<QuranService>();
+
+  final _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
+
+  void scrollTop() {
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      curve: Curves.fastOutSlowIn,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
   List<SuraInfo>? suraList;
 
   QuranTabs get currentTab => QuranTabs.values[currentIndex];
@@ -51,6 +64,7 @@ class QuranTabViewModel extends IndexTrackingViewModel {
     loadInterstitalAd();
     await runBusyFuture(_getUserSettings());
     runBusyFuture(_fetchSuraList());
+    _listenSuraScroll();
   }
 
   Future<void> _getUserSettings() async {
@@ -74,9 +88,25 @@ class QuranTabViewModel extends IndexTrackingViewModel {
     }
   }
 
+  void _listenSuraScroll() => _scrollController.addListener(_onSuraScroll);
+
+  bool _headerVisible = true;
+  bool get headerVisible => _headerVisible;
+
+  void _onSuraScroll() {
+    if (_scrollController.offset > 100 && _headerVisible) {
+      _headerVisible = false;
+      notifyListeners();
+    } else if (_scrollController.offset < 30 && !_headerVisible) {
+      _headerVisible = true;
+      notifyListeners();
+    }
+  }
+
   @override
   void dispose() {
     _networkChecker.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 }

@@ -89,7 +89,7 @@ class _HomeViewState extends State<HomeView> {
   Widget getViewForIndex(int index) {
     switch (index) {
       case 2:
-        return QuranTab();
+        return const QuranTab();
       case 1:
         return const CategoriesTab();
       default:
