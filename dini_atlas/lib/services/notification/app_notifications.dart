@@ -14,13 +14,6 @@ import 'prayer_reminder_notification.dart';
 // Dakikalık background-task
 @pragma('vm:entry-point')
 void periodicTimerController() async {
-  // Namaza kaç dk kaldığını gösteren push bildirim
-  await PrayerNotification.showPrayerCountdownNotification();
-  // Namaz vakti hatırlatıcı ek bildirim
-  await PrayerReminderNotification.showPrayerReminderNotification();
-  // Update Home Widgets
-  await AppWidgetService.updateHomeWidgetsIfAvailable();
-
   final prefs = await SharedPreferences.getInstance();
   final bool alarmMode = prefs.getBool('alarmMode') ?? true;
   // Alarm mod etkin ise kendini tekrarla
@@ -45,6 +38,13 @@ void periodicTimerController() async {
   } else {
     debugPrint("Periodic Fired");
   }
+    // Namaza kaç dk kaldığını gösteren push bildirim
+  await PrayerNotification.showPrayerCountdownNotification();
+  // Namaz vakti hatırlatıcı ek bildirim
+  await PrayerReminderNotification.showPrayerReminderNotification();
+  // Update Home Widgets
+  await AppWidgetService.updateHomeWidgetsIfAvailable();
+
 }
 
 class AppNotifications {

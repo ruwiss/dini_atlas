@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dini_atlas/app/app.bottomsheets.dart';
 import 'package:dini_atlas/app/app.router.dart';
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/user_location.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
@@ -38,32 +39,34 @@ class StartupViewModel extends BaseViewModel {
       final fetchResult = await _fetchTimesService.fetchTimes();
       fetchResult.fold((l) {}, (r) {
         setError(r.message);
-        _manuelFetchLocationCountry(l);
+        manuelFetchLocationCountry(location: l);
       });
-    }, (r) {
-      setError(r);
-      _bottomSheetService.showBottomSheet(
-        title: "Konum Problemi",
-        description: "Konumunuzu almaya çalışırken bir problem oluştu.",
-        confirmButtonTitle: "Tamam",
-      );
-    });
+    }, (r) async => setError(r));
   }
 
   late UserLocation _manuelSelectUserLocation;
 
   // Konum ve vakitlerle ilgili sorun oluşursa kullanıcı konumunu kendisi seçsin
-  void _manuelFetchLocationCountry(UserLocation location) async {
-    _manuelSelectUserLocation = location;
+  void manuelFetchLocationCountry({UserLocation? location}) async {
+    setBusy(true);
+    if (location == null) {
+      final result = await _locationService.getUserLocation();
+      await result.fold((l) async {
+        location ??= l;
+      }, (r) async => setError(r));
+    }
+    setBusy(false);
+    if (hasError) return;
+    _manuelSelectUserLocation = location!;
     final countries = await _fetchTimesService.getCountries();
     final country = await _bottomSheetService.showCustomSheet(
         variant: BottomSheetType.location,
         barrierDismissible: false,
         title: "Ülke Seçiniz",
-        data: countries.map((e) => e.ulkeAdiEn).toList());
+        data: countries.map((e) => e.ulkeAdiEn.capitalize()).toList());
     if (country == null) return;
-    final selection =
-        countries.firstWhere((e) => e.ulkeAdiEn == (country.data as String));
+    final selection = countries.firstWhere(
+        (e) => e.ulkeAdiEn == (country.data as String).toLowerCase());
     _manuelSelectUserLocation.country = selection.ulkeAdiEn;
 
     _manuelFetchLocationCity(selection.ulkeId);
@@ -75,10 +78,11 @@ class StartupViewModel extends BaseViewModel {
       variant: BottomSheetType.location,
       barrierDismissible: false,
       title: "Şehir Seçiniz",
-      data: cities.map((e) => e.sehirAdiEn).toList(),
+      data: cities.map((e) => e.sehirAdiEn.capitalize()).toList(),
     );
     if (city == null) return;
-    final selection = cities.firstWhere((e) => e.sehirAdiEn == city.data);
+    final selection = cities
+        .firstWhere((e) => e.sehirAdiEn == (city.data as String).toLowerCase());
     _manuelSelectUserLocation.city = selection.sehirAdiEn;
 
     _manuelFetchLocationState(selection.sehirId);
@@ -90,15 +94,18 @@ class StartupViewModel extends BaseViewModel {
       variant: BottomSheetType.location,
       barrierDismissible: false,
       title: "İlçe Seçiniz",
-      data: states.map((e) => e.ilceAdiEn).toList(),
+      data: states.map((e) => e.ilceAdiEn.capitalize()).toList(),
     );
     if (state == null) return;
-    final selection = states.firstWhere((e) => e.ilceAdiEn == state.data);
+    final selection = states
+        .firstWhere((e) => e.ilceAdiEn == (state.data as String).toLowerCase());
     _manuelSelectUserLocation.state = selection.ilceAdiEn;
 
+    setBusy(true);
     await _userSettingsService.setUserLocationSettings(
         location: _manuelSelectUserLocation);
     final fetchResult = await _fetchTimesService.fetchTimes();
+    setBusy(false);
     fetchResult.fold((l) {
       _navigationService.replaceWithHomeView();
     }, (r) {});

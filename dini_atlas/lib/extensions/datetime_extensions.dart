@@ -39,7 +39,7 @@ extension DateTimeExtensions on DateTime {
     int minutes = (difference.inMinutes % 60);
 
     String text = "$minutes dk";
-    if (hours > 0) text = "$hours sa $minutes dk";
+    if (hours > 0) text = "$hours sa ${minutes > 0 ? '$minutes dk' : ''}";
     return text;
   }
 

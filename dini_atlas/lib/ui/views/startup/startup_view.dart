@@ -39,7 +39,9 @@ class StartupView extends StackedView<StartupViewModel> {
                   verticalSpaceLarge,
                   _startupImage(context),
                   verticalSpace(40),
-                  _startupButton(context, viewModel),
+                  viewModel.isBusy
+                      ? const CircularProgressIndicator()
+                      : _actionButtons(context, viewModel),
                   const Spacer(),
                   _startupPrivacyPolicy(),
                   verticalSpaceMedium,
@@ -49,6 +51,25 @@ class StartupView extends StackedView<StartupViewModel> {
           },
         ),
       ),
+    );
+  }
+
+  Column _actionButtons(BuildContext context, StartupViewModel viewModel) {
+    return Column(
+      children: [
+        _startupButton(
+          context,
+          text: "Konum Bul",
+          onTap: viewModel.getDatas,
+        ),
+        verticalSpaceMedium,
+        _startupButton(
+          context,
+          text: "Manuel Seçim",
+          color: kcPurpleColorDarkSoft.withOpacity(.5),
+          onTap: viewModel.manuelFetchLocationCountry,
+        ),
+      ],
     );
   }
 
@@ -99,33 +120,34 @@ class StartupView extends StackedView<StartupViewModel> {
     );
   }
 
-  Widget _startupButton(BuildContext context, StartupViewModel viewModel) {
-    if (viewModel.isBusy) {
-      return const CircularProgressIndicator();
-    } else {
-      return InkWell(
-        onTap: viewModel.getDatas,
-        borderRadius: borderRadiusLarge,
-        splashColor: kcPurpleColorDark,
-        child: Ink(
-          decoration: BoxDecoration(
-            color: kcPurpleColorMedium,
-            borderRadius: borderRadiusLarge,
-          ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-            child: Text(
-              "Devam Et",
-              style: TextStyle(
-                color: kcBackgroundColor,
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
-              ),
+  Widget _startupButton(
+    BuildContext context, {
+    Color? color,
+    VoidCallback? onTap,
+    required String text,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: borderRadiusLarge,
+      splashColor: kcPurpleColorDark,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: color ?? kcPurpleColorMedium,
+          borderRadius: borderRadiusLarge,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: kcBackgroundColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
             ),
           ),
         ),
-      );
-    }
+      ),
+    );
   }
 
   TextButton _startupPrivacyPolicy() {
