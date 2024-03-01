@@ -20,8 +20,9 @@ abstract class AppWidgetService {
 
   static void init() {
     _appWidgetPlugin = AppWidgetPlugin(
-        androidPackageName: ksAppPackageName,
-        onConfigureWidget: onConfigureWidget);
+      androidPackageName: ksAppPackageName,
+      onConfigureWidget: onConfigureWidget,
+    );
   }
 
   static Future<

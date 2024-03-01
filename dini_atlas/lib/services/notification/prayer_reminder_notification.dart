@@ -13,7 +13,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'package:sound_mode/utils/ringer_mode_statuses.dart';
-import 'push_notification.dart';
+import 'app_notifications.dart';
 import 'dart:convert';
 
 class PrayerReminderNotification {
@@ -167,7 +167,7 @@ class PrayerReminderNotification {
           ? 'Güneş ${alertBefore ? "Doğuyor.." : "Doğdu"}'
           : '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}';
 
-      await PushNotification.instance.localNotiPlugin
+      await AppNotifications.instance.localNotiPlugin
           .show(2, alertMessage, subtitle, notificationDetails);
       if (silentModeActivated && silentModeSettingValue) {
         await Future.delayed(const Duration(seconds: 15));

@@ -50,7 +50,7 @@ class RiyazusSalihinView extends StackedView<RiyazusSalihinViewModel> {
         TextButton.icon(
           onPressed: viewModel.cancelFilter,
           icon: const Icon(Icons.arrow_back),
-          label: const Text("Geri Dön"),
+          label: const Text("Filtreyi Kaldır"),
         ),
         const Text("Arama sonuçları"),
       ],

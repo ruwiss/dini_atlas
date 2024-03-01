@@ -2,8 +2,9 @@ import 'dart:developer';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
+import 'package:dini_atlas/services/local/app_widget_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
-import 'package:dini_atlas/services/notification/push_notification.dart';
+import 'package:dini_atlas/services/notification/app_notifications.dart';
 import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_home_dialog.dart';
@@ -27,6 +28,8 @@ class HomeViewModel extends IndexTrackingViewModel {
 
   void init(HomeService homeService) async {
     _homeService = homeService;
+    AppWidgetService.init();
+    await AppNotifications.instance.setupNotification();
     await _optimizationPermissions();
     _checkAvailableUpdate();
   }
@@ -102,7 +105,7 @@ class HomeViewModel extends IndexTrackingViewModel {
         onChangedAlarmMode: (v) async {
           await _userSettingsService.setAlarmMode(v);
           _homeService.getUserSettings();
-          await PushNotification.instance.setAlarmMode(v);
+          await AppNotifications.instance.setAlarmMode(v);
         },
       ),
     );

@@ -43,7 +43,7 @@ class FirebaseRemoteConfigServiceClass {
           _hostKey: "https://api.kodlayalim.net/diniatlas",
           _privacyPolicyKey:
               "https://docs.kodlayalim.net/diniatlas_privacy.html",
-          _mailKey: "omer670067@gmail.com",
+          _mailKey: "",
           _securityKey: "V47R3JNT",
           _immediateUpdateVersionKey: 1,
           _gitlabProjectIdKey: "55056853",
