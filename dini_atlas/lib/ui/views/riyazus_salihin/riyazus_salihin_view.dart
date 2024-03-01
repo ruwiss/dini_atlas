@@ -96,6 +96,7 @@ class RiyazusSalihinView extends StackedView<RiyazusSalihinViewModel> {
                         number: item.id,
                         text1: item.arabic,
                         text3: item.turkish,
+                        highlightText: viewModel.filterQuery,
                         onBookmarkTap: () => viewModel.toggleFavorite(item),
                         isSaved: viewModel.isInFavourites(item.id),
                       ),

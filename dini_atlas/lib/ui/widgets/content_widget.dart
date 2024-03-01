@@ -25,6 +25,7 @@ class ContentWidget extends StatefulWidget {
     this.increaseFontSize = 0,
     this.hideDivider = false,
     this.titlePadding,
+    this.highlightText,
   });
   final ContentTypes type;
   final int number;
@@ -47,6 +48,7 @@ class ContentWidget extends StatefulWidget {
   final double increaseFontSize;
   final bool hideDivider;
   final EdgeInsetsGeometry? titlePadding;
+  final String? highlightText;
 
   @override
   State<ContentWidget> createState() => _QuranSuraItemState();
@@ -142,13 +144,18 @@ class _QuranSuraItemState extends State<ContentWidget> {
   }
 
   Widget _suraMeal() {
-    return Text(
-      widget.text3!,
-      style: TextStyle(
-        fontSize: 16 + widget.increaseFontSize,
-        color: kcPrimaryColorDark,
-      ),
-    );
+    final String text = widget.text3!;
+    if (widget.highlightText case final String query) {
+      return highlightedText(data: text, target: query);
+    } else {
+      return Text(
+        text,
+        style: TextStyle(
+          fontSize: 16 + widget.increaseFontSize,
+          color: kcPrimaryColorDark,
+        ),
+      );
+    }
   }
 
   Widget _suraTurkish() {
@@ -232,6 +239,47 @@ class _QuranSuraItemState extends State<ContentWidget> {
           color: kcOnPrimaryColor,
         ),
       ),
+    );
+  }
+
+  Text highlightedText({required String data, required String target}) {
+    final textSpans = List.empty(growable: true);
+    final escapedTarget = RegExp.escape(target);
+    final pattern = RegExp(escapedTarget, caseSensitive: false);
+    final matches = pattern.allMatches(data);
+
+    int currentIndex = 0;
+    for (final match in matches) {
+      final beforeMatch = data.substring(currentIndex, match.start);
+      if (beforeMatch.isNotEmpty) {
+        textSpans.add(TextSpan(text: beforeMatch));
+      }
+
+      final matchedText = data.substring(match.start, match.end);
+      textSpans.add(
+        TextSpan(
+          text: matchedText,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: kcPrimaryColorLight,
+          ),
+        ),
+      );
+
+      currentIndex = match.end;
+    }
+
+    if (currentIndex < data.length) {
+      final remainingText = data.substring(currentIndex);
+      textSpans.add(TextSpan(text: remainingText));
+    }
+
+    return Text.rich(
+      style: TextStyle(
+        fontSize: 16 + widget.increaseFontSize,
+        color: kcPrimaryColorDark,
+      ),
+      TextSpan(children: <TextSpan>[...textSpans]),
     );
   }
 }

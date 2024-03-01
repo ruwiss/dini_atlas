@@ -39,6 +39,8 @@ class RiyazusSalihinViewModel extends BaseViewModel {
 
   bool _filterMode = false;
   bool get filterMode => _filterMode;
+  String? _filterQuery;
+  String? get filterQuery => _filterQuery;
 
   void init() async {
     _loadBannerAd();
@@ -64,6 +66,7 @@ class RiyazusSalihinViewModel extends BaseViewModel {
     if (isFilterSearch) {
       setBusy(true);
       _filterMode = true;
+      _filterQuery = filter;
     }
 
     // aynı istekten sonra tekrar istek atma
@@ -92,6 +95,7 @@ class RiyazusSalihinViewModel extends BaseViewModel {
 
   void cancelFilter() {
     _filterMode = false;
+    _filterQuery = null;
     getRiyazusSalihinList();
   }
 
