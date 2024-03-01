@@ -27,10 +27,13 @@ abstract class GoogleServices {
     log("Firebase Remote Config initialized: ${stopwatch.elapsedMilliseconds} ms");
     await _setCrashlytics();
     log("Crashlytics record errors: ${stopwatch.elapsedMilliseconds} ms");
-    await locator<InAppPurchaseService>().init();
-    log("In App Purchases initialized: ${stopwatch.elapsedMilliseconds} ms");
-    unawaited(MobileAds.instance.initialize());
-    log("Mobile Ads initialized: ${stopwatch.elapsedMilliseconds} ms");
+
+    // Önce InAppSubscription çalıştır, ardından reklam servisini çalıştır
+    // Reklam kaldırıldıysa, boşa reklam yüklemesi yapmasın diye
+    unawaited(locator<InAppPurchaseService>().init(
+      onInit: () => unawaited(MobileAds.instance.initialize()),
+    ));
+
     stopwatch.stop();
 
     FirebaseAnalytics.instance.logAppOpen();

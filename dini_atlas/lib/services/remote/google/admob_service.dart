@@ -19,6 +19,7 @@ class AdmobBannerAdService {
       size: AdSize.banner,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
+          if (!ksShowAdmobAds) return;
           debugPrint('$ad loaded.');
           onAdLoaded?.call();
         },
@@ -48,6 +49,7 @@ class AdmobInterstitialAdService {
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
+          if (!ksShowAdmobAds) return;
           debugPrint('$ad loaded.');
           _interstitialAd = ad;
           onAdLoaded?.call();
@@ -80,6 +82,7 @@ class AdmobAppOpenAdsService {
       request: const AdRequest(),
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {
+          if (!ksShowAdmobAds) return;
           _appOpenAd = ad;
         },
         onAdFailedToLoad: (error) {
@@ -94,6 +97,7 @@ class AdmobAppOpenAdsService {
   bool get isAdAvailable => _appOpenAd != null;
 
   void showAdIfAvailable() {
+    if (!ksShowAdmobAds) return;
     if (!isAdAvailable) {
       debugPrint('Reklam bulunamadığı için yükleniyor.');
       setup();

@@ -7,6 +7,7 @@ import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:stacked/stacked.dart';
 
 enum QuranTabs {
@@ -63,6 +64,14 @@ class QuranTabViewModel extends IndexTrackingViewModel {
       suraList = data;
       notifyListeners();
     }, (error) => setError(error.message));
+  }
+
+  void showReviewDialog() async {
+    final InAppReview inAppReview = InAppReview.instance;
+
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    }
   }
 
   @override

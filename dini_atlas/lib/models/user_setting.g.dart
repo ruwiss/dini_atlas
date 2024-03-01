@@ -17,58 +17,63 @@ const UserSettingsSchema = CollectionSchema(
   name: r'UserSettings',
   id: 4939698790990493221,
   properties: {
-    r'city': PropertySchema(
+    r'alarmMode': PropertySchema(
       id: 0,
+      name: r'alarmMode',
+      type: IsarType.bool,
+    ),
+    r'city': PropertySchema(
+      id: 1,
       name: r'city',
       type: IsarType.object,
       target: r'City',
     ),
     r'country': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'country',
       type: IsarType.object,
       target: r'Country',
     ),
     r'increaseAyahFontSize': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'increaseAyahFontSize',
       type: IsarType.long,
     ),
     r'jsonString': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'jsonString',
       type: IsarType.string,
     ),
     r'lastReadAyah': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'lastReadAyah',
       type: IsarType.object,
       target: r'LastReadAyah',
     ),
     r'quranReciterId': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'quranReciterId',
       type: IsarType.long,
     ),
     r'silentModeEnable': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'silentModeEnable',
       type: IsarType.bool,
     ),
     r'state': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'state',
       type: IsarType.object,
       target: r'StateModel',
     ),
     r'suraSetting': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'suraSetting',
       type: IsarType.object,
       target: r'SuraSetting',
     ),
     r'userAuth': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'userAuth',
       type: IsarType.object,
       target: r'UserAuth',
@@ -146,42 +151,43 @@ void _userSettingsSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
+  writer.writeBool(offsets[0], object.alarmMode);
   writer.writeObject<City>(
-    offsets[0],
+    offsets[1],
     allOffsets,
     CitySchema.serialize,
     object.city,
   );
   writer.writeObject<Country>(
-    offsets[1],
+    offsets[2],
     allOffsets,
     CountrySchema.serialize,
     object.country,
   );
-  writer.writeLong(offsets[2], object.increaseAyahFontSize);
-  writer.writeString(offsets[3], object.jsonString);
+  writer.writeLong(offsets[3], object.increaseAyahFontSize);
+  writer.writeString(offsets[4], object.jsonString);
   writer.writeObject<LastReadAyah>(
-    offsets[4],
+    offsets[5],
     allOffsets,
     LastReadAyahSchema.serialize,
     object.lastReadAyah,
   );
-  writer.writeLong(offsets[5], object.quranReciterId);
-  writer.writeBool(offsets[6], object.silentModeEnable);
+  writer.writeLong(offsets[6], object.quranReciterId);
+  writer.writeBool(offsets[7], object.silentModeEnable);
   writer.writeObject<StateModel>(
-    offsets[7],
+    offsets[8],
     allOffsets,
     StateModelSchema.serialize,
     object.state,
   );
   writer.writeObject<SuraSetting>(
-    offsets[8],
+    offsets[9],
     allOffsets,
     SuraSettingSchema.serialize,
     object.suraSetting,
   );
   writer.writeObject<UserAuth>(
-    offsets[9],
+    offsets[10],
     allOffsets,
     UserAuthSchema.serialize,
     object.userAuth,
@@ -195,40 +201,41 @@ UserSettings _userSettingsDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = UserSettings();
+  object.alarmMode = reader.readBool(offsets[0]);
   object.city = reader.readObjectOrNull<City>(
-    offsets[0],
+    offsets[1],
     CitySchema.deserialize,
     allOffsets,
   );
   object.country = reader.readObjectOrNull<Country>(
-    offsets[1],
+    offsets[2],
     CountrySchema.deserialize,
     allOffsets,
   );
   object.id = id;
-  object.increaseAyahFontSize = reader.readLong(offsets[2]);
-  object.jsonString = reader.readString(offsets[3]);
+  object.increaseAyahFontSize = reader.readLong(offsets[3]);
+  object.jsonString = reader.readString(offsets[4]);
   object.lastReadAyah = reader.readObjectOrNull<LastReadAyah>(
-        offsets[4],
+        offsets[5],
         LastReadAyahSchema.deserialize,
         allOffsets,
       ) ??
       LastReadAyah();
-  object.quranReciterId = reader.readLong(offsets[5]);
-  object.silentModeEnable = reader.readBool(offsets[6]);
+  object.quranReciterId = reader.readLong(offsets[6]);
+  object.silentModeEnable = reader.readBool(offsets[7]);
   object.state = reader.readObjectOrNull<StateModel>(
-    offsets[7],
+    offsets[8],
     StateModelSchema.deserialize,
     allOffsets,
   );
   object.suraSetting = reader.readObjectOrNull<SuraSetting>(
-        offsets[8],
+        offsets[9],
         SuraSettingSchema.deserialize,
         allOffsets,
       ) ??
       SuraSetting();
   object.userAuth = reader.readObjectOrNull<UserAuth>(
-    offsets[9],
+    offsets[10],
     UserAuthSchema.deserialize,
     allOffsets,
   );
@@ -243,46 +250,48 @@ P _userSettingsDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readBool(offset)) as P;
+    case 1:
       return (reader.readObjectOrNull<City>(
         offset,
         CitySchema.deserialize,
         allOffsets,
       )) as P;
-    case 1:
+    case 2:
       return (reader.readObjectOrNull<Country>(
         offset,
         CountrySchema.deserialize,
         allOffsets,
       )) as P;
-    case 2:
-      return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (reader.readObjectOrNull<LastReadAyah>(
             offset,
             LastReadAyahSchema.deserialize,
             allOffsets,
           ) ??
           LastReadAyah()) as P;
-    case 5:
-      return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
+      return (reader.readBool(offset)) as P;
+    case 8:
       return (reader.readObjectOrNull<StateModel>(
         offset,
         StateModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 8:
+    case 9:
       return (reader.readObjectOrNull<SuraSetting>(
             offset,
             SuraSettingSchema.deserialize,
             allOffsets,
           ) ??
           SuraSetting()) as P;
-    case 9:
+    case 10:
       return (reader.readObjectOrNull<UserAuth>(
         offset,
         UserAuthSchema.deserialize,
@@ -387,6 +396,16 @@ extension UserSettingsQueryWhere
 
 extension UserSettingsQueryFilter
     on QueryBuilder<UserSettings, UserSettings, QFilterCondition> {
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      alarmModeEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'alarmMode',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition> cityIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -820,6 +839,18 @@ extension UserSettingsQueryLinks
 
 extension UserSettingsQuerySortBy
     on QueryBuilder<UserSettings, UserSettings, QSortBy> {
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy> sortByAlarmMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'alarmMode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy> sortByAlarmModeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'alarmMode', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       sortByIncreaseAyahFontSize() {
     return QueryBuilder.apply(this, (query) {
@@ -878,6 +909,18 @@ extension UserSettingsQuerySortBy
 
 extension UserSettingsQuerySortThenBy
     on QueryBuilder<UserSettings, UserSettings, QSortThenBy> {
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy> thenByAlarmMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'alarmMode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy> thenByAlarmModeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'alarmMode', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -948,6 +991,12 @@ extension UserSettingsQuerySortThenBy
 
 extension UserSettingsQueryWhereDistinct
     on QueryBuilder<UserSettings, UserSettings, QDistinct> {
+  QueryBuilder<UserSettings, UserSettings, QDistinct> distinctByAlarmMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'alarmMode');
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QDistinct>
       distinctByIncreaseAyahFontSize() {
     return QueryBuilder.apply(this, (query) {
@@ -982,6 +1031,12 @@ extension UserSettingsQueryProperty
   QueryBuilder<UserSettings, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool, QQueryOperations> alarmModeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'alarmMode');
     });
   }
 

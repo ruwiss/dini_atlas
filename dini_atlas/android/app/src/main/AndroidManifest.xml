@@ -13,9 +13,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Local Notifications, Alarm Manager Plus -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- Alarm Manager Plus - For apps with targetSDK=31 (Android 12) -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
-        android:maxSdkVersion="32" />
+    <!-- Alarm Manager Plus -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE " />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />

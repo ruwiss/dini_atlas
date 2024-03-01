@@ -75,3 +75,5 @@ const String kiHomeWidgetPrevSmall = "assets/images/widget_kucuk_preview.webp";
 
 const String kiEnableGps = "assets/images/enable_gps.webp";
 const String kiZoomInfo = "assets/images/zoom_info.png";
+
+const String kiAlarm = "assets/vectors/alarm.svg";

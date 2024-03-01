@@ -1,12 +1,13 @@
+import 'dart:developer';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
-import 'package:dini_atlas/services/local/app_widget_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/push_notification.dart';
 import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:dini_atlas/ui/dialogs/settings/settings_dialog.dart';
+import 'package:dini_atlas/ui/dialogs/settings/settings_home_dialog.dart';
+import 'package:flutter/services.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sound_mode/permission_handler.dart';
@@ -26,8 +27,6 @@ class HomeViewModel extends IndexTrackingViewModel {
 
   void init(HomeService homeService) async {
     _homeService = homeService;
-    AppWidgetService.init(); // Home Widgets
-    await PushNotification.instance.setupNotification();
     await _optimizationPermissions();
     _checkAvailableUpdate();
   }
@@ -50,19 +49,23 @@ class HomeViewModel extends IndexTrackingViewModel {
   }
 
   void _checkAvailableUpdate() async {
-    final info = await InAppUpdate.checkForUpdate();
-    if (info.updateAvailability != UpdateAvailability.updateAvailable) return;
-    if (info.availableVersionCode case final int version) {
-      final int immediateVersion =
-          FirebaseRemoteConfigServiceClass.i.immediateUpdateVersion;
-      if (version >= immediateVersion) {
-        await InAppUpdate.performImmediateUpdate();
-      } else {
-        final result = await InAppUpdate.startFlexibleUpdate();
-        if (result == AppUpdateResult.success) {
-          await InAppUpdate.completeFlexibleUpdate();
+    try {
+      final info = await InAppUpdate.checkForUpdate();
+      if (info.updateAvailability != UpdateAvailability.updateAvailable) return;
+      if (info.availableVersionCode case final int version) {
+        final int immediateVersion =
+            FirebaseRemoteConfigServiceClass.i.immediateUpdateVersion;
+        if (version >= immediateVersion) {
+          await InAppUpdate.performImmediateUpdate();
+        } else {
+          final result = await InAppUpdate.startFlexibleUpdate();
+          if (result == AppUpdateResult.success) {
+            await InAppUpdate.completeFlexibleUpdate();
+          }
         }
       }
+    } on PlatformException catch (e) {
+      log("Play Store'a erişilemediği için InAppUpdate: ${e.code}");
     }
   }
 
@@ -84,19 +87,23 @@ class HomeViewModel extends IndexTrackingViewModel {
     _dialogService.showCustomDialog(
       variant: DialogType.settings,
       barrierDismissible: true,
-      data: SettingsBaseDialogItem(
-        checkboxValue: userSettings!.silentModeEnable,
-        title: "Sessiz Mod",
-        svgIcon: kiEar,
-        subtitle: "Namaz vaktinden 5 dk önce başlar ve 30 dk sonra biter",
-        onChanged: (value) async {
-          await _userSettingsService.setSilentMode(value);
+      data: HomeSettingsDialog(
+        silentEnabled: userSettings!.silentModeEnable,
+        onChangedSilentMode: (v) async {
+          await _userSettingsService.setSilentMode(v);
           _homeService.getUserSettings();
           final permission =
               await PermissionHandler.permissionsGranted ?? false;
-          if (!permission) await PermissionHandler.openDoNotDisturbSetting();
+          if (!permission) {
+            await PermissionHandler.openDoNotDisturbSetting();
+          }
         },
-        showDivider: false,
+        alarmModeEnabled: userSettings.alarmMode,
+        onChangedAlarmMode: (v) async {
+          await _userSettingsService.setAlarmMode(v);
+          _homeService.getUserSettings();
+          await PushNotification.instance.setAlarmMode(v);
+        },
       ),
     );
   }

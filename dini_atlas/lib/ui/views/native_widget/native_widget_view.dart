@@ -63,11 +63,11 @@ class NativeWidgetView extends StackedView<NativeWidgetViewModel> {
     VoidCallback? onTap,
   }) {
     final widgets = [
-      Image.asset(widgetType.prevImage, height: 100),
-      horizontalSpaceMedium,
+      Image.asset(widgetType.prevImage, height: 90),
+      horizontalSpace(20),
       if (reversedRow) const Spacer(),
       Text(widgetType.text, style: const TextStyle(fontSize: 20)),
-      if (reversedRow) horizontalSpaceMedium,
+      if (reversedRow) horizontalSpaceTiny,
     ];
     return InkWell(
       onTap: onTap,

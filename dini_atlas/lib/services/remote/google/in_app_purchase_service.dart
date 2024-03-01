@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -19,20 +21,22 @@ class InAppPurchaseService with ListenableServiceMixin {
   void listen() => listenToReactiveValues(
       [entitlements, offers, customerInfo, hasSubscription]);
 
-  Future<void> init() async {
+  Future<void> init({VoidCallback? onInit}) async {
     if (kDebugMode) await Purchases.setLogLevel(LogLevel.debug);
     await Purchases.configure(PurchasesConfiguration(ksIapKey));
     await _getCustomerInfo();
     // Eğer abonelik varsa reklamları kapat
     if (hasSubscription) ksShowAdmobAds = false;
+    onInit?.call();
   }
 
   Future<void> _getCustomerInfo() async {
     try {
       _customerInfo = await Purchases.getCustomerInfo();
       updatePurchaseStatus(_customerInfo!);
-    } on PlatformException catch (_) {
+    } on PlatformException catch (e) {
       // Error fetching customer info
+      log("InAppSubscription: ${e.message}");
     }
   }
 

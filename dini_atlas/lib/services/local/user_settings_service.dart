@@ -81,6 +81,22 @@ class UserSettingsService {
     }
   }
 
+  Future<UserSettings> setAlarmMode(bool value) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userSettings = await getUserSettings();
+      userSettings!.alarmMode = value;
+      this.userSettings = userSettings;
+      // Veriyi kaydet
+      await _db.writeTxn(() async => await _db.userSettings.put(userSettings));
+      await prefs.setBool("alarmMode", value);
+      return userSettings;
+    } catch (e) {
+      throw UserSettingsException(
+          "Alarm mode - kaydedilirken bir sorun oluştu. $e");
+    }
+  }
+
   Future<UserSettings> setQuranReciter(int id) async {
     try {
       final userSettings = await getUserSettings();

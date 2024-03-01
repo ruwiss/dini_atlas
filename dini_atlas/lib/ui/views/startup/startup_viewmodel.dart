@@ -2,6 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dini_atlas/app/app.bottomsheets.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/user_location.dart';
+import 'package:dini_atlas/services/local/app_widget_service.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
@@ -113,7 +114,8 @@ class StartupViewModel extends BaseViewModel {
     } else {
       FlutterNativeSplash.remove();
     }
-    PushNotification.instance.setupNotification();
+    await PushNotification.instance.setupNotification();
+    AppWidgetService.init();
   }
 
   @override

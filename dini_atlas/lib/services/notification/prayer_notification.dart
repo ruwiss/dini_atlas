@@ -7,7 +7,7 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 abstract class PrayerNotification {
-  static void showPrayerCountdownNotification() async {
+  static Future<void> showPrayerCountdownNotification() async {
     final result = await PrayerTimesService.calculateSharedPrefNextPrayerTime();
 
     if (result == null) return;
@@ -44,7 +44,8 @@ abstract class PrayerNotification {
       channelShowBadge: false,
       autoCancel: false,
       silent: true,
-      category: AndroidNotificationCategory.event,
+      showWhen: false,
+      category: AndroidNotificationCategory.alarm,
       visibility: NotificationVisibility.public,
     );
     NotificationDetails notificationDetails =

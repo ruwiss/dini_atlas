@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dini_atlas",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "dini_atlas (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "dini_atlas (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "android_long_task",
+            "cwd": "packages\\android_long_task",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "android_long_task (profile mode)",
+            "cwd": "packages\\android_long_task",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "android_long_task (release mode)",
+            "cwd": "packages\\android_long_task",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

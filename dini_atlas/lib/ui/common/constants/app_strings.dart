@@ -6,6 +6,7 @@ import 'dart:convert';
 const String ksAppVersion = "1.0.4";
 
 String get ksBaseUrl => false
+    // ignore: dead_code
     ? "http://192.168.1.106:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
@@ -24,10 +25,10 @@ String get ksAppUrl =>
 const String ksDefaultLocale = "tr_TR";
 
 // Namaz vakti geri sayım push notification bildirim kanalı
-const String ksPrayerNotiChannel = "countdown_channel_atlas_4";
+const String ksPrayerNotiChannel = "countdown_channel_atlas_5";
 
 // Namaz vakti ek hatırlatıcı push notification bildirim kanalı
-const String ksPrayerReminderNotiChannel = "reminder_channel_atlas_4";
+const String ksPrayerReminderNotiChannel = "reminder_channel_atlas_5";
 
 // Mail
 String get ksMail => FirebaseRemoteConfigServiceClass.i.mail;

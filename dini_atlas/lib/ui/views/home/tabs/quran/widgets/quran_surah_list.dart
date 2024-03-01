@@ -52,12 +52,16 @@ class QuranSurahList extends StatelessWidget {
         if (currentTab != QuranTabs.traceable) {
           navService
               .navigateToQuranView(currentTab: currentTab, sura: item)
-              .then((_) => viewModel.loadInterstitalAd());
+              .then((_) {
+            viewModel.loadInterstitalAd();
+            viewModel.showReviewDialog();
+          });
         } else {
           // Takipli kuran ekranına git
-          navService
-              .navigateToTraceableQuranView(sura: item)
-              .then((_) => viewModel.loadInterstitalAd());
+          navService.navigateToTraceableQuranView(sura: item).then((_) {
+            viewModel.loadInterstitalAd();
+            viewModel.showReviewDialog();
+          });
         }
       },
       splashFactory: NoSplash.splashFactory,

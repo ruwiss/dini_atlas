@@ -17,7 +17,7 @@ import 'push_notification.dart';
 import 'dart:convert';
 
 class PrayerReminderNotification {
-  static void showPrayerReminderNotification() async {
+  static Future<void> showPrayerReminderNotification() async {
     final prefs = await SharedPreferences.getInstance();
 
     // Bildirim ayarlarını getir
@@ -31,13 +31,14 @@ class PrayerReminderNotification {
     // Namaz vakitlerini getir
     final List<PrayerSharedP>? prayerTimes =
         await PrayerTimesService.getPrayerTimesFromSharedPreferences();
+    if (prayerTimes == null) return;
 
     final DateTime now = DateTime.now();
     final dateNowAsToday = DateTime(now.year, now.month, now.day);
 
     // Bugüne ait namaz vakitlerini filtrele
     final PrayerSharedP currentPrayer =
-        PrayerTimesService.getPrayerByDay(prayerTimes!, now);
+        PrayerTimesService.getPrayerByDay(prayerTimes, now);
 
     int? advancedVoiceWarningTime;
     int? warningSoundId;
@@ -146,7 +147,7 @@ class PrayerReminderNotification {
         ticker: 'ticker',
         color: kcPrimaryColor,
         channelShowBadge: false,
-        category: AndroidNotificationCategory.event,
+        category: AndroidNotificationCategory.alarm,
         visibility: NotificationVisibility.public,
         playSound: true,
         sound: RawResourceAndroidNotificationSound(
@@ -163,16 +164,14 @@ class PrayerReminderNotification {
           alertBefore ? '$advancedVoiceWarningTime dk kaldı' : null;
 
       final alertMessage = activePrayer.name == PrayerType.gunes.name
-          ? '${activePrayer.name} ${alertBefore ? "Doğuyor.." : "Doğdu"}'
+          ? 'Güneş ${alertBefore ? "Doğuyor.." : "Doğdu"}'
           : '${activePrayer.name} Namazı ${alertBefore ? "Uyarısı" : "Vakti"}';
 
       await PushNotification.instance.localNotiPlugin
           .show(2, alertMessage, subtitle, notificationDetails);
       if (silentModeActivated && silentModeSettingValue) {
-        await Future.delayed(
-          const Duration(seconds: 15),
-          () => SoundMode.setSoundMode(RingerModeStatus.silent),
-        );
+        await Future.delayed(const Duration(seconds: 15));
+        await SoundMode.setSoundMode(RingerModeStatus.silent);
         debugPrint("Sessiz mod geri açıldı");
       }
     }

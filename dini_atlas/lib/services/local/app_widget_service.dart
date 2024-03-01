@@ -6,7 +6,6 @@ import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/prayer/prayer_shared_p.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'prayer_times_service.dart';
@@ -16,20 +15,13 @@ void onConfigureWidget(int widgetId) async {
   locator<NavigationService>().replaceWithNativeWidgetView(widgetId: widgetId);
 }
 
-@pragma('vm:entry-point')
-void onClickWidget(String? payload) async {
-  debugPrint(payload);
-}
-
 abstract class AppWidgetService {
   static late final AppWidgetPlugin _appWidgetPlugin;
 
   static void init() {
     _appWidgetPlugin = AppWidgetPlugin(
-      androidPackageName: ksAppPackageName,
-      onConfigureWidget: onConfigureWidget,
-      onClickWidget: onClickWidget,
-    );
+        androidPackageName: ksAppPackageName,
+        onConfigureWidget: onConfigureWidget);
   }
 
   static Future<
@@ -64,7 +56,8 @@ abstract class AppWidgetService {
     );
   }
 
-  static void configureBigWidget(int widgetId, {bool isUpdate = false}) async {
+  static Future<void> configureBigWidget(int widgetId,
+      {bool isUpdate = false}) async {
     final result = await _calculatePrayerTimes();
     if (result == null) return;
 
@@ -75,7 +68,7 @@ abstract class AppWidgetService {
         ? AppWidgetPlugin().updateWidget
         : _appWidgetPlugin.configureWidget;
 
-    process(
+    await process(
       widgetId: widgetId,
       widgetLayout: 'yeni_buyuk_widget',
       textViews: {
@@ -98,7 +91,8 @@ abstract class AppWidgetService {
     );
   }
 
-  static void configureMiniWidget(int widgetId, {bool isUpdate = false}) async {
+  static Future<void> configureMiniWidget(int widgetId,
+      {bool isUpdate = false}) async {
     final result = await _calculatePrayerTimes();
     if (result == null) return;
 
@@ -106,7 +100,7 @@ abstract class AppWidgetService {
         ? AppWidgetPlugin().updateWidget
         : _appWidgetPlugin.configureWidget;
 
-    process(
+    await process(
       widgetId: widgetId,
       widgetLayout: 'yeni_kucuk_widget',
       textViews: {
@@ -117,18 +111,18 @@ abstract class AppWidgetService {
     );
   }
 
-  static void updateAvailableHomeWidgets() async {
+  static Future<void> updateHomeWidgetsIfAvailable() async {
     final bigWidgets = await AppWidgetPlugin()
         .getWidgetIds(androidProviderName: "PrayerWidgetProvider");
     final miniWidgets = await AppWidgetPlugin()
         .getWidgetIds(androidProviderName: "PrayerMiniWidgetProvider");
 
     for (int id in bigWidgets ?? []) {
-      configureBigWidget(id, isUpdate: true);
+      await configureBigWidget(id, isUpdate: true);
     }
 
     for (int id in miniWidgets ?? []) {
-      configureMiniWidget(id, isUpdate: true);
+      await configureMiniWidget(id, isUpdate: true);
     }
   }
 }

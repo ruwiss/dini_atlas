@@ -8,7 +8,7 @@ class NearMosquesView extends StackedView<NearMosquesViewModel> {
   const NearMosquesView({super.key});
 
   void _launchUrl() async {
-    final url = Uri.parse("https://www.google.com/maps/search/mosque");
+    final url = Uri.parse("https://www.google.com/maps/search/cami");
     await launchUrl(url);
   }
 

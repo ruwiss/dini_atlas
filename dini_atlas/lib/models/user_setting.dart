@@ -41,6 +41,9 @@ class UserSettings {
   /// Sessiz Mod: vakitten 5 dk önceden 30 dk sonraya kadar
   bool silentModeEnable = false;
 
+  /// Alarm Modu: Vakit bildirimlerinin alarm kullanılarak sağlanması
+  bool alarmMode = true;
+
   /// Kuran okuyucu id
   int quranReciterId = -1;
 

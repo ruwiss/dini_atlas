@@ -805,6 +805,22 @@ class MockUserSettingsService extends _i1.Mock
       );
 
   @override
+  bool get isZoomInfoShown => (super.noSuchMethod(
+        Invocation.getter(#isZoomInfoShown),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set isZoomInfoShown(bool? _isZoomInfoShown) => super.noSuchMethod(
+        Invocation.setter(
+          #isZoomInfoShown,
+          _isZoomInfoShown,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   _i8.Future<_i3.UserSettings?> getUserSettings() => (super.noSuchMethod(
         Invocation.method(
           #getUserSettings,
@@ -1657,10 +1673,11 @@ class MockInAppPurchaseService extends _i1.Mock
       );
 
   @override
-  _i8.Future<void> init() => (super.noSuchMethod(
+  _i8.Future<void> init({_i9.VoidCallback? onInit}) => (super.noSuchMethod(
         Invocation.method(
           #init,
           [],
+          {#onInit: onInit},
         ),
         returnValue: _i8.Future<void>.value(),
         returnValueForMissingStub: _i8.Future<void>.value(),
