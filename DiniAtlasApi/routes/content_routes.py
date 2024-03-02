@@ -271,6 +271,11 @@ def dualar():
                 data.append(text)
             helper.daily_json("dualar", data)
 
+    if not data:
+        with open("json/dua.json", "r", encoding="utf-8") as f:
+            existing_data = json.load(f)
+            return existing_data
+
     return jsonify(data)
 
 
