@@ -6,6 +6,7 @@ import requests
 from connect import get_cursor
 import helper
 import json
+import os
 
 app = Blueprint("content_app", __name__)
 
@@ -232,18 +233,17 @@ def dini_gunler():
 
 @app.route("/radyolar")
 def radyolar():
-    try:
+    radios_path = "json/radios.json"
+    if os.path.exists(radios_path):
         with open("json/radios.json") as f:
-            return jsonify(json.load(f))
-    except:
-        return jsonify([])
-
-
-@app.route("/canlitv")
-def canli_tv():
-    r = requests.get("https://mp3quran.net/api/v3/live-tv")
-    data = r.json()["livetv"]
-    return jsonify([{"id": d["id"], "url": d["url"]} for d in data])
+            data = json.load(f)
+            try:
+                d = helper.fetch_radios()
+                return jsonify(d["radios"])
+            except:
+                return jsonify(data["radios"])
+    else:
+        return []
 
 
 @app.route("/dualar")

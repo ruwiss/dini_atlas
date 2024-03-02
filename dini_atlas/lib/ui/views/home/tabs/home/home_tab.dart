@@ -1,10 +1,11 @@
+import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/countdown/countdown_card.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/table_widget.dart';
-import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'home_tab_viewmodel.dart';
+
 import '../../home_service.dart';
+import 'home_tab_viewmodel.dart';
 
 class HomeTabView extends StatefulWidget {
   final HomeService homeService;

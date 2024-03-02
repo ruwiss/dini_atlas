@@ -34,14 +34,23 @@ def get_radio_names():
     ]
 
 
-def fetch_radios():
+def fetch_radios(force=False):
     current_directory = os.getcwd()
     json_folder_path = os.path.join(current_directory, "json")
     if not os.path.exists(json_folder_path):
         os.makedirs(json_folder_path)
 
     radios_json_path = os.path.join(json_folder_path, "radios.json")
+    fetch = False
     if not os.path.exists(radios_json_path):
+        fetch = True
+    else:
+        with open("json/radios.json") as f:
+            data = json.load(f)
+            if str(datetime.now().day) != data["last_fetch"]:
+                fetch = True
+
+    if fetch:
         radio_list = []
         for name in get_radio_names():
             r = requests.get(
@@ -51,7 +60,9 @@ def fetch_radios():
             print(f"{data['name']} - {data['url_resolved']}")
             radio_list.append({"name": data["name"], "url": data["url_resolved"]})
         with open(radios_json_path, "w") as f:
-            json.dump(radio_list, f)
+            json_item = {"radios": radio_list, "last_fetch": f"{datetime.now().day}"}
+            json.dump(json_item, f)
+            return json_item
 
 
 def daily_json(name, data=None):

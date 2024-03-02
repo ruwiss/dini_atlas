@@ -1,1 +1,61 @@
-[{"name": "LALEG\u00dcL FM", "url": "https://icecast.netmedya.net/lalegulfm"}, {"name": "Diyanet Kur'an Radyo", "url": "https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3c14192aa92.smil/playlist.m3u8"}, {"name": "Diyanet Radyo", "url": "https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3c1171d7d2a.smil/playlist.m3u8"}, {"name": "Erkam Radyo", "url": "https://api-tv5.yayin.com.tr:8002/mp3"}, {"name": "Semerkand Radyo", "url": "http://mtisvwurbfcyslive.mediatriple.net/mtisvwurbfcyslive/broadcast_58e23cb112296.smil/playlist.m3u8"}, {"name": "Akra FM", "url": "https://d3r5bwwuab2v60.cloudfront.net/akracanli2/_definst_/livestream_aac/playlist.m3u8"}, {"name": "Risalet Radyo", "url": "https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3c1520b2626.smil/playlist.m3u8"}, {"name": "Vav Radyo", "url": "https://trkvz-radyolar.ercdn.net/radyovav/playlist.m3u8"}, {"name": "Radyo G\u00fcl", "url": "http://yayin2.canliyayin.org:8866/;*.mp3"}, {"name": "BAYRAM FM TURKEY", "url": "https://sslyayin.netyayin.net/3442/stream"}, {"name": "Dost FM", "url": "http://yayin.dostfm.com:8920/;.mp3?no_dl"}, {"name": "Ribat FM", "url": "http://yayin1.canliyayin.org:7010/;*.mp3"}, {"name": "Enderun FM", "url": "http://yayin2.canliyayin.org:7052/;*.mp3"}, {"name": "G\u00f6zya\u015f\u0131 FM", "url": "http://yayin1.canliyayin.org:8700/;*.mp3"}]
+{
+    "radios": [
+        {
+            "name": "LALEG\u00dcL FM",
+            "url": "https://icecast.netmedya.net/lalegulfm"
+        },
+        {
+            "name": "Diyanet Kur'an Radyo",
+            "url": "https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3c14192aa92.smil/playlist.m3u8"
+        },
+        {
+            "name": "Diyanet Radyo",
+            "url": "https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3c1171d7d2a.smil/playlist.m3u8"
+        },
+        {
+            "name": "Erkam Radyo",
+            "url": "https://api-tv5.yayin.com.tr:8002/mp3"
+        },
+        {
+            "name": "Semerkand Radyo",
+            "url": "http://mtisvwurbfcyslive.mediatriple.net/mtisvwurbfcyslive/broadcast_58e23cb112296.smil/playlist.m3u8"
+        },
+        {
+            "name": "Akra FM",
+            "url": "https://d3r5bwwuab2v60.cloudfront.net/akracanli2/_definst_/livestream_aac/playlist.m3u8"
+        },
+        {
+            "name": "Risalet Radyo",
+            "url": "https://eustr73.mediatriple.net/videoonlylive/mtikoimxnztxlive/broadcast_5e3c1520b2626.smil/playlist.m3u8"
+        },
+        {
+            "name": "Vav Radyo",
+            "url": "https://trkvz-radyolar.ercdn.net/radyovav/playlist.m3u8"
+        },
+        {
+            "name": "Radyo G\u00fcl",
+            "url": "http://yayin2.canliyayin.org:8866/;*.mp3"
+        },
+        {
+            "name": "BAYRAM FM TURKEY",
+            "url": "https://sslyayin.netyayin.net/3442/stream"
+        },
+        {
+            "name": "Dost FM",
+            "url": "http://yayin.dostfm.com:8920/;.mp3?no_dl"
+        },
+        {
+            "name": "Ribat FM",
+            "url": "http://yayin1.canliyayin.org:7010/;*.mp3"
+        },
+        {
+            "name": "Enderun FM",
+            "url": "http://yayin2.canliyayin.org:7052/;*.mp3"
+        },
+        {
+            "name": "G\u00f6zya\u015f\u0131 FM",
+            "url": "http://yayin1.canliyayin.org:8700/;*.mp3"
+        }
+    ],
+    "last_fetch": "3"
+}
