@@ -2,6 +2,7 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class QuranSuraHeader extends StatefulWidget {
@@ -57,7 +58,7 @@ class _QuranSuraHeaderState extends State<QuranSuraHeader>
                 width: double.infinity,
                 margin: const EdgeInsets.symmetric(vertical: 17),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: borderRadiusMedium,
                   gradient: const LinearGradient(colors: [
                     kcPurpleColorMedium,
                     kcPurpleColorDark,
@@ -104,9 +105,14 @@ class _QuranSuraHeaderState extends State<QuranSuraHeader>
                         ],
                       ),
                     ),
-                    Flexible(
-                        child:
-                            SvgPicture.asset(kiCardImage, fit: BoxFit.cover)),
+                    ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(10),
+                      ),
+                      child: Flexible(
+                        child: SvgPicture.asset(kiCardImage, fit: BoxFit.cover),
+                      ),
+                    ),
                   ],
                 ),
               ),
