@@ -29,6 +29,9 @@ class AyahModel {
   /// Türkçe meali
   final String textMeal;
 
+  /// Türkçe meal kelime anlamları
+  final String? textKelimeler;
+
   /// Arapça metin
   final String textAr;
 
@@ -39,6 +42,7 @@ class AyahModel {
     required this.ayet,
     required this.sure,
     required this.textMeal,
+    this.textKelimeler,
     required this.textAr,
     required this.textOkunus,
   });
@@ -46,7 +50,9 @@ class AyahModel {
   factory AyahModel.fromJson(Map<String, dynamic> json) => AyahModel(
         ayet: json["ayet"],
         sure: json["sure"],
-        textMeal: json["text"],
+        textMeal: (json["text"] as String).replaceAll(r"\", ""),
+        textKelimeler:
+            (json["text_kelimeler"] as String?)?.replaceAll(r"\", ""),
         textAr: json["text_ar"],
         textOkunus: json["text_okunus"],
       );
@@ -55,6 +61,7 @@ class AyahModel {
         "ayet": ayet,
         "sure": sure,
         "text": textMeal,
+        "textKelimeler": textKelimeler,
         "text_ar": textAr,
         "text_okunus": textOkunus,
       };

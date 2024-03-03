@@ -83,6 +83,9 @@ class QuranView extends StackedView<QuranViewModel> {
                 text2:
                     suraSetting.showTurkishText ? ayahModel.textOkunus : null,
                 text3: suraSetting.showMeaningText ? ayahModel.textMeal : null,
+                words: suraSetting.showMeaningText
+                    ? ayahModel.textKelimeler
+                    : null,
                 onPlay: () => viewModel.playSura(ayahModel),
                 onPause: () => viewModel.pauseAudioPlayer(),
                 isPlaying: viewModel.isPlayingAyahId(ayahModel.ayet),

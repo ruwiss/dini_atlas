@@ -5,7 +5,7 @@ import 'dart:convert';
 
 const String ksAppVersion = "1.0.4";
 
-String get ksBaseUrl => false
+String get ksBaseUrl => true
     // ignore: dead_code
     ? "http://192.168.1.106:9958"
     : FirebaseRemoteConfigServiceClass.i.host;

@@ -15,6 +15,7 @@ class ContentWidget extends StatefulWidget {
     this.text1,
     this.text2,
     this.text3,
+    this.words,
     this.titleText,
     this.isPlaying = false,
     this.isPlayerLoading = false,
@@ -38,6 +39,9 @@ class ContentWidget extends StatefulWidget {
 
   /// Meal
   final String? text3;
+
+  /// Kelimeler (info)
+  final String? words;
   final String? titleText;
   final bool isPlaying;
   final bool isPlayerLoading;
@@ -107,7 +111,19 @@ class _QuranSuraItemState extends State<ContentWidget> {
             ),
           ),
           _textViews(),
-          if (!widget.hideDivider) const Divider()
+          if (widget.words case final String words) ...[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                words.delFromBeginAndEndIfAvailable('"'),
+                style: TextStyle(fontSize: 13 + widget.increaseFontSize),
+              ),
+            ),
+          ],
+          if (!widget.hideDivider &&
+              widget.words != null &&
+              widget.words!.isEmpty)
+            const Divider()
         ],
       ),
     );
@@ -242,7 +258,8 @@ class _QuranSuraItemState extends State<ContentWidget> {
     );
   }
 
-  Text highlightedText({required String data, required String target}) {
+  Text highlightedText(
+      {required String data, required String target, TextStyle? style}) {
     final textSpans = List.empty(growable: true);
     final escapedTarget = RegExp.escape(target);
     final pattern = RegExp(escapedTarget, caseSensitive: false);
@@ -275,10 +292,11 @@ class _QuranSuraItemState extends State<ContentWidget> {
     }
 
     return Text.rich(
-      style: TextStyle(
-        fontSize: 16 + widget.increaseFontSize,
-        color: kcPrimaryColorDark,
-      ),
+      style: style ??
+          TextStyle(
+            fontSize: 16 + widget.increaseFontSize,
+            color: kcPrimaryColorDark,
+          ),
       TextSpan(children: <TextSpan>[...textSpans]),
     );
   }

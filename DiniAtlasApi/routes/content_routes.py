@@ -48,7 +48,7 @@ def kuran():
             return jsonify({})
 
         cursor.execute(
-            "SELECT * FROM kuran WHERE sure = %s ORDER BY ayet ASC LIMIT 10 OFFSET %s",
+            """SELECT * FROM kuran WHERE sure = %s ORDER BY ayet ASC LIMIT 10 OFFSET %s""",
             (sure_data["sure"], offset),
         )
         ayetler = cursor.fetchall()
@@ -70,13 +70,14 @@ def kuran():
             return jsonify({"sure": sure_data, "ayetler": ayetler})
         else:
             cursor.execute(
-                """SELECT *
-      FROM kuran
-      WHERE sure = %s AND ayet = %s;
+                """SELECT * FROM kuran
+      WHERE sure = %s AND ayet >= %s
+      ORDER BY ayet ASC
+      LIMIT 10 OFFSET %s;
       """,
-                (sure, ayet),
+                (sure, ayet, offset),
             )
-            ayet = cursor.fetchone()
+            ayet = cursor.fetchall()
             return jsonify({"sure": sure_data, "ayetler": ayet})
 
 
