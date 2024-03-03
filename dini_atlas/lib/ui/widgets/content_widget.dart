@@ -27,6 +27,8 @@ class ContentWidget extends StatefulWidget {
     this.hideDivider = false,
     this.titlePadding,
     this.highlightText,
+    this.onSaveLastAyah,
+    this.isSavedLastAyah = false,
   });
   final ContentTypes type;
   final int number;
@@ -46,13 +48,15 @@ class ContentWidget extends StatefulWidget {
   final bool isPlaying;
   final bool isPlayerLoading;
   final bool isSaved;
-  final Function()? onPlay;
-  final Function()? onPause;
-  final Function()? onBookmarkTap;
+  final VoidCallback? onPlay;
+  final VoidCallback? onPause;
+  final VoidCallback? onBookmarkTap;
   final double increaseFontSize;
   final bool hideDivider;
   final EdgeInsetsGeometry? titlePadding;
   final String? highlightText;
+  final VoidCallback? onSaveLastAyah;
+  final bool isSavedLastAyah;
 
   @override
   State<ContentWidget> createState() => _QuranSuraItemState();
@@ -231,7 +235,14 @@ class _QuranSuraItemState extends State<ContentWidget> {
           IconButton(
             onPressed: () => widget.onBookmarkTap?.call(),
             icon: SvgPicture.asset(
-              widget.isSaved ? kiBookmarkChecked : kiBookmarkUnchecked,
+              widget.isSaved ? kiHeartFill : kiHeart,
+            ),
+          ),
+        if (widget.onSaveLastAyah != null)
+          IconButton(
+            onPressed: () => widget.onSaveLastAyah?.call(),
+            icon: SvgPicture.asset(
+              widget.isSavedLastAyah ? kiBookmarkChecked : kiBookmarkUnchecked,
             ),
           )
       ],

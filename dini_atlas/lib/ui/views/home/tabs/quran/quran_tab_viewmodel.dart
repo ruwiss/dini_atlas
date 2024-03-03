@@ -62,13 +62,14 @@ class QuranTabViewModel extends IndexTrackingViewModel {
   void init() async {
     _loadBannerAd();
     loadInterstitalAd();
-    await runBusyFuture(_getUserSettings());
+    await runBusyFuture(getUserSettings());
     runBusyFuture(_fetchSuraList());
     _listenSuraScroll();
   }
 
-  Future<void> _getUserSettings() async {
+  Future<void> getUserSettings() async {
     _userSettings = await _userSettingsService.getUserSettings();
+    notifyListeners();
   }
 
   Future<void> _fetchSuraList() async {

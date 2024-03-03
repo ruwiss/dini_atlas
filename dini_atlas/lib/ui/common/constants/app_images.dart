@@ -79,3 +79,6 @@ const String kiZoomInfo = "assets/images/zoom_info.png";
 const String kiAlarm = "assets/vectors/alarm.svg";
 
 const String kiStar = "assets/vectors/star.svg";
+
+const String kiHeart = "assets/vectors/heart.svg";
+const String kiHeartFill = "assets/vectors/heart_fill.svg";

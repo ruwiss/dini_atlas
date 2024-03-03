@@ -341,24 +341,19 @@ class QuranViewModel extends BaseViewModel {
     );
   }
 
-  void saveAyahPosition(BuildContext context) async {
-    if (ayahList == null || ayahList == null) return;
-    for (AyahModel ayah in ayahList!.ayetler) {
-      final currentContext = GlobalObjectKey(ayah.ayet).currentContext;
-      if (currentContext == null) continue;
-      final renderBox = currentContext.findRenderObject() as RenderBox;
-      final position = renderBox.localToGlobal(Offset.zero);
-      if (position.dy > 0 && position.dy < MediaQuery.of(context).size.height) {
-        // Görünen ilk eleman
-        if (ayah.ayet != userSettings.lastReadAyah.ayah) {
-          _userSettings =
-              await _userSettingsService.setLastReadAyah(LastReadAyah()
-                ..ayah = ayah.ayet
-                ..sura = ayahList!.sure.isim);
-        }
-        break;
-      }
-    }
+  bool isLastReadAyah(int ayah) => _userSettings.lastReadAyah.ayah == ayah;
+
+  void saveAyahAsLastRead(AyahModel ayahModel) async {
+    if (isLastReadAyah(ayahModel.ayet)) return;
+    _userSettings = await _userSettingsService.setLastReadAyah(LastReadAyah()
+      ..ayah = ayahModel.ayet
+      ..sura = ayahList!.sure.isim);
+    notifyListeners();
+    _bottomSheetService.showBottomSheet(
+      title: "İşaret koyuldu",
+      description: "Son okunan ayet olarak işaretlendi.",
+      confirmButtonTitle: "Tamam",
+    );
   }
 
   @override

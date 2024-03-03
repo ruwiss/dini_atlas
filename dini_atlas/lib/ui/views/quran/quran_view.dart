@@ -58,9 +58,6 @@ class QuranView extends StackedView<QuranViewModel> {
         if (info.metrics.pixels == info.metrics.maxScrollExtent) {
           viewModel.getAyahList(suraId: sura.suraId, loadMore: true);
         }
-        if (info is ScrollUpdateNotification) {
-          viewModel.saveAyahPosition(context);
-        }
         return true;
       },
       child: ListView.builder(
@@ -93,6 +90,8 @@ class QuranView extends StackedView<QuranViewModel> {
                     viewModel.playingAyahId == ayahModel.ayet,
                 isSaved: viewModel.isInFavourites(ayahModel.ayet),
                 onBookmarkTap: () => viewModel.onBookmarkTap(ayahModel),
+                onSaveLastAyah: () => viewModel.saveAyahAsLastRead(ayahModel),
+                isSavedLastAyah: viewModel.isLastReadAyah(ayahModel.ayet),
               ),
 
               // Daha fazla yükleme işlemindeyse indicator ekle

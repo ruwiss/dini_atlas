@@ -56,12 +56,14 @@ class QuranSurahList extends StatelessWidget {
               .then((_) {
             viewModel.loadInterstitalAd();
             viewModel.showReviewDialog();
+            viewModel.getUserSettings();
           });
         } else {
           // Takipli kuran ekranına git
           navService.navigateToTraceableQuranView(sura: item).then((_) {
             viewModel.loadInterstitalAd();
             viewModel.showReviewDialog();
+            viewModel.getUserSettings();
           });
         }
       },

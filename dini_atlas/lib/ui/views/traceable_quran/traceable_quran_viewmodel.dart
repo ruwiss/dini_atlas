@@ -39,12 +39,9 @@ class TraceableQuranViewModel extends BaseViewModel {
   PlayerState _currentPlayerState = PlayerState.stopped;
   PlayerState get currentPlayerState => _currentPlayerState;
 
-  late SuraInfo _suraInfo;
-
   bool? isZoomInfoShown;
 
   void init(SuraInfo sura) async {
-    _suraInfo = sura;
     await runBusyFuture(_getUserSettings());
     await runBusyFuture(_getQuranRecitersList());
     await runBusyFuture(_getSuraUrlList(sura));
@@ -210,15 +207,6 @@ class TraceableQuranViewModel extends BaseViewModel {
         // State'i sıradaki ayete güncelle
         _currentAyah = ayahItem;
         notifyListeners();
-      }
-
-      // Son okunan ayeti cihaza kaydet
-      if (_userSettings?.lastReadAyah.ayah != ayahItem.ayah) {
-        _userSettingsService
-            .setLastReadAyah(LastReadAyah()
-              ..ayah = ayahItem.ayah
-              ..sura = _suraInfo.name)
-            .then((value) => _userSettings = value);
       }
 
       final one = _suraPlayerModel?.pages[0];
