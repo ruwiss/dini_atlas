@@ -15,6 +15,8 @@ import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_quran_dialog.dart';
+import 'package:dini_atlas/ui/dialogs/simple_input_dialog.dart';
+import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
@@ -110,7 +112,8 @@ class QuranViewModel extends BaseViewModel {
       .getUserSettings()
       .then((value) => _userSettings = value!);
 
-  Future<void> getAyahList({required int suraId, int? ayahId, bool loadMore = false}) async {
+  Future<void> getAyahList(
+      {required int suraId, int? ayahId, bool loadMore = false}) async {
     if (loadMore) {
       // Zaten yükleniyorsa veya daha fazla veri yoksa iptal et
       if (_loadMoreStatus || _endOfContent) return;
@@ -360,6 +363,41 @@ class QuranViewModel extends BaseViewModel {
       title: "İşaret koyuldu",
       description: "Son okunan ayet olarak işaretlendi.",
       confirmButtonTitle: "Tamam",
+    );
+  }
+
+  void onHashtagButtonTap(BuildContext context) {
+    // Ayet sayı input
+    final max = ayahList?.sure.ayetSayisi;
+    showDialog(
+      context: context,
+      builder: (context) => SimpleInputDialog(
+        title: "Ayet Numarası",
+        hintText: "Max: $max",
+        keyboardType: const TextInputType.numberWithOptions(
+          decimal: false,
+          signed: false,
+        ),
+        onEntry: (input) {
+          final number = int.tryParse(input);
+          if (number == null || number > max! || number.isNegative) {
+            _bottomSheetService.showBottomSheet(
+              title: "Yanlış İstek",
+              description:
+                  "Gitmek istediğiniz ayeti 1-$max aralığında giriniz.",
+              confirmButtonTitle: "Tamam",
+            );
+          } else {
+            _navigationService.back();
+            // Sayfayı kapat ve istenilen sayfayı aç
+            _navigationService.navigateToQuranView(
+              currentTab: QuranTabs.sura,
+              sura: _suraInfo,
+              ayah: number,
+            );
+          }
+        },
+      ),
     );
   }
 

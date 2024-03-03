@@ -38,13 +38,13 @@ class QuranView extends StackedView<QuranViewModel> {
         title: sura.name,
         actions: [
           IconButton(
-            onPressed: viewModel.showSuraInfo,
-            icon: const Icon(Icons.info_outline),
-          ),
-          IconButton(
             onPressed: viewModel.onSettingsTap,
             icon: SvgPicture.asset(kiSettings),
-          )
+          ),
+          IconButton(
+            onPressed: () => viewModel.onHashtagButtonTap(context),
+            icon: const Icon(Icons.numbers, color: kcPrimaryColorLight),
+          ),
         ],
       ),
       body: Padding(
@@ -76,7 +76,11 @@ class QuranView extends StackedView<QuranViewModel> {
           return Column(
             key: GlobalObjectKey(ayahModel.ayet),
             children: [
-              if (index == 0) QuranHeader(sura: ayahList.sure),
+              if (index == 0)
+                QuranHeader(
+                  sura: ayahList.sure,
+                  onInfoTap: viewModel.showSuraInfo,
+                ),
               if (index == 0) BannerAdWidget(bannerAd: viewModel.bannerAd),
               ContentWidget(
                 increaseFontSize:

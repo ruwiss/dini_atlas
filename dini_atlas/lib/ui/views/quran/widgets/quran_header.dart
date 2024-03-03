@@ -6,8 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class QuranHeader extends StatelessWidget {
-  const QuranHeader({super.key, required this.sura});
+  const QuranHeader({
+    super.key,
+    required this.sura,
+    this.onInfoTap,
+  });
   final SuraDetailedInfo sura;
+  final VoidCallback? onInfoTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +20,26 @@ class QuranHeader extends StatelessWidget {
       padding: const EdgeInsets.only(top: 20, bottom: 25),
       child: Stack(
         alignment: Alignment.bottomCenter,
-        children: [
-          _cardView(),
-          _textView(),
-          _quranPicture(),
-        ],
+        children: [_cardView(), _textView(), _quranPicture(), _infoButton()],
       ),
     );
   }
 
-  Container _cardView() {
+  Positioned _infoButton() {
+    return Positioned(
+      right: 0,
+      bottom: 0,
+      child: IconButton(
+        onPressed: onInfoTap,
+        icon: const Icon(
+          Icons.info_outline,
+          color: kcBlueGrayColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _cardView() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 28),
       height: 255,
