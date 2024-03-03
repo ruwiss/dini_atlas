@@ -1,3 +1,4 @@
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/rosary/widgets/count_set_widget.dart';
 import 'package:dini_atlas/ui/views/rosary/widgets/counter_actions.dart';
@@ -5,6 +6,7 @@ import 'package:dini_atlas/ui/views/rosary/widgets/counter_widget.dart';
 import 'package:dini_atlas/ui/views/rosary/widgets/rosary_setting_buttons.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
 
 import 'rosary_viewmodel.dart';
@@ -18,9 +20,22 @@ class RosaryView extends StackedView<RosaryViewModel> {
     RosaryViewModel viewModel,
     Widget? child,
   ) {
+    final darkMode = !viewModel.isBusy && viewModel.darkMode;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: const AppBarWidget(title: "Tesbih"),
+      backgroundColor: darkMode
+          ? kcBlackBackground
+          : Theme.of(context).colorScheme.background,
+      appBar: AppBarWidget(
+        title: "Tesbih",
+        titleColor: darkMode ? kcGrayColorSoft : null,
+        backgroundColor: darkMode ? kcBlackBackground : null,
+        actions: [
+          IconButton(
+            onPressed: viewModel.toggleTheme,
+            icon: SvgPicture.asset(kiMoon),
+          ),
+        ],
+      ),
       body: Center(
         child: viewModel.isBusy
             ? const CircularProgressIndicator()

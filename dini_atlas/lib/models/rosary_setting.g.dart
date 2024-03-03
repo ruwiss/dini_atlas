@@ -22,23 +22,28 @@ const RosarySettingSchema = CollectionSchema(
       name: r'count',
       type: IsarType.long,
     ),
-    r'limit': PropertySchema(
+    r'darkMode': PropertySchema(
       id: 1,
+      name: r'darkMode',
+      type: IsarType.bool,
+    ),
+    r'limit': PropertySchema(
+      id: 2,
       name: r'limit',
       type: IsarType.long,
     ),
     r'setCount': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'setCount',
       type: IsarType.long,
     ),
     r'sound': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'sound',
       type: IsarType.bool,
     ),
     r'vibrate': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'vibrate',
       type: IsarType.bool,
     )
@@ -73,10 +78,11 @@ void _rosarySettingSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.count);
-  writer.writeLong(offsets[1], object.limit);
-  writer.writeLong(offsets[2], object.setCount);
-  writer.writeBool(offsets[3], object.sound);
-  writer.writeBool(offsets[4], object.vibrate);
+  writer.writeBool(offsets[1], object.darkMode);
+  writer.writeLong(offsets[2], object.limit);
+  writer.writeLong(offsets[3], object.setCount);
+  writer.writeBool(offsets[4], object.sound);
+  writer.writeBool(offsets[5], object.vibrate);
 }
 
 RosarySetting _rosarySettingDeserialize(
@@ -87,11 +93,12 @@ RosarySetting _rosarySettingDeserialize(
 ) {
   final object = RosarySetting();
   object.count = reader.readLong(offsets[0]);
+  object.darkMode = reader.readBool(offsets[1]);
   object.id = id;
-  object.limit = reader.readLong(offsets[1]);
-  object.setCount = reader.readLong(offsets[2]);
-  object.sound = reader.readBool(offsets[3]);
-  object.vibrate = reader.readBool(offsets[4]);
+  object.limit = reader.readLong(offsets[2]);
+  object.setCount = reader.readLong(offsets[3]);
+  object.sound = reader.readBool(offsets[4]);
+  object.vibrate = reader.readBool(offsets[5]);
   return object;
 }
 
@@ -105,12 +112,14 @@ P _rosarySettingDeserializeProp<P>(
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 4:
+      return (reader.readBool(offset)) as P;
+    case 5:
       return (reader.readBool(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -265,6 +274,16 @@ extension RosarySettingQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<RosarySetting, RosarySetting, QAfterFilterCondition>
+      darkModeEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'darkMode',
+        value: value,
       ));
     });
   }
@@ -476,6 +495,19 @@ extension RosarySettingQuerySortBy
     });
   }
 
+  QueryBuilder<RosarySetting, RosarySetting, QAfterSortBy> sortByDarkMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'darkMode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<RosarySetting, RosarySetting, QAfterSortBy>
+      sortByDarkModeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'darkMode', Sort.desc);
+    });
+  }
+
   QueryBuilder<RosarySetting, RosarySetting, QAfterSortBy> sortByLimit() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'limit', Sort.asc);
@@ -537,6 +569,19 @@ extension RosarySettingQuerySortThenBy
   QueryBuilder<RosarySetting, RosarySetting, QAfterSortBy> thenByCountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'count', Sort.desc);
+    });
+  }
+
+  QueryBuilder<RosarySetting, RosarySetting, QAfterSortBy> thenByDarkMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'darkMode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<RosarySetting, RosarySetting, QAfterSortBy>
+      thenByDarkModeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'darkMode', Sort.desc);
     });
   }
 
@@ -610,6 +655,12 @@ extension RosarySettingQueryWhereDistinct
     });
   }
 
+  QueryBuilder<RosarySetting, RosarySetting, QDistinct> distinctByDarkMode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'darkMode');
+    });
+  }
+
   QueryBuilder<RosarySetting, RosarySetting, QDistinct> distinctByLimit() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'limit');
@@ -646,6 +697,12 @@ extension RosarySettingQueryProperty
   QueryBuilder<RosarySetting, int, QQueryOperations> countProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'count');
+    });
+  }
+
+  QueryBuilder<RosarySetting, bool, QQueryOperations> darkModeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'darkMode');
     });
   }
 

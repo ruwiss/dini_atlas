@@ -7,6 +7,8 @@ class RosaryCounterWidget extends StatelessWidget {
   const RosaryCounterWidget({super.key, required this.viewModel});
   final RosaryViewModel viewModel;
 
+  bool get _dark => viewModel.darkMode;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,7 +20,7 @@ class RosaryCounterWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(90),
-        color: kcBlueGrayColor,
+        color: _dark ? kcGrayColor : kcBlueGrayColor,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +35,7 @@ class RosaryCounterWidget extends StatelessWidget {
           ),
           verticalSpaceTiny,
           !viewModel.editMode
-              ? Text("${viewModel.limit}", style: _limitCountStyle)
+              ? Text("${viewModel.limit}", style: _limitCountStyle())
               : SizedBox(
                   width: 40,
                   child: TextFormField(
@@ -41,7 +43,7 @@ class RosaryCounterWidget extends StatelessWidget {
                     keyboardType: const TextInputType.numberWithOptions(),
                     textAlign: TextAlign.center,
                     autofocus: true,
-                    style: _limitCountStyle,
+                    style: _limitCountStyle(),
                     maxLength: 3,
                     onFieldSubmitted: viewModel.changeLimitCount,
                     onChanged: (value) {
@@ -53,7 +55,7 @@ class RosaryCounterWidget extends StatelessWidget {
                       border: InputBorder.none,
                       isDense: true,
                       hintText: "0",
-                      hintStyle: _limitCountStyle,
+                      hintStyle: _limitCountStyle(),
                       counterText: "",
                     ),
                   ),
@@ -66,16 +68,16 @@ class RosaryCounterWidget extends StatelessWidget {
     );
   }
 
-  final TextStyle _limitCountStyle = const TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w500,
-  );
+  TextStyle _limitCountStyle() => TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: _dark ? kcBackgroundColor : null);
 
   Widget _editLimitButton() {
     return IconButton(
       onPressed: viewModel.toggleEditMode,
       style: IconButton.styleFrom(
-          backgroundColor: kcBackgroundColor,
+          backgroundColor: _dark ? kcGrayColorSoft : kcBackgroundColor,
           padding: const EdgeInsets.all(10)),
       icon: Icon(
         viewModel.editMode ? Icons.close : Icons.edit,

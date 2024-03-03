@@ -6,6 +6,8 @@ part 'rosary_setting.g.dart';
 class RosarySetting {
   Id id = Isar.autoIncrement;
 
+  bool darkMode = false;
+
   int count = 0;
   int limit = 33;
   int setCount = 1;

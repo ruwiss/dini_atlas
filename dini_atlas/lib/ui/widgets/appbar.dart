@@ -13,12 +13,14 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.hideBackButton = false,
     this.backgroundColor,
+    this.titleColor,
   });
   final String title;
   final List<Widget>? actions;
   final Widget? leading;
   final bool hideBackButton;
   final Color? backgroundColor;
+  final Color? titleColor;
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
@@ -30,10 +32,10 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       title: Text(
         title,
-        style: const TextStyle(
+        style:  TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w700,
-          color: kcPrimaryColor,
+          color: titleColor ?? kcPrimaryColor,
         ),
       ),
       leading: leading ??

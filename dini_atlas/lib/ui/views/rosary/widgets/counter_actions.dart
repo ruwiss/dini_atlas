@@ -28,6 +28,7 @@ class RosaryCounterActionsWidget extends StatelessWidget {
   }
 
   Widget _incrementButton() {
+    final dark = viewModel.darkMode;
     return Padding(
       padding: const EdgeInsets.all(22),
       child: Stack(
@@ -36,13 +37,13 @@ class RosaryCounterActionsWidget extends StatelessWidget {
           Container(
             height: 190,
             width: 190,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: kcBackgroundColor,
               boxShadow: [
                 BoxShadow(
-                  color: kcBlueGrayColor,
-                  offset: Offset(0, 0),
+                  color: dark ? Colors.black12 : kcBlueGrayColor,
+                  offset: const Offset(0, 0),
                   blurRadius: 10,
                 ),
               ],
@@ -55,8 +56,11 @@ class RosaryCounterActionsWidget extends StatelessWidget {
               value: viewModel.countPercentage,
               strokeWidth: 6,
               backgroundColor: kcBlueGrayColor,
-              valueColor:
-                  AlwaysStoppedAnimation(kcPurpleColorMedium.withOpacity(.5)),
+              valueColor: AlwaysStoppedAnimation(
+                dark
+                    ? kcPrimaryColorLight
+                    : kcPurpleColorMedium.withOpacity(.5),
+              ),
             ),
           ),
           InkWell(
@@ -68,9 +72,9 @@ class RosaryCounterActionsWidget extends StatelessWidget {
               width: 173,
               alignment: Alignment.center,
               padding: const EdgeInsets.all(30),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: kcBackgroundColor,
+                color: dark ? kcGrayColor : kcBackgroundColor,
               ),
               child: const Text(
                 "+",

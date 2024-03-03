@@ -45,6 +45,7 @@ class RosaryViewModel extends BaseViewModel {
   double get countPercentage => (count / limit) * 1;
   int get set => _rosarySetting!.setCount;
   int get limit => _rosarySetting!.limit;
+  bool get darkMode => _rosarySetting!.darkMode;
 
   Future<void> _getRosarySetting() async {
     _rosarySetting = await _userSettingsService.getRosarySetting();
@@ -63,6 +64,12 @@ class RosaryViewModel extends BaseViewModel {
 
   void changeVibrate() {
     _rosarySetting!.vibrate = !_rosarySetting!.vibrate;
+    _setRosarySetting();
+    notifyListeners();
+  }
+
+  void toggleTheme() {
+    _rosarySetting!.darkMode = !_rosarySetting!.darkMode;
     _setRosarySetting();
     notifyListeners();
   }

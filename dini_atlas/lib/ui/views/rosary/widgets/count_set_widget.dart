@@ -9,24 +9,28 @@ class RosaryCountSetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = viewModel.darkMode;
     return Align(
       alignment: Alignment.centerRight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             "TUR",
             style: TextStyle(
               fontSize: 14,
-              color: kcPrimaryColor,
+              color: dark ? kcBackgroundColor : kcPrimaryColor,
               fontWeight: FontWeight.w500,
             ),
           ),
           verticalSpaceTiny,
           CircleAvatar(
-            backgroundColor: kcPrimaryColorLight,
+            backgroundColor: dark ? kcGrayColorSoft : kcPrimaryColorLight,
             radius: 16,
-            child: Text("${viewModel.set}"),
+            child: Text(
+              "${viewModel.set}",
+              style: TextStyle(color: dark ? kcPrimaryColorDark : null),
+            ),
           ),
         ],
       ),

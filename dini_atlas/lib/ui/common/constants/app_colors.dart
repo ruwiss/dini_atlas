@@ -40,3 +40,6 @@ List<Color> kcListCardColors = [
   const Color(0xFFECAABA).withOpacity(.35),
   const Color(0xFF863ED5).withOpacity(.35),
 ];
+
+// Black
+const Color kcBlackBackground = Color(0xFF121212);
