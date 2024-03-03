@@ -187,7 +187,7 @@ class _SettingsBaseDialogItemState extends State<SettingsBaseDialogItem> {
             ),
           if (widget.showDivider) ...[
             verticalSpace(23),
-            const Divider(height: 1),
+            const Divider(height: 1, thickness: 1.5, color: kcDividerColor),
           ]
         ],
       ),
