@@ -95,12 +95,12 @@ class QuranViewModel extends BaseViewModel {
 
   late SuraInfo _suraInfo;
 
-  void init(SuraInfo sura) async {
+  void init({required SuraInfo sura, int? ayah}) async {
     _suraInfo = sura;
     _loadBannerAd();
     _loadInterstitalAd();
     await runBusyFuture(getUserSettings());
-    runBusyFuture(getAyahList(suraId: sura.suraId));
+    runBusyFuture(getAyahList(suraId: sura.suraId, ayahId: ayah));
     runBusyFuture(_getQuranRecitersList());
     runBusyFuture(_getFavourites());
     _playerListener();
@@ -110,7 +110,7 @@ class QuranViewModel extends BaseViewModel {
       .getUserSettings()
       .then((value) => _userSettings = value!);
 
-  Future<void> getAyahList({required int suraId, bool loadMore = false}) async {
+  Future<void> getAyahList({required int suraId, int? ayahId, bool loadMore = false}) async {
     if (loadMore) {
       // Zaten yükleniyorsa veya daha fazla veri yoksa iptal et
       if (_loadMoreStatus || _endOfContent) return;
@@ -121,7 +121,7 @@ class QuranViewModel extends BaseViewModel {
 
     // Veriyi getir, eğer loadMore ise offset değerini gönder
     final result = await _quranService.getSuraAyahList(
-        suraId: suraId, offset: loadMore ? _currentOffset : 0);
+        suraId: suraId, ayah: ayahId, offset: loadMore ? _currentOffset : 0);
 
     _setLoadMoreStatus(false);
 
@@ -341,13 +341,20 @@ class QuranViewModel extends BaseViewModel {
     );
   }
 
-  bool isLastReadAyah(int ayah) => _userSettings.lastReadAyah.ayah == ayah;
+  SavedLastAyah get _lastReadAyah => _userSettings.savedLastAyah;
+
+  bool isLastReadAyah(AyahModel ayahModel) =>
+      _lastReadAyah.ayah == ayahModel.ayet &&
+      _lastReadAyah.suraId == ayahModel.sure;
 
   void saveAyahAsLastRead(AyahModel ayahModel) async {
-    if (isLastReadAyah(ayahModel.ayet)) return;
-    _userSettings = await _userSettingsService.setLastReadAyah(LastReadAyah()
-      ..ayah = ayahModel.ayet
-      ..sura = ayahList!.sure.isim);
+    if (isLastReadAyah(ayahModel)) return;
+    _userSettings = await _userSettingsService.setLastReadAyah(
+      SavedLastAyah()
+        ..ayah = ayahModel.ayet
+        ..sura = ayahList!.sure.isim
+        ..suraId = ayahModel.sure,
+    );
     notifyListeners();
     _bottomSheetService.showBottomSheet(
       title: "İşaret koyuldu",

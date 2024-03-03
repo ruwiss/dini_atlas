@@ -227,10 +227,10 @@ class UserSettingsService {
     }
   }
 
-  Future<UserSettings> setLastReadAyah(LastReadAyah lastReadAyah) async {
+  Future<UserSettings> setLastReadAyah(SavedLastAyah lastReadAyah) async {
     try {
       final userSettings = await getUserSettings();
-      userSettings!.lastReadAyah = lastReadAyah;
+      userSettings!.savedLastAyah = lastReadAyah;
       this.userSettings = userSettings;
       // Veriyi kaydet
       await _db.writeTxn(() async => _db.userSettings.put(userSettings));

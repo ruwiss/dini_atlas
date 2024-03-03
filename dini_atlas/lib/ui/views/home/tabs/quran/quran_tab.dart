@@ -24,6 +24,7 @@ class QuranTab extends StackedView<QuranTabViewModel> {
                 QuranSuraHeader(
                   lastReadAyah: viewModel.lastReadAyah,
                   visible: viewModel.headerVisible,
+                  onTap: viewModel.onHeaderTap,
                 ),
                 // Sure listesi filtreleme butonları
                 QuranTabButtons(

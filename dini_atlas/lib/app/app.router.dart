@@ -206,7 +206,10 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<QuranViewArguments>(nullOk: false);
       return _i21.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) => _i5.QuranView(
-            key: args.key, sura: args.sura, currentTab: args.currentTab),
+            key: args.key,
+            sura: args.sura,
+            currentTab: args.currentTab,
+            ayah: args.ayah),
         settings: data,
         transitionsBuilder:
             data.transition ?? _i1.TransitionsBuilders.slideLeftWithFade,
@@ -330,6 +333,7 @@ class QuranViewArguments {
     this.key,
     required this.sura,
     required this.currentTab,
+    this.ayah,
   });
 
   final _i22.Key? key;
@@ -338,9 +342,11 @@ class QuranViewArguments {
 
   final _i24.QuranTabs currentTab;
 
+  final int? ayah;
+
   @override
   String toString() {
-    return '{"key": "$key", "sura": "$sura", "currentTab": "$currentTab"}';
+    return '{"key": "$key", "sura": "$sura", "currentTab": "$currentTab", "ayah": "$ayah"}';
   }
 
   @override
@@ -348,12 +354,13 @@ class QuranViewArguments {
     if (identical(this, other)) return true;
     return other.key == key &&
         other.sura == sura &&
-        other.currentTab == currentTab;
+        other.currentTab == currentTab &&
+        other.ayah == ayah;
   }
 
   @override
   int get hashCode {
-    return key.hashCode ^ sura.hashCode ^ currentTab.hashCode;
+    return key.hashCode ^ sura.hashCode ^ currentTab.hashCode ^ ayah.hashCode;
   }
 }
 
@@ -513,6 +520,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
     _i22.Key? key,
     required _i23.SuraInfo sura,
     required _i24.QuranTabs currentTab,
+    int? ayah,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -520,8 +528,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.quranView,
-        arguments:
-            QuranViewArguments(key: key, sura: sura, currentTab: currentTab),
+        arguments: QuranViewArguments(
+            key: key, sura: sura, currentTab: currentTab, ayah: ayah),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -797,6 +805,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
     _i22.Key? key,
     required _i23.SuraInfo sura,
     required _i24.QuranTabs currentTab,
+    int? ayah,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -804,8 +813,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.quranView,
-        arguments:
-            QuranViewArguments(key: key, sura: sura, currentTab: currentTab),
+        arguments: QuranViewArguments(
+            key: key, sura: sura, currentTab: currentTab, ayah: ayah),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

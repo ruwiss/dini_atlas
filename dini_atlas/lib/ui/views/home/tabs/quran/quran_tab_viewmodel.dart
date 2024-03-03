@@ -1,4 +1,5 @@
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/quran/sura_info.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 enum QuranTabs {
   sura(0, "Sûre"),
@@ -25,6 +27,7 @@ class QuranTabViewModel extends IndexTrackingViewModel {
   final _networkChecker = locator<NetworkChecker>();
   final _userSettingsService = locator<UserSettingsService>();
   final _quranService = locator<QuranService>();
+  final _navigationService = locator<NavigationService>();
 
   final _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
@@ -43,7 +46,7 @@ class QuranTabViewModel extends IndexTrackingViewModel {
 
   UserSettings? _userSettings;
   UserSettings get userSettings => _userSettings!;
-  LastReadAyah get lastReadAyah => userSettings.lastReadAyah;
+  SavedLastAyah get lastReadAyah => userSettings.savedLastAyah;
 
   final _bannerAdService = AdmobBannerAdService(adUnitId: ksAdmobBanner1);
   BannerAd? get bannerAd => _bannerAdService.bannerAd;
@@ -102,6 +105,15 @@ class QuranTabViewModel extends IndexTrackingViewModel {
       _headerVisible = true;
       notifyListeners();
     }
+  }
+
+  void onHeaderTap() {
+    final sura = suraList!.singleWhere((e) => e.suraId == lastReadAyah.suraId);
+    _navigationService.navigateToQuranView(
+      currentTab: QuranTabs.sura,
+      sura: sura,
+      ayah: lastReadAyah.ayah,
+    );
   }
 
   @override

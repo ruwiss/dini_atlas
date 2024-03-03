@@ -44,16 +44,16 @@ const UserSettingsSchema = CollectionSchema(
       name: r'jsonString',
       type: IsarType.string,
     ),
-    r'lastReadAyah': PropertySchema(
-      id: 5,
-      name: r'lastReadAyah',
-      type: IsarType.object,
-      target: r'LastReadAyah',
-    ),
     r'quranReciterId': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'quranReciterId',
       type: IsarType.long,
+    ),
+    r'savedLastAyah': PropertySchema(
+      id: 6,
+      name: r'savedLastAyah',
+      type: IsarType.object,
+      target: r'SavedLastAyah',
     ),
     r'silentModeEnable': PropertySchema(
       id: 7,
@@ -91,7 +91,7 @@ const UserSettingsSchema = CollectionSchema(
     r'Country': CountrySchema,
     r'City': CitySchema,
     r'StateModel': StateModelSchema,
-    r'LastReadAyah': LastReadAyahSchema,
+    r'SavedLastAyah': SavedLastAyahSchema,
     r'SuraSetting': SuraSettingSchema
   },
   getId: _userSettingsGetId,
@@ -122,8 +122,8 @@ int _userSettingsEstimateSize(
   }
   bytesCount += 3 + object.jsonString.length * 3;
   bytesCount += 3 +
-      LastReadAyahSchema.estimateSize(
-          object.lastReadAyah, allOffsets[LastReadAyah]!, allOffsets);
+      SavedLastAyahSchema.estimateSize(
+          object.savedLastAyah, allOffsets[SavedLastAyah]!, allOffsets);
   {
     final value = object.state;
     if (value != null) {
@@ -166,13 +166,13 @@ void _userSettingsSerialize(
   );
   writer.writeLong(offsets[3], object.increaseAyahFontSize);
   writer.writeString(offsets[4], object.jsonString);
-  writer.writeObject<LastReadAyah>(
-    offsets[5],
+  writer.writeLong(offsets[5], object.quranReciterId);
+  writer.writeObject<SavedLastAyah>(
+    offsets[6],
     allOffsets,
-    LastReadAyahSchema.serialize,
-    object.lastReadAyah,
+    SavedLastAyahSchema.serialize,
+    object.savedLastAyah,
   );
-  writer.writeLong(offsets[6], object.quranReciterId);
   writer.writeBool(offsets[7], object.silentModeEnable);
   writer.writeObject<StateModel>(
     offsets[8],
@@ -215,13 +215,13 @@ UserSettings _userSettingsDeserialize(
   object.id = id;
   object.increaseAyahFontSize = reader.readLong(offsets[3]);
   object.jsonString = reader.readString(offsets[4]);
-  object.lastReadAyah = reader.readObjectOrNull<LastReadAyah>(
-        offsets[5],
-        LastReadAyahSchema.deserialize,
+  object.quranReciterId = reader.readLong(offsets[5]);
+  object.savedLastAyah = reader.readObjectOrNull<SavedLastAyah>(
+        offsets[6],
+        SavedLastAyahSchema.deserialize,
         allOffsets,
       ) ??
-      LastReadAyah();
-  object.quranReciterId = reader.readLong(offsets[6]);
+      SavedLastAyah();
   object.silentModeEnable = reader.readBool(offsets[7]);
   object.state = reader.readObjectOrNull<StateModel>(
     offsets[8],
@@ -268,14 +268,14 @@ P _userSettingsDeserializeProp<P>(
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readObjectOrNull<LastReadAyah>(
+      return (reader.readLong(offset)) as P;
+    case 6:
+      return (reader.readObjectOrNull<SavedLastAyah>(
             offset,
-            LastReadAyahSchema.deserialize,
+            SavedLastAyahSchema.deserialize,
             allOffsets,
           ) ??
-          LastReadAyah()) as P;
-    case 6:
-      return (reader.readLong(offset)) as P;
+          SavedLastAyah()) as P;
     case 7:
       return (reader.readBool(offset)) as P;
     case 8:
@@ -805,10 +805,10 @@ extension UserSettingsQueryObject
     });
   }
 
-  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition> lastReadAyah(
-      FilterQuery<LastReadAyah> q) {
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition> savedLastAyah(
+      FilterQuery<SavedLastAyah> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'lastReadAyah');
+      return query.object(q, r'savedLastAyah');
     });
   }
 
@@ -1065,16 +1065,16 @@ extension UserSettingsQueryProperty
     });
   }
 
-  QueryBuilder<UserSettings, LastReadAyah, QQueryOperations>
-      lastReadAyahProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'lastReadAyah');
-    });
-  }
-
   QueryBuilder<UserSettings, int, QQueryOperations> quranReciterIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'quranReciterId');
+    });
+  }
+
+  QueryBuilder<UserSettings, SavedLastAyah, QQueryOperations>
+      savedLastAyahProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'savedLastAyah');
     });
   }
 
@@ -2481,9 +2481,9 @@ extension UserAuthQueryObject
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-const LastReadAyahSchema = Schema(
-  name: r'LastReadAyah',
-  id: -6122909453311509654,
+const SavedLastAyahSchema = Schema(
+  name: r'SavedLastAyah',
+  id: -6338500487055748129,
   properties: {
     r'ayah': PropertySchema(
       id: 0,
@@ -2494,16 +2494,21 @@ const LastReadAyahSchema = Schema(
       id: 1,
       name: r'sura',
       type: IsarType.string,
+    ),
+    r'suraId': PropertySchema(
+      id: 2,
+      name: r'suraId',
+      type: IsarType.long,
     )
   },
-  estimateSize: _lastReadAyahEstimateSize,
-  serialize: _lastReadAyahSerialize,
-  deserialize: _lastReadAyahDeserialize,
-  deserializeProp: _lastReadAyahDeserializeProp,
+  estimateSize: _savedLastAyahEstimateSize,
+  serialize: _savedLastAyahSerialize,
+  deserialize: _savedLastAyahDeserialize,
+  deserializeProp: _savedLastAyahDeserializeProp,
 );
 
-int _lastReadAyahEstimateSize(
-  LastReadAyah object,
+int _savedLastAyahEstimateSize(
+  SavedLastAyah object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -2512,29 +2517,31 @@ int _lastReadAyahEstimateSize(
   return bytesCount;
 }
 
-void _lastReadAyahSerialize(
-  LastReadAyah object,
+void _savedLastAyahSerialize(
+  SavedLastAyah object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.ayah);
   writer.writeString(offsets[1], object.sura);
+  writer.writeLong(offsets[2], object.suraId);
 }
 
-LastReadAyah _lastReadAyahDeserialize(
+SavedLastAyah _savedLastAyahDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = LastReadAyah();
+  final object = SavedLastAyah();
   object.ayah = reader.readLong(offsets[0]);
   object.sura = reader.readString(offsets[1]);
+  object.suraId = reader.readLong(offsets[2]);
   return object;
 }
 
-P _lastReadAyahDeserializeProp<P>(
+P _savedLastAyahDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -2545,14 +2552,16 @@ P _lastReadAyahDeserializeProp<P>(
       return (reader.readLong(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-extension LastReadAyahQueryFilter
-    on QueryBuilder<LastReadAyah, LastReadAyah, QFilterCondition> {
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> ayahEqualTo(
+extension SavedLastAyahQueryFilter
+    on QueryBuilder<SavedLastAyah, SavedLastAyah, QFilterCondition> {
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition> ayahEqualTo(
       int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -2562,7 +2571,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
       ayahGreaterThan(
     int value, {
     bool include = false,
@@ -2576,7 +2585,8 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> ayahLessThan(
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      ayahLessThan(
     int value, {
     bool include = false,
   }) {
@@ -2589,7 +2599,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> ayahBetween(
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition> ayahBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -2606,7 +2616,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraEqualTo(
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition> suraEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -2619,7 +2629,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
       suraGreaterThan(
     String value, {
     bool include = false,
@@ -2635,7 +2645,8 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraLessThan(
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      suraLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -2650,7 +2661,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraBetween(
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition> suraBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -2669,7 +2680,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
       suraStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -2683,7 +2694,8 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraEndsWith(
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      suraEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -2696,9 +2708,8 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      suraContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'sura',
@@ -2708,7 +2719,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition> suraMatches(
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition> suraMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -2720,7 +2731,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
       suraIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -2730,7 +2741,7 @@ extension LastReadAyahQueryFilter
     });
   }
 
-  QueryBuilder<LastReadAyah, LastReadAyah, QAfterFilterCondition>
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
       suraIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -2739,7 +2750,63 @@ extension LastReadAyahQueryFilter
       ));
     });
   }
+
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      suraIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'suraId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      suraIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'suraId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      suraIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'suraId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SavedLastAyah, SavedLastAyah, QAfterFilterCondition>
+      suraIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'suraId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
-extension LastReadAyahQueryObject
-    on QueryBuilder<LastReadAyah, LastReadAyah, QFilterCondition> {}
+extension SavedLastAyahQueryObject
+    on QueryBuilder<SavedLastAyah, SavedLastAyah, QFilterCondition> {}

@@ -20,7 +20,7 @@ class QuranSurahList extends StatelessWidget {
 
   List<SuraInfo> get sura => viewModel.suraList!;
   QuranTabs get currentTab => viewModel.currentTab;
-  LastReadAyah get lastReadAyah => viewModel.lastReadAyah;
+  SavedLastAyah get lastReadAyah => viewModel.lastReadAyah;
 
   @override
   Widget build(BuildContext context) {

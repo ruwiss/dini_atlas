@@ -48,7 +48,7 @@ class UserSettings {
   int quranReciterId = -1;
 
   /// Son okunan ayet
-  LastReadAyah lastReadAyah = LastReadAyah();
+  SavedLastAyah savedLastAyah = SavedLastAyah();
 
   /// Font boyutunu +[value] arttır
   int increaseAyahFontSize = 0;
@@ -155,7 +155,8 @@ class UserAuth {
 }
 
 @embedded
-class LastReadAyah {
+class SavedLastAyah {
   String sura = "Fâtiha Sûresi";
+  int suraId = 1;
   int ayah = 1;
 }

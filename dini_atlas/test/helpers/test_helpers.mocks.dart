@@ -1105,7 +1105,7 @@ class MockUserSettingsService extends _i1.Mock
 
   @override
   _i8.Future<_i3.UserSettings> setLastReadAyah(
-          _i3.LastReadAyah? lastReadAyah) =>
+          _i3.SavedLastAyah? lastReadAyah) =>
       (super.noSuchMethod(
         Invocation.method(
           #setLastReadAyah,

@@ -15,9 +15,16 @@ import 'package:stacked/stacked.dart';
 import 'quran_viewmodel.dart';
 
 class QuranView extends StackedView<QuranViewModel> {
-  const QuranView({super.key, required this.sura, required this.currentTab});
+  const QuranView({
+    super.key,
+    required this.sura,
+    required this.currentTab,
+    // istediğimiz ayetten başlasın
+    this.ayah,
+  });
   final SuraInfo sura;
   final QuranTabs currentTab;
+  final int? ayah;
 
   @override
   Widget builder(
@@ -91,7 +98,7 @@ class QuranView extends StackedView<QuranViewModel> {
                 isSaved: viewModel.isInFavourites(ayahModel.ayet),
                 onBookmarkTap: () => viewModel.onBookmarkTap(ayahModel),
                 onSaveLastAyah: () => viewModel.saveAyahAsLastRead(ayahModel),
-                isSavedLastAyah: viewModel.isLastReadAyah(ayahModel.ayet),
+                isSavedLastAyah: viewModel.isLastReadAyah(ayahModel),
               ),
 
               // Daha fazla yükleme işlemindeyse indicator ekle
@@ -118,6 +125,6 @@ class QuranView extends StackedView<QuranViewModel> {
   @override
   void onViewModelReady(QuranViewModel viewModel) {
     super.onViewModelReady(viewModel);
-    viewModel.init(sura);
+    viewModel.init(sura: sura, ayah: ayah);
   }
 }
