@@ -7,10 +7,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dini_atlas/models/favourite.dart' as _i25;
 import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
-import 'package:dini_atlas/ui/views/about/about_view.dart' as _i19;
+import 'package:dini_atlas/ui/views/about/about_view.dart' as _i18;
 import 'package:dini_atlas/ui/views/compass/compass_view.dart' as _i8;
 import 'package:dini_atlas/ui/views/dualar/dualar_view.dart' as _i17;
-import 'package:dini_atlas/ui/views/elifba/elifba_view.dart' as _i18;
 import 'package:dini_atlas/ui/views/esmaul_husna/esmaul_husna_view.dart'
     as _i16;
 import 'package:dini_atlas/ui/views/favourites/favourites_view.dart' as _i6;
@@ -21,7 +20,7 @@ import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart'
     as _i24;
 import 'package:dini_atlas/ui/views/kaza/kaza_view.dart' as _i9;
 import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart'
-    as _i20;
+    as _i19;
 import 'package:dini_atlas/ui/views/near_mosques/near_mosques_view.dart'
     as _i14;
 import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart' as _i4;
@@ -35,6 +34,7 @@ import 'package:dini_atlas/ui/views/rosary/rosary_view.dart' as _i10;
 import 'package:dini_atlas/ui/views/startup/startup_view.dart' as _i3;
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart'
     as _i7;
+import 'package:dini_atlas/ui/views/webview/webview_view.dart' as _i20;
 import 'package:flutter/foundation.dart' as _i22;
 import 'package:flutter/material.dart' as _i21;
 import 'package:flutter/material.dart';
@@ -74,11 +74,11 @@ class Routes {
 
   static const dualarView = '/dualar-view';
 
-  static const elifbaView = '/elifba-view';
-
   static const aboutView = '/about-view';
 
   static const nativeWidgetView = '/native-widget-view';
+
+  static const webviewView = '/webview-view';
 
   static const all = <String>{
     homeView,
@@ -97,9 +97,9 @@ class Routes {
     riyazusSalihinView,
     esmaulHusnaView,
     dualarView,
-    elifbaView,
     aboutView,
     nativeWidgetView,
+    webviewView,
   };
 }
 
@@ -170,16 +170,16 @@ class StackedRouter extends _i1.RouterBase {
       page: _i17.DualarView,
     ),
     _i1.RouteDef(
-      Routes.elifbaView,
-      page: _i18.ElifbaView,
-    ),
-    _i1.RouteDef(
       Routes.aboutView,
-      page: _i19.AboutView,
+      page: _i18.AboutView,
     ),
     _i1.RouteDef(
       Routes.nativeWidgetView,
-      page: _i20.NativeWidgetView,
+      page: _i19.NativeWidgetView,
+    ),
+    _i1.RouteDef(
+      Routes.webviewView,
+      page: _i20.WebviewView,
     ),
   ];
 
@@ -293,29 +293,31 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i18.ElifbaView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i18.ElifbaView(),
-        settings: data,
-      );
-    },
-    _i19.AboutView: (data) {
+    _i18.AboutView: (data) {
       final args = data.getArgs<AboutViewArguments>(
         orElse: () => const AboutViewArguments(),
       );
       return _i21.PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) => _i19.AboutView(
+        pageBuilder: (context, animation, secondaryAnimation) => _i18.AboutView(
             key: args.key, showSubscriptionView: args.showSubscriptionView),
         settings: data,
         transitionsBuilder:
             data.transition ?? _i1.TransitionsBuilders.slideRightWithFade,
       );
     },
-    _i20.NativeWidgetView: (data) {
+    _i19.NativeWidgetView: (data) {
       final args = data.getArgs<NativeWidgetViewArguments>(nullOk: false);
       return _i21.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i20.NativeWidgetView(key: args.key, widgetId: args.widgetId),
+            _i19.NativeWidgetView(key: args.key, widgetId: args.widgetId),
+        settings: data,
+      );
+    },
+    _i20.WebviewView: (data) {
+      final args = data.getArgs<WebviewViewArguments>(nullOk: false);
+      return _i21.MaterialPageRoute<dynamic>(
+        builder: (context) => _i20.WebviewView(
+            key: args.key, title: args.title, path: args.path, url: args.url),
         settings: data,
       );
     },
@@ -470,6 +472,42 @@ class NativeWidgetViewArguments {
   @override
   int get hashCode {
     return key.hashCode ^ widgetId.hashCode;
+  }
+}
+
+class WebviewViewArguments {
+  const WebviewViewArguments({
+    this.key,
+    required this.title,
+    this.path,
+    this.url,
+  });
+
+  final _i22.Key? key;
+
+  final String title;
+
+  final String? path;
+
+  final String? url;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "title": "$title", "path": "$path", "url": "$url"}';
+  }
+
+  @override
+  bool operator ==(covariant WebviewViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key &&
+        other.title == title &&
+        other.path == path &&
+        other.url == url;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ title.hashCode ^ path.hashCode ^ url.hashCode;
   }
 }
 
@@ -710,20 +748,6 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToElifbaView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.elifbaView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToAboutView({
     _i22.Key? key,
     bool showSubscriptionView = false,
@@ -753,6 +777,26 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.nativeWidgetView,
         arguments: NativeWidgetViewArguments(key: key, widgetId: widgetId),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToWebviewView({
+    _i22.Key? key,
+    required String title,
+    String? path,
+    String? url,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.webviewView,
+        arguments:
+            WebviewViewArguments(key: key, title: title, path: path, url: url),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -995,20 +1039,6 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithElifbaView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.elifbaView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithAboutView({
     _i22.Key? key,
     bool showSubscriptionView = false,
@@ -1038,6 +1068,26 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.nativeWidgetView,
         arguments: NativeWidgetViewArguments(key: key, widgetId: widgetId),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithWebviewView({
+    _i22.Key? key,
+    required String title,
+    String? path,
+    String? url,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.webviewView,
+        arguments:
+            WebviewViewArguments(key: key, title: title, path: path, url: url),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

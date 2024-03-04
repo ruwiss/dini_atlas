@@ -32,7 +32,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       title: Text(
         title,
-        style:  TextStyle(
+        style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w700,
           color: titleColor ?? kcPrimaryColor,

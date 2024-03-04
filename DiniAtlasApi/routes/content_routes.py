@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, Response
+from flask import Blueprint, redirect, request, jsonify, Response
 from selectolax.lexbor import LexborHTMLParser
 from datetime import datetime
 from markupsafe import escape
@@ -282,8 +282,4 @@ def dualar():
 
 @app.route("/aygoruntusu/<img>")
 def ay_goruntusu(img):
-    r = requests.get(f"https://namazvakti.diyanet.gov.tr/images/{img}", stream=True)
-    if r.status_code == 200:
-        return Response(r.content, mimetype="image/gif")
-    else:
-        return "Error", 404
+    return redirect(f"https://namazvakti.diyanet.gov.tr/images/{img}")

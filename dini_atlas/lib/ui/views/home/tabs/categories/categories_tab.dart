@@ -1,4 +1,6 @@
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
+import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/home/tabs/categories/categories.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,14 @@ class _CategoriesTabState extends State<CategoriesTab> {
           return InkWell(
             borderRadius: BorderRadius.circular(10),
             onTap: () {
-              locator<NavigationService>().navigateTo(item.route);
+              if (item.id == "cuz") {
+                locator<NavigationService>().navigateToWebviewView(
+                  title: item.name,
+                  url: FirebaseRemoteConfigServiceClass.i.elifba,
+                );
+              } else {
+                locator<NavigationService>().navigateTo(item.route);
+              }
             },
             child: Stack(
               alignment: Alignment.center,

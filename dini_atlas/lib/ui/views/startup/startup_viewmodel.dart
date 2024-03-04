@@ -28,7 +28,6 @@ class StartupViewModel extends BaseViewModel {
       _navigationService.replaceWithNoInternetView();
     } else {
       await runBusyFuture(_fetchUserLocationAndPrayerTimes());
-      if (modelError == null) _navigationService.replaceWithHomeView();
     }
   }
 
@@ -37,8 +36,9 @@ class StartupViewModel extends BaseViewModel {
     await result.fold((l) async {
       await _userSettingsService.setUserLocationSettings(location: l);
       final fetchResult = await _fetchTimesService.fetchTimes();
-      fetchResult.fold((l) {}, (r) {
-        setError(r.message);
+      fetchResult.fold((l) {
+        _navigationService.replaceWithHomeView();
+      }, (r) {
         manuelFetchLocationCountry(location: l);
       });
     }, (r) async => setError(r));

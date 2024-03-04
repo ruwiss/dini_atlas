@@ -1,10 +1,12 @@
-import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
+import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/about/about_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutTab extends StatelessWidget {
@@ -51,9 +53,9 @@ class AboutTab extends StatelessWidget {
         _aboutTileWidget(
           svg: kiAboutPrivacyPolicy,
           text: "Gizlilik Politikası",
-          onTap: () => launchUrl(
-            Uri.parse(FirebaseRemoteConfigServiceClass.i.privacyPolicy),
-            mode: LaunchMode.externalApplication,
+          onTap: () => locator<NavigationService>().navigateToWebviewView(
+            title: 'Gizlilik Sözleşmesi',
+            path: 'assets/docs/privacy_policy.html',
           ),
         ),
       ],

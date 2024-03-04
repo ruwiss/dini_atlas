@@ -101,6 +101,6 @@ final List<CategoryItem> categoryItems = [
     name: "Elif Bâ",
     image: kiBook2,
     color: kcListCardColors[11],
-    route: Routes.elifbaView,
+    route: Routes.webviewView,
   ),
 ];

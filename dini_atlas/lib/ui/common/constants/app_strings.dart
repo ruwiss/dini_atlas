@@ -11,9 +11,6 @@ String get ksBaseUrl => false
     ? "http://192.168.1.106:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
-// Gizlilik Politikası
-String get ksPrivacyPolicy => FirebaseRemoteConfigServiceClass.i.privacyPolicy;
-
 // Uygulama başlığı
 const String ksAppName = "Dinî Atlas";
 

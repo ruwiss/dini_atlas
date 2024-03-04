@@ -30,12 +30,12 @@ import 'package:dini_atlas/ui/views/near_mosques/near_mosques_view.dart';
 import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_view.dart';
 import 'package:dini_atlas/ui/views/esmaul_husna/esmaul_husna_view.dart';
 import 'package:dini_atlas/ui/views/dualar/dualar_view.dart';
-import 'package:dini_atlas/ui/views/elifba/elifba_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/location/location_sheet.dart';
 import 'package:dini_atlas/ui/views/about/about_view.dart';
 import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
 import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart';
 import 'package:dini_atlas/ui/dialogs/remove_ads/remove_ads_dialog.dart';
+import 'package:dini_atlas/ui/views/webview/webview_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -59,12 +59,12 @@ import 'package:dini_atlas/ui/dialogs/remove_ads/remove_ads_dialog.dart';
     MaterialRoute(page: RiyazusSalihinView),
     MaterialRoute(page: EsmaulHusnaView),
     MaterialRoute(page: DualarView),
-    MaterialRoute(page: ElifbaView),
     CustomRoute(
       page: AboutView,
       transitionsBuilder: TransitionsBuilders.slideRightWithFade,
     ),
     MaterialRoute(page: NativeWidgetView),
+    MaterialRoute(page: WebviewView),
 // @stacked-route
   ],
   dependencies: [
