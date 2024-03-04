@@ -1,7 +1,7 @@
 name: dini_atlas
 description: Dini Atlas
 publish_to: 'none'
-version: 1.0.6+11
+version: 1.0.7+12
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -103,7 +103,6 @@ flutter:
     - assets/sounds/
     - assets/fonts/
     - assets/docs/
-    - assets/docs/elifba/
 
   fonts:
     - family: Poppins

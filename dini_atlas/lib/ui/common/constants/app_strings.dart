@@ -5,7 +5,7 @@ import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-const String ksAppVersion = "1.0.6";
+const String ksAppVersion = "1.0.7";
 
 String get ksBaseUrl => false
     ? "http://192.168.1.106:9958"
