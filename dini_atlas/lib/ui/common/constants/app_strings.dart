@@ -50,9 +50,6 @@ const String ksAdmobBanner1 = "ca-app-pub-1923752572867502/8337775502";
 /// İçerik liste görünümü
 const String ksAdmobBanner2 = "ca-app-pub-1923752572867502/5515584315";
 
-/// Elifba ekranı
-const String ksAdmobBanner3 = "ca-app-pub-1923752572867502/3085448826";
-
 /// Kaza ekranı
 const String ksAdmobBanner4 = "ca-app-pub-1923752572867502/1772367150";
 

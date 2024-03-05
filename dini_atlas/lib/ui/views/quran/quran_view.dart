@@ -5,6 +5,7 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
 import 'package:dini_atlas/ui/views/quran/widgets/quran_header.dart';
+import 'package:dini_atlas/ui/views/quran/widgets/search_ayah_field.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:dini_atlas/ui/widgets/content_widget.dart';
@@ -42,18 +43,25 @@ class QuranView extends StackedView<QuranViewModel> {
             icon: SvgPicture.asset(kiSettings),
           ),
           IconButton(
-            onPressed: () => viewModel.onHashtagButtonTap(context),
+            onPressed: viewModel.toggleHashInputView,
             icon: const Icon(Icons.numbers, color: kcPrimaryColorLight),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: viewModel.hasError
-            ? Text("${viewModel.modelError}")
-            : viewModel.isBusy || viewModel.ayahList == null
-                ? Center(child: _loadingWidget())
-                : _quranView(context, viewModel),
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: viewModel.hasError
+                ? Text("${viewModel.modelError}")
+                : viewModel.isBusy || viewModel.ayahList == null
+                    ? Center(child: _loadingWidget())
+                    : _quranView(context, viewModel),
+          ),
+          if (viewModel.showHastInputView)
+            SearchAyahField(viewModel: viewModel),
+        ],
       ),
     );
   }

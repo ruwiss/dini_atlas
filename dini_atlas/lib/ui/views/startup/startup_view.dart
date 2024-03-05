@@ -31,22 +31,28 @@ class StartupView extends StackedView<StartupViewModel> {
                 onRetry: viewModel.getDatas,
               );
             } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  verticalSpaceMedium,
-                  const Spacer(),
-                  _startupTitle(context),
-                  verticalSpace(40),
-                  _startupImage(context),
-                  verticalSpace(30),
-                  viewModel.isBusy
-                      ? const CircularProgressIndicator()
-                      : _actionButtons(context, viewModel),
-                  const Spacer(),
-                  _startupPrivacyPolicy(),
-                  verticalSpaceMedium,
-                ],
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: paddingLarge,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(),
+                      Column(
+                        children: [
+                          _startupTitle(context),
+                          verticalSpace(40),
+                          _startupImage(context),
+                          verticalSpace(30),
+                          viewModel.isBusy
+                              ? const CircularProgressIndicator()
+                              : _actionButtons(context, viewModel),
+                        ],
+                      ),
+                      _startupPrivacyPolicy(),
+                    ],
+                  ),
+                ),
               );
             }
           },

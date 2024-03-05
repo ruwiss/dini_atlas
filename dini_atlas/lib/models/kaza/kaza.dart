@@ -43,12 +43,12 @@ class Kaza {
       };
 
   Kaza.createEmpty()
-      : sabah = 100,
-        ogle = 100,
-        ikindi = 100,
-        aksam = 100,
-        yatsi = 100,
-        vitir = 100,
+      : sabah = 0,
+        ogle = 0,
+        ikindi = 0,
+        aksam = 0,
+        yatsi = 0,
+        vitir = 0,
         oruc = 0,
         lastUpdated = null;
 
