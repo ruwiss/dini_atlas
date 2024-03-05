@@ -31,20 +31,23 @@ class _TraceableQuranWidgetState extends State<TraceableQuranWidget> {
                     textAlign: TextAlign.center);
               } else if (snapshot.hasData) {
                 final Uint8List bytes = snapshot.data!;
-                return SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: suraPage.x == null
-                      ? SvgPicture.memory(bytes)
-                      : Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: CustomPaint(
-                              painter: AyahMarkerPainter(
-                                x: double.parse(suraPage.x!),
-                                y: double.parse(suraPage.y!),
-                                polygon: suraPage.polygon!,
-                              ),
-                              child: SvgPicture.memory(bytes)),
-                        ),
+                return GestureDetector(
+                  onTap: widget.viewModel.showAndHidePlayerViewWithDuration,
+                  child: SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: suraPage.x == null
+                        ? SvgPicture.memory(bytes)
+                        : Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: CustomPaint(
+                                painter: AyahMarkerPainter(
+                                  x: double.parse(suraPage.x!),
+                                  y: double.parse(suraPage.y!),
+                                  polygon: suraPage.polygon!,
+                                ),
+                                child: SvgPicture.memory(bytes)),
+                          ),
+                  ),
                 );
               }
               return const Text("Yükleniyor");

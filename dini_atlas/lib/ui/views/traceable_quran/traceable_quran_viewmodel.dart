@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dini_atlas/app/app.dialogs.dart';
@@ -231,6 +232,10 @@ class TraceableQuranViewModel extends BaseViewModel {
       // Durum değişince state'i güncelle
       _currentPlayerState = state;
       notifyListeners();
+
+      if (state == PlayerState.playing && showPlayerView) {
+        showAndHidePlayerViewWithDuration();
+      }
     });
   }
 
@@ -265,6 +270,22 @@ class TraceableQuranViewModel extends BaseViewModel {
     } else {
       throw Exception('Failed to load SVG');
     }
+  }
+
+  bool _showPlayerView = true;
+  bool get showPlayerView => _showPlayerView;
+
+  void togglePlayerView(bool val) {
+    _showPlayerView = val;
+    notifyListeners();
+  }
+
+  void showAndHidePlayerViewWithDuration() {
+    togglePlayerView(true);
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      timer.cancel();
+      togglePlayerView(false);
+    });
   }
 
   @override

@@ -40,7 +40,11 @@ class TraceableQuranView extends StackedView<TraceableQuranViewModel> {
                     ? _bismillahWidget()
                     : TraceableQuranWidget(viewModel: viewModel),
                 _zoomInfoView(viewModel),
-                TraceableQuranAudioWidget(viewModel: viewModel),
+                AnimatedOpacity(
+                  opacity: viewModel.showPlayerView ? 1.0 : 0.0,
+                  duration: const Duration(seconds: 1),
+                  child: TraceableQuranAudioWidget(viewModel: viewModel),
+                )
               ],
             ),
     );
