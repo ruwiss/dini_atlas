@@ -36,6 +36,7 @@ import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
 import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart';
 import 'package:dini_atlas/ui/dialogs/remove_ads/remove_ads_dialog.dart';
 import 'package:dini_atlas/ui/views/webview/webview_view.dart';
+import 'package:dini_atlas/ui/bottom_sheets/image/image_sheet.dart';
 // @stacked-import
 
 @StackedApp(
@@ -86,8 +87,8 @@ import 'package:dini_atlas/ui/views/webview/webview_view.dart';
 // @stacked-service
   ],
   bottomsheets: [
-    StackedBottomsheet(classType: AlertSheet),
     StackedBottomsheet(classType: LocationSheet),
+    StackedBottomsheet(classType: ImageSheet),
 // @stacked-bottom-sheet
   ],
   dialogs: [
