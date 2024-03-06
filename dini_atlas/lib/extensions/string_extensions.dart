@@ -59,4 +59,31 @@ extension StringTimeExtensions on String {
   String delFromBeginAndEndIfAvailable(String char) {
     return replaceAll(RegExp('^"|"\$'), "").trim();
   }
+
+  String toLowerCaseTurkish() {
+    String result = "";
+    for (var char in characters) {
+      switch (char) {
+        case 'I':
+          result += 'ı';
+          break;
+        case 'İ':
+          result += 'i';
+          break;
+        case 'Ğ':
+          result += 'ğ';
+        case 'Ü':
+          result += 'ü';
+        case 'Ö':
+          result += 'ö';
+        case 'Ş':
+          result += 'ş';
+        case 'Ç':
+          result += 'ç';
+        default:
+          result += char.toLowerCase();
+      }
+    }
+    return result;
+  }
 }

@@ -61,7 +61,8 @@ class LocationService {
 
     if (kDebugMode) {
       print(
-          "Kullanıcı konumu alındı: ${userLocation.country}: ${userLocation.city}");
+        "Kullanıcı konumu alındı: ${userLocation.country}: ${userLocation.city}",
+      );
     }
 
     return Left(userLocation);

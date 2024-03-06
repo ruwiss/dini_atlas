@@ -1,3 +1,4 @@
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:isar/isar.dart';
 part 'city.g.dart';
 
@@ -10,9 +11,9 @@ class City {
   City();
 
   City.fromJson(Map<String, dynamic> json)
-      : sehirAdi = (json["SehirAdi"] as String).toLowerCase(),
-        sehirAdiEn = (json["SehirAdiEn"] as String).toLowerCase(),
-        sehirId = (json["SehirID"] as String).toLowerCase();
+      : sehirAdi = (json["SehirAdi"] as String).toLowerCaseTurkish(),
+        sehirAdiEn = (json["SehirAdiEn"] as String).toLowerCaseTurkish(),
+        sehirId = (json["SehirID"] as String);
 
   Map<String, dynamic> toJson() => {
         "SehirAdi": sehirAdi,

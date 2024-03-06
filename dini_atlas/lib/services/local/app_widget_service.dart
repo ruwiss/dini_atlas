@@ -16,7 +16,7 @@ void onConfigureWidget(int widgetId) async {
 }
 
 abstract class AppWidgetService {
-  static late final AppWidgetPlugin _appWidgetPlugin;
+  static AppWidgetPlugin? _appWidgetPlugin;
 
   static void init() {
     _appWidgetPlugin = AppWidgetPlugin(
@@ -67,7 +67,7 @@ abstract class AppWidgetService {
 
     final process = isUpdate
         ? AppWidgetPlugin().updateWidget
-        : _appWidgetPlugin.configureWidget;
+        : _appWidgetPlugin!.configureWidget;
 
     await process(
       widgetId: widgetId,
@@ -93,7 +93,7 @@ abstract class AppWidgetService {
 
     final process = isUpdate
         ? AppWidgetPlugin().updateWidget
-        : _appWidgetPlugin.configureWidget;
+        : _appWidgetPlugin!.configureWidget;
 
     await process(
       widgetId: widgetId,

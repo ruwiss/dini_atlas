@@ -15,6 +15,8 @@ class LocationSheet extends StackedView<LocationSheetModel> {
     required this.request,
   });
 
+  List<String> get _listItems => request.data as List<String>;
+
   @override
   Widget builder(
     BuildContext context,
@@ -48,12 +50,24 @@ class LocationSheet extends StackedView<LocationSheetModel> {
             ),
           ],
           verticalSpaceMedium,
+          TextField(
+            onChanged: viewModel.filter,
+            autofocus: true,
+            decoration: InputDecoration(
+              isDense: true,
+              filled: true,
+              fillColor: kcBlueGrayColor.withOpacity(.8),
+              hintText: "Arama Yap",
+              border: InputBorder.none,
+            ),
+          ),
+          verticalSpaceMedium,
           Flexible(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: (request.data as List).length,
+              itemCount: viewModel.filteredList.length,
               itemBuilder: (context, index) {
-                final String item = (request.data as List)[index];
+                final String item = viewModel.filteredList[index];
                 return ListTile(
                   title: Text(
                     item,
@@ -75,5 +89,5 @@ class LocationSheet extends StackedView<LocationSheetModel> {
 
   @override
   LocationSheetModel viewModelBuilder(BuildContext context) =>
-      LocationSheetModel();
+      LocationSheetModel(listItems: _listItems);
 }

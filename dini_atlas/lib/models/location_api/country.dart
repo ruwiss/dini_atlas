@@ -1,3 +1,4 @@
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:isar/isar.dart';
 
 part 'country.g.dart';
@@ -11,9 +12,9 @@ class Country {
   Country();
 
   Country.fromJson(Map<String, dynamic> json)
-      : ulkeAdi = (json["UlkeAdi"] as String).toLowerCase(),
-        ulkeAdiEn = (json["UlkeAdiEn"] as String).toLowerCase(),
-        ulkeId = (json["UlkeID"] as String).toLowerCase();
+      : ulkeAdi = (json["UlkeAdi"] as String).toLowerCaseTurkish(),
+        ulkeAdiEn = (json["UlkeAdiEn"] as String).toLowerCaseTurkish(),
+        ulkeId = (json["UlkeID"] as String);
 
   Map<String, dynamic> toJson() => {
         "UlkeAdi": ulkeAdi,

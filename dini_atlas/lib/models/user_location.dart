@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dini_atlas/extensions/string_extensions.dart';
+
 class UserLocation {
   String country;
   String city;
@@ -15,9 +17,9 @@ class UserLocation {
   });
 
   UserLocation.fromJson(Map<String, dynamic> json)
-      : country = json['country'].trim(),
-        city = json['administrativeArea'].trim(),
-        state = json['subAdministrativeArea'].trim(),
+      : country = (json['country'].trim() as String).toLowerCaseTurkish(),
+        city = (json['administrativeArea'].trim() as String).toLowerCaseTurkish(),
+        state = (json['subAdministrativeArea'].trim() as String).toLowerCaseTurkish(),
         latitude = json['latitude'],
         longtitude = json['longitude'];
 

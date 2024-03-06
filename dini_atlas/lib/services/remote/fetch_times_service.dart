@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/location_api/city.dart';
 import 'package:dini_atlas/models/location_api/country.dart';
 import 'package:dini_atlas/models/location_api/state.dart';
@@ -157,6 +158,7 @@ class FetchTimesService {
 
       return (city: city, state: state);
     } catch (e) {
+      debugPrint("Lokasyon Id'leri alınırken sorun oluştu");
       rethrow;
     }
   }
@@ -176,10 +178,11 @@ class FetchTimesService {
   Future<Country> _getUserCountry(String country) async {
     try {
       final countries = await getCountries();
-      return countries.singleWhere((e) =>
-          e.ulkeAdi == country.toLowerCase() ||
-          e.ulkeAdiEn == country.toLowerCase());
+      return countries.singleWhere(
+        (e) => e.ulkeAdi == country || e.ulkeAdiEn == country,
+      );
     } catch (e) {
+      debugPrint("Ülke bilgisi alınırken sorun oluştu");
       rethrow;
     }
   }
@@ -199,19 +202,22 @@ class FetchTimesService {
   Future<City> _getUserCity(String city, Country country) async {
     try {
       final cities = await getCities(country.ulkeId);
-      int foundIndex = cities.indexWhere((e) =>
-          e.sehirAdi == city.toLowerCase() ||
-          e.sehirAdiEn == city.toLowerCase());
+      int foundIndex = cities.indexWhere(
+        (e) => e.sehirAdi == city || e.sehirAdiEn == city,
+      );
 
       if (foundIndex == -1) {
-        foundIndex = cities.indexWhere((e) =>
-            e.sehirAdi == country.ulkeAdiEn.toLowerCase() ||
-            e.sehirAdiEn == country.ulkeAdiEn.toLowerCase() ||
-            e.sehirAdi == country.ulkeAdi.toLowerCase());
+        foundIndex = cities.indexWhere(
+          (e) =>
+              e.sehirAdi == country.ulkeAdiEn ||
+              e.sehirAdiEn == country.ulkeAdiEn ||
+              e.sehirAdi == country.ulkeAdi,
+        );
       }
 
       return cities[foundIndex];
     } catch (e) {
+      debugPrint("Şehir bilgisi alınırken sorun oluştu: $city");
       rethrow;
     }
   }
@@ -232,17 +238,17 @@ class FetchTimesService {
       String city, String state, String cityId) async {
     try {
       final states = await getStates(cityId);
-
-      int foundIndex = states.indexWhere((e) =>
-          e.ilceAdi == state.toLowerCase() ||
-          e.ilceAdiEn == state.toLowerCase());
+      int foundIndex = states.indexWhere(
+        (e) => e.ilceAdi == state || e.ilceAdiEn == state,
+      );
       if (foundIndex == -1) {
-        foundIndex = states.indexWhere((e) =>
-            e.ilceAdi == city.toLowerCase() ||
-            e.ilceAdiEn == city.toLowerCase());
+        foundIndex = states.indexWhere(
+          (e) => e.ilceAdi == city || e.ilceAdiEn == city,
+        );
       }
       return states[foundIndex];
     } catch (e) {
+      debugPrint("İlçe bilgisi alınırken sorun oluştu: $state");
       rethrow;
     }
   }
@@ -262,6 +268,7 @@ class FetchTimesService {
       if (kDebugMode) print("- Vakit namazları getirildi.");
       return times;
     } catch (e) {
+      debugPrint("Vakitler alınırken sorun oluştu");
       rethrow;
     }
   }
@@ -288,6 +295,7 @@ class FetchTimesService {
 
       return singleEidTime;
     } catch (e) {
+      debugPrint("Bayram namazı vakitleri alınırken sorun oluştu");
       rethrow;
     }
   }
@@ -311,6 +319,7 @@ class FetchTimesService {
       _religiousDays = religiousDays;
       return religiousDays;
     } catch (e) {
+      debugPrint("Dini günler alınırken sorun oluştu");
       rethrow;
     }
   }

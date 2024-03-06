@@ -43,7 +43,10 @@ class StartupView extends StackedView<StartupViewModel> {
                           _startupImage(context),
                           verticalSpace(30),
                           viewModel.isBusy
-                              ? const CircularProgressIndicator()
+                              ? const Padding(
+                                  padding: EdgeInsets.only(bottom: 20),
+                                  child: CircularProgressIndicator(),
+                                )
                               : _actionButtons(context, viewModel),
                         ],
                       ),
@@ -155,15 +158,18 @@ class StartupView extends StackedView<StartupViewModel> {
     );
   }
 
-  TextButton _startupPrivacyPolicy() {
-    return TextButton(
-      onPressed: () => launchUrl(Uri.parse(ksPrivacyPolicy)),
-      child: const Text(
-        "Gizlilik Politikası",
-        style: TextStyle(
-          color: kcGrayColor,
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
+  Widget _startupPrivacyPolicy() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: TextButton(
+        onPressed: () => launchUrl(Uri.parse(ksPrivacyPolicy)),
+        child: const Text(
+          "Gizlilik Politikası",
+          style: TextStyle(
+            color: kcGrayColor,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

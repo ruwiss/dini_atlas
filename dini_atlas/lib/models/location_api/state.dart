@@ -1,3 +1,4 @@
+import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:isar/isar.dart';
 
 part 'state.g.dart';
@@ -11,9 +12,9 @@ class StateModel {
   StateModel();
 
   StateModel.fromJson(Map<String, dynamic> json)
-      : ilceAdi = (json["IlceAdi"] as String).toLowerCase(),
-        ilceAdiEn = (json["IlceAdiEn"] as String).toLowerCase(),
-        ilceId = (json["IlceID"] as String).toLowerCase();
+      : ilceAdi = (json["IlceAdi"] as String).toLowerCaseTurkish(),
+        ilceAdiEn = (json["IlceAdiEn"] as String).toLowerCaseTurkish(),
+        ilceId = (json["IlceID"] as String);
 
   Map<String, dynamic> toJson() => {
         "IlceAdi": ilceAdi,

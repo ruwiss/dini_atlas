@@ -53,9 +53,15 @@ class QuranTabViewModel extends IndexTrackingViewModel {
   void _loadBannerAd() =>
       _bannerAdService.loadAd(onAdLoaded: () => notifyListeners());
 
+  int _interstitialAdLoadLimit = 2;
   final _interstitialAdService =
       AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial1);
-  void loadInterstitalAd() => _interstitialAdService.loadAd();
+  void loadInterstitalAd() {
+    if (_interstitialAdLoadLimit > 0) {
+      _interstitialAdLoadLimit--;
+      _interstitialAdService.loadAd();
+    }
+  }
 
   void showInterstitalAl() {
     final interstitialAd = _interstitialAdService.interstitialAd;

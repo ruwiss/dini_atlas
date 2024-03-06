@@ -37,10 +37,15 @@ class HomeTabViewModel extends ReactiveViewModel {
   final _interstitialAdService =
       AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
 
+  bool _interstitialAdLoadProcess = false;
+
   void _loadInterstitalAdAndShow() {
-    _interstitialAdService.loadAd(
-      onAdLoaded: () => _interstitialAdService.interstitialAd?.show(),
-    );
+    if (!_interstitialAdLoadProcess) {
+      _interstitialAdLoadProcess = true;
+      _interstitialAdService.loadAd(
+        onAdLoaded: () => _interstitialAdService.interstitialAd?.show(),
+      );
+    }
   }
 
   String? currentMoonPhaseImage;
