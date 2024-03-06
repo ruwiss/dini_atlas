@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
-import 'package:dini_atlas/ui/bottom_sheets/alert/alert_sheet.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_dialog.dart';
 import 'package:dini_atlas/services/local/isar_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';

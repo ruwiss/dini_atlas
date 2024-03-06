@@ -5,7 +5,7 @@ import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-const String ksAppVersion = "1.0.7";
+const String ksAppVersion = "1.0.8";
 
 String get ksBaseUrl => false
     ? "http://192.168.1.106:9958"
@@ -18,6 +18,8 @@ const String ksAppName = "Dinî Atlas";
 const String ksAppPackageName = "com.rw.dini_atlas";
 String get ksAppUrl =>
     "https://play.google.com/store/apps/details?id=$ksAppPackageName";
+
+String get ksPrivacyPolicy => FirebaseRemoteConfigServiceClass.i.privacyPolicy;
 
 // Dil (Location Service)
 const String ksDefaultLocale = "tr_TR";
@@ -47,7 +49,7 @@ const String ksAdmobAppOpen = "ca-app-pub-1923752572867502/5356388948";
 /// Sure liste görünümü
 const String ksAdmobBanner1 = "ca-app-pub-1923752572867502/8337775502";
 
-/// İçerik liste görünümü
+/// İçerik
 const String ksAdmobBanner2 = "ca-app-pub-1923752572867502/5515584315";
 
 /// Kaza ekranı

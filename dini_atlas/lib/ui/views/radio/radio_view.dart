@@ -45,6 +45,11 @@ class RadioView extends StackedView<RadioViewModel> {
                               titleText: radio.name,
                               hideDivider: true,
                               isPlaying: viewModel.currentPlaying == radio.url,
+                              words: viewModel.currentPlaying == radio.url &&
+                                      viewModel.hasErrorForKey(
+                                          viewModel.currentPlaying)
+                                  ? "   Bir sorun oluştu"
+                                  : null,
                               isPlayerLoading:
                                   viewModel.busy(viewModel.currentPlaying) &&
                                       viewModel.currentPlaying == radio.url,

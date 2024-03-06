@@ -317,7 +317,11 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<WebviewViewArguments>(nullOk: false);
       return _i21.MaterialPageRoute<dynamic>(
         builder: (context) => _i20.WebviewView(
-            key: args.key, title: args.title, path: args.path, url: args.url),
+            key: args.key,
+            title: args.title,
+            path: args.path,
+            url: args.url,
+            showAd: args.showAd),
         settings: data,
       );
     },
@@ -481,6 +485,7 @@ class WebviewViewArguments {
     required this.title,
     this.path,
     this.url,
+    this.showAd = false,
   });
 
   final _i22.Key? key;
@@ -491,9 +496,11 @@ class WebviewViewArguments {
 
   final String? url;
 
+  final bool showAd;
+
   @override
   String toString() {
-    return '{"key": "$key", "title": "$title", "path": "$path", "url": "$url"}';
+    return '{"key": "$key", "title": "$title", "path": "$path", "url": "$url", "showAd": "$showAd"}';
   }
 
   @override
@@ -502,12 +509,17 @@ class WebviewViewArguments {
     return other.key == key &&
         other.title == title &&
         other.path == path &&
-        other.url == url;
+        other.url == url &&
+        other.showAd == showAd;
   }
 
   @override
   int get hashCode {
-    return key.hashCode ^ title.hashCode ^ path.hashCode ^ url.hashCode;
+    return key.hashCode ^
+        title.hashCode ^
+        path.hashCode ^
+        url.hashCode ^
+        showAd.hashCode;
   }
 }
 
@@ -788,6 +800,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
     required String title,
     String? path,
     String? url,
+    bool showAd = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -795,8 +808,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.webviewView,
-        arguments:
-            WebviewViewArguments(key: key, title: title, path: path, url: url),
+        arguments: WebviewViewArguments(
+            key: key, title: title, path: path, url: url, showAd: showAd),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1079,6 +1092,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
     required String title,
     String? path,
     String? url,
+    bool showAd = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1086,8 +1100,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.webviewView,
-        arguments:
-            WebviewViewArguments(key: key, title: title, path: path, url: url),
+        arguments: WebviewViewArguments(
+            key: key, title: title, path: path, url: url, showAd: showAd),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

@@ -77,8 +77,8 @@ def kuran():
       """,
                 (sure, ayet, offset),
             )
-            ayet = cursor.fetchall()
-            return jsonify({"sure": sure_data, "ayetler": ayet})
+            ayetler = cursor.fetchall()
+            return jsonify({"sure": sure_data, "ayetler": ayetler})
 
 
 @app.route("/hadis/riyazus_salihin")

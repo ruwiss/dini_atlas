@@ -36,6 +36,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                 locator<NavigationService>().navigateToWebviewView(
                   title: item.name,
                   url: FirebaseRemoteConfigServiceClass.i.elifba,
+                  showAd: true,
                 );
               } else {
                 locator<NavigationService>().navigateTo(item.route);

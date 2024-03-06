@@ -13,6 +13,7 @@ class FirebaseRemoteConfigServiceClass {
   final String _gitlabProjectIdKey = "gitlab_project_id";
   final String _gitlabApiTokenKey = "gitlab_api_token";
   final String _elifbaKey = "elifba";
+  final String _privacyPolicyKey = "privacy_policy";
 
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
@@ -24,6 +25,7 @@ class FirebaseRemoteConfigServiceClass {
   String get gitlabProjectId => _remoteConfig.getString(_gitlabProjectIdKey);
   String get gitlabApiToken => _remoteConfig.getString(_gitlabApiTokenKey);
   String get elifba => _remoteConfig.getString(_elifbaKey);
+  String get privacyPolicy => _remoteConfig.getString(_privacyPolicyKey);
 
   Future<void> init() async {
     await _setConfigSettings();
@@ -46,6 +48,7 @@ class FirebaseRemoteConfigServiceClass {
           _immediateUpdateVersionKey: 1,
           _gitlabProjectIdKey: "55056853",
           _gitlabApiTokenKey: "glpat-eQXXQp-mRMQ_tTXBs5se",
+          _privacyPolicyKey: "https://belge.kodlayalim.net/diniatlas.html",
         },
       );
 

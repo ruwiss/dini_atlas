@@ -1,5 +1,3 @@
-import 'package:dini_atlas/app/app.locator.dart';
-import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
@@ -7,7 +5,7 @@ import 'package:dini_atlas/ui/widgets/location_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'startup_viewmodel.dart';
 
@@ -159,10 +157,7 @@ class StartupView extends StackedView<StartupViewModel> {
 
   TextButton _startupPrivacyPolicy() {
     return TextButton(
-      onPressed: () => locator<NavigationService>().navigateToWebviewView(
-        title: 'Gizlilik Sözleşmesi',
-        path: 'assets/docs/privacy_policy.html',
-      ),
+      onPressed: () => launchUrl(Uri.parse(ksPrivacyPolicy)),
       child: const Text(
         "Gizlilik Politikası",
         style: TextStyle(
