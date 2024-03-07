@@ -44,6 +44,7 @@ class EsmaulHusnaView extends StackedView<EsmaulHusnaViewModel> {
                             type: ContentTypes.esmaulHusnaType(),
                             number: index + 1,
                             titleText: item.text,
+                            text1: item.arabic,
                             text3: item.mean,
                             titlePadding: const EdgeInsets.symmetric(
                               horizontal: 12,

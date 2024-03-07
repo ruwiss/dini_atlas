@@ -1,7 +1,6 @@
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:dini_atlas/ui/widgets/banner_ad_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

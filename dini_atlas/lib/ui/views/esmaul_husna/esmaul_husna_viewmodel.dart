@@ -26,11 +26,13 @@ class EsmaulHusnaViewModel extends BaseViewModel {
 
 class EsmaulHusna {
   final String text;
+  final String arabic;
   final String mean;
 
-  EsmaulHusna(this.text, this.mean);
+  EsmaulHusna(this.text, this.mean, this.arabic);
 
   EsmaulHusna.fromJson(Map<String, dynamic> json)
-      : text = json['text'],
+      : text = json['turkish'],
+        arabic = json['arabic'],
         mean = json['mean'];
 }

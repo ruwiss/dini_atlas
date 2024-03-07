@@ -1,482 +1,497 @@
 [
     {
-        "text": "el-A’lâ ",
-        "mean": "En yüce, en şerefli"
+        "arabic": "الله",
+        "turkish": "Allah",
+        "mean": "“O’nun zat ve özel ismidir. Diğer bütün esma ve sıfatlar, bu ismin içinde toplanmıştır. Diğer bütün isimleri bu isminin fiilleri, sıfatları ve tecellileri ile ilgilidir.”"
     },
     {
-        "text": "el-A’lem ",
-        "mean": "Her şeyi en iyi bilen"
+        "arabic": "الرحمن",
+        "turkish": "Rahmân",
+        "mean": "“Dünyada bütün mahlûkata merhamet eden, şefkat gösteren, ihsan eden.”"
     },
     {
-        "text": "el-Alî ",
-        "mean": "Şanı, şerefi, izzeti ve kudreti yüce olan"
+        "arabic": "الرحيم",
+        "turkish": "Rahîm",
+        "mean": "“Ahirette, sadece müminlere acıyan, merhamet eden.”"
     },
     {
-        "text": "el-Âlim ",
-        "mean": "Bilen, anlayan, tanıyan"
+        "arabic": "العدل",
+        "turkish": "Adil",
+        "mean": "“Adil, insaflı, her şeyi yerli yerinde yapan, her şeyi hak ve doğru olan. İslâm’da adâlete verilen önem büyüktür. İslâm kültüründeki adâlet anlayışı, kânundaki hakkın verilmesinden ibârettir. Kur’an-ı Kerim’de Cenâb-ı Allah Hayrü’l-Hâkimîn yani adâletle hükmedenlerin en hayırlısı (A’râf, 7/87) olarak ifade edilirken, en büyük adâlet sıfatına sahip olan varlık anlamında kullanılmıştır.”"
     },
     {
-        "text": "el-Alîm ",
-        "mean": "Her şeyi çok iyi bilen"
+        "arabic": "العفو",
+        "turkish": "Afüv",
+        "mean": "“Affedici, günahları silip sâhibini cezâlandırmaktan vazgeçen anlamına gelmektedir.”"
     },
     {
-        "text": "el-Âhir ",
-        "mean": "Varlığının sonu olmayan, ölümsüz, ebedî ve bâkî"
+        "arabic": "الآخر",
+        "turkish": "Âhir",
+        "mean": "“Varlığı sonrasız olan, varlığının zamansal sonu olmayan.”"
     },
     {
-        "text": "el-Akrab ",
-        "mean": "Bilmesi, görmesi, duyması, haberdâr olması ve yardım etmesi açısından insanlara en yakın olan"
+        "arabic": "العليم",
+        "turkish": "Alîm",
+        "mean": "“Her şeyi çok iyi bilen. Çok bilen, bilgisi sonsuz, farkında olan, her şeyi en ince noktasına kadar bilen, ilmi ebedî ve ezelî olan demektir. Aynı zamanda bilgiç anlamınada gelir.”"
     },
     {
-        "text": "el-Azîm ",
-        "mean": "Zatı, isim, sıfat vefiilleri itibariyle pek ulu, büyük, yüce"
+        "arabic": "العلي",
+        "turkish": "Aliyy",
+        "mean": "“Ulu, yüce, üstün olan. Alî, yüksek, büyük ve yüce olan; güçte, bilgide, hükümde, irâdede ve diğer bütün yetkin sıfatlarında üstün olan anlamına gelmektedir.”"
     },
     {
-        "text": "el-Azîz ",
-        "mean": "Üstün, güçlü, kuvvetli, galip, şerefli, değerli, melik"
+        "arabic": "العظيم",
+        "turkish": "Azîm",
+        "mean": "“Büyüklük sahibi, çok yüce ve çok büyük olan; sınırsız ve kayıtsız büyüklük, üstünlüğün tek sâhibi, pek azametli, yüce olandır.”"
     },
     {
-        "text": "el-Bâri’ ",
-        "mean": "Yaratan, örneği olmadan varlıkları îcat eden"
+        "arabic": "العزيز",
+        "turkish": "Azîz",
+        "mean": "“Aziz, izzetli. Aziz; kelimeye izzetli, onurlu, mağlup edilemeyen, her şeye galip olan anlamları verilmiştir. Aziz kelimesinden ayrıca Arapça dil kalıpları kullanılarak Azze, Azize, Muiz, muazzez gibi kelimeler türetilmiştir.\""
     },
     {
-        "text": "el-Basîr ",
-        "mean": "Aydınlık ve karanlıkta küçük ve büyük her şeyi gören"
+        "arabic": "الباعث",
+        "turkish": "Bâis",
+        "mean": "“Ölüleri yeniden yaratan, ölüleri dirilten, her canlıyı ölümünün ardından yeniden dirilten demektir. Meselâ kışın ölmüş gibi âdetâ cansız gibi görünen bitkileri ve bâzı hayvanları baharda yeniden canlandırması ve onlarda yeni şeyler yaratması.”"
     },
     {
-        "text": "el-Bâtın ",
-        "mean": "Mâhiyeti akıl ile idrâk olunamayan, hayal iletahayyül edilemeyen, her şeyin iç yüzünü, sırlarını bilen"
+        "arabic": "الباقي",
+        "turkish": "Bâkî",
+        "mean": "“Varlığının sonu olmayan, gelmeyen, süreklilik sâhibi, sonsuza kadar kalan, sonsuz. Varlığının zamansal sonu bulunmayan (gelmeyen), ebedî olan demektir.”"
     },
     {
-        "text": "el-Berr ",
-        "mean": "İyilik eden, çok lütufkâr, çok merhametli, çok şefkatli"
+        "arabic": "البارئ",
+        "turkish": "Bâri",
+        "mean": "“Umum kainatla münasip, tertipli, bir kalıptan döker gibi güzel yaratan, yarattıklarını temiz ve sağlam bir nizâm üzere yaratan, olgunlaştırarak birbirinden farklı niteliklerde meydana getiren, her şeyin âzâ ve cihazını birbirine uygun yaratan demektir.”"
     },
     {
-        "text": "Câ’ılûn ",
-        "mean": "Yaratan, vâr eden, bir varlıktan başka bir varlık yapan"
+        "arabic": "البصير",
+        "turkish": "Basîr",
+        "mean": "“Gören, her şeyi her yönüyle eksiksiz gören, yarattıklarına da görme duyusunu veren demektir. İnsan ve hayvanlara çevreleriyle temasta olabilmeleri için dil, kulak, akıl, temas, görme ve diğer duyularını vermiş ve sorumlu olan yarattıklarından da kendisini eserlerinden tanıması için bu duyularla donatmıştır.”"
     },
     {
-        "text": "el-Cebbâr ",
-        "mean": "Emir ve yasaklarını, hüküm ve kararlarını kullarına yaptırmaya gücü yeten, azgın ve zalimleri kahredici, dertlere derman olan, yaraları sarıp onaran, yaratıklarının hâllerini düzelten"
+        "arabic": "الباسط",
+        "turkish": "Bâsit",
+        "mean": "“Ferahlatan, genişleten. Bâsit, her hayrı veren, lütuf ve rahmetini kullarına yayan. Dilediğine bolluk veren, açan, genişleten demektir.”"
     },
     {
-        "text": "el-Ebkâ ",
-        "mean": "Verdiği nimetler sürekli ve hep kalıcı olan"
+        "arabic": "الباطن",
+        "turkish": "Bâtın",
+        "mean": "“Varlığı (zâtı) gizli olan, cisim olarak görünmeyen. Bâtın; gizli, cisim olarak görülmeyen, duyularla algılanamayan, varlığı gizli olan, ancak varlığı da kesin olarak bilinendir. Hayâl, duygu, akıl ve düşüncenin de görülmeyip eserleriyle varlıklarının kesin olarak bilinmesi gibi. Akılların idrâk edemeyeceği kadar yüce ve azâbı gizli olan demektir.”"
     },
     {
-        "text": "el-Ehad ",
-        "mean": "Eşi, benzeri ve ikincisi bulunmayan bir tek,yegâne"
+        "arabic": "البديع",
+        "turkish": "Bedî",
+        "mean": "“Örneksiz yaratan, emsalsiz, acâyip ve hayret verici âlemler yaratan demektir.”"
     },
     {
-        "text": "el-Ekrem ",
-        "mean": "En çok ikram eden"
+        "arabic": "البَرّ",
+        "turkish": "Berr",
+        "mean": "“İyilik yapan, iyilik ve güzellik, bağışta bulunma, kullarına yardımcı olma anlamlarında Yüce Allah’ın bir sıfat ismidir. Kullarına iyilik ve ihsanı, nimetleri bol olan demektir.”"
     },
     {
-        "text": "el-Evvel ",
-        "mean": "Öncesi olmayan, yaratılmamış, ezelî ve kadîmtek varlık"
+        "arabic": "الجامع",
+        "turkish": "Câmi",
+        "mean": "“Toparlayan, istediğini istediği şekilde, istediği zaman, istediği yerde toplayan demektir.”"
     },
     {
-        "text": "Fâil (ûn)",
-        "mean": "Yapan, yaratan, vâr eden"
+        "arabic": "الجبّار",
+        "turkish": "Cebbâr",
+        "mean": "“Güç kullanan. Dilediğini cebir yoluyla yapan, kayıtsız şartsız herkese cebredecek güçte olan, hiç kimse tarafından kendisine cebir olunamayan demektir.”"
     },
     {
-        "text": "el-Fettâh ",
-        "mean": "İyilik kapılarını açan, en âdil hüküm veren"
+        "arabic": "الجليل",
+        "turkish": "Celîl",
+        "mean": "“Celalet ve celadet sahibi, azim, mertebesi yüksek, büyüklük ve ululuğu pek yüce olandır. Azamet sâhibi olan, ululuk sâhibi olan demektir.”"
     },
     {
-        "text": "el-Gaffâr ",
-        "mean": "Çok affeden, çok bağışlayan, günah ne kadarçok olursa olsun yine bağışlayan"
+        "arabic": "الضار",
+        "turkish": "Dâr",
+        "mean": "“Zarar veren. Dâr, zarar verici şeyler yaratan mânâsındadır. Elem ve zarar verecek şeyleri yaratan, hüsrana uğratan demektir.”"
     },
     {
-        "text": "el-Gafûr ",
-        "mean": "Çok affeden, çok bağışlayan"
+        "arabic": "الأوّل",
+        "turkish": "Evvel",
+        "mean": "“Varlığı öncesiz olan, varlığının zamansal başı olmayan. Evvel; her şeyden önce olan, öncelerin öncesi, başlangıçların yaratıcısı ve varlığının öncesi olmayandır. Her şeyden önce var olan demektir. “"
     },
     {
-        "text": "el-Ganî ",
-        "mean": "Zengin, hiçbir şeye muhtaç olmayan"
+        "arabic": "الفتّاح",
+        "turkish": "Fettâh",
+        "mean": "“Açan, genişlik verici. Fettâh, kulların her türlü güçlük ve sıkıntılarını açan ve kolaylaştıran anlamına gelir. Faydalı ilimlere karşı insanların kalbini açarak işlerini kolaylaştıran, bütün zorluklarını ortadan kaldıran yüce Allah’tır. Her işinde üstün gelen O’dur. Her türlü müşkülleri açan ve kolaylaştıran, darlıktan kurtarandır.”"
     },
     {
-        "text": "el-Habîr ",
-        "mean": "Her şeyden haberdar olan, gizli aşikâr her şeyibilen, haber veren"
+        "arabic": "الغفّار",
+        "turkish": "Gaffâr",
+        "mean": "“Günahları çokça bağışlayan, çokça örten. Gaffâr, kullarının günâhlarını affeden ve çok bağışlayan yüce varlık anlamına gelir. Günâh işlemek insanların özelliği olduğu gibi, onların günâhlarını örtmek ve bağışlamak da yüce Allah’ın ayrılmaz sıfatlarındandır.\"“"
     },
     {
-        "text": "el-Hâdi’ ",
-        "mean": "Hile yapanları cezalandıran"
+        "arabic": "الغفور",
+        "turkish": "Gafûr",
+        "mean": "“Affeden. Gafûr, mağfiret eden, suçları çok bağışlayan, affeden, insanların beğenilmeyen taraflarını gizleyen, mağfireti çok demektir.”"
     },
     {
-        "text": "el-Hâdî ",
-        "mean": "Hidayet eden, doğru yolu gösteren"
+        "arabic": "الغني",
+        "turkish": "Ganî",
+        "mean": "“Zengin. Ganî, çok zengin, hiçbirşeye muhtaç olmayan demektir.”"
     },
     {
-        "text": "el-Hafî ",
-        "mean": "Çok ikram eden, son derece iyilik ve lütuf sahibi,her şeyi bilen, duaları kabul eden"
+        "arabic": "الخبير",
+        "turkish": "Habîr",
+        "mean": "“Her şeyden haberdâr olan. Habîr, her şeyden haberdâr olan, her şeyin iç yüzünden ve gizli tarafından her yönüyle haber sâhibi olan, onlara yumuşak davranarak cezâlarını geriye bırakandır. Her şeyi iç yüzünden, gizli tarafından haberdâr olan demektir.”"
     },
     {
-        "text": "Hâfiz (ûn)",
-        "mean": "Koruyup gözeten"
+        "arabic": "الهادي",
+        "turkish": "Hâdî",
+        "mean": "“Hidâyet verici, hidâyete kavuşturan, kulunu hayırla muvaffak kılan demektir.”"
     },
     {
-        "text": "el-Hafîz ",
-        "mean": "Varlıkları yok olmaktan koruyan"
+        "arabic": "الخافض",
+        "turkish": "Hâfıd",
+        "mean": "“Perişan eden. “Allah’ın, emirlerini dinlemeyen, başkalarını beğenmeyen, büyüklenip hak ve hukuk tanımaz zorbaları rezil, perişan eden” anlamına gelen bir isimdir. Yukarıdan aşağıya indiren, alçaltan, dereceleri düşüren demektir.”"
     },
     {
-        "text": "el-Hakîm ",
-        "mean": "Hikmet sahibi, her işi, emri ve yasağı yerli yerinde olan"
+        "arabic": "الحفيظ",
+        "turkish": "Hafîz",
+        "mean": "“Koruyucu. Koruyucu ve muhafaza edici olan demektir. Bu ad, Allah’ın isimleriyle ilgili meşhur rivâyetlerde aktarılmaktadır. Dolayısıyla bu rivayetlere göre Allah’ın adları’ndan biri olduğuna karar verilmiştir.”"
     },
     {
-        "text": "el-Hâkim ",
-        "mean": "Hükmeden, karar veren, haklıyı haksızı ayıran"
+        "arabic": "الحكم",
+        "turkish": "Hakem",
+        "mean": "“Hakem, hikmet sâhibi olan, yaptığı her işte hikmeti gözeten, hükmeden. Hikmet sâhibi olan, yaptığı her işte hikmeti gözeten, hükmeden demektir.”"
     },
     {
-        "text": "el-Hakem ",
-        "mean": "Hüküm veren, son kararı veren"
+        "arabic": "الحكيم",
+        "turkish": "Hakîm",
+        "mean": "“Her işi hikmetli olan, her şeyi inceliğiyle bilen, bu bilgisine göre emir ve yasakları vâzeden, buyrukları ve bütün işleri yerli yerinde olandır. Emirleri, kelâmı ve bütün işleri hikmetli, hikmet sâhibi olan demektir. “"
     },
     {
-        "text": "el-Hakk ",
-        "mean": "Varlığı, ilâh ve rab oluşu hak olan, eşyayı vareden, hakkı ızhar eden, mülk sahibi, yok olmayan, varlığında şüphe bulunmayan, âdil"
+        "arabic": "الحقّ",
+        "turkish": "Hakk",
+        "mean": "“Varlığı (zâtı) hiç değişmeden duran. Hakk, varlığı hiç değişmeyen, hiç yok olmayan ve gerçek olan anlamındadır (el-Hacc, 22/6). Vacib’ul vücut olan, varlığı hiç değişmeden duran demektir.”"
     },
     {
-        "text": "el-Halîm ",
-        "mean": "Çok sakin, hemen öfkelenmeyen, acele etmeyen, teenni ile hareket eden"
+        "arabic": "الخالق",
+        "turkish": "Hâlik",
+        "mean": "“Yaratıcı. Hâlik, Allah’ın yoktan vâr eder yaratıcılığına işâret eden sıfatıdır ve hiç benzeri olmayan bir şeyi meydana getirmek demektir. Bu anlamda Allah’tan başka hiçbir yaratıcı yoktur. Her şeyi yaratan O’dur. İnsanların ortaya koydukları şeyler yaratma değil, vâr olanlardan yeni bir şey elde etmektir. Allah yaratandır. O’nun dışındaki tüm varlıklar ise yaratılmıştır. Her şeyin varlığını ve geçireceği halleri takdîr eden, yaratan, yoktan var eden, büyüklükte eşi olmayandır. “"
     },
     {
-        "text": "el-Hallâk ",
-        "mean": "Mükemmel yaratan, devamlı yaratan"
+        "arabic": "الحليم",
+        "turkish": "Halîm",
+        "mean": "“Yumuşak muâmele eden. Halîm, acele etmeyen, günahkârların cezâsını vermeye güç yetirdiği halde bunu acele yapmayıp, onlara yumuşak davranarak cezâlarını geriye bırakandır. Yumuşak davranan, hilmi çok olan demektir.”"
     },
     {
-        "text": "el-Hasîb ",
-        "mean": "İnsanlara yeten, insanların yaptıklarını koruyup hesaba çeken"
+        "arabic": "الحميد",
+        "turkish": "Hamîd",
+        "mean": "“Övülen. Hamîd, çok övülen, övgüyle değer sıfatlarıyla hamd edilendir. Bütün varlığın diliyle övülmeye lâyık ve her an ancak O’na hamd edilen tek yüce varlık anlamlarına gelir.”"
     },
     {
-        "text": "Hâsib (în)",
-        "mean": "İnsanları sorgulayan, hesaba çeken"
+        "arabic": "الحسيب",
+        "turkish": "Hasîb",
+        "mean": "“Hesap gören. Aynı zamanda hesap gören, muhasebeci ve sayman anlamına gelmektedir. “Kulların yaptıklarını muhasebeye tâbi tutan.” “Amellerin karşılığını verme hususunda kâfi olan.” “Onlar (peygamberler) Allah’ın gönderdiklerini tebliğ edenler, O’ndan korkanlar ve Allah’tan başka hiç kimseden korkmayanlardır. Hasîb olarak Allah yeter.” (Ahzâb33/, 39) Hasîb, herkesin yaptıklarını tâkdir edip bütün ayrıntılarıyla bilen ve her insana yaptıklarının karşılığını veren anlamına gelir.”"
     },
     {
-        "text": "el-Hayr ",
-        "mean": "Hayırlı olan, faydalı olan, iyilik eden"
+        "arabic": "الحيّ",
+        "turkish": "Hayy",
+        "mean": "“Her zaman diri olan. Hayy, ezelî ve ebedî diri olan, uyuklama, yorulma gibi noksanlıklardan uzak olan. Var. Diri, tam ve mükemmel mânâsıyla hayat sâhibi demektir.”"
     },
     {
-        "text": "el-İlâh ",
-        "mean": "Ma’bûd, Tanrı"
+        "arabic": "القابض",
+        "turkish": "Kābid",
+        "mean": "“Sıkan, daraltan. Kābid, Allah’ın, her şeyi sonsuz kudreti altına alan, bu kudretiyle kuşatıp kavrayan, her şeyi emri altına alıp tutan en yüce varlık olduğu anlamına gelir. Dilediğine darlık veren, sıkan, daraltan demektir.”"
     },
     {
-        "text": "el-Kadîr ",
-        "mean": "Çok güçlü, çok kuvvetli, istediğini istediği gibi eksiksiz, kusursuz ve tam yapabilen"
+        "arabic": "القادر",
+        "turkish": "Kādir",
+        "mean": "“Kudretli, kudret sâhibi, tükenmez kudreti olan, istediğini dilediği gibi yapmaya muktedir olandır. Her türlü güç ve kuvvet de O’ndandır (el-Bakara, 2/20). İstediğini, istediği gibi yaratmaya muktedir olan, gücü yeten demektir.”"
     },
     {
-        "text": "el-Kâdir ",
-        "mean": "Güçlü, kuvvetli, her şeye gücü yeten"
+        "arabic": "القهّار",
+        "turkish": "Kahhâr",
+        "mean": "“Kahreden. Kahhâr, Allah’ın ziyâdesiyle kahredici, yok edici yüce bir varlık olduğu anlamına gelir. Sonsuz kudretinin karşısında hiçbir kimsenin gücü ve kudreti olamaz. Ama serbest irâdeleriyle O’nun karşısına çıkma cüretini gösterenlere de lâyık oldukları cezâları tam olarak verecektir. Allah’ın kayıtsız üstünlüğüne sınır koyacak hiçbir varlık yoktur. Her şeye, her istediğini yapacak sûrette, gâlip ve hâkim demektir. “"
     },
     {
-        "text": "el-Kâfî ",
-        "mean": "Kullarına yardım eden, vekil olan, yol gösteren,yaptıklarını bilen, gören, haberdar olan ve hesaba çeken"
+        "arabic": "القويّ",
+        "turkish": "Kaviyy",
+        "mean": "“Kuvvetli. Kavî, kudretli, güçlü ve sınırsız kuvvet sâhibi olan anlamına gelir. Müslümanlar, her şeyin Allah’ın kudret ve kuvveti karşısında güçsüz olduğu; Allah’a boyun eğmek zorunda olunduğuna inanırlar. Pek kuvvetli demektir. İslam inancına göre bedenen ve ruhen güçlü olmak için günde 116 kez zikrin devamı gereklidir.”"
     },
     {
-        "text": "el-Kahhâr ",
-        "mean": "Yenilmeyen, daima galip gelen"
+        "arabic": "القيّوم",
+        "turkish": "Kayyûm",
+        "mean": "“Ayakta tutan, yarattıklarının işini çeviren, her işleneni bilen, evveli olmayan demektir.”"
     },
     {
-        "text": "el-Kâhir ",
-        "mean": "Galip gelen, zelil eden, güçlü, her şeyi kuşatan,yaratıklarını dilediği gibi yöneten"
+        "arabic": "الكبير",
+        "turkish": "Kebîr",
+        "mean": "“Büyük, yüce anlamında olup Allah’ın kâinatı hüküm ve kudretiyle idâre eden, her şeyi hükmü altına alan olduğunu belirtir ve pek büyük demektir.”"
     },
     {
-        "text": "el-Kâim ",
-        "mean": "Varlıkları görüp gözeten, koruyan, yöneten"
+        "arabic": "الكريم",
+        "turkish": "Kerîm",
+        "mean": "“Cömert, kerem sâhibi; muktedirken affeden, cömertlik duygusunu veren, va’dini yerine getirendir. Çok ikrâm edici, kerîmi olan demektir.”"
     },
     {
-        "text": "el-Karîb ",
-        "mean": "Af, mağfireti, rahmeti, bilmesi, görmesi ve duyması itibariyle kullarına yakın olan"
+        "arabic": "القدّوس",
+        "turkish": "Kuddüs",
+        "mean": "“Tertemiz. Kuddûs, (Haşr Sûresi, son âyetler). Yeni Ahit’in Arapça çevirilerinde de yer alır. Her türlü hatâ, gaflet ve âcizlikten uzak, eksiklikten berî, mutlak kemâl sâhibi anlamına gelir. Kur’an’da Allah’ın, sonradan olma ve hiçbir tasvir kayıtlarına sığmayan, hakkında hiçbir eksiklik düşünülemeyen en mukaddes olan en yüce varlık olması, bu ismiyle de anlatılmıştır. Her türlü eksiklik ve ayıplardan münezzeh, arı olan demektir.”"
     },
     {
-        "text": "el-Kâşif ",
-        "mean": "Azap, sıkıntı, bela ve dertleri gideren"
+        "arabic": "اللطيف",
+        "turkish": "Latîf",
+        "mean": "“İnce, letâfetli. Allah’ın güzel adlarından (Esmâu’l Hüsna) birisi, kelime olarak latif, ince hoş, nüfuz edici, saydam, güzel, yumuşak, gizli, derin, lütufkâr gibi anlamları dile getirir.”"
     },
     {
-        "text": "Kâtib (ûn)",
-        "mean": "İnsanların yaptıklarını yazan"
+        "arabic": "الماجد",
+        "turkish": "Mâcid",
+        "mean": "“Şânlı. Mâcid, ulu ve cömert, şânı yüce anlamlarını taşımaktadır. Kadri ve şânı büyük, kerem ve müsâmahası bol demektir.”"
     },
     {
-        "text": "el-Kavî ",
-        "mean": "Kuvvetli, kudretli, her şeye gücü yeten"
+        "arabic": "مالك الملك",
+        "turkish": "Mâlik-ül Mülk",
+        "mean": "“Mülkün gerçek ezeli ve ebedi sâhibi.”"
     },
     {
-        "text": "el-Kayyûm ",
-        "mean": "Zatı ile kaim olana, ezelî ve ebedî, her şeyin varlığı kendisine bağlı, uykusu ve uyuklaması olmayan, varlıkları yöneten, koruyan, ihtiyaçlarını üstlenen"
+        "arabic": "المانع",
+        "turkish": "Mâni",
+        "mean": "“Engel olan. Mâni, bâzı şeylerin meydana gelmesine müsâde etmeyen, engelleyen demektir.”"
     },
     {
-        "text": "el-Kebîr ",
-        "mean": "Zatı, isim ve sıfatları, şanı ve şerefi, kadri ve kıymeti, değer ve izzeti pek yüce, ulu ve büyük"
+        "arabic": "المجيد",
+        "turkish": "Mecîd",
+        "mean": "“Şerefli. Mecîd şan, şeref, büyüklük ve kudretinden dolayı yüce olan ve güzel işlerinden dolayı sevilip övülendir. Şeref, ancak kendi emir ve yasaklarına uymakla elde edilebilir. Şânı şerefi çok üstün olan demektir.”"
     },
     {
-        "text": "el-Kerîm ",
-        "mean": "Değerli, şerefli, çok nimet veren, nimet ve ihsanı bol olan "
+        "arabic": "الملك",
+        "turkish": "Melik",
+        "mean": "“Hükümdar. Melik mülkün sâhibi, mülk ve saltanatı devamlı olan demektir. Kur’an’ın ilk ve son sûresinde (Fâtiha ve Nâs sûresi) Allah’tan Melik olarak söz edilir; yâni bir Müslüman için mülk sâhibi, bütün eşyânın ve yaratılanların tek mâlikidir. Bütün varlıkların üzerinde emretme, istediği gibi tasarruf etme, hiçbir şarta bağlı olmaksızın sâhip olma O’na mahsustur. Yarattıklarına emretme, sakındırma, cezâlandırma, istediğini zelîl, dilediğini de azîz etme kudretine sâhip olan yalnız Allah’tır. O, yarattığı mülkünde ve orada olanların hepsinde yegâne hükümdardır ve sonsuz kudretiyle onları idâresi altında tutan tek Allahtır.”"
     },
     {
-        "text": "el-Kuddûs ",
-        "mean": "Her türlü çirkinlik, noksanlık ve ayıplardanuzak, tertemiz, bütün kemal sıfatları kendisinde toplayan,güzellik, iyilik ve ihsanlarıyla övülen"
+        "arabic": "المتين",
+        "turkish": "Metîn",
+        "mean": "“Sağlam, metânetli, kuvveti çok şiddetli olup hiçbir iş zor gelmeyen, pek güçlü demektir.”"
     },
     {
-        "text": "el-Latîf ",
-        "mean": "Yaratıklara karşı yumuşak, çok merhametli, çok lütufkâr, ihsan sahibi, insanlara hak ettiklerinden fazlasını veren her şeyin detayını, sırlarını en iyi bilen, işleri çok hassas düzenleyen, gözle görülmeyen"
+        "arabic": "المؤخّر",
+        "turkish": "Mu’ahhir",
+        "mean": "“Geride bırakan, erteleyen, her şeyden sonra yine var olan; O’na uymayanları zelîl edip arkada bırakan, istediğini geri koyandır. Sonunda yine sadece O var (olarak) kalacaktır.”"
     },
     {
-        "text": "Mâhid (ûn)",
-        "mean": "Yeryüzünü yaratıkları için elverişli, yarayışlı ve faydalı olarak yaratan"
+        "arabic": "المجيب",
+        "turkish": "Mucîb",
+        "mean": "“İcâbet eden. O’na yalvaranların isteklerine karşılık veren, teklifleri bilendir (Bakara, 2/186). Kendine yalvaranların isteklerini veren, duâları kabul eden, icâbet eden demektir.”"
     },
     {
-        "text": "el-Mâlik ",
-        "mean": "Bütün varlıkların sahibi"
+        "arabic": "المغني",
+        "turkish": "Muğnî",
+        "mean": "“Zenginleştiren, dilediğine zenginlik veren, ihtiyaçlarını gideren, müstağni kılan demektir.”"
     },
     {
-        "text": "el-Mecîd ",
-        "mean": "Çok şerefli, çok itibarlı"
+        "arabic": "المحسي",
+        "turkish": "Muhsî",
+        "mean": "“Sayan, iyilik eden, ihsan eden, hayırsever”"
     },
     {
-        "text": "el-Melik ",
-        "mean": "Bütün varlıkları yöneten, dilediğini yapan, dilediği gibi hükmeden"
+        "arabic": "المحيي",
+        "turkish": "Muhyî",
+        "mean": "“Canlandıran, dirilten. Muhyî dirilten, canlandıran, hayat veren, vâr ve ihyâ eden, dirilten, can bağışlayan, sağlık veren demektir.”"
     },
     {
-        "text": "el-Melîk ",
-        "mean": "Çok mülkü olan, her şeyin sahibi ve maliki, onları terbiye edip yetiştiren, mülk ve güç veren"
+        "arabic": "المعيد",
+        "turkish": "Muîd",
+        "mean": "“Döndüren. Muîd, yaratılmışları yok ettikten sonra tekrar yaratandır. O’ndan başka yaratıcı olamaz. Yaratılmışları yok ettikten sonra tekrar yaratan demektir.”"
     },
     {
-        "text": "el-Metîn ",
-        "mean": "Çok kuvvetli, çok dayanıklı, acizliği, zafiyetive gevşekliği olmayan"
+        "arabic": "المعز",
+        "turkish": "Muiz",
+        "mean": "“İzzet veren. Aziz kelimesinden türetilen Muiz, izzet ve azizlik veren anlamlarına gelir.”"
     },
     {
-        "text": "el-Mevlâ ",
-        "mean": "Dost, yardımcı, görüp gözeten"
+        "arabic": "المقدّم",
+        "turkish": "Mukaddim",
+        "mean": "“Öne geçiren. Mukaddim, her şeyden önce olan, dilediğini öne alan; dilediğine maddî ve manevî nimetler verip yükselten, öne geçiren demektir. “Takdim eden” manasına da gelir.”"
     },
     {
-        "text": "Mu’azzib (în)",
-        "mean": "Suç işleyenleri, zalimleri, günahkârları cezalandıran"
+        "arabic": "المقيت",
+        "turkish": "Mukît",
+        "mean": "“Besleyen, rızıkları yaratan, bilen, tâyin eden, her yaratılmışın rızkını veren demektir.”"
     },
     {
-        "text": "el-Mu ’ızz ",
-        "mean": "İzzet ve şeref, güç ve kuvvet, itibar ve şereflikılan, aziz yapan"
+        "arabic": "المقسط",
+        "turkish": "Muksit",
+        "mean": "“Dürüst veya tasarruflu. Muksit, “Bütün işlerini dengeli yapan” anlamına gelir. Hükmünde ve fiillerinde adâletli olan demektir.”"
     },
     {
-        "text": "el-Muhric ",
-        "mean": "Bir şeyi açığa çıkaran, bir varlıktan başka birvarlık var eden, gizli şeyleri ortaya çıkaran"
+        "arabic": "المقتدر",
+        "turkish": "Muktedir",
+        "mean": "“İktidar sahibi. Muktedir, gücü her şeye yeten, her şeyi dilediği duruma getiren, kuvvet sahibi demektir. Kehf suresinin 45. ayetinde, Kamer suresinin 42. ve 55. ayetlerinde geçer.”"
     },
     {
-        "text": "el-Muhît ",
-        "mean": "İlim ve kudretiyle her şeyi kuşatan, her şeyemuttali olan"
+        "arabic": "المصور",
+        "turkish": "Musavvir",
+        "mean": "“Tasarımlayan, şekillendiren. Yaratmış olduğu varlıkları şekillendiren ve durumlarını tâkdir eden demektir.”"
     },
     {
-        "text": "el-Mukît ",
-        "mean": "Her şeye gücü yeten, rızık veren, yapılanlarıbilen, koruyan, mükâfat veren"
+        "arabic": "المبدىء",
+        "turkish": "Mübdî’",
+        "mean": "“Varlık veren. Mübdî, hiç yoktan ortaya koyan, vâreden, yaratandır. Allah’tan başka yaratıcı yoktur. Yaratıkları maddesiz ve örneksiz olarak baştan yaratan olan Allah’ın adıdır. “"
     },
     {
-        "text": "el-Muktedir ",
-        "mean": "Güçlü, kuvvetli, istediğini istediği gibi yapan"
+        "arabic": "المهيْمن",
+        "turkish": "Müheymin",
+        "mean": "“Belirleyici.”"
     },
     {
-        "text": "el-Musavvir ",
-        "mean": "Yaratıklara şekil ve özellik veren"
+        "arabic": "المؤمن",
+        "turkish": "Mü’min",
+        "mean": "“Güvenen. İsim Allah’a izafe edildiğinde anlam değişikliği yapılarak (ismi mef’ul) güvenilen şeklinde anlamlandırılır.”"
     },
     {
-        "text": "Mûsi (ûn)",
-        "mean": "Gökleri genişleten"
+        "arabic": "المميت",
+        "turkish": "Mümît",
+        "mean": "“Öldüren, can alan. Mümît, öldüren, ölümü her canlıya tâkdir edip bunu uygulayan, yaratıkların ölümünü yaratan, öldüren demektir.”"
     },
     {
-        "text": "el-Mübîn ",
-        "mean": "Varlığı aşikâr olan, hakkı ızhar eden, gerçeğibeyan eden"
+        "arabic": "المنتقم",
+        "turkish": "Müntakim",
+        "mean": "“İntikam alan. Ancak din bilginlerince intikam alma Allah’a yakıştırılamadığı için “günahkârlara adaletiyle müstahak oldukları cezayı veren” şeklinde açıklamalarla ismin antropomorfik çağrışımı yok edilir.”"
     },
     {
-        "text": "Mübrim (ûn)",
-        "mean": "Hile ile kötülük yapmaya karar verenleri bilen, onların bu kötülüklerini boşa çıkaran, onları kesin olarak cezalandıran"
+        "arabic": "المتعالِ",
+        "turkish": "Müteâli",
+        "mean": "“Her şeyden yüce. Müteâli, yüksek ve yüce, bilinenlerin en üstünü demektir. Akıllı yaratılmışlarda mümkün gördüğü her şeyden çok yücedir.”"
     },
     {
-        "text": "Mübtelî (n)",
-        "mean": "Deneyen, imtihan eden, gizli olanları açığa çıkaran"
+        "arabic": "المتكبّر",
+        "turkish": "Mütekebbir",
+        "mean": "“Bütün ihtişamın sahibi, Büyük ve büyüklenen.”[7] Mütekebbir, “zatının ve sıfatlarının mahiyeti bilinemeyecek kadar ulu” anlamına gelir.[8] Arapça K.B.R kökünden mütefa’il vezninde türetilen bir kelimedir. Mütekebbir, kibirlenen, büyüklenen anlamına gelir. Yaklaşık olarak aynı anlama gelen Müstekbir kelimesi de aynı kökten türemiş kelimelerdendir. Aynı kökten türetilen diğer kelimeler kibir, kibriya, ekber vb. dir. Bu manalar yergi ifade etmekte olup Allah’tan başka varlıklar için söz konusudur.[8] Tanrı için kullanıldığında ululuk sahibi, her şeyde ve her hadisede büyüklüğünü gösteren anlamları verilir. İsim ayrıca antropomorfik çağrışımlar açısından dikkat çekicidir.”"
     },
     {
-        "text": "el-Mücîb ",
-        "mean": "Duaları, istekleri, dilekleri kabul eden, ihtiyaçları karşılayan, sıkıntıları gideren"
+        "arabic": "المذل",
+        "turkish": "Müzil",
+        "mean": "“Zillet veren. Müzil, yüce Allah’ın lâyık olanları zillete düşüren, zelîl kılan, onları hor ve hakîr eden anlamına gelen bir sıfat isimdir. Zillete düşüren, hor ve hakir eden demektir.”"
     },
     {
-        "text": "el-Müheymin ",
-        "mean": "İnsanların bütün yaptıklarını bilen, koruyan, görüp gözeten"
+        "arabic": "النافع",
+        "turkish": "Nâfi",
+        "mean": "“Faydalandıran. Nâfi, hayr ve menfaat verecek şeyleri yaratan, faydalandıran anlamına gelir.”"
     },
     {
-        "text": "el-Mühlik ",
-        "mean": "İsyan eden, azan, günaha dalan ve zulmeden fert ve toplumları helâk eden"
+        "arabic": "النور",
+        "turkish": "Nûr",
+        "mean": "“Evreni nurlandıran. Nûr, rûhânî ışık, âlemleri nûrlandıran, dilediğini nûr eden, nûr olan demektir. “"
     },
     {
-        "text": "el-Mü’min ",
-        "mean": "Yaratıklarına güven veren"
+        "arabic": "الرافع",
+        "turkish": "Râfi",
+        "mean": "“Yücelten. Râfi, kaldıran, yükselten, dereceleri yükselten ve yüksek olan anlamlarına gelir. Gönülleri îmân ve irfan ışığıyla parlatan, yüksek gerçeklerden haberdâr eden yüce Allah’tır. Her yönüyle yüce ve yüksek olan O’dur.”"
     },
     {
-        "text": "el-Müneccî ",
-        "mean": "Sıkıntı, bela ve azaptan kurtaran"
+        "arabic": "الرقيب",
+        "turkish": "Rakîb",
+        "mean": "“Kontrol ve gözetim altında bulunduran. Rakîb, görüp gözeten, murâkebe eden, bütün varlıklar üzerine gözcü olup bütün işlerini kontrol altına alandır. Bütün varlıklar ve bütün işler murakabesi altında bulunan demektir.”"
     },
     {
-        "text": "el-Münezzil ",
-        "mean": "Nimet veren, su, sekînet, melek, kitap vepeygamber indiren"
+        "arabic": "الرؤوف",
+        "turkish": "Ra’ûf",
+        "mean": "“Esirgeyen. Rauf, çok şefkat ve merhamet gösteren, çok esirgeyen, kolaylık sağlayan anlamındadır. Rauf’un anlamı ilk anda Rahîm’le benzer görünse de Kur’an’da Rauf ismi berâber geçtiği yerlerde Rahîm’den önce anılmıştır. Rauf’un kolaylık sağlaması anlamına örnek yaşlılık, hastalık ve zayıflık gibi hallerde bâzı ibâdetlerden muaf olma sayılabilir. “"
     },
     {
-        "text": "el-Münîr ",
-        "mean": "Işık veren, aydınlatan"
+        "arabic": "الرشيد",
+        "turkish": "Reşîd",
+        "mean": "“Doğru yola eriştiren. Reşîd, bütün âlemleri dosdoğru bir nizam ve hikmetle âkıbetine ulaştıran demektir.”"
     },
     {
-        "text": "Münşi’ (ûn)",
-        "mean": "İcat eden, inşa eden, yapan, örneksiz olarak yaratan"
+        "arabic": "الرزّاق",
+        "turkish": "Rezzâk",
+        "mean": "“Rızıklandıran.”"
     },
     {
-        "text": "Müntekım (ûn)",
-        "mean": "Suçluları cezalandıran"
+        "arabic": "الصبور",
+        "turkish": "Sabûr",
+        "mean": "“Sabırlı olan, isyankârlardan acele intikam almayan demektir.”"
     },
     {
-        "text": "Münzil (în)",
-        "mean": "Melek, kitap, su ve sekînet indiren, nimet veren"
+        "arabic": "الصمد",
+        "turkish": "Samed",
+        "mean": "“Her şey kendisine muhtaç olan, kendisi ise hiçbir şeye muhtaç olmayan. Geleneksel meâl çalışmalarında Samed kelimesine birebir tercüme şeklinde anlam verilmez ve “kendisi hiçbir şeye muhtaç olmayan, ama her şey ona muhtaç olan; tüm canlıların ihtiyaçlarını gideren ve her türlü istekte doğrudan kendisine başvurulan” şeklinde açıklamalarda bulunulur.”"
     },
     {
-        "text": "Münzir (în)",
-        "mean": "Kullarına fayda ve zarar veren şeyleri bildiren; inkâr ve isyan edenlerin âkibetinin kötü olduğunu haber vererek onları bu davranışlardan sakındıran ve azabı ilekorkutan"
+        "arabic": "الشهيد",
+        "turkish": "Şehîd",
+        "mean": "“Şâhit, her şeye şâhit olan, her şeyi hakkıyla gören, bilen ve muâmelesini de buna göre yapan demektir. Her zaman ve her yerde hâzır ve nâzır olan demektir. “"
     },
     {
-        "text": "Mürsil (în)",
-        "mean": "vahiy, peygamber, bol yağmur, aşılayıcı rüzgâr,koruyucu melek, âsiler için yıldırımlar ve âfetler gönderen),"
+        "arabic": "الشكور",
+        "turkish": "Şekûr",
+        "mean": "“Az şükredene dahi çok nimet veren.”"
     },
     {
-        "text": "el-Müste’ân ",
-        "mean": "Kendisinden yardım istenen, kendisine sığınılan"
+        "arabic": "السلام",
+        "turkish": "Selām",
+        "mean": "“Esenlik kaynağı. Selām, İslam sözcüğüyle aynı semantik kökten türer. Her çeşit âfet ve kaderlerden emin olan demektir. Selām ismiyle Allah, her türlü eminliğin, sâlimliğin aslı olup, ayıptan, kusurdan ve her çeşit eksikliklerden uzak olan yüce yaratıcı olduğunu kullarına belli etmiştir. Selam kelimesi aslında barış demektir. İbranicede karşılığı Şalom’dur. Selim, Süleyman (Solomon) isimleri bu kökten türemiştir.”"
     },
     {
-        "text": "Müstemi (ûn)",
-        "mean": "Sesleri işiten, duyan"
+        "arabic": "السميع",
+        "turkish": "Semî",
+        "mean": "“İşiten, işitme kuvvetine sâhip olan ve işitme gücünü verendir. O, hiçbir şartla ve kayda bağlı olmaksızın işitir. Herşeyi işiten, kullarının niyazını kabul eden demektir.”"
     },
     {
-        "text": "el-Müte’âl ",
-        "mean": "Aşkın, pek yüce, ulu, eksik ve noksanlıklardan berî olan"
+        "arabic": "التوّاب",
+        "turkish": "Tevvâb",
+        "mean": "“Tövbelere kucak açan. Tevvâb, tövbeleri çok kabul eden, tövbe kapısını açık tutarak tövbe etme imkânı veren, bağışlayan demektir. Buna göre Allah, samîmî olarak günahlardan dönüp tövbe edenleri bağışlayandır.”"
     },
     {
-        "text": "el-Mütekebbir ",
-        "mean": "İhtiyaç ve noksanlığı gerektiren her şeyden münezzeh, pek yüce ve ulu"
+        "arabic": "الواجد",
+        "turkish": "Vâcid",
+        "mean": "“İcâd eyleyen, varlığı kendinden olan. Vâcid, vâr olan ve her şeyi vâreden, icâd eyleyen; varlığı kendinden olan; dilediğini istediği anda var edip yaratandır. O’na karşı hiçbir şey kendini gizleyemez. İstediğini, istediği vakit bulan demektir.”"
     },
     {
-        "text": "el-Müteveffî ",
-        "mean": "Yaratıkların canlarını alan"
+        "arabic": "الواحد",
+        "turkish": "Vâhid",
+        "mean": "“Eşi ve benzeri olmayan, zâtında tek olan. Vâhid; kendisinden başka olmamak, zâtında, sıfatlarında, işlerinde ve hükümlerinde, fiillerinde aslâ ortağı, dengi ve benzeri bulunmayan demektir. Sayılabilirlik, yâni iki değil, bir olmak demek değildir. Çünkü Allah sonsuzdur, ucu bucağı yoktur. Dolayısıyla bir sayıyla eşlemek imkânsızdır.”"
     },
     {
-        "text": "en-Nâsır ",
-        "mean": "Yardım eden"
+        "arabic": "الوالي",
+        "turkish": "Vâlî",
+        "mean": "“Evreni ve evrende olan her şeyi yöneten. Vâlî yardım eden, destek veren, işleri düzenleyen, yöneten anlamlarını taşır. Bu muazzam kâinâtı ve bütün hâdisâtı tek başına idâre eden demektir.”"
     },
     {
-        "text": "en-Nesîr ",
-        "mean": "Çok yardım eden, sürekli yardım eden"
+        "arabic": "الوارث",
+        "turkish": "Vâris",
+        "mean": "“Bütün servetlerin gerçek sâhibi. Vâris, bütün servetlerin gerçek sâhibi anlamına gelir. Varlığı devam eden, servetlerin hakiki sâhibi demektir. “"
     },
     {
-        "text": "er-Râfi’ ",
-        "mean": "Peygamber ve müminlerin itibar, şan ve şereflerini artıran, göğü yükselten"
+        "arabic": "الواسع",
+        "turkish": "Vâsi",
+        "mean": "“Bağışlaması bol ve rahmeti çok olan. Yarattıklarına maddî ve manevî genişlik verendir. Lütfu bol olan demektir.\""
     },
     {
-        "text": "er-Rahîm ",
-        "mean": "Çok merhametli"
+        "arabic": "الودود",
+        "turkish": "Vedûd",
+        "mean": "“Sevilen, çok şefkatli, muhabbetli, sâlih kullarını çok seven ve onlarca çok sevilen, onları rahmet ve rızâsına erdiren; sevilmeye ve dostluğu kazanılmaya yegâne lâyık olandır. Sevgi ve dostluk hissini yaratandır. Kur’an’da iki sûrede (Hûd, 11/90 ve Buruc, 85/14) geçmektedir.”"
     },
     {
-        "text": "er-Rahmân ",
-        "mean": "Çok merhametli "
+        "arabic": "الوهّاب",
+        "turkish": "Vehhâb",
+        "mean": "“Karşılıksız bolca veren. Vehhâb, Allah’ın karşılıksız olarak çok hîbe eden, çok fazla bağışlayan olduğu anlamına gelir. Hak sâhibi olmadıkları halde yarattıklarına çok çok verendir. Çok fazla ihsan eden, çeşit çeşit nimetleri daima bağışlayan demektir.”"
     },
     {
-        "text": "er-Rakîb ",
-        "mean": "İnsanların hâllerini, sözlerini, yaptıklarını ve davranışlarını bilen, haberdar olan, murakabe edip koruyan"
+        "arabic": "الوكيل",
+        "turkish": "Vekîl",
+        "mean": "“Vekil kılınan, hayatını Allah’a tevekkül ederek düzenleyen ve böylece O’na sığınanların işlerinde kendilerine yardım edendir; idâresinde hiçbir kayda ve şarta bağlı olmayandır. Tevekkül sâhiplerinin işini düzeltip onlardan daha iyi temin eden demektir.”"
     },
     {
-        "text": "er-Raûf ",
-        "mean": "Çok merhametli, çok şefkatli, çok acıyan"
+        "arabic": "الولي",
+        "turkish": "Velî",
+        "mean": "“Veli, dost, emir sâhibi ve iyi insanların, yâni müminlerin dostu (velîsi) olup onlara yardım ederek işlerini yönetendir.”"
     },
     {
-        "text": "er-Rezzâk ",
-        "mean": "Bol nimet, maddî ve manevî rızık veren"
+        "arabic": "الظاهر",
+        "turkish": "Zâhir",
+        "mean": "“Yarattıklarıyla varlığı aşikâr olan, görünen, varlığında hiç şüphe olmayan, varlığı her şeyden âşikâr olandır. Her yaratık, yaratanının görülen bir şâhididir.”"
     },
     {
-        "text": "Sâdık (ûn)",
-        "mean": "Söz, iş, vad ve va’îdinde doğru olan, her sözünü ve vadini yerine getiren"
-    },
-    {
-        "text": "es-Samed ",
-        "mean": "Her şeyin kendisine muhtaç olduğu, yöneldiği,her dilek ve isteğin mercii; hiç eksiği, kusuru ve ihtiyacı olmayan ulu, şanlı, dosdoğru, âdil ve güvenilir olan"
-    },
-    {
-        "text": "es-Selâm ",
-        "mean": "Eksiklik, acizlik, hastalık, ölüm ve benzeri şeylerden salim olan kullarına güven ve selamet veren"
-    },
-    {
-        "text": "es-Semî’ ",
-        "mean": "Her sözü, bütün konuşulanları en iyi işiten, duyan"
-    },
-    {
-        "text": "Şâhid (în)",
-        "mean": "Bilen, muttali olan, her şeye tanık olan"
-    },
-    {
-        "text": "eş-Şâkir ",
-        "mean": "Verdiği nimetlere şükreden ve çalışan kimseyi ödüllendiren"
-    },
-    {
-        "text": "eş-Şefî’ ",
-        "mean": "Müminlerin yâr ve yardımcısı, azap ve sıkıntılardan koruyucusu olan"
-    },
-    {
-        "text": "eş-Şehîd ",
-        "mean": "Her şeye muttali olan, gören, bilen, haberdâr olan, her yerde hazır nazır olan, hiçbir şey kendisinden gizlenemeyen, bütün sırlara vakıf olan, her şeyi murakabe eden"
-    },
-    {
-        "text": "eş-Şekûr ",
-        "mean": "İbadet eden kullarının mükâfatlarını bolca veren, az çok her itaati ödüllendiren"
-    },
-    {
-        "text": "eş-Şey ",
-        "mean": "Var olan, mevcut"
-    },
-    {
-        "text": "et-Tevvâb ",
-        "mean": "Sürekli tövbeleri kabul eden"
-    },
-    {
-        "text": "el-Vâhid ",
-        "mean": "Zatında, isim ve sıfatlarında eşi ve benzeri bulunmayan, tek olan"
-    },
-    {
-        "text": "el-Vâlî ",
-        "mean": "Koruyup gözeten, yardım eden, işleri deruhte eden"
-    },
-    {
-        "text": "el-Vâris ",
-        "mean": "Bütün varlıkların sahibi, bâkî ve ebedî olan, herşey kendisine dönen"
-    },
-    {
-        "text": "el-Vâsi’ ",
-        "mean": "Güçlü, kuvvetli, ilim ve merhameti her şeyi kuşatan, bütün yaratıklara rızık veren, nimet ve ihsanı bol olan"
-    },
-    {
-        "text": "el-Vedûd ",
-        "mean": "Müminleri çok seven, kulları tarafından çok sevilen"
-    },
-    {
-        "text": "el-Vehhâb ",
-        "mean": "Karşılıksız çok nimet veren, ikram ve ihsanda devamlı olan, lütfu, ihsanı ve rahmeti bütün kulları kuşatan"
-    },
-    {
-        "text": "el-Vekîl ",
-        "mean": "Güvenilen, koruyan, yardım eden, görüp gözeten, her şeyin maliki ve yöneticisi olan"
-    },
-    {
-        "text": "el-Velî ",
-        "mean": "Dost, seven, görüp gözeten, yardım eden"
-    },
-    {
-        "text": "ez-Zâhir",
-        "mean": "Varlığı her şeyden aşikâr olan, her şeye galip gelen, her şeyden yüce olan"
-    },
-    {
-        "text": "Zâri’(ûn)",
-        "mean": "Ekinleri, bitkileri yetiştiren, büyüten"
-    },
-    {
-        "text": "Hüvallâhüllezî lâ ilâhe illâ hû ",
-        "mean": "Kendisinden başka hiç bir ilâh bulunmayan Allah"
+        "arabic": "ذو الجلال والإكرام",
+        "turkish": "Zülcelâl-i vel-İkrâm",
+        "mean": "“Şanlı ve İkrâmlı. Zülcelâl-i vel-İkrâm hem azamet, hem de fazl-u kerem sâhibi demektir.”"
     }
 ]

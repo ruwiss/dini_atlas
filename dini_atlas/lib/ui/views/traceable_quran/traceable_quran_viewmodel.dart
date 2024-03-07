@@ -282,10 +282,12 @@ class TraceableQuranViewModel extends BaseViewModel {
 
   void showAndHidePlayerViewWithDuration() {
     togglePlayerView(true);
-    Timer.periodic(const Duration(seconds: 3), (timer) {
-      timer.cancel();
-      togglePlayerView(false);
-    });
+    if (_currentPlayerState == PlayerState.playing) {
+      Timer.periodic(const Duration(seconds: 3), (timer) {
+        timer.cancel();
+        togglePlayerView(false);
+      });
+    }
   }
 
   @override

@@ -96,7 +96,11 @@ class HomeTabViewModel extends ReactiveViewModel {
 
     await result.fold(
       (times) async {
-        homeService.prayerTimes = times;
+        homeService.prayerTimes = times
+          ..prayerTimes.sort(
+            (a, b) =>
+                a.miladiTarihUzunIso8601.compareTo(b.miladiTarihUzunIso8601),
+          );
         notifyListeners();
         // Namaz vakitlerini bildirim ekranı için Shared Preferences'a kaydet
         await PrayerTimesService.savePrayerTimesToSharedPreferences(times);
@@ -152,17 +156,18 @@ class HomeTabViewModel extends ReactiveViewModel {
       selectedPrayerTime = _prayerTimeList
           ?.indexWhere((e) => e.miladiTarihUzunIso8601.isEqualTo(datetime));
     } else {
-      // Tabloda önceki güne gidilince
-      if (increment != null) selectedPrayerTime = selectedPrayerTime! + 1;
-      // Tabloda sonraki güne gidilirse
-      if (decrement != null) selectedPrayerTime = selectedPrayerTime! - 1;
+      if (increment != null) {
+        // Eğer sonraki gün yoksa işlem yapma
+        if ((selectedPrayerTime! + 1) >= _prayerTimeList!.length) return;
 
-      // Eğer tabloda gidilen gün mevcut listede yoksa başa dön
-      if (selectedPrayerTime! >= _prayerTimeList!.length) {
-        selectedPrayerTime = 0;
-      } else if (selectedPrayerTime!.isNegative) {
-        // Eğer tabloda gidilen günden daha öncesi yoksa sona git
-        selectedPrayerTime = _prayerTimeList!.length - 1;
+        // Sonraki elemanı seç
+        selectedPrayerTime = selectedPrayerTime! + 1;
+      } else if (decrement != null) {
+        // Eğer önceki gün yoksa işlem yapma
+        if ((selectedPrayerTime! - 1).isNegative) return;
+
+        // Önceki elemanı seç
+        selectedPrayerTime = selectedPrayerTime! - 1;
       }
     }
     notifyListeners();
