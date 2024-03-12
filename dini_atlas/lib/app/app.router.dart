@@ -5,8 +5,8 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:dini_atlas/models/favourite.dart' as _i25;
-import 'package:dini_atlas/models/quran/sura_info.dart' as _i23;
+import 'package:dini_atlas/models/favourite.dart' as _i26;
+import 'package:dini_atlas/models/quran/sura_info.dart' as _i24;
 import 'package:dini_atlas/ui/views/about/about_view.dart' as _i18;
 import 'package:dini_atlas/ui/views/compass/compass_view.dart' as _i8;
 import 'package:dini_atlas/ui/views/dualar/dualar_view.dart' as _i17;
@@ -17,7 +17,7 @@ import 'package:dini_atlas/ui/views/forty_hadiths/forty_hadiths_view.dart'
     as _i12;
 import 'package:dini_atlas/ui/views/home/home_view.dart' as _i2;
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart'
-    as _i24;
+    as _i25;
 import 'package:dini_atlas/ui/views/kaza/kaza_view.dart' as _i9;
 import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart'
     as _i19;
@@ -32,14 +32,15 @@ import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_view.dart'
     as _i15;
 import 'package:dini_atlas/ui/views/rosary/rosary_view.dart' as _i10;
 import 'package:dini_atlas/ui/views/startup/startup_view.dart' as _i3;
+import 'package:dini_atlas/ui/views/story/story_view.dart' as _i21;
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart'
     as _i7;
 import 'package:dini_atlas/ui/views/webview/webview_view.dart' as _i20;
-import 'package:flutter/foundation.dart' as _i22;
-import 'package:flutter/material.dart' as _i21;
+import 'package:flutter/foundation.dart' as _i23;
+import 'package:flutter/material.dart' as _i22;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i26;
+import 'package:stacked_services/stacked_services.dart' as _i27;
 
 class Routes {
   static const homeView = '/home-view';
@@ -80,6 +81,8 @@ class Routes {
 
   static const webviewView = '/webview-view';
 
+  static const storyView = '/story-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -100,6 +103,7 @@ class Routes {
     aboutView,
     nativeWidgetView,
     webviewView,
+    storyView,
   };
 }
 
@@ -181,30 +185,34 @@ class StackedRouter extends _i1.RouterBase {
       Routes.webviewView,
       page: _i20.WebviewView,
     ),
+    _i1.RouteDef(
+      Routes.storyView,
+      page: _i21.StoryView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.NoInternetView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.NoInternetView(),
         settings: data,
       );
     },
     _i5.QuranView: (data) {
       final args = data.getArgs<QuranViewArguments>(nullOk: false);
-      return _i21.PageRouteBuilder<dynamic>(
+      return _i22.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) => _i5.QuranView(
             key: args.key,
             sura: args.sura,
@@ -219,7 +227,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<FavouritesViewArguments>(
         orElse: () => const FavouritesViewArguments(),
       );
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i6.FavouritesView(key: args.key, favourite: args.favourite),
         settings: data,
@@ -227,68 +235,68 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i7.TraceableQuranView: (data) {
       final args = data.getArgs<TraceableQuranViewArguments>(nullOk: false);
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i7.TraceableQuranView(key: args.key, sura: args.sura),
         settings: data,
       );
     },
     _i8.CompassView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.CompassView(),
         settings: data,
       );
     },
     _i9.KazaView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.KazaView(),
         settings: data,
       );
     },
     _i10.RosaryView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.RosaryView(),
         settings: data,
       );
     },
     _i11.ReligiousDaysView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.ReligiousDaysView(),
         settings: data,
       );
     },
     _i12.FortyHadithsView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.FortyHadithsView(),
         settings: data,
       );
     },
     _i13.RadioView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.RadioView(),
         settings: data,
       );
     },
     _i14.NearMosquesView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i14.NearMosquesView(),
         settings: data,
       );
     },
     _i15.RiyazusSalihinView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i15.RiyazusSalihinView(),
         settings: data,
       );
     },
     _i16.EsmaulHusnaView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i16.EsmaulHusnaView(),
         settings: data,
       );
     },
     _i17.DualarView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i17.DualarView(),
         settings: data,
       );
@@ -297,7 +305,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<AboutViewArguments>(
         orElse: () => const AboutViewArguments(),
       );
-      return _i21.PageRouteBuilder<dynamic>(
+      return _i22.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) => _i18.AboutView(
             key: args.key, showSubscriptionView: args.showSubscriptionView),
         settings: data,
@@ -307,7 +315,7 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i19.NativeWidgetView: (data) {
       final args = data.getArgs<NativeWidgetViewArguments>(nullOk: false);
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i19.NativeWidgetView(key: args.key, widgetId: args.widgetId),
         settings: data,
@@ -315,13 +323,19 @@ class StackedRouter extends _i1.RouterBase {
     },
     _i20.WebviewView: (data) {
       final args = data.getArgs<WebviewViewArguments>(nullOk: false);
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => _i20.WebviewView(
             key: args.key,
             title: args.title,
             path: args.path,
             url: args.url,
             showAd: args.showAd),
+        settings: data,
+      );
+    },
+    _i21.StoryView: (data) {
+      return _i22.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i21.StoryView(),
         settings: data,
       );
     },
@@ -342,11 +356,11 @@ class QuranViewArguments {
     this.ayah,
   });
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
-  final _i23.SuraInfo sura;
+  final _i24.SuraInfo sura;
 
-  final _i24.QuranTabs currentTab;
+  final _i25.QuranTabs currentTab;
 
   final int? ayah;
 
@@ -376,9 +390,9 @@ class FavouritesViewArguments {
     this.favourite,
   });
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
-  final _i25.Favourite? favourite;
+  final _i26.Favourite? favourite;
 
   @override
   String toString() {
@@ -403,9 +417,9 @@ class TraceableQuranViewArguments {
     required this.sura,
   });
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
-  final _i23.SuraInfo sura;
+  final _i24.SuraInfo sura;
 
   @override
   String toString() {
@@ -430,7 +444,7 @@ class AboutViewArguments {
     this.showSubscriptionView = false,
   });
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   final bool showSubscriptionView;
 
@@ -458,7 +472,7 @@ class NativeWidgetViewArguments {
     required this.widgetId,
   });
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   final int widgetId;
 
@@ -488,7 +502,7 @@ class WebviewViewArguments {
     this.showAd = false,
   });
 
-  final _i22.Key? key;
+  final _i23.Key? key;
 
   final String title;
 
@@ -523,7 +537,7 @@ class WebviewViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i26.NavigationService {
+extension NavigatorStateExtension on _i27.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -567,9 +581,9 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> navigateToQuranView({
-    _i22.Key? key,
-    required _i23.SuraInfo sura,
-    required _i24.QuranTabs currentTab,
+    _i23.Key? key,
+    required _i24.SuraInfo sura,
+    required _i25.QuranTabs currentTab,
     int? ayah,
     int? routerId,
     bool preventDuplicates = true,
@@ -587,8 +601,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> navigateToFavouritesView({
-    _i22.Key? key,
-    _i25.Favourite? favourite,
+    _i23.Key? key,
+    _i26.Favourite? favourite,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -604,8 +618,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> navigateToTraceableQuranView({
-    _i22.Key? key,
-    required _i23.SuraInfo sura,
+    _i23.Key? key,
+    required _i24.SuraInfo sura,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -761,7 +775,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> navigateToAboutView({
-    _i22.Key? key,
+    _i23.Key? key,
     bool showSubscriptionView = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -779,7 +793,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> navigateToNativeWidgetView({
-    _i22.Key? key,
+    _i23.Key? key,
     required int widgetId,
     int? routerId,
     bool preventDuplicates = true,
@@ -796,7 +810,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> navigateToWebviewView({
-    _i22.Key? key,
+    _i23.Key? key,
     required String title,
     String? path,
     String? url,
@@ -810,6 +824,20 @@ extension NavigatorStateExtension on _i26.NavigationService {
     return navigateTo<dynamic>(Routes.webviewView,
         arguments: WebviewViewArguments(
             key: key, title: title, path: path, url: url, showAd: showAd),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToStoryView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.storyView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -859,9 +887,9 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> replaceWithQuranView({
-    _i22.Key? key,
-    required _i23.SuraInfo sura,
-    required _i24.QuranTabs currentTab,
+    _i23.Key? key,
+    required _i24.SuraInfo sura,
+    required _i25.QuranTabs currentTab,
     int? ayah,
     int? routerId,
     bool preventDuplicates = true,
@@ -879,8 +907,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> replaceWithFavouritesView({
-    _i22.Key? key,
-    _i25.Favourite? favourite,
+    _i23.Key? key,
+    _i26.Favourite? favourite,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -896,8 +924,8 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> replaceWithTraceableQuranView({
-    _i22.Key? key,
-    required _i23.SuraInfo sura,
+    _i23.Key? key,
+    required _i24.SuraInfo sura,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1053,7 +1081,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> replaceWithAboutView({
-    _i22.Key? key,
+    _i23.Key? key,
     bool showSubscriptionView = false,
     int? routerId,
     bool preventDuplicates = true,
@@ -1071,7 +1099,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> replaceWithNativeWidgetView({
-    _i22.Key? key,
+    _i23.Key? key,
     required int widgetId,
     int? routerId,
     bool preventDuplicates = true,
@@ -1088,7 +1116,7 @@ extension NavigatorStateExtension on _i26.NavigationService {
   }
 
   Future<dynamic> replaceWithWebviewView({
-    _i22.Key? key,
+    _i23.Key? key,
     required String title,
     String? path,
     String? url,
@@ -1102,6 +1130,20 @@ extension NavigatorStateExtension on _i26.NavigationService {
     return replaceWith<dynamic>(Routes.webviewView,
         arguments: WebviewViewArguments(
             key: key, title: title, path: path, url: url, showAd: showAd),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithStoryView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.storyView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

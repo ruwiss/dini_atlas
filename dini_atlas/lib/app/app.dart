@@ -36,6 +36,7 @@ import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart';
 import 'package:dini_atlas/ui/dialogs/remove_ads/remove_ads_dialog.dart';
 import 'package:dini_atlas/ui/views/webview/webview_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/image/image_sheet.dart';
+import 'package:dini_atlas/ui/views/story/story_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -65,6 +66,7 @@ import 'package:dini_atlas/ui/bottom_sheets/image/image_sheet.dart';
     ),
     MaterialRoute(page: NativeWidgetView),
     MaterialRoute(page: WebviewView),
+    MaterialRoute(page: StoryView),
 // @stacked-route
   ],
   dependencies: [

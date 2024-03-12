@@ -2,7 +2,6 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 abstract class AppTheme {
   static void setStatusBarColor() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(

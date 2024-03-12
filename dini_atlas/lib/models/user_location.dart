@@ -18,8 +18,10 @@ class UserLocation {
 
   UserLocation.fromJson(Map<String, dynamic> json)
       : country = (json['country'].trim() as String).toLowerCaseTurkish(),
-        city = (json['administrativeArea'].trim() as String).toLowerCaseTurkish(),
-        state = (json['subAdministrativeArea'].trim() as String).toLowerCaseTurkish(),
+        city =
+            (json['administrativeArea'].trim() as String).toLowerCaseTurkish(),
+        state = (json['subAdministrativeArea'].trim() as String)
+            .toLowerCaseTurkish(),
         latitude = json['latitude'],
         longtitude = json['longitude'];
 

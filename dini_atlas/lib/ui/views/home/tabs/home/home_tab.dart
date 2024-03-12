@@ -3,6 +3,7 @@ import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/default_table_widget.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/detailed_table_widget.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/dot_view.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/widgets/story_circle_views.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -64,7 +65,14 @@ class HomeTabViewState extends State<HomeTabView> {
 
   List<Widget> _tableWidgets(HomeTabViewModel viewModel) => [
         DefaultTableWidget(viewModel: viewModel),
-        DetailedTableWidget(viewModel: viewModel),
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              StoryCircleViews(),
+              DetailedTableWidget(viewModel: viewModel),
+            ],
+          ),
+        )
       ];
 
   Align _subtitleWidget() {

@@ -80,6 +80,7 @@ dependencies:
   # in app purchase
   purchases_flutter: ^6.21.0
   webview_flutter: ^4.7.0
+  story_view: ^0.16.5
 
 dev_dependencies:
   build_runner: ^2.4.5
