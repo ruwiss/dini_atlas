@@ -75,6 +75,9 @@ extension DateTimeExtensions on DateTime {
   // DateTime objesini [00:00] String formatına döndürür
   String toHourMinString() =>
       "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
+
+  // DateTime objesinin gününü kısalt (Cmt, Paz) gibi
+  String shortDayName() => DateFormat.E(ksDefaultLocale).format(this);
 }
 
 // TimeOfDay Extensions

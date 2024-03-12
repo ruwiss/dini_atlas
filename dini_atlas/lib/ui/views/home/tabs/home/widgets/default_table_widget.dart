@@ -8,9 +8,9 @@ import 'package:flutter_svg/svg.dart';
 
 import '../home_tab_viewmodel.dart';
 
-class TableWidget extends StatelessWidget {
+class DefaultTableWidget extends StatelessWidget {
   final HomeTabViewModel viewModel;
-  const TableWidget({super.key, required this.viewModel});
+  const DefaultTableWidget({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class TableWidget extends StatelessWidget {
           )
         ],
         verticalSpace(20),
-        _tableBody(context),
+        Expanded(child: SingleChildScrollView(child: _tableBody(context))),
         verticalSpaceSmall,
       ],
     );

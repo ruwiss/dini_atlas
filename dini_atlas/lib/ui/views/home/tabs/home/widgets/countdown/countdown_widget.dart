@@ -2,6 +2,7 @@ import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 
 import 'countdown_viewmodel.dart';
@@ -33,11 +34,15 @@ class CountDownWidget extends StatelessWidget {
               ),
             ),
             verticalSpace(2),
-            Text(
-              model.countdownTimer ?? "",
-              style: const TextStyle(
-                fontSize: 26,
-                color: kcOnPrimaryColor,
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 350),
+              opacity: model.countdownTimer == null ? 0 : 1,
+              child: Text(
+                model.countdownTimer ?? "",
+                style: const TextStyle(
+                  fontSize: 26,
+                  color: kcOnPrimaryColor,
+                ),
               ),
             ),
           ],

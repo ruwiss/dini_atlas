@@ -25,6 +25,8 @@ import 'package:dini_atlas/ui/views/home/home_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+enum TableTab { normal, detailed }
+
 class HomeTabViewModel extends ReactiveViewModel {
   final HomeService homeService;
   HomeTabViewModel({required this.homeService});
@@ -59,6 +61,14 @@ class HomeTabViewModel extends ReactiveViewModel {
   bool? get nextTimeIsAfterDay => homeService.nextTimeIsAfterDay;
   PrayerType get currentPrayerType => homeService.currentPrayerType;
   List<PrayerNotiSettings>? prayerNotiSettingsList;
+
+  TableTab _currentTableTab = TableTab.normal;
+  TableTab get currentTableTab => _currentTableTab;
+
+  void changeTableTab(int index) {
+    _currentTableTab = TableTab.values[index];
+    notifyListeners();
+  }
 
   @override
   List<ListenableServiceMixin> get listenableServices => [homeService];
@@ -263,4 +273,14 @@ class HomeTabViewModel extends ReactiveViewModel {
       return null;
     }
   }
+
+  List<PrayerTime> get weeklyPrayerTimes => [
+        _prayerTimeList![selectedPrayerTime!], // 1. Gün
+        _prayerTimeList![selectedPrayerTime! + 1], // 2. Gün
+        _prayerTimeList![selectedPrayerTime! + 2], // 3. Gün
+        _prayerTimeList![selectedPrayerTime! + 3], // 4. Gün
+        _prayerTimeList![selectedPrayerTime! + 4], // 5. Gün
+        _prayerTimeList![selectedPrayerTime! + 5], // 6. Gün
+        _prayerTimeList![selectedPrayerTime! + 6], // 7. Gün
+      ];
 }

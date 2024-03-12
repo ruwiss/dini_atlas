@@ -4,6 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_remote_config_service.dart';
 import 'package:flutter/widgets.dart';
@@ -40,10 +41,12 @@ abstract class GoogleServices {
   }
 
   static Future<void> _setCrashlytics() async {
+    if (kDebugMode) return;
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   }
 
   static void recordError(Object error, StackTrace stack) {
+    if (kDebugMode) return;
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
   }
 
