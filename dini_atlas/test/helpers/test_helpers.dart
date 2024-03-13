@@ -12,6 +12,7 @@ import 'package:dini_atlas/services/local/favorites_service.dart';
 import 'package:dini_atlas/services/remote/auth_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
+import 'package:dini_atlas/services/remote/story_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -30,6 +31,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<AuthService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<KazaService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<InAppPurchaseService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<StoryService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -46,6 +48,7 @@ void registerServices() {
   getAndRegisterAuthService();
   getAndRegisterKazaService();
   getAndRegisterInAppPurchaseService();
+  getAndRegisterStoryService();
 // @stacked-mock-register
 }
 
@@ -166,6 +169,13 @@ MockInAppPurchaseService getAndRegisterInAppPurchaseService() {
   _removeRegistrationIfExists<InAppPurchaseService>();
   final service = MockInAppPurchaseService();
   locator.registerSingleton<InAppPurchaseService>(service);
+  return service;
+}
+
+MockStoryService getAndRegisterStoryService() {
+  _removeRegistrationIfExists<StoryService>();
+  final service = MockStoryService();
+  locator.registerSingleton<StoryService>(service);
   return service;
 }
 // @stacked-mock-create

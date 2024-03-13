@@ -11,8 +11,8 @@ def md5(val):
 
 
 def remove_html_tags(html) -> str:
-    CLEANR = re.compile("<.*?>")
-    return re.sub(CLEANR, "", html)
+    cleanr = re.compile("<.*?>")
+    return re.sub(cleanr, "", html)
 
 
 def get_radio_names():
@@ -67,8 +67,8 @@ def fetch_radios(force=False):
 
 def daily_json(name, data=None):
     current_day = datetime.now().day
-    dir = "json/"
-    filename = f"{dir}{name}-{current_day}.json"
+    dir_name = "json/"
+    filename = f"{dir_name}{name}-{current_day}.json"
 
     if data:
         with open(filename, "w", encoding="utf-8") as f:
@@ -80,11 +80,11 @@ def daily_json(name, data=None):
                 return existing_data
 
         except FileNotFoundError:
-            for fname in os.listdir(dir):
+            for fname in os.listdir(dir_name):
                 if (
                     fname.startswith(name)
                     and fname.endswith(".json")
                     and fname != filename
                 ):
-                    file = os.path.join(dir, fname)
+                    file = os.path.join(dir_name, fname)
                     os.remove(file)

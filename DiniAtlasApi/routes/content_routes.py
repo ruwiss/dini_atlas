@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request, jsonify, Response
+from flask import Blueprint, redirect, request, jsonify, Response, send_file
 from selectolax.lexbor import LexborHTMLParser
 from datetime import datetime
 from markupsafe import escape
@@ -236,7 +236,7 @@ def dini_gunler():
 def radyolar():
     radios_path = "json/radios.json"
     if os.path.exists(radios_path):
-        with open("json/radios.json") as f:
+        with open(radios_path) as f:
             data = json.load(f)
             try:
                 d = helper.fetch_radios()
@@ -283,3 +283,23 @@ def dualar():
 @app.route("/aygoruntusu/<img>")
 def ay_goruntusu(img):
     return redirect(f"https://namazvakti.diyanet.gov.tr/images/{img}")
+
+
+@app.route("/stories")
+def stories():
+    stories_path = "json/story/stories.json"
+    if os.path.exists(stories_path):
+        with open(stories_path) as f:
+            return jsonify(json.load(f))
+    else:
+        return "Error", 500
+
+
+@app.route("/story/<media>")
+def story_media(media):
+    media_path = f"json/story/media/{media}"
+    if os.path.exists(media_path):
+        pass
+    else:
+        return "Error", 501
+    return send_file(media_path, as_attachment=True)

@@ -1,76 +1,89 @@
+import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/app/app.router.dart';
+import 'package:dini_atlas/models/story_model.dart';
+import 'package:dini_atlas/services/remote/story_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class StoryCircleViews extends StatelessWidget {
-  const StoryCircleViews({super.key});
+  const StoryCircleViews({super.key, required this.viewModel});
+  final HomeTabViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _storyCircle(
-              viewPercentage: .5,
-              imageUrl:
-                  "https://i.pinimg.com/736x/8e/18/66/8e1866670c3d7ae370ee09452ba00a51.jpg",
-            ),
-            _storyCircle(
-              viewPercentage: 1,
-              imageUrl:
-                  "https://www.shutterstock.com/image-vector/vector-illustration-muslim-mosque-on-260nw-1173853915.jpg",
-            ),
-            _storyCircle(
-              viewPercentage: .7,
-              imageUrl:
-                  "https://1.bp.blogspot.com/-i8gnwiMI5zs/YDYiz4yIKII/AAAAAAAABEo/62sNfBCWxbkdZN1aMoxabkIL3YQxHhIYACLcBGAsYHQ/s512/icon.png",
-            ),
-          ],
+    final stories = viewModel.storiesModel;
+    if (stories == null) {
+      return const SizedBox();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              stories.categories.length,
+              (index) {
+                final category = stories.categories[index];
+                return _storyCircle(category: category);
+              },
+            ).toList(),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
-  Widget _storyCircle({
-    required String imageUrl,
-    required double viewPercentage,
-    VoidCallback? onTap,
-  }) {
+  Widget _storyCircle({required StoryCategory category}) {
     const double size = 55;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
-        onTap: onTap,
-        child: Stack(
-          alignment: Alignment.center,
+        onTap: () async {
+          final stories =
+              await locator<StoryService>().filterStories(category.id);
+          final val = await locator<NavigationService>()
+              .navigateToStoryView(stories: stories);
+          if (val) viewModel.getStoryViews();
+        },
+        child: Column(
           children: [
-            SizedBox(
-              height: size,
-              width: size,
-              child: CircularProgressIndicator(
-                value: viewPercentage,
-                color: kcPurpleColorMedium,
-                backgroundColor: kcBlueGrayColor,
-                strokeWidth: 4.5,
-              ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  height: size,
+                  width: size,
+                  child: CircularProgressIndicator(
+                    value: category.seenPercentage,
+                    color: kcPurpleColorMedium,
+                    backgroundColor: kcBlueGrayColor,
+                    strokeWidth: 4.5,
+                  ),
+                ),
+                Container(
+                  height: size,
+                  width: size,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: kcBackgroundColor,
+                  ),
+                  child: Image.network(
+                    category.thumbnail,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
             ),
-            Container(
-              height: size,
-              width: size,
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: kcBackgroundColor,
-              ),
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-              ),
+            verticalSpaceTiny,
+            Text(
+              category.name,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 13),
             ),
           ],
         ),

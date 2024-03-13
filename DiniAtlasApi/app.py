@@ -20,7 +20,7 @@ app.config["JSONIFY_MIMETYPE"] = "application/json; charset=utf-8"
 app.config["DB_HOST"] = "localhost"
 app.config["DB_USER"] = "root" if debug_mode else "kodlayalim_user"
 app.config["DB_PASSWORD"] = None if debug_mode else "Ankara.0660."
-app.config["DB_DATABASE"] = "dini_atlas" if debug_mode else "kodlayalim_diniatlas"
+app.config["DB_DATABASE"] = "diniatlas" if debug_mode else "kodlayalim_diniatlas"
 
 app.register_blueprint(content_app)
 app.register_blueprint(user_app, url_prefix="/kullanici")

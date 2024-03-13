@@ -7,6 +7,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dini_atlas/models/favourite.dart' as _i26;
 import 'package:dini_atlas/models/quran/sura_info.dart' as _i24;
+import 'package:dini_atlas/models/story_model.dart' as _i27;
 import 'package:dini_atlas/ui/views/about/about_view.dart' as _i18;
 import 'package:dini_atlas/ui/views/compass/compass_view.dart' as _i8;
 import 'package:dini_atlas/ui/views/dualar/dualar_view.dart' as _i17;
@@ -40,7 +41,7 @@ import 'package:flutter/foundation.dart' as _i23;
 import 'package:flutter/material.dart' as _i22;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i27;
+import 'package:stacked_services/stacked_services.dart' as _i28;
 
 class Routes {
   static const homeView = '/home-view';
@@ -187,7 +188,7 @@ class StackedRouter extends _i1.RouterBase {
     ),
     _i1.RouteDef(
       Routes.storyView,
-      page: _i21.StoryView,
+      page: _i21.StoriesView,
     ),
   ];
 
@@ -333,10 +334,14 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i21.StoryView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i21.StoryView(),
+    _i21.StoriesView: (data) {
+      final args = data.getArgs<StoryViewArguments>(nullOk: false);
+      return _i22.PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            _i21.StoriesView(key: args.key, stories: args.stories),
         settings: data,
+        transitionsBuilder:
+            data.transition ?? _i1.TransitionsBuilders.slideBottom,
       );
     },
   };
@@ -537,7 +542,34 @@ class WebviewViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i27.NavigationService {
+class StoryViewArguments {
+  const StoryViewArguments({
+    this.key,
+    required this.stories,
+  });
+
+  final _i23.Key? key;
+
+  final _i27.Stories stories;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "stories": "$stories"}';
+  }
+
+  @override
+  bool operator ==(covariant StoryViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.stories == stories;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ stories.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i28.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -830,14 +862,17 @@ extension NavigatorStateExtension on _i27.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToStoryView([
+  Future<dynamic> navigateToStoryView({
+    _i23.Key? key,
+    required _i27.Stories stories,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.storyView,
+        arguments: StoryViewArguments(key: key, stories: stories),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1136,14 +1171,17 @@ extension NavigatorStateExtension on _i27.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithStoryView([
+  Future<dynamic> replaceWithStoryView({
+    _i23.Key? key,
+    required _i27.Stories stories,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.storyView,
+        arguments: StoryViewArguments(key: key, stories: stories),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

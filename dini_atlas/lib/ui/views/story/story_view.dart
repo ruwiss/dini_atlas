@@ -1,10 +1,13 @@
+import 'package:dini_atlas/models/story_model.dart';
+import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:story_view/story_view.dart';
 import 'story_viewmodel.dart';
 
-class StoryView extends StackedView<StoryViewModel> {
-  const StoryView({Key? key}) : super(key: key);
+class StoriesView extends StackedView<StoryViewModel> {
+  const StoriesView({super.key, required this.stories});
+  final Stories stories;
 
   @override
   Widget builder(
@@ -13,16 +16,22 @@ class StoryView extends StackedView<StoryViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+      body: StoryView(
+        storyItems: viewModel.storyList,
+        controller: viewModel.controller,
+        indicatorColor: kcPrimaryColorLight,
+        onComplete: viewModel.onStoryCompleted,
+        onStoryShow: (storyItem, index) => viewModel.onStoryShow(index),
       ),
     );
   }
 
   @override
-  StoryViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      StoryViewModel();
+  StoryViewModel viewModelBuilder(BuildContext context) => StoryViewModel();
+
+  @override
+  void onViewModelReady(StoryViewModel viewModel) {
+    viewModel.init(stories);
+    super.onViewModelReady(viewModel);
+  }
 }

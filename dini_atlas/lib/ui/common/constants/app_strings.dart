@@ -7,8 +7,8 @@ import 'dart:convert';
 
 const String ksAppVersion = "1.0.9";
 
-String get ksBaseUrl => false
-    ? "http://192.168.1.106:9958"
+String get ksBaseUrl => true
+    ? "http://192.168.1.125:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
 // Uygulama başlığı

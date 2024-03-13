@@ -37,6 +37,7 @@ import 'package:dini_atlas/ui/dialogs/remove_ads/remove_ads_dialog.dart';
 import 'package:dini_atlas/ui/views/webview/webview_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/image/image_sheet.dart';
 import 'package:dini_atlas/ui/views/story/story_view.dart';
+import 'package:dini_atlas/services/remote/story_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -66,7 +67,10 @@ import 'package:dini_atlas/ui/views/story/story_view.dart';
     ),
     MaterialRoute(page: NativeWidgetView),
     MaterialRoute(page: WebviewView),
-    MaterialRoute(page: StoryView),
+    CustomRoute(
+      page: StoriesView,
+      transitionsBuilder: TransitionsBuilders.slideBottom,
+    ),
 // @stacked-route
   ],
   dependencies: [
@@ -85,6 +89,7 @@ import 'package:dini_atlas/ui/views/story/story_view.dart';
     LazySingleton(classType: AuthService),
     LazySingleton(classType: KazaService),
     LazySingleton(classType: InAppPurchaseService),
+    LazySingleton(classType: StoryService),
 // @stacked-service
   ],
   bottomsheets: [

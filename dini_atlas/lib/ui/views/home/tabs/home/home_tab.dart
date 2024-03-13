@@ -68,7 +68,7 @@ class HomeTabViewState extends State<HomeTabView> {
         SingleChildScrollView(
           child: Column(
             children: [
-              StoryCircleViews(),
+              StoryCircleViews(viewModel: viewModel),
               DetailedTableWidget(viewModel: viewModel),
             ],
           ),

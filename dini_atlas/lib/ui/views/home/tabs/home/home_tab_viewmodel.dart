@@ -8,6 +8,7 @@ import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/location_api/state.dart';
 import 'package:dini_atlas/models/prayer/eid_prayer.dart';
 import 'package:dini_atlas/models/prayer/prayer_time.dart';
+import 'package:dini_atlas/models/story_model.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/app_widget_service.dart';
 import 'package:dini_atlas/services/local/location_service.dart';
@@ -16,6 +17,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/prayer_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
+import 'package:dini_atlas/services/remote/story_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
 import 'package:dio/dio.dart';
@@ -35,6 +37,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   final _userSettingsService = locator<UserSettingsService>();
   final _locationService = locator<LocationService>();
   final _navigationService = locator<NavigationService>();
+  final _storyService = locator<StoryService>();
 
   final _interstitialAdService =
       AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
@@ -62,12 +65,17 @@ class HomeTabViewModel extends ReactiveViewModel {
   PrayerType get currentPrayerType => homeService.currentPrayerType;
   List<PrayerNotiSettings>? prayerNotiSettingsList;
 
+  StoriesModel? _storiesModel;
+  StoriesModel? get storiesModel => _storiesModel;
+
   TableTab _currentTableTab = TableTab.normal;
   TableTab get currentTableTab => _currentTableTab;
 
   void changeTableTab(int index) {
     _currentTableTab = TableTab.values[index];
     notifyListeners();
+    // Story verilerini çağır
+    _getStories();
   }
 
   @override
@@ -283,4 +291,26 @@ class HomeTabViewModel extends ReactiveViewModel {
         _prayerTimeList![selectedPrayerTime! + 5], // 6. Gün
         _prayerTimeList![selectedPrayerTime! + 6], // 7. Gün
       ];
+
+  void _getStories() async {
+    if (_storiesModel == null) {
+      _storiesModel = await _storyService.getStories();
+      notifyListeners();
+      getStoryViews();
+    }
+  }
+
+  void getStoryViews() async {
+    if (_storiesModel case final StoriesModel model) {
+      for (final category in model.categories) {
+        final items = model.stories.singleWhere((e) => e.type == category.id);
+        int percentage = items.stories.length;
+        for (var story in items.stories) {
+          if (await _storyService.isSeen(story.media)) percentage--;
+        }
+        category.seenPercentage = percentage / items.stories.length;
+      }
+      notifyListeners();
+    }
+  }
 }
