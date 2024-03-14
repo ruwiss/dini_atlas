@@ -84,3 +84,5 @@ const String kiHeart = "assets/vectors/heart.svg";
 const String kiHeartFill = "assets/vectors/heart_fill.svg";
 
 const String kiMoon = "assets/vectors/moon.svg";
+
+const String kiArrowUp = "assets/vectors/arrow_up.svg";

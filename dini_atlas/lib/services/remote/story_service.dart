@@ -1,6 +1,13 @@
+import 'dart:io';
+
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/story_model.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
+import 'package:dini_atlas/ui/common/constants/app_strings.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StoryService {
@@ -46,5 +53,23 @@ class StoryService {
     final prefs = await _getPrefs();
     final List<String> items = prefs.getStringList(_storiesCacheKey) ?? [];
     return items.contains(media);
+  }
+
+  Future<void> shareMedia(String imageUrl) async {
+    try {
+      final response = await Dio().get(
+        imageUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+      final Directory directory = await getTemporaryDirectory();
+      final File file = await File('${directory.path}/storyImage.png')
+          .writeAsBytes(response.data);
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        subject: "Dini Atlas uygulamasından: $ksAppUrl",
+      );
+    } catch (e) {
+      debugPrint("Paylaşırken sorun oluştu $e");
+    }
   }
 }
