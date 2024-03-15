@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dini_atlas/app/app.locator.dart';
+import 'package:dini_atlas/models/daily_content.dart';
 import 'package:dini_atlas/models/story_model.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
@@ -10,28 +11,29 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StoryService {
+class DailyService {
   final _dio = locator<DioService>();
 
-  final String _storiesUrl = "/stories";
+  final String _dailyUrl = "/daily";
   final String _storiesCacheKey = "storiesMarkAsSeen";
 
-  StoriesModel? _storiesModel;
-  Future<StoriesModel?> getStories() async {
-    if (_storiesModel != null) return _storiesModel;
+  StoriesModel? storiesModel;
+  DailyContents? dailyContentsModel;
+  Future<void> getDaily() async {
+    if (storiesModel != null && dailyContentsModel != null) return;
 
-    final response = await _dio.request(_storiesUrl);
+    final response = await _dio.request(_dailyUrl);
 
     // Cevap yoksa veya sunucu hata gönderdiyse
-    if (response == null || response.statusCode != 200) return null;
+    if (response == null || response.statusCode != 200) return;
 
-    _storiesModel = StoriesModel.fromJson(response.data);
-    return _storiesModel;
+    storiesModel = StoriesModel.fromJson(response.data['stories']);
+    dailyContentsModel = DailyContents.fromJson(response.data['contents']);
   }
 
   Future<Stories> filterStories(int type) async {
-    if (_storiesModel == null) throw Exception("_storiesModel is null");
-    return _storiesModel!.stories.singleWhere((e) => e.type == type);
+    if (storiesModel == null) throw Exception("_storiesModel is null");
+    return storiesModel!.stories.singleWhere((e) => e.type == type);
   }
 
   SharedPreferences? _prefs;
@@ -40,8 +42,8 @@ class StoryService {
     return _prefs!;
   }
 
-  Future<void> markAsSeen(String media) async {
-    if (await isSeen(media)) return;
+  Future<void> markStoryAsSeen(String media) async {
+    if (await isStorySeen(media)) return;
     final prefs = await _getPrefs();
     final List<String> items = prefs.getStringList(_storiesCacheKey) ?? [];
     if (items.length >= 50) items.removeRange(0, 10);
@@ -49,7 +51,7 @@ class StoryService {
     await prefs.setStringList(_storiesCacheKey, items);
   }
 
-  Future<bool> isSeen(String media) async {
+  Future<bool> isStorySeen(String media) async {
     final prefs = await _getPrefs();
     final List<String> items = prefs.getStringList(_storiesCacheKey) ?? [];
     return items.contains(media);

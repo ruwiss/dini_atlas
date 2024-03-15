@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/story_model.dart';
-import 'package:dini_atlas/services/remote/story_service.dart';
+import 'package:dini_atlas/services/remote/daily_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stacked_services/stacked_services.dart';
 import "package:story_view/story_view.dart";
@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class StoryViewModel extends BaseViewModel {
   final controller = StoryController();
-  final _storyService = locator<StoryService>();
+  final _storyService = locator<DailyService>();
   final _navigationService = locator<NavigationService>();
 
   late Stories _stories;
@@ -43,7 +43,7 @@ class StoryViewModel extends BaseViewModel {
   late Story currentStory = _stories.stories[0];
   void onStoryShow(int index) async {
     currentStory = _stories.stories[index];
-    _storyService.markAsSeen(currentStory.media);
+    _storyService.markStoryAsSeen(currentStory.media);
   }
 
   void onStoryCompleted() => _navigationService.back(result: 1);

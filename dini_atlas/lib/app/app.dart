@@ -37,7 +37,7 @@ import 'package:dini_atlas/ui/dialogs/remove_ads/remove_ads_dialog.dart';
 import 'package:dini_atlas/ui/views/webview/webview_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/image/image_sheet.dart';
 import 'package:dini_atlas/ui/views/story/story_view.dart';
-import 'package:dini_atlas/services/remote/story_service.dart';
+import 'package:dini_atlas/services/remote/daily_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -89,7 +89,7 @@ import 'package:dini_atlas/services/remote/story_service.dart';
     LazySingleton(classType: AuthService),
     LazySingleton(classType: KazaService),
     LazySingleton(classType: InAppPurchaseService),
-    LazySingleton(classType: StoryService),
+    LazySingleton(classType: DailyService),
 // @stacked-service
   ],
   bottomsheets: [

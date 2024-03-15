@@ -1,7 +1,7 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/story_model.dart';
-import 'package:dini_atlas/services/remote/story_service.dart';
+import 'package:dini_atlas/services/remote/daily_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
@@ -44,7 +44,7 @@ class StoryCircleViews extends StatelessWidget {
       child: GestureDetector(
         onTap: () async {
           final stories =
-              await locator<StoryService>().filterStories(category.id);
+              await locator<DailyService>().filterStories(category.id);
           final val = await locator<NavigationService>()
               .navigateToStoryView(stories: stories);
           if (val) viewModel.getStoryViews();

@@ -1,5 +1,6 @@
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/countdown/countdown_card.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/widgets/daily_contents_widget.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/default_table_widget.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/detailed_table_widget.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/dot_view.dart';
@@ -70,6 +71,7 @@ class HomeTabViewState extends State<HomeTabView> {
             children: [
               StoryCircleViews(viewModel: viewModel),
               DetailedTableWidget(viewModel: viewModel),
+              DailyContentsWidget(viewModel: viewModel),
             ],
           ),
         )

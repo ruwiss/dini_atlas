@@ -1,7 +1,6 @@
 import 'package:dini_atlas/models/story_model.dart';
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/common/constants/app_images.dart';
-import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
@@ -35,27 +34,25 @@ class StoriesView extends StackedView<StoryViewModel> {
             child: StreamBuilder<PlaybackState>(
               stream: viewModel.controller.playbackNotifier.stream,
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const SizedBox();
+                if (snapshot.hasData &&
+                    viewModel.currentStory.mediaType != StoryMediaType.video) {
+                  return CircleAvatar(
+                    radius: 19,
+                    backgroundColor: kcGrayColor.withOpacity(.5),
+                    child: IconButton(
+                      onPressed: viewModel.onShareButtonTap,
+                      icon: SvgPicture.asset(
+                        kiShare,
+                        height: 17,
+                        colorFilter: const ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  );
                 } else {
-                  return viewModel.currentStory.mediaType ==
-                          StoryMediaType.video
-                      ? const SizedBox()
-                      : CircleAvatar(
-                          radius: 19,
-                          backgroundColor: kcGrayColor.withOpacity(.5),
-                          child: IconButton(
-                            onPressed: viewModel.onShareButtonTap,
-                            icon: SvgPicture.asset(
-                              kiShare,
-                              height: 17,
-                              colorFilter: const ColorFilter.mode(
-                                Colors.white,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                          ),
-                        );
+                  return const SizedBox();
                 }
               },
             ),

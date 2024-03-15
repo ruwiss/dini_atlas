@@ -34,7 +34,7 @@ import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart'
     as _i36;
 import 'package:dini_atlas/services/remote/kaza_service.dart' as _i34;
 import 'package:dini_atlas/services/remote/quran_service.dart' as _i25;
-import 'package:dini_atlas/services/remote/story_service.dart' as _i38;
+import 'package:dini_atlas/services/remote/daily_service.dart' as _i38;
 import 'package:dio/dio.dart' as _i18;
 import 'package:flutter/material.dart' as _i8;
 import 'package:fpdart/fpdart.dart' as _i20;
@@ -1801,9 +1801,9 @@ class MockInAppPurchaseService extends _i1.Mock
 /// A class which mocks [StoryService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockStoryService extends _i1.Mock implements _i38.StoryService {
+class MockStoryService extends _i1.Mock implements _i38.DailyService {
   @override
-  _i9.Future<_i5.StoriesModel?> getStories() => (super.noSuchMethod(
+  _i9.Future<_i5.StoriesModel?> getDaily() => (super.noSuchMethod(
         Invocation.method(
           #getStories,
           [],

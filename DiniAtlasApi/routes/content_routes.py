@@ -285,9 +285,10 @@ def ay_goruntusu(img):
     return redirect(f"https://namazvakti.diyanet.gov.tr/images/{img}")
 
 
-@app.route("/stories")
+@app.route("/daily")
 def stories():
-    stories_path = "json/story/stories.json"
+    datestr = datetime.now().strftime("%d-%m-%Y")
+    stories_path = f"json/daily/{datestr}.json"
     if os.path.exists(stories_path):
         with open(stories_path) as f:
             return jsonify(json.load(f))
@@ -297,7 +298,7 @@ def stories():
 
 @app.route("/story/<media>")
 def story_media(media):
-    media_path = f"json/story/media/{media}"
+    media_path = f"json/daily/story_media/{media}"
     if os.path.exists(media_path):
         pass
     else:

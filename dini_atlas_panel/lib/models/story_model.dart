@@ -1,4 +1,6 @@
-import 'package:dini_atlas/ui/common/constants/app_strings.dart';
+import 'dart:math';
+
+import 'package:dini_atlas_panel/constants/strings.dart';
 
 class StoriesModel {
   final List<StoryCategory> categories;
@@ -14,19 +16,25 @@ class StoriesModel {
       stories: storiesJson.map((e) => Stories.fromJson(e)).toList(),
     );
   }
+
+  StoriesModel.empty()
+      : categories = [],
+        stories = [];
 }
 
 class StoryCategory {
-  final int id;
+  final int? id;
   final String name;
   final String thumbnail;
-  double seenPercentage = 0;
-  StoryCategory(this.id, this.name, this.thumbnail, this.seenPercentage);
+  StoryCategory(this.name, this.thumbnail, this.id);
+
+  StoryCategory.createNew(this.name, this.thumbnail)
+      : id = Random().nextInt(999);
 
   StoryCategory.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        thumbnail = "$ksBaseUrl${json['thumbnail']}";
+        thumbnail = "$kBaseUrl${json['thumbnail']}";
 }
 
 class Stories {
@@ -55,7 +63,7 @@ class Story {
 
   factory Story.fromJson(Map<String, dynamic> json) {
     return Story(
-      media: "$ksBaseUrl${json['media']}",
+      media: "$kBaseUrl${json['media']}",
       mediaType: switch (json['mediaType']) {
         'video' => StoryMediaType.video,
         _ => StoryMediaType.image
