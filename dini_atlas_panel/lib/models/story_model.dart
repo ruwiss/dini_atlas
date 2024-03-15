@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:dini_atlas_panel/constants/strings.dart';
-
 class StoriesModel {
   final List<StoryCategory> categories;
   final List<Stories> stories;
@@ -20,6 +18,11 @@ class StoriesModel {
   StoriesModel.empty()
       : categories = [],
         stories = [];
+
+  Map<String, dynamic> toJson() => {
+        "categories": categories.map((e) => e.toJson()).toList(),
+        "stories": stories.map((e) => e.toJson()).toList(),
+      };
 }
 
 class StoryCategory {
@@ -34,7 +37,13 @@ class StoryCategory {
   StoryCategory.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        thumbnail = "$kBaseUrl${json['thumbnail']}";
+        thumbnail = json['thumbnail'];
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "thumbnail": thumbnail,
+      };
 }
 
 class Stories {
@@ -50,6 +59,10 @@ class Stories {
       stories: (json['list'] as List).map((e) => Story.fromJson(e)).toList(),
     );
   }
+  Map<String, dynamic> toJson() => {
+        "type": type,
+        "list": stories.map((e) => e.toJson()).toList(),
+      };
 }
 
 enum StoryMediaType { image, video }
@@ -63,7 +76,7 @@ class Story {
 
   factory Story.fromJson(Map<String, dynamic> json) {
     return Story(
-      media: "$kBaseUrl${json['media']}",
+      media: json['media'],
       mediaType: switch (json['mediaType']) {
         'video' => StoryMediaType.video,
         _ => StoryMediaType.image
@@ -71,6 +84,11 @@ class Story {
       addon: json['addon'] == null ? null : StoryAddon.fromJson(json['addon']),
     );
   }
+  Map<String, dynamic> toJson() => {
+        "media": media,
+        "mediaType": mediaType.name,
+        "addon": addon?.toJson(),
+      };
 }
 
 class StoryAddon {
@@ -81,4 +99,9 @@ class StoryAddon {
   StoryAddon.fromJson(Map<String, dynamic> json)
       : placeholder = json['placeholder'],
         url = json['url'];
+
+  Map<String, dynamic> toJson() => {
+        "placeholder": placeholder,
+        "url": url,
+      };
 }
