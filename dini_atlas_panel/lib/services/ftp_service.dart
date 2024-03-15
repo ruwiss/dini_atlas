@@ -49,8 +49,9 @@ class FTPService {
     await _connect();
     await ftpConnect.changeDirectory("$_dailyFolder/story_media");
     if (!await ftpConnect.existFile(platformFile.name)) {
-      await ftpConnect.uploadFile(File(platformFile.path!),
-          sRemoteName: platformFile.name);
+      await ftpConnect.sendCustomCommand('TYPE I');
+      await ftpConnect.uploadFileWithRetry(File(platformFile.path!),
+          pRetryCount: 3);
     }
     await _disconnect();
     return "/story/${platformFile.name}";
@@ -66,7 +67,7 @@ class FTPService {
       final dir = await getTemporaryDirectory();
       final file = File("${dir.path}/$fileName");
       await file.writeAsString(jsonEncode(json));
-      await ftpConnect.uploadFile(file, sRemoteName: fileName);
+      await ftpConnect.uploadFile(file);
       await _disconnect();
       return true;
     } catch (e) {

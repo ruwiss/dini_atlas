@@ -8,10 +8,13 @@ extension DateTimeExtensions on DateTime {
     return formattedDate;
   }
 
-    /// Verilen tarihi [16-03-2024] formatına döndürür
+  /// Verilen tarihi [16-03-2024] formatına döndürür
   String formatDateTimeString() {
     final formatter = DateFormat('dd-MM-yyyy', 'tr');
     String formattedDate = formatter.format(this);
     return formattedDate;
   }
+
+  // %Y-%m-%d
+  String convertYMDtimeString() => DateFormat('yyyy-MM-dd').format(this);
 }

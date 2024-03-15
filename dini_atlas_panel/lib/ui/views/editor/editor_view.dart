@@ -1,4 +1,5 @@
-import 'package:dini_atlas_panel/constants/strings.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dini_atlas_panel/constants.dart';
 import 'package:dini_atlas_panel/extensions/string_extensions.dart';
 import 'package:dini_atlas_panel/models/daily_content.dart';
 import 'package:dini_atlas_panel/models/story_model.dart';
@@ -253,8 +254,12 @@ class _EditorViewState extends State<EditorView> {
                   : Text(
                       "${_stories?.stories[storiesIndex].stories.length} Hikaye"),
               onTap: () => setState(() => _showStoryCategoryId = category.id),
-              leading:
-                  Image.network("$kBaseUrl${category.thumbnail}", height: 35),
+              leading: CachedNetworkImage(
+                imageUrl: "$kBaseUrl${category.thumbnail}",
+                httpHeaders: kHeaderWithToken,
+                height: 35,
+                width: 35,
+              ),
               trailing: IconButton(
                 onPressed: () {
                   _stories!.stories

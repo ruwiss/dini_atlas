@@ -1,4 +1,5 @@
-import 'package:dini_atlas_panel/constants/strings.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dini_atlas_panel/constants.dart';
 import 'package:dini_atlas_panel/extensions/string_extensions.dart';
 import 'package:dini_atlas_panel/services/ftp_service.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,13 @@ class _MediaViewState extends State<MediaView> {
       leading: _removingFile != name ? null : const CircularProgressIndicator(),
       trailing: isVideo
           ? const Icon(Icons.video_collection)
-          : Image.network("$kBaseUrl/story/$name"),
+          : CachedNetworkImage(
+              imageUrl: "$kBaseUrl/story/$name",
+              httpHeaders: kHeaderWithToken,
+              width: 40,
+              height: 40,
+              fit: BoxFit.cover,
+            ),
       onTap: widget.viewer ? null : () => Navigator.of(context).pop(name),
     );
   }
