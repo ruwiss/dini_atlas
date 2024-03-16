@@ -100,9 +100,6 @@ class _EditorViewState extends State<EditorView> {
                         "contents": _contents!.toJson(),
                       }).then((value) {
                         Navigator.of(context).pop();
-                      }).catchError((e) {
-                        _contentSaving = false;
-                        setState(() => _errorText = e);
                       });
                     },
                     icon: const Icon(Icons.save, color: Colors.indigo),
@@ -253,7 +250,11 @@ class _EditorViewState extends State<EditorView> {
                   ? null
                   : Text(
                       "${_stories?.stories[storiesIndex].stories.length} Hikaye"),
-              onTap: () => setState(() => _showStoryCategoryId = category.id),
+              onTap: () {
+                if (storiesIndex != -1) {
+                  setState(() => _showStoryCategoryId = category.id);
+                }
+              },
               leading: CachedNetworkImage(
                 imageUrl: "$kBaseUrl${category.thumbnail}",
                 httpHeaders: kHeaderWithToken,
@@ -400,7 +401,8 @@ class _EditorViewState extends State<EditorView> {
 
     setState(() => _loadingStoryData = true);
     final path = _pickedStoryMedia != null
-        ? await FTPService.instance.uploadMedia(_pickedStoryMedia!)
+        ? await FTPService.instance
+            .uploadMedia(_pickedStoryMedia!, autoFileName: true)
         : "/story/$_pickedStoryMediaFromMedia";
     setState(() => _loadingStoryData = false);
 

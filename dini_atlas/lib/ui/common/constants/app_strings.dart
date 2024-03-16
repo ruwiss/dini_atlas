@@ -5,9 +5,9 @@ import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-const String ksAppVersion = "1.0.9";
+const String ksAppVersion = "1.1.2";
 
-String get ksBaseUrl => true
+String get ksBaseUrl => false
     ? "http://192.168.1.125:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
@@ -58,8 +58,11 @@ const String ksAdmobBanner4 = "ca-app-pub-1923752572867502/1772367150";
 /// Pusula ekranı
 const String ksAdmobBanner5 = "ca-app-pub-1923752572867502/9425881498";
 
-// Sure liste görünümünden içeriğe giderken
+/// Sure liste görünümünden içeriğe giderken
 const String ksAdmobInterstitial1 = "ca-app-pub-1923752572867502/5647446257";
 
-// Buton aksiyonları için geçiş reklamı
+/// Buton aksiyonları için geçiş reklamı
 const String ksAdmobInterstitial2 = "ca-app-pub-1923752572867502/4206958804";
+
+/// Story arası resimli (videosuz) reklam
+const String ksAdmobInterstitital3 = "ca-app-pub-1923752572867502/3246477761";

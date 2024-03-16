@@ -26,47 +26,56 @@ class DailyContentsWidget extends StatelessWidget {
   }
 
   Widget _contentView(DailyContent content) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: borderRadiusMedium,
-        color: kcBackgroundColor,
-        border: Border.all(color: kcBlueGrayColor, width: 2),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                switch (content.dailyContentType) {
-                  DailyContentType.ayet => "Günün Ayeti",
-                  DailyContentType.hadis => "Günün Hadisi",
-                  DailyContentType.dua => "Günün Duâsı",
-                },
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: kcPrimaryColor,
+    if (content.metin.trim().isEmpty) {
+      return const SizedBox();
+    } else {
+      return Container(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: borderRadiusMedium,
+          color: kcBackgroundColor,
+          border: Border.all(color: kcBlueGrayColor, width: 2),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  switch (content.dailyContentType) {
+                    DailyContentType.ayet => "Günün Ayeti",
+                    DailyContentType.hadis => "Günün Hadisi",
+                    DailyContentType.dua => "Günün Duâsı",
+                  },
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: kcPrimaryColor,
+                  ),
                 ),
-              ),
-              Text(
-                content.kaynak,
-                style: const TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-          verticalSpaceTiny,
-          SelectableText(
-            content.metin,
-            style: const TextStyle(
-              color: kcPrimaryColorDark,
-              fontSize: 13,
+                SizedBox(
+                  width: 150,
+                  child: Text(
+                    content.kaynak,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.end,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
-    );
+            verticalSpaceTiny,
+            SelectableText(
+              content.metin,
+              style: const TextStyle(
+                color: kcPrimaryColorDark,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

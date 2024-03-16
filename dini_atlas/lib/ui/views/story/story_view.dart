@@ -18,46 +18,51 @@ class StoriesView extends StackedView<StoryViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      body: Stack(
-        children: [
-          StoryView(
-            storyItems: viewModel.storyList,
-            controller: viewModel.controller,
-            indicatorColor: kcPrimaryColorLight,
-            onComplete: viewModel.onStoryCompleted,
-            onStoryShow: (storyItem, index) => viewModel.onStoryShow(index),
-            onVerticalSwipeComplete: viewModel.onVerticalSwipe,
-          ),
-          Positioned(
-            top: 60,
-            right: 20,
-            child: StreamBuilder<PlaybackState>(
-              stream: viewModel.controller.playbackNotifier.stream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData &&
-                    viewModel.currentStory.mediaType != StoryMediaType.video) {
-                  return CircleAvatar(
-                    radius: 19,
-                    backgroundColor: kcGrayColor.withOpacity(.5),
-                    child: IconButton(
-                      onPressed: viewModel.onShareButtonTap,
-                      icon: SvgPicture.asset(
-                        kiShare,
-                        height: 17,
-                        colorFilter: const ColorFilter.mode(
-                          Colors.white,
-                          BlendMode.srcIn,
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Stack(
+          children: [
+            StoryView(
+              storyItems: viewModel.storyList,
+              controller: viewModel.controller,
+              indicatorColor: kcPrimaryColorLight,
+              onComplete: viewModel.onStoryCompleted,
+              onStoryShow: (storyItem, index) => viewModel.onStoryShow(index),
+              onVerticalSwipeComplete: viewModel.onVerticalSwipe,
+            ),
+            Positioned(
+              top: 60,
+              right: 20,
+              child: StreamBuilder<PlaybackState>(
+                stream: viewModel.controller.playbackNotifier.stream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData &&
+                      viewModel.currentStory.mediaType !=
+                          StoryMediaType.video) {
+                    return CircleAvatar(
+                      radius: 19,
+                      backgroundColor: kcGrayColor.withOpacity(.5),
+                      child: IconButton(
+                        onPressed: viewModel.onShareButtonTap,
+                        icon: SvgPicture.asset(
+                          kiShare,
+                          height: 17,
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

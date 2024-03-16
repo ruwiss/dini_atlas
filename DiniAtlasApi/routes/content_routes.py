@@ -290,8 +290,8 @@ def stories():
     datestr = datetime.now().strftime("%d-%m-%Y")
     stories_path = f"json/daily/{datestr}.json"
     if os.path.exists(stories_path):
-        with open(stories_path) as f:
-            return jsonify(json.load(f))
+        with open(stories_path, encoding='utf-8') as f:
+            return jsonify(json.load(f))    
     else:
         return "Error", 500
 

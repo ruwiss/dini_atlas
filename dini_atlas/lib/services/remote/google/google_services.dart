@@ -7,7 +7,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'firebase_remote_config_service.dart';
-import 'package:flutter/widgets.dart';
 
 import 'dart:async';
 import 'dart:developer';

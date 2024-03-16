@@ -1,10 +1,10 @@
 name: dini_atlas
 description: Dini Atlas
 publish_to: 'none'
-version: 1.0.9+14
+version: 1.1.2+17
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+    sdk: '>=3.0.3 <4.0.0'
 
 dependencies:
   flutter:
@@ -29,6 +29,7 @@ dependencies:
 
   # image
   flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.1
 
   # database
   isar: ^3.1.0+1

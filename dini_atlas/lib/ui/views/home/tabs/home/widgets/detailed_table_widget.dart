@@ -4,7 +4,6 @@ import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class DetailedTableWidget extends StatelessWidget {
   const DetailedTableWidget({super.key, required this.viewModel});

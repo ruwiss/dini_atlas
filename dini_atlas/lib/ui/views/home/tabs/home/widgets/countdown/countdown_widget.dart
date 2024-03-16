@@ -34,15 +34,11 @@ class CountDownWidget extends StatelessWidget {
               ),
             ),
             verticalSpace(2),
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 350),
-              opacity: model.countdownTimer == null ? 0 : 1,
-              child: Text(
-                model.countdownTimer ?? "",
-                style: const TextStyle(
-                  fontSize: 26,
-                  color: kcOnPrimaryColor,
-                ),
+            Text(
+              model.countdownTimer ?? "",
+              style: const TextStyle(
+                fontSize: 26,
+                color: kcOnPrimaryColor,
               ),
             ),
           ],

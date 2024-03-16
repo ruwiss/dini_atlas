@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/models/story_model.dart';
 import 'package:dini_atlas/services/remote/daily_service.dart';
-import 'package:dini_atlas/ui/common/constants/app_colors.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,9 @@ class StoryCircleViews extends StatelessWidget {
         onTap: () async {
           final stories =
               await locator<DailyService>().filterStories(category.id);
-          final val = await locator<NavigationService>()
-              .navigateToStoryView(stories: stories);
-          if (val) viewModel.getStoryViews();
+          await locator<NavigationService>()
+              .navigateToStoryView(stories: stories)
+              .then((_) => viewModel.getStoryViews());
         },
         child: Column(
           children: [
@@ -72,9 +73,10 @@ class StoryCircleViews extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: kcBackgroundColor,
                   ),
-                  child: Image.network(
-                    category.thumbnail,
+                  child: CachedNetworkImage(
+                    imageUrl: category.thumbnail,
                     fit: BoxFit.cover,
+                    httpHeaders: {"token": ksToken},
                   ),
                 ),
               ],

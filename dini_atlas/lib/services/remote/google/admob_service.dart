@@ -6,15 +6,17 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-// 10 Kere Videolu reklam görürse reklamları kaldır diyaloğunu göster
+// 5-10 Kere Videolu reklam görürse reklamları kaldır diyaloğunu göster
 void checkCountAndShowRemoveAdsDialog() async {
   final prefs = await SharedPreferences.getInstance();
-  if ((prefs.getInt('adCounter') ?? 0) >= 10) {
+  final adCount = (prefs.getInt('adCounter') ?? 0);
+  prefs.setInt('adCounter', adCount + 1);
+  if (adCount == 5 || adCount >= 10) {
     await locator<DialogService>().showCustomDialog(
       variant: DialogType.removeAds,
       barrierDismissible: true,
     );
-    prefs.remove('adCounter');
+    if (adCount >= 10) prefs.remove('adCounter');
   }
 }
 
@@ -58,7 +60,7 @@ class AdmobInterstitialAdService {
   final String _testAdUnitId = "ca-app-pub-3940256099942544/1033173712";
 
   /// Loads an interstitial ad.
-  void loadAd({VoidCallback? onAdLoaded}) {
+  void loadAd({VoidCallback? onAdLoaded, VoidCallback? onAdDismissed}) {
     if (!ksShowAdmobAds) return;
     InterstitialAd.load(
       adUnitId: ksTestAds ? _testAdUnitId : adUnitId,
@@ -69,8 +71,10 @@ class AdmobInterstitialAdService {
           debugPrint('$ad loaded.');
 
           ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) =>
-                checkCountAndShowRemoveAdsDialog(),
+            onAdDismissedFullScreenContent: (ad) {
+              checkCountAndShowRemoveAdsDialog();
+              onAdDismissed?.call();
+            },
           );
 
           _interstitialAd = ad;

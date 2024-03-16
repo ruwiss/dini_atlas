@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/daily_content.dart';
 import 'package:dini_atlas/models/story_model.dart';
@@ -20,15 +20,20 @@ class DailyService {
   StoriesModel? storiesModel;
   DailyContents? dailyContentsModel;
   Future<void> getDaily() async {
+    final connectivity = await Connectivity().checkConnectivity();
+    if (connectivity == ConnectivityResult.none) return;
     if (storiesModel != null && dailyContentsModel != null) return;
 
-    final response = await _dio.request(_dailyUrl);
+    try {
+      final response = await _dio.request(_dailyUrl);
+      // Cevap yoksa veya sunucu hata gönderdiyse
+      if (response == null || response.statusCode != 200) return;
 
-    // Cevap yoksa veya sunucu hata gönderdiyse
-    if (response == null || response.statusCode != 200) return;
-
-    storiesModel = StoriesModel.fromJson(response.data['stories']);
-    dailyContentsModel = DailyContents.fromJson(response.data['contents']);
+      storiesModel = StoriesModel.fromJson(response.data['stories']);
+      dailyContentsModel = DailyContents.fromJson(response.data['contents']);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<Stories> filterStories(int type) async {
@@ -61,7 +66,8 @@ class DailyService {
     try {
       final response = await Dio().get(
         imageUrl,
-        options: Options(responseType: ResponseType.bytes),
+        options: Options(
+            responseType: ResponseType.bytes, headers: {"token": ksToken}),
       );
       final Directory directory = await getTemporaryDirectory();
       final File file = await File('${directory.path}/storyImage.png')

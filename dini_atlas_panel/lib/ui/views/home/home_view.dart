@@ -31,9 +31,15 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         title: const Text("Dini Atlas Panel", style: TextStyle(fontSize: 16)),
         backgroundColor: Colors.blueGrey.shade50,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        ),
         actions: [
+          IconButton(
+              onPressed: () => setState(() {}),
+              icon: const Icon(Icons.refresh)),
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(

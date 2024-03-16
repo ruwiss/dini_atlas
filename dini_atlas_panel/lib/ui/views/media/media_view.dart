@@ -32,7 +32,7 @@ class _MediaViewState extends State<MediaView> {
         value.removeWhere((e) => !e.split('.').last.isVideoExtension());
       }
 
-      setState(() => _fileNames = value);
+      setState(() => _fileNames = value.reversed.toList());
     });
   }
 
