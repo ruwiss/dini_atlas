@@ -57,15 +57,16 @@ class FTPService {
       {bool autoFileName = false}) async {
     try {
       await ftpConnect.changeDirectory("$_dailyFolder/story_media");
+      final String fileName = !autoFileName
+          ? ''
+          : "${DateTime.now().formatDateTimeString()}-${platformFile.name}";
       if (!await ftpConnect.existFile(platformFile.name)) {
         await ftpConnect.sendCustomCommand('TYPE I');
-        final String fileName = !autoFileName
-            ? ''
-            : "${DateTime.now().formatDateTimeString()}-${platformFile.name}";
+
         await ftpConnect.uploadFileWithRetry(File(platformFile.path!),
             pRetryCount: 3, pRemoteName: fileName);
       }
-      return "/story/${platformFile.name}";
+      return "/story/$fileName";
     } catch (e) {
       await _connect();
       return await uploadMedia(platformFile, autoFileName: autoFileName);
