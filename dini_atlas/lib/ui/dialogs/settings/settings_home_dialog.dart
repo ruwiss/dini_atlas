@@ -1,6 +1,7 @@
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'settings_dialog.dart';
 
@@ -38,7 +39,18 @@ class HomeSettingsDialog extends StatelessWidget {
           svgIcon: kiEar,
           subtitle: "Namaz vaktinden 5 dk önce başlar ve 30 dk sonra biter",
           onChanged: onChangedSilentMode,
-          showDivider: false,
+          showDivider: true,
+        ),
+        verticalSpace(25),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            "ⓘ Bazı cihazlar pil tasarrufu sağlayabilmek için uygulamayı kısıtlamaktadır. Eğer bildirim ve uyarılarınız donuyor veya çalışmıyorsa uygulamanın pil optimizasyonundan hariç bırakılmasını sağlamalısınız. Bu ayar cihazlar arasında farklı yerlerde olabilmektedir.",
+            style: TextStyle(
+              fontSize: 15,
+              color: kcPurpleColorDarkSoft.withOpacity(.6),
+            ),
+          ),
         ),
       ],
     );

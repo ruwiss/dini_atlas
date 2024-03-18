@@ -51,6 +51,8 @@ dependencies:
   sound_mode: ^3.0.0
   device_info_plus: ^9.1.2
   permission_handler: ^11.3.0
+  account_picker: ^2.1.0
+  page_flip: ^0.2.3
 
   # user
   in_app_review: ^2.0.8
@@ -105,6 +107,7 @@ flutter:
     - assets/sounds/
     - assets/fonts/
     - assets/docs/
+    - assets/docs/yasin/
 
   fonts:
     - family: Poppins

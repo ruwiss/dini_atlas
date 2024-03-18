@@ -12,7 +12,20 @@
           "package_name": "com.rw.dini_atlas"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "584946237586-4p4rmtsllv7ch13tnfr213jvj0j38msg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rw.dini_atlas",
+            "certificate_hash": "a1e6aaa808c92a5616ee2a5cbdd52236a1036058"
+          }
+        },
+        {
+          "client_id": "584946237586-4cfkjk6koa9e1krg4jo3t90uilg65eqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCoVawUcjFIu_DV-XUoyBWmcL7aTKWgKD8"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584946237586-4cfkjk6koa9e1krg4jo3t90uilg65eqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -213,17 +213,17 @@ class UserSettingsService {
     }
   }
 
-  Future<UserSettings> setUserAuthInformation(UserAuth userAuth) async {
+  Future<UserSettings> setUserMail(String mail) async {
     try {
       final userSettings = await getUserSettings();
-      userSettings!.userAuth = userAuth;
+      userSettings!.userMail = mail;
       this.userSettings = userSettings;
       // Veriyi kaydet
       await _db.writeTxn(() async => _db.userSettings.put(userSettings));
       return userSettings;
     } catch (e) {
       throw UserSettingsException(
-          "Kullanıcı giriş bilgileri kaydedilirken bir sorun oluştu $e");
+          "Kullanıcı mail bilgisi kaydedilirken bir sorun oluştu $e");
     }
   }
 

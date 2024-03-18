@@ -1,41 +1,22 @@
+import 'package:account_picker/account_picker.dart';
 import 'package:dini_atlas/app/app.locator.dart';
-import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/models/kaza/kaza.dart';
 import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
-import 'package:dini_atlas/services/remote/auth_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:dini_atlas/ui/views/kaza/widgets/auth_widget.form.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-enum AuthType { login, register }
-
 enum KazaType { sabah, ogle, ikindi, aksam, yatsi, vitir, oruc }
-
-class KazaAuthFormValidator {
-  static String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) return null;
-    if (!value.isValidEmail()) return "Geçerli e-posta adresi giriniz.";
-    return null;
-  }
-
-  static String? validatePasswords(String? value) {
-    if (value == null || value.isEmpty) return null;
-    if (value.length < 6) return "Şifreniz en az 6 karakter olmalıdır.";
-    return null;
-  }
-}
 
 class KazaViewModel extends FormViewModel {
   final networkChecker = locator<NetworkChecker>();
   final _bottomSheetService = locator<BottomSheetService>();
-  final _authService = locator<AuthService>();
   final _userSettingsService = locator<UserSettingsService>();
   final _kazaService = locator<KazaService>();
 
@@ -53,12 +34,9 @@ class KazaViewModel extends FormViewModel {
   }
 
   late UserSettings _userSettings;
-  bool get isUserLoggedIn => _userSettings.userAuth != null;
+  bool get isUserLoggedIn => _userSettings.userMail != null;
 
-  AuthType _authType = AuthType.login;
-  AuthType get authType => _authType;
-
-  UserAuth? _userAuthInformation;
+  String? _userMail;
 
   Kaza? _kaza;
   Kaza? _oldKaza;
@@ -72,67 +50,29 @@ class KazaViewModel extends FormViewModel {
   Future<void> _getUserSettings() async {
     _userSettings = (await _userSettingsService.getUserSettings())!;
     if (isUserLoggedIn) {
-      _userAuthInformation = _userSettings.userAuth!;
+      _userMail = _userSettings.userMail!;
       await _getUserKaza();
     }
   }
 
-  void onAuthTypeChange() {
-    _authType = switch (_authType) {
-      AuthType.login => AuthType.register,
-      AuthType.register => AuthType.login,
-    };
-    clearForm();
-    clearErrors();
-    notifyListeners();
-  }
-
-  Future<void> _authUser() async {
-    _userAuthInformation = UserAuth()
-      ..email = kazaAuthMailValue!
-      ..password = kazaAuthPass1Value!;
-
-    final result = await _authService.auth(
-        userAuth: _userAuthInformation!, isLogin: _authType == AuthType.login);
-
-    FirebaseMessaging.instance.subscribeToTopic("kaza");
-
-    result.fold(
-      (userSettings) {
-        _userSettings = userSettings;
-        notifyListeners();
-
-        // kullanıcı kaza bilgilerini getir
-        runBusyFuture(_getUserKaza());
-      },
-      (error) => setError(error.message),
-    );
-  }
-
-  void onAuthButtonTap() {
-    if (_authType == AuthType.login) {
-      if (hasKazaAuthMail &&
-          hasKazaAuthPass1 &&
-          kazaAuthMailValue!.isValidEmail()) {
-        // Login
-        runBusyFuture(_authUser());
-      }
+  Future<void> authUser() async {
+    final emailResult = await AccountPicker.emailHint();
+    if (emailResult == null) {
+      setError("Mail hesabınız seçilirken sorun oluştu");
+      return;
     } else {
-      if (hasKazaAuthMail &&
-          hasKazaAuthPass1 &&
-          hasKazaAuthPass2 &&
-          kazaAuthMailValue!.isValidEmail()) {
-        if (kazaAuthPass1Value != kazaAuthPass2Value) {
-          return setError("Şifreler eşleşmiyor");
-        }
-        // Register
-        runBusyFuture(_authUser());
-      }
+      _userMail = emailResult.email;
+      _userSettings = await _userSettingsService.setUserMail(_userMail!);
+      notifyListeners();
+
+      FirebaseMessaging.instance.subscribeToTopic("kaza");
+      // kullanıcı kaza bilgilerini getir
+      runBusyFuture(_getUserKaza());
     }
   }
 
   Future<void> _getUserKaza() async {
-    final result = await _kazaService.getUserKaza(_userAuthInformation!);
+    final result = await _kazaService.getUserKaza(_userMail!);
     _kaza = result ?? Kaza.createEmpty();
     _oldKaza = kaza;
     notifyListeners();
@@ -147,8 +87,8 @@ class KazaViewModel extends FormViewModel {
     _loadInterstitialAdAndShow();
     kaza!.lastUpdated = DateTime.now();
     setBusy(true);
-    final result = await _kazaService.setUserKaza(
-        userAuth: _userAuthInformation!, kaza: kaza!);
+    final result =
+        await _kazaService.setUserKaza(mail: _userMail!, kaza: kaza!);
     setBusy(false);
     notifyListeners();
     if (result) {

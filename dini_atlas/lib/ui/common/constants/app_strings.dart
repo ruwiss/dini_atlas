@@ -7,7 +7,7 @@ import 'dart:convert';
 
 const String ksAppVersion = "1.1.2";
 
-String get ksBaseUrl => false
+String get ksBaseUrl => true
     ? "http://192.168.1.125:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
@@ -64,5 +64,5 @@ const String ksAdmobInterstitial1 = "ca-app-pub-1923752572867502/5647446257";
 /// Buton aksiyonları için geçiş reklamı
 const String ksAdmobInterstitial2 = "ca-app-pub-1923752572867502/4206958804";
 
-/// Story arası resimli (videosuz) reklam
+/// Videosuz geçiş reklamı
 const String ksAdmobInterstitital3 = "ca-app-pub-1923752572867502/3246477761";

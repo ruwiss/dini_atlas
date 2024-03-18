@@ -47,7 +47,7 @@ class StoryCircleViews extends StatelessWidget {
           final stories =
               await locator<DailyService>().filterStories(category.id);
           await locator<NavigationService>()
-              .navigateToStoryView(stories: stories)
+              .navigateToStoriesView(stories: stories)
               .then((_) => viewModel.getStoryViews());
         },
         child: Column(

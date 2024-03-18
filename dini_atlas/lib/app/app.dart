@@ -19,13 +19,11 @@ import 'package:dini_atlas/ui/views/favourites/favourites_view.dart';
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart';
 import 'package:dini_atlas/ui/views/compass/compass_view.dart';
 import 'package:dini_atlas/ui/views/kaza/kaza_view.dart';
-import 'package:dini_atlas/services/remote/auth_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/ui/views/rosary/rosary_view.dart';
 import 'package:dini_atlas/ui/views/religious_days/religious_days_view.dart';
 import 'package:dini_atlas/ui/views/forty_hadiths/forty_hadiths_view.dart';
 import 'package:dini_atlas/ui/views/radio/radio_view.dart';
-import 'package:dini_atlas/ui/views/near_mosques/near_mosques_view.dart';
 import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_view.dart';
 import 'package:dini_atlas/ui/views/esmaul_husna/esmaul_husna_view.dart';
 import 'package:dini_atlas/ui/views/dualar/dualar_view.dart';
@@ -38,6 +36,7 @@ import 'package:dini_atlas/ui/views/webview/webview_view.dart';
 import 'package:dini_atlas/ui/bottom_sheets/image/image_sheet.dart';
 import 'package:dini_atlas/ui/views/story/story_view.dart';
 import 'package:dini_atlas/services/remote/daily_service.dart';
+import 'package:dini_atlas/ui/views/yasin/yasin_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -57,7 +56,6 @@ import 'package:dini_atlas/services/remote/daily_service.dart';
     MaterialRoute(page: ReligiousDaysView),
     MaterialRoute(page: FortyHadithsView),
     MaterialRoute(page: RadioView),
-    MaterialRoute(page: NearMosquesView),
     MaterialRoute(page: RiyazusSalihinView),
     MaterialRoute(page: EsmaulHusnaView),
     MaterialRoute(page: DualarView),
@@ -71,6 +69,7 @@ import 'package:dini_atlas/services/remote/daily_service.dart';
       page: StoriesView,
       transitionsBuilder: TransitionsBuilders.slideBottom,
     ),
+    MaterialRoute(page: YasinView),
 // @stacked-route
   ],
   dependencies: [
@@ -86,7 +85,6 @@ import 'package:dini_atlas/services/remote/daily_service.dart';
     LazySingleton(classType: FetchTimesService),
     LazySingleton(classType: QuranService),
     LazySingleton(classType: FavouritesService),
-    LazySingleton(classType: AuthService),
     LazySingleton(classType: KazaService),
     LazySingleton(classType: InAppPurchaseService),
     LazySingleton(classType: DailyService),

@@ -8,11 +8,11 @@
 import 'package:dini_atlas/models/favourite.dart' as _i26;
 import 'package:dini_atlas/models/quran/sura_info.dart' as _i24;
 import 'package:dini_atlas/models/story_model.dart' as _i27;
-import 'package:dini_atlas/ui/views/about/about_view.dart' as _i18;
+import 'package:dini_atlas/ui/views/about/about_view.dart' as _i17;
 import 'package:dini_atlas/ui/views/compass/compass_view.dart' as _i8;
-import 'package:dini_atlas/ui/views/dualar/dualar_view.dart' as _i17;
+import 'package:dini_atlas/ui/views/dualar/dualar_view.dart' as _i16;
 import 'package:dini_atlas/ui/views/esmaul_husna/esmaul_husna_view.dart'
-    as _i16;
+    as _i15;
 import 'package:dini_atlas/ui/views/favourites/favourites_view.dart' as _i6;
 import 'package:dini_atlas/ui/views/forty_hadiths/forty_hadiths_view.dart'
     as _i12;
@@ -21,22 +21,21 @@ import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart'
     as _i25;
 import 'package:dini_atlas/ui/views/kaza/kaza_view.dart' as _i9;
 import 'package:dini_atlas/ui/views/native_widget/native_widget_view.dart'
-    as _i19;
-import 'package:dini_atlas/ui/views/near_mosques/near_mosques_view.dart'
-    as _i14;
+    as _i18;
 import 'package:dini_atlas/ui/views/no_internet/no_internet_view.dart' as _i4;
 import 'package:dini_atlas/ui/views/quran/quran_view.dart' as _i5;
 import 'package:dini_atlas/ui/views/radio/radio_view.dart' as _i13;
 import 'package:dini_atlas/ui/views/religious_days/religious_days_view.dart'
     as _i11;
 import 'package:dini_atlas/ui/views/riyazus_salihin/riyazus_salihin_view.dart'
-    as _i15;
+    as _i14;
 import 'package:dini_atlas/ui/views/rosary/rosary_view.dart' as _i10;
 import 'package:dini_atlas/ui/views/startup/startup_view.dart' as _i3;
-import 'package:dini_atlas/ui/views/story/story_view.dart' as _i21;
+import 'package:dini_atlas/ui/views/story/story_view.dart' as _i20;
 import 'package:dini_atlas/ui/views/traceable_quran/traceable_quran_view.dart'
     as _i7;
-import 'package:dini_atlas/ui/views/webview/webview_view.dart' as _i20;
+import 'package:dini_atlas/ui/views/webview/webview_view.dart' as _i19;
+import 'package:dini_atlas/ui/views/yasin/yasin_view.dart' as _i21;
 import 'package:flutter/foundation.dart' as _i23;
 import 'package:flutter/material.dart' as _i22;
 import 'package:flutter/material.dart';
@@ -68,8 +67,6 @@ class Routes {
 
   static const radioView = '/radio-view';
 
-  static const nearMosquesView = '/near-mosques-view';
-
   static const riyazusSalihinView = '/riyazus-salihin-view';
 
   static const esmaulHusnaView = '/esmaul-husna-view';
@@ -82,7 +79,9 @@ class Routes {
 
   static const webviewView = '/webview-view';
 
-  static const storyView = '/story-view';
+  static const storiesView = '/stories-view';
+
+  static const yasinView = '/yasin-view';
 
   static const all = <String>{
     homeView,
@@ -97,14 +96,14 @@ class Routes {
     religiousDaysView,
     fortyHadithsView,
     radioView,
-    nearMosquesView,
     riyazusSalihinView,
     esmaulHusnaView,
     dualarView,
     aboutView,
     nativeWidgetView,
     webviewView,
-    storyView,
+    storiesView,
+    yasinView,
   };
 }
 
@@ -159,36 +158,36 @@ class StackedRouter extends _i1.RouterBase {
       page: _i13.RadioView,
     ),
     _i1.RouteDef(
-      Routes.nearMosquesView,
-      page: _i14.NearMosquesView,
-    ),
-    _i1.RouteDef(
       Routes.riyazusSalihinView,
-      page: _i15.RiyazusSalihinView,
+      page: _i14.RiyazusSalihinView,
     ),
     _i1.RouteDef(
       Routes.esmaulHusnaView,
-      page: _i16.EsmaulHusnaView,
+      page: _i15.EsmaulHusnaView,
     ),
     _i1.RouteDef(
       Routes.dualarView,
-      page: _i17.DualarView,
+      page: _i16.DualarView,
     ),
     _i1.RouteDef(
       Routes.aboutView,
-      page: _i18.AboutView,
+      page: _i17.AboutView,
     ),
     _i1.RouteDef(
       Routes.nativeWidgetView,
-      page: _i19.NativeWidgetView,
+      page: _i18.NativeWidgetView,
     ),
     _i1.RouteDef(
       Routes.webviewView,
-      page: _i20.WebviewView,
+      page: _i19.WebviewView,
     ),
     _i1.RouteDef(
-      Routes.storyView,
-      page: _i21.StoriesView,
+      Routes.storiesView,
+      page: _i20.StoriesView,
+    ),
+    _i1.RouteDef(
+      Routes.yasinView,
+      page: _i21.YasinView,
     ),
   ];
 
@@ -278,54 +277,48 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i14.NearMosquesView: (data) {
+    _i14.RiyazusSalihinView: (data) {
       return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i14.NearMosquesView(),
+        builder: (context) => const _i14.RiyazusSalihinView(),
         settings: data,
       );
     },
-    _i15.RiyazusSalihinView: (data) {
+    _i15.EsmaulHusnaView: (data) {
       return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i15.RiyazusSalihinView(),
+        builder: (context) => const _i15.EsmaulHusnaView(),
         settings: data,
       );
     },
-    _i16.EsmaulHusnaView: (data) {
+    _i16.DualarView: (data) {
       return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i16.EsmaulHusnaView(),
+        builder: (context) => const _i16.DualarView(),
         settings: data,
       );
     },
-    _i17.DualarView: (data) {
-      return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i17.DualarView(),
-        settings: data,
-      );
-    },
-    _i18.AboutView: (data) {
+    _i17.AboutView: (data) {
       final args = data.getArgs<AboutViewArguments>(
         orElse: () => const AboutViewArguments(),
       );
       return _i22.PageRouteBuilder<dynamic>(
-        pageBuilder: (context, animation, secondaryAnimation) => _i18.AboutView(
+        pageBuilder: (context, animation, secondaryAnimation) => _i17.AboutView(
             key: args.key, showSubscriptionView: args.showSubscriptionView),
         settings: data,
         transitionsBuilder:
             data.transition ?? _i1.TransitionsBuilders.slideRightWithFade,
       );
     },
-    _i19.NativeWidgetView: (data) {
+    _i18.NativeWidgetView: (data) {
       final args = data.getArgs<NativeWidgetViewArguments>(nullOk: false);
       return _i22.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i19.NativeWidgetView(key: args.key, widgetId: args.widgetId),
+            _i18.NativeWidgetView(key: args.key, widgetId: args.widgetId),
         settings: data,
       );
     },
-    _i20.WebviewView: (data) {
+    _i19.WebviewView: (data) {
       final args = data.getArgs<WebviewViewArguments>(nullOk: false);
       return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => _i20.WebviewView(
+        builder: (context) => _i19.WebviewView(
             key: args.key,
             title: args.title,
             path: args.path,
@@ -334,14 +327,20 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i21.StoriesView: (data) {
-      final args = data.getArgs<StoryViewArguments>(nullOk: false);
+    _i20.StoriesView: (data) {
+      final args = data.getArgs<StoriesViewArguments>(nullOk: false);
       return _i22.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            _i21.StoriesView(key: args.key, stories: args.stories),
+            _i20.StoriesView(key: args.key, stories: args.stories),
         settings: data,
         transitionsBuilder:
             data.transition ?? _i1.TransitionsBuilders.slideBottom,
+      );
+    },
+    _i21.YasinView: (data) {
+      return _i22.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i21.YasinView(),
+        settings: data,
       );
     },
   };
@@ -542,8 +541,8 @@ class WebviewViewArguments {
   }
 }
 
-class StoryViewArguments {
-  const StoryViewArguments({
+class StoriesViewArguments {
+  const StoriesViewArguments({
     this.key,
     required this.stories,
   });
@@ -558,7 +557,7 @@ class StoryViewArguments {
   }
 
   @override
-  bool operator ==(covariant StoryViewArguments other) {
+  bool operator ==(covariant StoriesViewArguments other) {
     if (identical(this, other)) return true;
     return other.key == key && other.stories == stories;
   }
@@ -750,20 +749,6 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToNearMosquesView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.nearMosquesView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToRiyazusSalihinView([
     int? routerId,
     bool preventDuplicates = true,
@@ -862,7 +847,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToStoryView({
+  Future<dynamic> navigateToStoriesView({
     _i23.Key? key,
     required _i27.Stories stories,
     int? routerId,
@@ -871,8 +856,22 @@ extension NavigatorStateExtension on _i28.NavigationService {
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return navigateTo<dynamic>(Routes.storyView,
-        arguments: StoryViewArguments(key: key, stories: stories),
+    return navigateTo<dynamic>(Routes.storiesView,
+        arguments: StoriesViewArguments(key: key, stories: stories),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToYasinView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.yasinView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1059,20 +1058,6 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithNearMosquesView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.nearMosquesView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithRiyazusSalihinView([
     int? routerId,
     bool preventDuplicates = true,
@@ -1171,7 +1156,7 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithStoryView({
+  Future<dynamic> replaceWithStoriesView({
     _i23.Key? key,
     required _i27.Stories stories,
     int? routerId,
@@ -1180,8 +1165,22 @@ extension NavigatorStateExtension on _i28.NavigationService {
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   }) async {
-    return replaceWith<dynamic>(Routes.storyView,
-        arguments: StoryViewArguments(key: key, stories: stories),
+    return replaceWith<dynamic>(Routes.storiesView,
+        arguments: StoriesViewArguments(key: key, stories: stories),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithYasinView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.yasinView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

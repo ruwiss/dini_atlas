@@ -63,7 +63,8 @@ class StoryViewModel extends BaseViewModel {
     currentStory = _stories.stories[index];
     _storyService.markStoryAsSeen(currentStory.media);
     if (_interstitalAdLoaded) {
-      controller.pause();
+      await Future.delayed(
+          const Duration(seconds: 1), () => controller.pause());
       _interstitialAdService.interstitialAd?.show();
       _adShown = true;
     }

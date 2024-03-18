@@ -62,11 +62,11 @@ final List<CategoryItem> categoryItems = [
     route: Routes.fortyHadithsView,
   ),
   CategoryItem(
-    id: "camiler",
-    name: "Yakındaki\nCamiler",
-    image: kiMosqueSvg,
+    id: "yasin",
+    name: "Yasin-i\nŞerif",
+    image: kiPaper,
     color: kcListCardColors[6],
-    route: Routes.nearMosquesView,
+    route: Routes.yasinView,
   ),
   CategoryItem(
     id: "radyolar",

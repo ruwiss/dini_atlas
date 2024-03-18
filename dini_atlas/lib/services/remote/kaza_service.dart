@@ -1,6 +1,5 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/kaza/kaza.dart';
-import 'package:dini_atlas/models/user_setting.dart';
 
 import 'dio_service.dart';
 
@@ -9,8 +8,8 @@ class KazaService {
 
   final String _kazaUrl = "/kullanici/kaza";
 
-  Future<Kaza?> getUserKaza(UserAuth userAuth) async {
-    final response = await _dio.request(_kazaUrl, data: userAuth.toJson());
+  Future<Kaza?> getUserKaza(String mail) async {
+    final response = await _dio.request(_kazaUrl, data: {"mail": mail});
 
     if (response == null || response.statusCode != 200) return null;
 
@@ -22,11 +21,13 @@ class KazaService {
   }
 
   Future<bool> setUserKaza({
-    required UserAuth userAuth,
+    required String mail,
     required Kaza kaza,
   }) async {
-    final data = userAuth.toJson();
-    data['data'] = kaza.toJson();
+    final data = {
+      "mail": mail,
+      "data": kaza.toJson(),
+    };
 
     final response =
         await _dio.request(_kazaUrl, method: DioMethod.post, data: data);

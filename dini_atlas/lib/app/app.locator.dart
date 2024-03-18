@@ -17,13 +17,12 @@ import '../services/local/location_service.dart';
 import '../services/local/network_checker.dart';
 import '../services/local/prayer_times_service.dart';
 import '../services/local/user_settings_service.dart';
-import '../services/remote/auth_service.dart';
+import '../services/remote/daily_service.dart';
 import '../services/remote/dio_service.dart';
 import '../services/remote/fetch_times_service.dart';
 import '../services/remote/google/in_app_purchase_service.dart';
 import '../services/remote/kaza_service.dart';
 import '../services/remote/quran_service.dart';
-import '../services/remote/daily_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -51,7 +50,6 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => FetchTimesService());
   locator.registerLazySingleton(() => QuranService());
   locator.registerLazySingleton(() => FavouritesService());
-  locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => KazaService());
   locator.registerLazySingleton(() => InAppPurchaseService());
   locator.registerLazySingleton(() => DailyService());
