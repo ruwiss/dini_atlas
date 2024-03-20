@@ -10,6 +10,10 @@ import os
 
 app = Blueprint("content_app", __name__)
 
+# Geçici dosyanın kaydedileceği dizin
+TEMP_FOLDER = 'temp'
+if not os.path.exists(TEMP_FOLDER):
+    os.makedirs(TEMP_FOLDER)
 
 @app.route("/")
 def index():
@@ -304,3 +308,28 @@ def story_media(media):
     else:
         return "Error", 501
     return send_file(media_path, as_attachment=True)
+
+
+@app.route("/feedback", methods=['POST'])
+def user_feedback():
+     if request.method == 'POST':
+        image_file = request.files['image']
+        text = request.form['text']
+        
+        token = "6421456783:AAE_N4mD1sTL-YuhiqKOF9EC8gz9z2tnWAg"
+        chat_id = "-1002033217313"
+        
+      
+        temp_image_path = os.path.join(TEMP_FOLDER, f'temp_image.png_{len(text)}')
+        image_file.save(temp_image_path)
+
+        url = f'https://api.telegram.org/bot{token}/sendPhoto'
+        files = {'photo': open(temp_image_path, 'rb')}
+        params = {
+            'chat_id': chat_id,
+            'caption': text
+        }
+        requests.post(url, data=params, files=files)
+        os.remove(temp_image_path)
+        
+        return "OK"

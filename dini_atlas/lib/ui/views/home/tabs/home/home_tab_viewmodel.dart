@@ -75,13 +75,17 @@ class HomeTabViewModel extends ReactiveViewModel {
   TableTab _currentTableTab = TableTab.normal;
   TableTab get currentTableTab => _currentTableTab;
 
+  PageController pageController = PageController();
+
   void changeTableTab(int index) {
     _currentTableTab = TableTab.values[index];
     notifyListeners();
+
     if (_currentTableTab == TableTab.detailed) {
       // Günlük verileri getir
       _getDaily();
     }
+    _userSettingsService.setHomeTab(index);
   }
 
   @override
@@ -112,7 +116,19 @@ class HomeTabViewModel extends ReactiveViewModel {
     // Tablo için vakitleri getir
     changePrayerTimeIndex();
 
+    // En son seçilen Tab'ı seç
+    _getAndSetDefaultHomeTab();
+
     FlutterNativeSplash.remove();
+  }
+
+  void _getAndSetDefaultHomeTab() async {
+    final defaultTabIndex = await _userSettingsService.getHomeTabIndex();
+    if (defaultTabIndex == 1) {
+      pageController.animateToPage(defaultTabIndex,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+      //changeTableTab(defaultTabIndex);
+    }
   }
 
   Future<void> _getPrayerTimes() async {

@@ -9,12 +9,13 @@ class DioService {
       baseUrl: ksBaseUrl,
       responseType: ResponseType.json,
       contentType: Headers.jsonContentType,
+      validateStatus: (status) => true,
     );
 
   Future<Response?> request(
     url, {
     DioMethod method = DioMethod.get,
-    Map<String, dynamic>? data,
+    Object? data,
   }) async {
     final req = switch (method) {
       DioMethod.get => _dio.get,
@@ -24,8 +25,9 @@ class DioService {
     };
 
     final bool withArgs = method == DioMethod.get;
-    final Map<String, dynamic>? postData = !withArgs ? data : null;
-    final Map<String, dynamic>? queryData = withArgs ? data : null;
+    final Object? postData = !withArgs ? data : null;
+    final Map<String, dynamic>? queryData =
+        withArgs ? (data as Map<String, dynamic>?) : null;
 
     try {
       return await req(

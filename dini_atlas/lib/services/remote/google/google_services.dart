@@ -1,5 +1,8 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/firebase_options.dart';
+import 'package:dini_atlas/services/remote/dio_service.dart';
+import 'package:dio/dio.dart';
+import 'package:feedback_gitlab/feedback_gitlab.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -55,5 +58,23 @@ abstract class GoogleServices {
     final fcmToken = await firebaseMessaging.getToken();
 
     debugPrint("Firebase Messaging Token: $fcmToken");
+  }
+
+  static Future<void> uploadUserFeedBack(
+      UserFeedback feedback, String? email) async {
+    try {
+      String text = feedback.text;
+      if (email != null) text = "E-Posta: $email\n\n$text";
+      FormData formData = FormData.fromMap({
+        "image": MultipartFile.fromBytes(feedback.screenshot,
+            filename: "feedback.png"),
+        "text": text,
+      });
+
+      await locator<DioService>()
+          .request("/feedback", data: formData, method: DioMethod.post);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

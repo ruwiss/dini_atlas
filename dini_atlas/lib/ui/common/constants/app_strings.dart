@@ -5,10 +5,10 @@ import 'package:dini_atlas/extensions/datetime_extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
-const String ksAppVersion = "1.1.2";
+const String ksAppVersion = "1.1.3";
 
 String get ksBaseUrl => true
-    ? "http://192.168.1.125:9958"
+    ? "http://192.168.1.130:9958"
     : FirebaseRemoteConfigServiceClass.i.host;
 
 // Uygulama başlığı

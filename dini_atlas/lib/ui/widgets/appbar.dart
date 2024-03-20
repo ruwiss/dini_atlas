@@ -1,5 +1,6 @@
+import 'package:account_picker/account_picker.dart';
 import 'package:dini_atlas/app/app.locator.dart';
-import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
+import 'package:dini_atlas/services/remote/google/google_services.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:feedback_gitlab/feedback_gitlab.dart';
 import 'package:flutter/material.dart';
@@ -47,9 +48,28 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {
-            BetterFeedback.of(context).showAndUploadToGitLab(
-              projectId: FirebaseRemoteConfigServiceClass.i.gitlabProjectId,
-              apiToken: FirebaseRemoteConfigServiceClass.i.gitlabApiToken,
+            BetterFeedback.of(context).show(
+              (feedback) async {
+                locator<BottomSheetService>()
+                    .showBottomSheet(
+                  title: "İletişim",
+                  description:
+                      "Sorunu hızlıca çözebilmemiz için e-posta adresinizi seçebilirsiniz.",
+                  confirmButtonTitle: "Tamam",
+                )
+                    .then((_) async {
+                  final emailResult = await AccountPicker.emailHint();
+                  GoogleServices.uploadUserFeedBack(
+                          feedback, emailResult?.email)
+                      .then((value) {
+                    locator<BottomSheetService>().showBottomSheet(
+                      title: "Alındı",
+                      description: "Geri bildiriminiz için teşekkür ederiz.",
+                      confirmButtonTitle: "Kapat",
+                    );
+                  });
+                });
+              },
             );
           },
           icon: const Icon(Icons.bug_report),

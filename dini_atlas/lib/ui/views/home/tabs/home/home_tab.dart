@@ -50,6 +50,7 @@ class HomeTabViewState extends State<HomeTabView> {
             verticalSpace(10),
             Flexible(
               child: PageView.builder(
+                controller: viewModel.pageController,
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   return _tableWidgets(viewModel)[index];

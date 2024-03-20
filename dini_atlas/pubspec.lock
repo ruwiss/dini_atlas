@@ -409,14 +409,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  feedback_gitlab:
-    dependency: "direct main"
-    description:
-      name: feedback_gitlab
-      sha256: "4d3862a400bbb094486848bc409f049864ca4af884756f70bb49521d669ebd28"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   ffi:
     dependency: transitive
     description:

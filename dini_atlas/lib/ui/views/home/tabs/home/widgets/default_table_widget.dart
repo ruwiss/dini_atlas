@@ -26,7 +26,7 @@ class DefaultTableWidget extends StatelessWidget {
             style: const TextStyle(fontSize: 14, color: kcPrimaryColor),
           )
         ],
-        verticalSpace(20),
+        verticalSpace(5),
         Expanded(child: SingleChildScrollView(child: _tableBody(context))),
         verticalSpaceSmall,
       ],
@@ -35,7 +35,7 @@ class DefaultTableWidget extends StatelessWidget {
 
   Container _tableHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 11),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 8),
       decoration: BoxDecoration(
         color: kcBlueGrayColor,
         borderRadius: borderRadiusMedium,
@@ -109,12 +109,13 @@ class DefaultTableWidget extends StatelessWidget {
           if (viewModel.selectedPrayerTime == null) return const SizedBox();
           return Column(
             children: [
-              _tableItem(prayerType: PrayerType.imsak),
-              _tableItem(prayerType: PrayerType.gunes),
-              _tableItem(prayerType: PrayerType.ogle),
-              _tableItem(prayerType: PrayerType.ikindi),
-              _tableItem(prayerType: PrayerType.aksam),
-              _tableItem(prayerType: PrayerType.yatsi, hideDivider: true),
+              _tableItem(context, prayerType: PrayerType.imsak),
+              _tableItem(context, prayerType: PrayerType.gunes),
+              _tableItem(context, prayerType: PrayerType.ogle),
+              _tableItem(context, prayerType: PrayerType.ikindi),
+              _tableItem(context, prayerType: PrayerType.aksam),
+              _tableItem(context,
+                  prayerType: PrayerType.yatsi, hideDivider: true),
             ],
           );
         },
@@ -122,7 +123,8 @@ class DefaultTableWidget extends StatelessWidget {
     );
   }
 
-  Widget _tableItem({
+  Widget _tableItem(
+    BuildContext context, {
     required PrayerType prayerType,
     bool hideDivider = false,
   }) {
@@ -145,8 +147,9 @@ class DefaultTableWidget extends StatelessWidget {
     };
 
     final bool isActive = viewModel.isNotiActiveForPrayer(prayerType);
+    final paddingTop = screenHeight(context) * 0.004;
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 4),
+      padding: EdgeInsets.only(left: 10, right: 10, top: paddingTop),
       child: Column(
         children: [
           Row(
@@ -173,7 +176,7 @@ class DefaultTableWidget extends StatelessWidget {
               ),
             ],
           ),
-          if (!hideDivider) const Divider(),
+          if (!hideDivider) Divider(height: paddingTop),
         ],
       ),
     );
