@@ -3,6 +3,7 @@ from selectolax.lexbor import LexborHTMLParser
 from datetime import datetime
 from markupsafe import escape
 import requests
+from random import shuffle
 from connect import get_cursor
 import helper
 import json
@@ -253,35 +254,13 @@ def radyolar():
 
 @app.route("/dualar")
 def dualar():
-    data = helper.daily_json("dualar")
-    if not data:
-        try:
-            r = requests.get("https://esenler.bel.tr/esenlerde-ramazan/gunun-duasi/")
-            node = (
-                LexborHTMLParser(r.text).css_first(".items > .container > ul").css("li")
-            )
-
-            data = []
-            for i in node:
-                text = i.css_first(".text").text().strip()
-                data.append(text)
-            helper.daily_json("dualar", data)
-        except:
-            r = requests.get("https://diyanet.tv/gunun-duasi")
-            node = LexborHTMLParser(r.text).css(".programlar-icerik-body")
-
-            data = []
-            for i in node:
-                text = i.text().strip()
-                data.append(text)
-            helper.daily_json("dualar", data)
-
-    if not data:
+    try:
         with open("json/dua.json", "r", encoding="utf-8") as f:
             existing_data = json.load(f)
-            return existing_data
-
-    return jsonify(data)
+            shuffle(existing_data)
+            return jsonify(existing_data[:10])
+    except:
+        return []
 
 
 @app.route("/aygoruntusu/<img>")
