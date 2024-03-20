@@ -2,7 +2,7 @@ import 'package:account_picker/account_picker.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/services/remote/google/google_services.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:feedback_gitlab/feedback_gitlab.dart';
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
