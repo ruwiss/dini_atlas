@@ -47,67 +47,67 @@ class YasinView extends StackedView<YasinViewModel> {
                   _navigateButton(
                     viewModel: viewModel,
                     name: "Yasin",
-                    page: 25,
-                  ),
-                  _navigateButton(
-                    viewModel: viewModel,
-                    name: "Fatiha",
                     page: 1,
                   ),
                   _navigateButton(
                     viewModel: viewModel,
+                    name: "Fatiha",
+                    page: 7,
+                  ),
+                  _navigateButton(
+                    viewModel: viewModel,
                     name: "Elif Lam Mim",
-                    page: 2,
-                  ),
-                  _navigateButton(
-                    viewModel: viewModel,
-                    name: "Ayet-el Kürsi",
-                    page: 3,
-                  ),
-                  _navigateButton(
-                    viewModel: viewModel,
-                    name: "Amenerrasulü",
-                    page: 4,
-                  ),
-                  _navigateButton(
-                    viewModel: viewModel,
-                    name: "Lev Enzelna",
-                    page: 5,
-                  ),
-                  _navigateButton(
-                    viewModel: viewModel,
-                    name: "Amme",
-                    page: 6,
-                  ),
-                  _navigateButton(
-                    viewModel: viewModel,
-                    name: "Tebareke",
                     page: 8,
                   ),
                   _navigateButton(
                     viewModel: viewModel,
-                    name: "Secde",
+                    name: "Ayet-el Kürsi",
+                    page: 9,
+                  ),
+                  _navigateButton(
+                    viewModel: viewModel,
+                    name: "Amenerrasulü",
+                    page: 10,
+                  ),
+                  _navigateButton(
+                    viewModel: viewModel,
+                    name: "Lev Enzelna",
                     page: 11,
                   ),
                   _navigateButton(
                     viewModel: viewModel,
-                    name: "Fetih",
+                    name: "Amme",
+                    page: 12,
+                  ),
+                  _navigateButton(
+                    viewModel: viewModel,
+                    name: "Tebareke",
                     page: 14,
                   ),
                   _navigateButton(
                     viewModel: viewModel,
+                    name: "Secde",
+                    page: 17,
+                  ),
+                  _navigateButton(
+                    viewModel: viewModel,
+                    name: "Fetih",
+                    page: 20,
+                  ),
+                  _navigateButton(
+                    viewModel: viewModel,
                     name: "Vakıa",
-                    page: 19,
+                    page: 25,
                   ),
                   _navigateButton(
                     viewModel: viewModel,
                     name: "Cuma",
-                    page: 23,
+                    page: 29,
                   ),
                 ],
               );
             } else {
-              return Image.asset("assets/docs/yasin/$i.png");
+              return Image.asset("assets/docs/yasin/$i.webp");
             }
           }),
         ),
