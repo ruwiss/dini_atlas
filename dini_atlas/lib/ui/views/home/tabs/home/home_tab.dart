@@ -1,10 +1,6 @@
 import 'package:dini_atlas/ui/views/home/tabs/home/widgets/countdown/countdown_card.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/widgets/daily_contents_widget.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/widgets/default_table_widget.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/widgets/detailed_table_widget.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/widgets/dot_view.dart';
-import 'package:dini_atlas/ui/views/home/tabs/home/widgets/story_circle_views.dart';
+import 'package:dini_atlas/ui/views/home/tabs/home/widgets/table_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,53 +33,30 @@ class HomeTabViewState extends State<HomeTabView> {
             _subtitleWidget(),
             verticalSpace(15),
             CountdownCard(
-                viewModel: viewModel, homeService: widget.homeService),
-            verticalSpace(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                DotView(isActive: viewModel.currentTableTab == TableTab.normal),
-                DotView(
-                    isActive: viewModel.currentTableTab == TableTab.detailed),
-              ],
+              viewModel: viewModel,
+              homeService: widget.homeService,
             ),
-            verticalSpace(10),
+            verticalSpaceMedium,
             Flexible(
-              child: PageView.builder(
-                controller: viewModel.pageController,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return _tableWidgets(viewModel)[index];
-                },
-                onPageChanged: (value) => viewModel.changeTableTab(value),
+              child: SingleChildScrollView(
+                child: TableWidget(viewModel: viewModel),
               ),
-            )
-            // TableWidget(viewModel: viewModel),
+            ),
           ],
         );
       },
     );
   }
 
-  List<Widget> _tableWidgets(HomeTabViewModel viewModel) => [
-        DefaultTableWidget(viewModel: viewModel),
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              StoryCircleViews(viewModel: viewModel),
-              DetailedTableWidget(viewModel: viewModel),
-              DailyContentsWidget(viewModel: viewModel),
-            ],
-          ),
-        )
-      ];
-
-  Align _subtitleWidget() {
-    return const Align(
-      alignment: Alignment.centerLeft,
-      child: Text(
-        "Esselâmü Aleyküm",
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+  Widget _subtitleWidget() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          "Esselâmü Aleyküm",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }

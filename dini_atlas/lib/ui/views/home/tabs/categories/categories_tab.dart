@@ -17,61 +17,64 @@ class CategoriesTab extends StatefulWidget {
 class _CategoriesTabState extends State<CategoriesTab> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GridView.builder(
-        itemCount: categoryItems.length,
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Center(
+        child: GridView.builder(
+          itemCount: categoryItems.length,
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 3 / 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+          ),
+          itemBuilder: (context, index) {
+            final CategoryItem item = categoryItems[index];
+            return InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () {
+                if (item.id == "cuz") {
+                  locator<NavigationService>().navigateToWebviewView(
+                    title: item.name,
+                    url: FirebaseRemoteConfigServiceClass.i.elifba,
+                    showAd: true,
+                  );
+                } else {
+                  locator<NavigationService>().navigateTo(item.route);
+                }
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Card
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: item.color,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  // Icon
+                  Opacity(
+                    opacity: .6,
+                    child: SvgPicture.asset(item.image),
+                  ),
+                  // Text
+                  Text(
+                    item.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: kcPurpleColorDarkSoft,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
-        itemBuilder: (context, index) {
-          final CategoryItem item = categoryItems[index];
-          return InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: () {
-              if (item.id == "cuz") {
-                locator<NavigationService>().navigateToWebviewView(
-                  title: item.name,
-                  url: FirebaseRemoteConfigServiceClass.i.elifba,
-                  showAd: true,
-                );
-              } else {
-                locator<NavigationService>().navigateTo(item.route);
-              }
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Card
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: item.color,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                // Icon
-                Opacity(
-                  opacity: .6,
-                  child: SvgPicture.asset(item.image),
-                ),
-                // Text
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: kcPurpleColorDarkSoft,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
       ),
     );
   }

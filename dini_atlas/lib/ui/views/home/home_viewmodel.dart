@@ -2,12 +2,16 @@ import 'dart:developer';
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/local/app_widget_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/app_notifications.dart';
+import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_home_dialog.dart';
+import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,13 +28,17 @@ class HomeViewModel extends IndexTrackingViewModel {
   final _navigationService = locator<NavigationService>();
   List<String> get tabItems => [kiHome, kiCategories, kiQuran];
 
-  bool get showSettingsIcon => currentIndex == 0; // ana sayfa ayarlar butonu
+  bool get isHomePage => currentIndex == 0;
+
+  List<PrayerNotiSettings>? prayerNotiSettingsList;
 
   void init(HomeService homeService) async {
     _homeService = homeService;
     AppWidgetService.init();
     await AppNotifications.instance.setupNotification();
     await _optimizationPermissions();
+    // Kullanıcı vakit ayarlarını liste olarak getir
+    await getAllPrayerNotiSettings();
     _checkAvailableUpdate();
   }
 
@@ -106,6 +114,82 @@ class HomeViewModel extends IndexTrackingViewModel {
           await _userSettingsService.setAlarmMode(v);
           _homeService.getUserSettings();
           await AppNotifications.instance.setAlarmMode(v);
+        },
+      ),
+    );
+  }
+
+  // Tüm vakitler için bildirim ayarlarını getir
+  Future<void> getAllPrayerNotiSettings() async {
+    prayerNotiSettingsList =
+        await _userSettingsService.getAllPrayerNotiSettings();
+    notifyListeners();
+
+    // İlk girişte ve ayarlar kaydedildiğinde, bildirim ayarlarını
+    // Background Task üzerinde kontrol etmek için Shared Preferences'a kaydet
+    _userSettingsService
+        .setPrayerNotiSettingsForBackgroundTask(prayerNotiSettingsList!);
+  }
+
+  // Daha önce getirilen vakit bildirim ayarlarından 1 tanesini filtreleyip geri döndür
+  PrayerNotiSettings getPrayerNotiSettings(PrayerType prayerType) {
+    final notiSettings =
+        prayerNotiSettingsList!.singleWhere((e) => e.name == prayerType.text);
+    return notiSettings.copyWith();
+  }
+
+  // Vakit bildirim seçeneği aktif mi kontrol et
+  bool isNotiActiveForPrayer(PrayerType prayerType) {
+    return getPrayerNotiSettings(prayerType).voiceWarningEnable;
+  }
+
+  final _interstitialAdService =
+      AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
+
+  bool _interstitialAdLoadProcess = false;
+
+  void _loadInterstitalAdAndShow() {
+    if (!_interstitialAdLoadProcess) {
+      _interstitialAdLoadProcess = true;
+      _interstitialAdService.loadAd(
+        onAdLoaded: () => _interstitialAdService.interstitialAd?.show(),
+      );
+    }
+  }
+
+  final notificationsOverlayController = OverlayPortalController();
+
+  void onTapNotificationsMenu() {
+    notificationsOverlayController.toggle();
+  }
+
+  // Vakit ayarlar diyaloğunu göster
+  void showNotificationSettingsDialog(PrayerType type) {
+    final settings = getPrayerNotiSettings(type);
+    final dialogService = locator<DialogService>();
+
+    // Diyaloğu göster
+    dialogService.showCustomDialog(
+      variant: DialogType.settings,
+      title: type.text,
+      barrierDismissible: true,
+      data: SettingsNotiDialog(
+        prayerNotiSettings: settings.copyWith(),
+        onSave: (settings) async {
+          _loadInterstitalAdAndShow();
+          // Tek bir vakit bildirim ayarını güncelle
+          await _userSettingsService.setPrayerNotiSettings(
+              prayerNotiSettings: settings);
+          getAllPrayerNotiSettings();
+        },
+        onSaveAll: (settings) async {
+          _loadInterstitalAdAndShow();
+          // Tüm vakitlerin bildirim ayarlarını güncelle
+          await _userSettingsService.setPrayerNotiSettings(
+            prayerNotiSettings: settings,
+            updateAll: true,
+          );
+          getAllPrayerNotiSettings();
         },
       ),
     );

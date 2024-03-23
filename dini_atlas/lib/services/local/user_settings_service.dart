@@ -258,14 +258,4 @@ class UserSettingsService {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool("silentMode") ?? false;
   }
-
-  void setHomeTab(int index) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setInt("homeTabIndex", index);
-  }
-
-  Future<int> getHomeTabIndex() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt("homeTabIndex") ?? 0;
-  }
 }

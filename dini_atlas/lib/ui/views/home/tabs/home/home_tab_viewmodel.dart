@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/extensions/datetime_extensions.dart';
@@ -17,10 +16,8 @@ import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/notification/prayer_notification.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
-import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/daily_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
-import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -40,20 +37,6 @@ class HomeTabViewModel extends ReactiveViewModel {
   final _navigationService = locator<NavigationService>();
   final _storyService = locator<DailyService>();
 
-  final _interstitialAdService =
-      AdmobInterstitialAdService(adUnitId: ksAdmobInterstitial2);
-
-  bool _interstitialAdLoadProcess = false;
-
-  void _loadInterstitalAdAndShow() {
-    if (!_interstitialAdLoadProcess) {
-      _interstitialAdLoadProcess = true;
-      _interstitialAdService.loadAd(
-        onAdLoaded: () => _interstitialAdService.interstitialAd?.show(),
-      );
-    }
-  }
-
   String? currentMoonPhaseImage;
   Uint8List? currentMoonImage;
   StateModel? userStateLocation;
@@ -61,32 +44,19 @@ class HomeTabViewModel extends ReactiveViewModel {
   bool locationBusy = false;
 
   List<PrayerTime>? get _prayerTimeList => homeService.prayerTimes?.prayerTimes;
+  PrayerTime? get currentPrayerTime =>
+      _prayerTimeList == null || selectedPrayerTime == null
+          ? null
+          : _prayerTimeList?[selectedPrayerTime!];
   EidPrayerTime? get _eidPrayerTime => homeService.prayerTimes?.eidPrayers;
   bool? get nextTimeIsAfterDay => homeService.nextTimeIsAfterDay;
   PrayerType get currentPrayerType => homeService.currentPrayerType;
-  List<PrayerNotiSettings>? prayerNotiSettingsList;
 
   StoriesModel? _storiesModel;
   StoriesModel? get storiesModel => _storiesModel;
 
   DailyContents? _dailyContents;
   DailyContents? get dailContents => _dailyContents;
-
-  TableTab _currentTableTab = TableTab.normal;
-  TableTab get currentTableTab => _currentTableTab;
-
-  PageController pageController = PageController();
-
-  void changeTableTab(int index) {
-    _currentTableTab = TableTab.values[index];
-    notifyListeners();
-
-    if (_currentTableTab == TableTab.detailed) {
-      // Günlük verileri getir
-      _getDaily();
-    }
-    _userSettingsService.setHomeTab(index);
-  }
 
   @override
   List<ListenableServiceMixin> get listenableServices => [homeService];
@@ -95,8 +65,6 @@ class HomeTabViewModel extends ReactiveViewModel {
     // Ana servisteki değişiklikleri dinle
     homeService.listen();
 
-    // Kullanıcı vakit ayarlarını liste olarak getir
-    await getAllPrayerNotiSettings();
 
     // Namaz vakitlerini getir
     await _getPrayerTimes();
@@ -114,21 +82,12 @@ class HomeTabViewModel extends ReactiveViewModel {
     getUserStateLocation();
 
     // Tablo için vakitleri getir
-    changePrayerTimeIndex();
+    setPrayerTimeIndex();
 
-    // En son seçilen Tab'ı seç
-    _getAndSetDefaultHomeTab();
+    // Günlük verileri getir
+    _getDaily();
 
     FlutterNativeSplash.remove();
-  }
-
-  void _getAndSetDefaultHomeTab() async {
-    final defaultTabIndex = await _userSettingsService.getHomeTabIndex();
-    if (defaultTabIndex == 1) {
-      pageController.animateToPage(defaultTabIndex,
-          duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-      //changeTableTab(defaultTabIndex);
-    }
   }
 
   Future<void> _getPrayerTimes() async {
@@ -187,29 +146,12 @@ class HomeTabViewModel extends ReactiveViewModel {
 
   PrayerTime get tablePrayerTime => _prayerTimeList![selectedPrayerTime!];
 
-  void changePrayerTimeIndex({bool? increment, bool? decrement}) {
-    // Eğer bir değişim yoksa, o zaman sadece bugünün namazı sırasını getir
-    if (increment == null && decrement == null) {
-      final DateTime datetime = DateTime.now();
+  void setPrayerTimeIndex() {
+    final DateTime datetime = DateTime.now();
 
-      // Sıradaki vakit namazları getir (tablo için)
-      selectedPrayerTime = _prayerTimeList
-          ?.indexWhere((e) => e.miladiTarihUzunIso8601.isEqualTo(datetime));
-    } else {
-      if (increment != null) {
-        // Eğer sonraki gün yoksa işlem yapma
-        if ((selectedPrayerTime! + 1) >= _prayerTimeList!.length) return;
-
-        // Sonraki elemanı seç
-        selectedPrayerTime = selectedPrayerTime! + 1;
-      } else if (decrement != null) {
-        // Eğer önceki gün yoksa işlem yapma
-        if ((selectedPrayerTime! - 1).isNegative) return;
-
-        // Önceki elemanı seç
-        selectedPrayerTime = selectedPrayerTime! - 1;
-      }
-    }
+    // Sıradaki vakit namazları getir (tablo için)
+    selectedPrayerTime = _prayerTimeList
+        ?.indexWhere((e) => e.miladiTarihUzunIso8601.isEqualTo(datetime));
     notifyListeners();
   }
 
@@ -225,61 +167,6 @@ class HomeTabViewModel extends ReactiveViewModel {
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
     }, (r) {});
     setBusyForObject(locationBusy, false);
-  }
-
-  // Tüm vakitler için bildirim ayarlarını getir
-  Future<void> getAllPrayerNotiSettings() async {
-    prayerNotiSettingsList =
-        await _userSettingsService.getAllPrayerNotiSettings();
-    notifyListeners();
-
-    // İlk girişte ve ayarlar kaydedildiğinde, bildirim ayarlarını
-    // Background Task üzerinde kontrol etmek için Shared Preferences'a kaydet
-    _userSettingsService
-        .setPrayerNotiSettingsForBackgroundTask(prayerNotiSettingsList!);
-  }
-
-  // Daha önce getirilen vakit bildirim ayarlarından 1 tanesini filtreleyip geri döndür
-  PrayerNotiSettings getPrayerNotiSettings(PrayerType prayerType) {
-    final notiSettings =
-        prayerNotiSettingsList!.singleWhere((e) => e.name == prayerType.text);
-    return notiSettings.copyWith();
-  }
-
-  // Vakit bildirim seçeneği aktif mi kontrol et
-  bool isNotiActiveForPrayer(PrayerType prayerType) {
-    return getPrayerNotiSettings(prayerType).voiceWarningEnable;
-  }
-
-  // Vakit ayarlar diyaloğunu göster
-  void showNotificationSettingsDialog(PrayerType type) {
-    final settings = getPrayerNotiSettings(type);
-    final dialogService = locator<DialogService>();
-
-    // Diyaloğu göster
-    dialogService.showCustomDialog(
-      variant: DialogType.settings,
-      title: type.text,
-      data: SettingsNotiDialog(
-        prayerNotiSettings: settings.copyWith(),
-        onSave: (settings) async {
-          _loadInterstitalAdAndShow();
-          // Tek bir vakit bildirim ayarını güncelle
-          await _userSettingsService.setPrayerNotiSettings(
-              prayerNotiSettings: settings);
-          getAllPrayerNotiSettings();
-        },
-        onSaveAll: (settings) async {
-          _loadInterstitalAdAndShow();
-          // Tüm vakitlerin bildirim ayarlarını güncelle
-          await _userSettingsService.setPrayerNotiSettings(
-            prayerNotiSettings: settings,
-            updateAll: true,
-          );
-          getAllPrayerNotiSettings();
-        },
-      ),
-    );
   }
 
   String? ifTodayEidPrayerTimeGetTime() {
@@ -305,13 +192,13 @@ class HomeTabViewModel extends ReactiveViewModel {
   }
 
   List<PrayerTime> get weeklyPrayerTimes => [
-        _prayerTimeList![selectedPrayerTime!], // 1. Gün
         _prayerTimeList![selectedPrayerTime! + 1], // 2. Gün
         _prayerTimeList![selectedPrayerTime! + 2], // 3. Gün
         _prayerTimeList![selectedPrayerTime! + 3], // 4. Gün
         _prayerTimeList![selectedPrayerTime! + 4], // 5. Gün
         _prayerTimeList![selectedPrayerTime! + 5], // 6. Gün
         _prayerTimeList![selectedPrayerTime! + 6], // 7. Gün
+        _prayerTimeList![selectedPrayerTime! + 7], // 8. Gün
       ];
 
   void _getDaily() async {

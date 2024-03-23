@@ -30,12 +30,11 @@ class DailyContentsWidget extends StatelessWidget {
       return const SizedBox();
     } else {
       return Container(
-        padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        margin: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(
           borderRadius: borderRadiusMedium,
           color: kcBackgroundColor,
-          border: Border.all(color: kcBlueGrayColor, width: 2),
         ),
         child: Column(
           children: [

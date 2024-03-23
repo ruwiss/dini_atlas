@@ -17,21 +17,24 @@ class CountdownCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        // CardView
-        _cardView(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // CardView
+          _cardView(),
 
-        // Countdown
-        _countdown(),
+          // Countdown
+          _countdown(),
 
-        // Live Moon Image
-        _liveMoon(),
+          // Live Moon Image
+          _liveMoon(),
 
-        // Location Text
-        _location()
-      ],
+          // Location Text
+          _location()
+        ],
+      ),
     );
   }
 

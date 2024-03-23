@@ -15,37 +15,40 @@ class QuranTab extends StackedView<QuranTabViewModel> {
     QuranTabViewModel viewModel,
     Widget? child,
   ) {
-    return Center(
-      child: viewModel.isBusy
-          ? const CircularProgressIndicator()
-          : Column(
-              children: [
-                // Son okunan sure bilgisi
-                QuranSuraHeader(
-                  lastReadAyah: viewModel.lastReadAyah,
-                  visible: viewModel.headerVisible,
-                  onTap: viewModel.onHeaderTap,
-                ),
-                // Sure listesi filtreleme butonları
-                QuranTabButtons(
-                  quranTab: viewModel.currentTab,
-                  onIndexChanged: (id) {
-                    viewModel.setIndex(id);
-                    viewModel.scrollTop();
-                  },
-                ),
-                BannerAdWidget(
-                  bannerAd: viewModel.bannerAd,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                ),
-                viewModel.hasError
-                    ? Center(child: Text(viewModel.modelError))
-                    : QuranSurahList(
-                        viewModel: viewModel,
-                        scrollController: viewModel.scrollController,
-                      ),
-              ],
-            ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Center(
+        child: viewModel.isBusy
+            ? const CircularProgressIndicator()
+            : Column(
+                children: [
+                  // Son okunan sure bilgisi
+                  QuranSuraHeader(
+                    lastReadAyah: viewModel.lastReadAyah,
+                    visible: viewModel.headerVisible,
+                    onTap: viewModel.onHeaderTap,
+                  ),
+                  // Sure listesi filtreleme butonları
+                  QuranTabButtons(
+                    quranTab: viewModel.currentTab,
+                    onIndexChanged: (id) {
+                      viewModel.setIndex(id);
+                      viewModel.scrollTop();
+                    },
+                  ),
+                  BannerAdWidget(
+                    bannerAd: viewModel.bannerAd,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  viewModel.hasError
+                      ? Center(child: Text(viewModel.modelError))
+                      : QuranSurahList(
+                          viewModel: viewModel,
+                          scrollController: viewModel.scrollController,
+                        ),
+                ],
+              ),
+      ),
     );
   }
 

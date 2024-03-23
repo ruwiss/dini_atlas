@@ -4,6 +4,7 @@ import 'package:dini_atlas/ui/common/constants/app_sounds.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../views/home/tabs/home/widgets/selectable_button.dart';
 import '../../views/home/tabs/home/widgets/selectable_tile.dart';

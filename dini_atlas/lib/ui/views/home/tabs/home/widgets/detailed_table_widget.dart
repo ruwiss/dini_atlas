@@ -11,11 +11,14 @@ class DetailedTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        verticalSpaceSmall,
-        _tableWidget(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Column(
+        children: [
+          verticalSpaceSmall,
+          _tableWidget(),
+        ],
+      ),
     );
   }
 
@@ -27,7 +30,7 @@ class DetailedTableWidget extends StatelessWidget {
         _headerCells(),
         ...List.generate(
           items.length,
-          (index) => _timeCells(items[index], isCurrentDay: index == 0),
+          (index) => _timeCells(items[index]),
         ),
       ],
     );
@@ -40,11 +43,6 @@ class DetailedTableWidget extends StatelessWidget {
   TextStyle get _cellTextStyleBold => TextStyle(
         fontSize: 11.5,
         color: kcPrimaryColorDark.withOpacity(.6),
-        fontWeight: FontWeight.w600,
-      );
-  TextStyle get _cellTextStyleBoldColored => const TextStyle(
-        fontSize: 11.5,
-        color: kcPrimaryColorLight,
         fontWeight: FontWeight.w600,
       );
 
@@ -62,27 +60,25 @@ class DetailedTableWidget extends StatelessWidget {
     );
   }
 
-  TableRow _timeCells(PrayerTime item, {bool isCurrentDay = false}) {
+  TableRow _timeCells(PrayerTime item) {
     return TableRow(
       children: [
         _tableCell(
           item.miladiTarihUzunIso8601.shortDayName(),
           bold: true,
           alignLeft: true,
-          currentDay: isCurrentDay,
         ),
-        _tableCell(item.imsak, currentDay: isCurrentDay), // İmsak
-        _tableCell(item.gunes, currentDay: isCurrentDay), // Güneş
-        _tableCell(item.ogle, currentDay: isCurrentDay), // Öğle
-        _tableCell(item.ikindi, currentDay: isCurrentDay), // İkindi
-        _tableCell(item.aksam, currentDay: isCurrentDay), // Akşam
-        _tableCell(item.yatsi, currentDay: isCurrentDay), // Yatsı
+        _tableCell(item.imsak), // İmsak
+        _tableCell(item.gunes), // Güneş
+        _tableCell(item.ogle), // Öğle
+        _tableCell(item.ikindi), // İkindi
+        _tableCell(item.aksam), // Akşam
+        _tableCell(item.yatsi), // Yatsı
       ],
     );
   }
 
-  Widget _tableCell(String title,
-      {bool bold = false, bool alignLeft = false, bool currentDay = false}) {
+  Widget _tableCell(String title, {bool bold = false, bool alignLeft = false}) {
     return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
       child: Padding(
@@ -90,11 +86,7 @@ class DetailedTableWidget extends StatelessWidget {
         child: Text(
           title,
           textAlign: alignLeft ? null : TextAlign.center,
-          style: currentDay
-              ? _cellTextStyleBoldColored
-              : bold
-                  ? _cellTextStyleBold
-                  : _cellTextStyle,
+          style: bold ? _cellTextStyleBold : _cellTextStyle,
         ),
       ),
     );

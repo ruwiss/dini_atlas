@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'home_service.dart';
 import 'home_viewmodel.dart';
+import 'tabs/home/widgets/notifications_overlay_widget.dart';
 import 'tabs/quran/quran_tab.dart';
 
 class HomeView extends StatefulWidget {
@@ -37,20 +38,26 @@ class _HomeViewState extends State<HomeView> {
             icon: SvgPicture.asset(kiMenu),
           ),
           actions: [
-            if (viewModel.showSettingsIcon)
+            if (viewModel.isHomePage) ...[
+              NotificationsOverlayWidget(
+                viewModel: viewModel,
+                controller: viewModel.notificationsOverlayController,
+                child: IconButton(
+                  onPressed: viewModel.onTapNotificationsMenu,
+                  icon: const Icon(Icons.notifications),
+                ),
+              ),
               IconButton(
                 onPressed: viewModel.onSettingsTap,
                 icon: SvgPicture.asset(kiSettings),
               ),
+            ]
           ],
         ),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
-              child: getViewForIndex(viewModel.currentIndex),
-            ),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 250),
+            child: getViewForIndex(viewModel.currentIndex),
           ),
         ),
         bottomNavigationBar: _bottomNavigationBar(context, viewModel),

@@ -19,7 +19,7 @@ class YasinView extends StackedView<YasinViewModel> {
       appBar: const AppBarWidget(title: "", backgroundColor: Color(0xfffff1d1)),
       backgroundColor: const Color(0xfffff1d1),
       body: Transform.scale(
-        scale: 1.09,
+        scale: 1.085,
         child: PageFlipWidget(
           key: viewModel.controller,
           backgroundColor: const Color(0xfffff1d1),
