@@ -44,10 +44,10 @@ class StoryCircleViews extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
         onTap: () async {
-          final stories =
+          final (categories, stories) =
               await locator<DailyService>().filterStories(category.id);
           await locator<NavigationService>()
-              .navigateToStoriesView(stories: stories)
+              .navigateToStoriesView(categories: categories, stories: stories)
               .then((_) => viewModel.getStoryViews());
         },
         child: Column(

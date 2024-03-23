@@ -24,16 +24,20 @@ class DetailedTableWidget extends StatelessWidget {
 
   Widget _tableWidget() {
     final items = viewModel.weeklyPrayerTimes;
-    return Table(
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: [
-        _headerCells(),
-        ...List.generate(
-          items.length,
-          (index) => _timeCells(items[index]),
-        ),
-      ],
-    );
+    if (items.isEmpty) {
+      return const SizedBox();
+    } else {
+      return Table(
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: [
+          _headerCells(),
+          ...List.generate(
+            items.length,
+            (index) => _timeCells(items[index]),
+          ),
+        ],
+      );
+    }
   }
 
   TextStyle get _cellTextStyle => const TextStyle(

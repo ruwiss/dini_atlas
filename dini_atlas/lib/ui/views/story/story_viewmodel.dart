@@ -14,9 +14,11 @@ class StoryViewModel extends BaseViewModel {
   final _storyService = locator<DailyService>();
   final _navigationService = locator<NavigationService>();
 
-  late Stories _stories;
+  late List<Stories> _stories;
+  late List<StoryCategory> _categories;
 
-  void init(Stories stories) {
+  void init(List<StoryCategory> categories, List<Stories> stories) {
+    _categories = categories;
     _stories = stories;
     _loadAd();
   }
@@ -28,39 +30,49 @@ class StoryViewModel extends BaseViewModel {
   bool _adShown = false;
 
   void _loadAd() async {
-    if (_stories.stories.length > 1) {
-      _interstitialAdService.loadAd(
-        onAdLoaded: () => _interstitalAdLoaded = true,
-        onAdDismissed: () => controller.play(),
-      );
-    }
+    _interstitialAdService.loadAd(
+      onAdLoaded: () => _interstitalAdLoaded = true,
+      onAdDismissed: () => controller.play(),
+    );
   }
 
-  List<StoryItem> get storyList => _stories.stories.map((e) {
-        if (e.mediaType == StoryMediaType.video) {
-          return StoryItem.pageVideo(
-            e.media,
-            requestHeaders: {"token": ksToken} as Map<String, dynamic>?,
-            controller: controller,
-            errorWidget: const Text("Bir sorun oluştu"),
-          );
-        } else {
-          return StoryItem.pageImage(
-            url: e.media,
-            requestHeaders: {"token": ksToken} as Map<String, dynamic>?,
-            controller: controller,
-            errorWidget: const Text("Bir sorun oluştu"),
-            duration: const Duration(seconds: 5),
-            caption: e.addon == null
-                ? null
-                : Text(e.addon!.placeholder, textAlign: TextAlign.center),
-          );
-        }
-      }).toList();
+  List<Story> get _storyList => _stories.expand((e) => e.stories).toList();
+  StoryCategory getStoriesCategory(Stories ee) =>
+      _categories.singleWhere((e) => e.id == ee.type);
 
-  late Story currentStory = _stories.stories[0];
+  List<StoryItem> get storyList => _stories
+      .expand(
+        (ee) => ee.stories.map((e) {
+          if (e.mediaType == StoryMediaType.video) {
+            return StoryItem.pageVideo(
+              e.media,
+              requestHeaders: {"token": ksToken} as Map<String, dynamic>?,
+              controller: controller,
+              errorWidget: const Text("Bir sorun oluştu"),
+            );
+          } else {
+            return StoryItem.pageImage(
+              url: e.media,
+              requestHeaders: {"token": ksToken} as Map<String, dynamic>?,
+              controller: controller,
+              errorWidget: const Text("Bir sorun oluştu"),
+              duration: const Duration(seconds: 5),
+              caption: e.addon == null
+                  ? null
+                  : Text(e.addon!.placeholder, textAlign: TextAlign.center),
+            );
+          }
+        }).toList(),
+      )
+      .toList();
+
+  late Story currentStory = _stories.first.stories[0];
+  late StoryCategory currentCategory = getStoriesCategory(_stories.first);
   void onStoryShow(int index) async {
-    currentStory = _stories.stories[index];
+    currentStory = _storyList[index];
+
+    currentCategory = getStoriesCategory(_stories[_stories.indexWhere(
+        (e) => e.stories.indexWhere((ee) => ee == currentStory) != -1)]);
     _storyService.markStoryAsSeen(currentStory.media);
     if (_interstitalAdLoaded) {
       await Future.delayed(

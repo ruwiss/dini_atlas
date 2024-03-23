@@ -331,7 +331,10 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<StoriesViewArguments>(nullOk: false);
       return _i22.PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            _i20.StoriesView(key: args.key, stories: args.stories),
+            _i20.StoriesView(
+                key: args.key,
+                stories: args.stories,
+                categories: args.categories),
         settings: data,
         transitionsBuilder:
             data.transition ?? _i1.TransitionsBuilders.slideBottom,
@@ -545,26 +548,31 @@ class StoriesViewArguments {
   const StoriesViewArguments({
     this.key,
     required this.stories,
+    required this.categories,
   });
 
   final _i23.Key? key;
 
-  final _i27.Stories stories;
+  final List<_i27.Stories> stories;
+
+  final List<_i27.StoryCategory> categories;
 
   @override
   String toString() {
-    return '{"key": "$key", "stories": "$stories"}';
+    return '{"key": "$key", "stories": "$stories", "categories": "$categories"}';
   }
 
   @override
   bool operator ==(covariant StoriesViewArguments other) {
     if (identical(this, other)) return true;
-    return other.key == key && other.stories == stories;
+    return other.key == key &&
+        other.stories == stories &&
+        other.categories == categories;
   }
 
   @override
   int get hashCode {
-    return key.hashCode ^ stories.hashCode;
+    return key.hashCode ^ stories.hashCode ^ categories.hashCode;
   }
 }
 
@@ -849,7 +857,8 @@ extension NavigatorStateExtension on _i28.NavigationService {
 
   Future<dynamic> navigateToStoriesView({
     _i23.Key? key,
-    required _i27.Stories stories,
+    required List<_i27.Stories> stories,
+    required List<_i27.StoryCategory> categories,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -857,7 +866,8 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.storiesView,
-        arguments: StoriesViewArguments(key: key, stories: stories),
+        arguments: StoriesViewArguments(
+            key: key, stories: stories, categories: categories),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -1158,7 +1168,8 @@ extension NavigatorStateExtension on _i28.NavigationService {
 
   Future<dynamic> replaceWithStoriesView({
     _i23.Key? key,
-    required _i27.Stories stories,
+    required List<_i27.Stories> stories,
+    required List<_i27.StoryCategory> categories,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1166,7 +1177,8 @@ extension NavigatorStateExtension on _i28.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.storiesView,
-        arguments: StoriesViewArguments(key: key, stories: stories),
+        arguments: StoriesViewArguments(
+            key: key, stories: stories, categories: categories),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

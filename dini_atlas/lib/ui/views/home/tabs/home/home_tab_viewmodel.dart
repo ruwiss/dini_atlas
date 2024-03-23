@@ -65,7 +65,6 @@ class HomeTabViewModel extends ReactiveViewModel {
     // Ana servisteki değişiklikleri dinle
     homeService.listen();
 
-
     // Namaz vakitlerini getir
     await _getPrayerTimes();
 
@@ -191,15 +190,14 @@ class HomeTabViewModel extends ReactiveViewModel {
     }
   }
 
-  List<PrayerTime> get weeklyPrayerTimes => [
-        _prayerTimeList![selectedPrayerTime! + 1], // 2. Gün
-        _prayerTimeList![selectedPrayerTime! + 2], // 3. Gün
-        _prayerTimeList![selectedPrayerTime! + 3], // 4. Gün
-        _prayerTimeList![selectedPrayerTime! + 4], // 5. Gün
-        _prayerTimeList![selectedPrayerTime! + 5], // 6. Gün
-        _prayerTimeList![selectedPrayerTime! + 6], // 7. Gün
-        _prayerTimeList![selectedPrayerTime! + 7], // 8. Gün
-      ];
+  List<PrayerTime> get weeklyPrayerTimes {
+    List<PrayerTime> items = [];
+    for (var i = 1; i <= 7; i++) {
+      _prayerTimeList!.length - 1 >= selectedPrayerTime! + i;
+      items.add(_prayerTimeList![selectedPrayerTime! + i]);
+    }
+    return items;
+  }
 
   void _getDaily() async {
     if (_storiesModel == null || _dailyContents == null) {

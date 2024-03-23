@@ -36,9 +36,15 @@ class DailyService {
     }
   }
 
-  Future<Stories> filterStories(int type) async {
+  Future<(List<StoryCategory>, List<Stories>)> filterStories(int type) async {
     if (storiesModel == null) throw Exception("_storiesModel is null");
-    return storiesModel!.stories.singleWhere((e) => e.type == type);
+    final int currentIndex =
+        storiesModel!.stories.indexWhere((e) => e.type == type);
+    List<Stories> storyItems = [];
+    for (var i = currentIndex; i < storiesModel!.stories.length; i++) {
+      storyItems.add(storiesModel!.stories[i]);
+    }
+    return (storiesModel!.categories ,storyItems);
   }
 
   SharedPreferences? _prefs;
