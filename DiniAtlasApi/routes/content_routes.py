@@ -12,9 +12,10 @@ import os
 app = Blueprint("content_app", __name__)
 
 # Geçici dosyanın kaydedileceği dizin
-TEMP_FOLDER = 'temp'
+TEMP_FOLDER = "temp"
 if not os.path.exists(TEMP_FOLDER):
     os.makedirs(TEMP_FOLDER)
+
 
 @app.route("/")
 def index():
@@ -155,13 +156,35 @@ def kuran_okuyuculari():
 
     okuyucular = []
     for i in reciters:
+        if i["id"] in [51, 256]:
+            continue
         server = i["folder_url"].split(".mp3quran.net")[0].split("/")[2]
         server_folder = i["folder_url"].split(".mp3quran.net/")[1].replace("/", "")
+        name = (
+            i["name"]
+            .replace("إبراهيم الأخضر", "Ibrahim Al Akhdar")
+            .replace("أحمد بن علي العجمي", "Ahmad bin Ali Al-Ajmi")
+            .replace("أحمد نعينع", "Ahmed Neinaa")
+            .replace("أكرم العلاقمي", "Akram Al Alaqmi")
+            .replace("سعود الشريم", "Suud el-Şureym")
+            .replace("سهل ياسين", "Sahil Yaseen")
+            .replace("عبدالباسط عبدالصمد", "Abdulbasit Abdussamed")
+            .replace("عبدالله بصفر", "Abdullah Ibn Ali Basfar")
+            .replace("عبدالله عواد الجهني", "Abdullah el-Cuheni")
+            .replace("عبدالمحسن القاسم", "Abdulmohsen Al-Qasim")
+            .replace("علي بن عبدالرحمن الحذيفي", "Ali Al-Hudhaifi")
+            .replace("علي حجاج السويسي", "Sheikh Ali As-Suwaisy")
+            .replace("عماد زهير حافظ", "Imad Zuhair Hafez")
+            .replace("محمد الطبلاوي", "Mohammed Al-Tablawi")
+            .replace("محمد صديق المنشاوي", "Mohammed Manshawi")
+            .replace("محمود خليل الحصري", "Mahmoud Khalil Al-Husary")
+            .replace("خالد المهنا", "Khaled Al-Muhanna")
+        )
         if i["soar_count"] == 114:
             okuyucular.append(
                 {
                     "id": i["id"],
-                    "name": i["name"],
+                    "name": name,
                     "reciter_url": f"/kuran/okuyucu/{server}/{server_folder}/{i['id']}",
                 }
             )
@@ -267,17 +290,19 @@ def dualar():
 def ay_goruntusu(img):
     return redirect(f"https://namazvakti.diyanet.gov.tr/images/{img}")
 
+
 @app.route("/daily-zip")
 def daily_zip():
     return send_file("json/daily.zip")
+
 
 @app.route("/daily")
 def stories():
     datestr = datetime.now().strftime("%d-%m-%Y")
     stories_path = f"json/daily/{datestr}.json"
     if os.path.exists(stories_path):
-        with open(stories_path, encoding='utf-8') as f:
-            return jsonify(json.load(f))    
+        with open(stories_path, encoding="utf-8") as f:
+            return jsonify(json.load(f))
     else:
         return "Error", 500
 
@@ -292,27 +317,22 @@ def story_media(media):
     return send_file(media_path, as_attachment=True)
 
 
-@app.route("/feedback", methods=['POST'])
+@app.route("/feedback", methods=["POST"])
 def user_feedback():
-     if request.method == 'POST':
-        image_file = request.files['image']
-        text = request.form['text']
-        
+    if request.method == "POST":
+        image_file = request.files["image"]
+        text = request.form["text"]
+
         token = "6421456783:AAE_N4mD1sTL-YuhiqKOF9EC8gz9z2tnWAg"
         chat_id = "-1002033217313"
-        
-      
-        temp_image_path = os.path.join(TEMP_FOLDER, f'temp_image.png_{len(text)}')
+
+        temp_image_path = os.path.join(TEMP_FOLDER, f"temp_image.png_{len(text)}")
         image_file.save(temp_image_path)
 
-        url = f'https://api.telegram.org/bot{token}/sendPhoto'
-        files = {'photo': open(temp_image_path, 'rb')}
-        params = {
-            'chat_id': chat_id,
-            'caption': text
-        }
+        url = f"https://api.telegram.org/bot{token}/sendPhoto"
+        files = {"photo": open(temp_image_path, "rb")}
+        params = {"chat_id": chat_id, "caption": text}
         requests.post(url, data=params, files=files)
         os.remove(temp_image_path)
-        
+
         return "OK"
-     
