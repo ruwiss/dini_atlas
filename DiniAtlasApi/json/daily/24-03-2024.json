@@ -1,72 +1,56 @@
 {
-    "stories": {
-        "categories": [
-            {
-                "id": 389,
-                "name": "Kuran",
-                "thumbnail": "/story/kuran.png"
-            },
-            {
-                "id": 460,
-                "name": "Hadis",
-                "thumbnail": "/story/hadis.png"
-            },
-            {
-                "id": 816,
-                "name": "Dua",
-                "thumbnail": "/story/dua.png"
-            }
-        ],
-        "stories": [
-            {
-                "type": 389,
-                "list": [
-                    {
-                        "media": "/story/21-03-2024-1000021214.jpg",
-                        "mediaType": "image",
-                        "addon": null
-                    },
-                    {
-                        "media": "/story/21-03-2024-1000021209.jpg",
-                        "mediaType": "image",
-                        "addon": null
-                    }
-                ]
-            },
-            {
-                "type": 460,
-                "list": [
-                    {
-                        "media": "/story/21-03-2024-1000021213.jpg",
-                        "mediaType": "image",
-                        "addon": null
-                    }
-                ]
-            },
-            {
-                "type": 816,
-                "list": [
-                    {
-                        "media": "/story/21-03-2024-1000021212.jpg",
-                        "mediaType": "image",
-                        "addon": null
-                    }
-                ]
-            }
-        ]
-    },
-    "contents": {
-        "ayet": {
-            "metin": "Senin yanında hak yola dönenlerle birlikte, sana buyurulduğu gibi dosdoğru ol! Siz de azıp sapmayın. Allah, yaptıklarınızı çok iyi görmektedir.",
-            "kaynak": "Hud Suresi 112. Ayet"
+    "categories": [
+        {
+            "id": 389,
+            "name": "Kuran",
+            "thumbnail": "/story/kuran.png"
         },
-        "hadis": {
-            "metin": "Ebû Amr (veya Ebû Amre) Süfyân İbni Abdullah radıyallahu anh şöyle dedi:- Yâ Resûlallah! Bana İslâmı öylesine tanıt ki, onu bir daha senden başkasına sormaya ihtiyaç hissetmeyeyim, dedim. Resûlullah sallallahu aleyhi ve sellem: - “Allah’a inandım de, sonra da dosdoğru ol!” buyurdu.",
-            "kaynak": "Müslim, İmân 62. Ayrıca bk. Tirmizî, Zühd 61; İbni Mâce, Fiten 12."
+        {
+            "id": 460,
+            "name": "Hadis",
+            "thumbnail": "/story/hadis.png"
         },
-        "dua": {
-            "metin": "Ey kalpleri hâlden hâle çeviren Allah’ım, kalbimi dinin üzere sabit kıl.",
-            "kaynak": ""
+        {
+            "id": 816,
+            "name": "Dua",
+            "thumbnail": "/story/dua.png"
         }
-    }
+    ],
+    "stories": [
+        {
+            "type": 389,
+            "list": [
+                {
+                    "media": "/story/21-03-2024-1000021214.jpg",
+                    "mediaType": "image",
+                    "addon": null
+                },
+                {
+                    "media": "/story/21-03-2024-1000021209.jpg",
+                    "mediaType": "image",
+                    "addon": null
+                }
+            ]
+        },
+        {
+            "type": 460,
+            "list": [
+                {
+                    "media": "/story/21-03-2024-1000021213.jpg",
+                    "mediaType": "image",
+                    "addon": null
+                }
+            ]
+        },
+        {
+            "type": 816,
+            "list": [
+                {
+                    "media": "/story/21-03-2024-1000021212.jpg",
+                    "mediaType": "image",
+                    "addon": null
+                }
+            ]
+        }
+    ]
 }

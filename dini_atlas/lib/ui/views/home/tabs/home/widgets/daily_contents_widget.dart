@@ -35,16 +35,10 @@ class DailyContentsWidget extends StatelessWidget {
               metin: contents.dua,
               type: DailyContentTypes.dualar,
             ),
-          if (!viewModel.hideBabyNamesContent) ...[
-            _contentView(
-              metin: contents.kizIsimleri,
-              type: DailyContentTypes.kizIsimleri,
-            ),
-            _contentView(
-              metin: contents.erkekIsimleri,
+          if (!viewModel.hideBabyNamesContent)  _contentView(
+              metin: "Kız ismi: ${contents.kizIsimleri}\nErkek ismi: ${contents.erkekIsimleri}",
               type: DailyContentTypes.erkekIsimleri,
             ),
-          ]
         ],
       );
     }

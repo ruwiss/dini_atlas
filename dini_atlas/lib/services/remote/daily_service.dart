@@ -18,8 +18,8 @@ enum DailyContentTypes {
   ayetler("daily/ayetler.json", "Vaktin Ayeti"),
   dualar("daily/dualar.json", "Vaktin Duâsı"),
   hadisler("daily/hadisler.json", "Vaktin Hadisi"),
-  erkekIsimleri("daily/erkek-isimleri.json", "Vaktin Erkek İsmi"),
-  kizIsimleri("daily/kiz-isimleri.json", "Vaktin Kız İsmi");
+  erkekIsimleri("daily/erkek-isimleri.json", "Vaktin Bebek İsimleri"),
+  kizIsimleri("daily/kiz-isimleri.json", "Vaktin Bebek İsimleri");
 
   final String fileName;
   final String whatIs;
@@ -48,7 +48,7 @@ class DailyService {
       // Cevap yoksa veya sunucu hata gönderdiyse
       if (response == null || response.statusCode != 200) return;
 
-      storiesModel = StoriesModel.fromJson(response.data['stories']);
+      storiesModel = StoriesModel.fromJson(response.data);
     } catch (e) {
       debugPrint(e.toString());
     }
