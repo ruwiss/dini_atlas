@@ -129,7 +129,6 @@ class AdmobAppOpenAdsService {
   bool get isAdAvailable => _appOpenAd != null;
 
   void showAdIfAvailable() {
-    if (!ksShowAdmobAds) return;
     if (!isAdAvailable) {
       debugPrint('Reklam bulunamadığı için yükleniyor.');
       setup();
@@ -174,7 +173,7 @@ class AppLifecycleReactor {
 
   void _onAppStateChanged(AppState appState) {
     debugPrint("App State Changed: ${appState.name}");
-    if (appState == AppState.foreground) {
+    if (appState == AppState.foreground && ksShowAdmobAds) {
       appOpenAdManager.showAdIfAvailable();
     }
   }

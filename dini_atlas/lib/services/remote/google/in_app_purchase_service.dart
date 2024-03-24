@@ -22,12 +22,17 @@ class InAppPurchaseService with ListenableServiceMixin {
       [entitlements, offers, customerInfo, hasSubscription]);
 
   Future<void> init({VoidCallback? onInit}) async {
-    if (kDebugMode) await Purchases.setLogLevel(LogLevel.debug);
-    await Purchases.configure(PurchasesConfiguration(ksIapKey));
-    await _getCustomerInfo();
-    // Eğer abonelik varsa reklamları kapat
-    if (hasSubscription) ksShowAdmobAds = false;
-    onInit?.call();
+    try {
+      if (kDebugMode) await Purchases.setLogLevel(LogLevel.debug);
+      await Purchases.configure(PurchasesConfiguration(ksIapKey));
+      await _getCustomerInfo();
+      // Eğer abonelik varsa reklamları kapat
+      if (hasSubscription) ksShowAdmobAds = false;
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      onInit?.call();
+    }
   }
 
   Future<void> _getCustomerInfo() async {
@@ -40,7 +45,7 @@ class InAppPurchaseService with ListenableServiceMixin {
     }
   }
 
-  Future<void> updatePurchaseStatus(CustomerInfo customerInfo) async {
+  void updatePurchaseStatus(CustomerInfo customerInfo) {
     _customerInfo = customerInfo;
     _entitlements = customerInfo.entitlements.active.values.toList();
     notifyListeners();
