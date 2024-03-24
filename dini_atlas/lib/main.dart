@@ -44,15 +44,7 @@ class MainApp extends StatelessWidget {
         StackedService.routeObserver,
         GoogleServices.observer
       ],
-      builder: (context, child) {
-        final mediaQueryData = MediaQuery.of(context);
-        final scale = mediaQueryData.textScaler
-            .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.3);
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: scale),
-          child: child!,
-        );
-      },
+      builder: (context, child) => MediaQuery.withNoTextScaling(child: child!),
     );
   }
 }
