@@ -57,6 +57,21 @@ class UserSettings {
   SuraSetting suraSetting = SuraSetting();
 
   Map<String, dynamic> jsonValue() => jsonDecode(jsonString);
+
+  /// Ayet görünürlüğünü kapat
+  bool? hideAyetDailyContent;
+
+  /// Dua görünürlüğünü kapat
+  bool? hideDuaDailyContent;
+
+  /// Hadis görünürlüğünü kapat
+  bool? hideHadisDailyContent;
+
+  /// Kız isimleri görünürlüğünü kapat
+  bool? hideKizIsmiDailyContent;
+
+  /// Erkek isimleri görünürlüğünü kapat
+  bool? hideErkekIsmiDailyContent;
 }
 
 @collection

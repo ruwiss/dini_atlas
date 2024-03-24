@@ -36,6 +36,17 @@ class UserSettingsService {
     }
   }
 
+  Future<void> setUserSettings(UserSettings value) async {
+    try {
+      userSettings = value;
+      // Veriyi kaydet
+      await _db.writeTxn(() async => await _db.userSettings.put(value));
+    } catch (e) {
+      throw UserSettingsException(
+          "UserSettings - kaydedilirken bir sorun oluştu. $e");
+    }
+  }
+
   Future<void> setUserLocationSettings({
     required UserLocation location,
     Country? country,

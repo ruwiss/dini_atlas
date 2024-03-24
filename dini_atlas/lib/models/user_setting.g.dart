@@ -34,46 +34,71 @@ const UserSettingsSchema = CollectionSchema(
       type: IsarType.object,
       target: r'Country',
     ),
-    r'increaseAyahFontSize': PropertySchema(
+    r'hideAyetDailyContent': PropertySchema(
       id: 3,
+      name: r'hideAyetDailyContent',
+      type: IsarType.bool,
+    ),
+    r'hideDuaDailyContent': PropertySchema(
+      id: 4,
+      name: r'hideDuaDailyContent',
+      type: IsarType.bool,
+    ),
+    r'hideErkekIsmiDailyContent': PropertySchema(
+      id: 5,
+      name: r'hideErkekIsmiDailyContent',
+      type: IsarType.bool,
+    ),
+    r'hideHadisDailyContent': PropertySchema(
+      id: 6,
+      name: r'hideHadisDailyContent',
+      type: IsarType.bool,
+    ),
+    r'hideKizIsmiDailyContent': PropertySchema(
+      id: 7,
+      name: r'hideKizIsmiDailyContent',
+      type: IsarType.bool,
+    ),
+    r'increaseAyahFontSize': PropertySchema(
+      id: 8,
       name: r'increaseAyahFontSize',
       type: IsarType.long,
     ),
     r'jsonString': PropertySchema(
-      id: 4,
+      id: 9,
       name: r'jsonString',
       type: IsarType.string,
     ),
     r'quranReciterId': PropertySchema(
-      id: 5,
+      id: 10,
       name: r'quranReciterId',
       type: IsarType.long,
     ),
     r'savedLastAyah': PropertySchema(
-      id: 6,
+      id: 11,
       name: r'savedLastAyah',
       type: IsarType.object,
       target: r'SavedLastAyah',
     ),
     r'silentModeEnable': PropertySchema(
-      id: 7,
+      id: 12,
       name: r'silentModeEnable',
       type: IsarType.bool,
     ),
     r'state': PropertySchema(
-      id: 8,
+      id: 13,
       name: r'state',
       type: IsarType.object,
       target: r'StateModel',
     ),
     r'suraSetting': PropertySchema(
-      id: 9,
+      id: 14,
       name: r'suraSetting',
       type: IsarType.object,
       target: r'SuraSetting',
     ),
     r'userMail': PropertySchema(
-      id: 10,
+      id: 15,
       name: r'userMail',
       type: IsarType.string,
     )
@@ -161,29 +186,34 @@ void _userSettingsSerialize(
     CountrySchema.serialize,
     object.country,
   );
-  writer.writeLong(offsets[3], object.increaseAyahFontSize);
-  writer.writeString(offsets[4], object.jsonString);
-  writer.writeLong(offsets[5], object.quranReciterId);
+  writer.writeBool(offsets[3], object.hideAyetDailyContent);
+  writer.writeBool(offsets[4], object.hideDuaDailyContent);
+  writer.writeBool(offsets[5], object.hideErkekIsmiDailyContent);
+  writer.writeBool(offsets[6], object.hideHadisDailyContent);
+  writer.writeBool(offsets[7], object.hideKizIsmiDailyContent);
+  writer.writeLong(offsets[8], object.increaseAyahFontSize);
+  writer.writeString(offsets[9], object.jsonString);
+  writer.writeLong(offsets[10], object.quranReciterId);
   writer.writeObject<SavedLastAyah>(
-    offsets[6],
+    offsets[11],
     allOffsets,
     SavedLastAyahSchema.serialize,
     object.savedLastAyah,
   );
-  writer.writeBool(offsets[7], object.silentModeEnable);
+  writer.writeBool(offsets[12], object.silentModeEnable);
   writer.writeObject<StateModel>(
-    offsets[8],
+    offsets[13],
     allOffsets,
     StateModelSchema.serialize,
     object.state,
   );
   writer.writeObject<SuraSetting>(
-    offsets[9],
+    offsets[14],
     allOffsets,
     SuraSettingSchema.serialize,
     object.suraSetting,
   );
-  writer.writeString(offsets[10], object.userMail);
+  writer.writeString(offsets[15], object.userMail);
 }
 
 UserSettings _userSettingsDeserialize(
@@ -204,29 +234,34 @@ UserSettings _userSettingsDeserialize(
     CountrySchema.deserialize,
     allOffsets,
   );
+  object.hideAyetDailyContent = reader.readBoolOrNull(offsets[3]);
+  object.hideDuaDailyContent = reader.readBoolOrNull(offsets[4]);
+  object.hideErkekIsmiDailyContent = reader.readBoolOrNull(offsets[5]);
+  object.hideHadisDailyContent = reader.readBoolOrNull(offsets[6]);
+  object.hideKizIsmiDailyContent = reader.readBoolOrNull(offsets[7]);
   object.id = id;
-  object.increaseAyahFontSize = reader.readLong(offsets[3]);
-  object.jsonString = reader.readString(offsets[4]);
-  object.quranReciterId = reader.readLong(offsets[5]);
+  object.increaseAyahFontSize = reader.readLong(offsets[8]);
+  object.jsonString = reader.readString(offsets[9]);
+  object.quranReciterId = reader.readLong(offsets[10]);
   object.savedLastAyah = reader.readObjectOrNull<SavedLastAyah>(
-        offsets[6],
+        offsets[11],
         SavedLastAyahSchema.deserialize,
         allOffsets,
       ) ??
       SavedLastAyah();
-  object.silentModeEnable = reader.readBool(offsets[7]);
+  object.silentModeEnable = reader.readBool(offsets[12]);
   object.state = reader.readObjectOrNull<StateModel>(
-    offsets[8],
+    offsets[13],
     StateModelSchema.deserialize,
     allOffsets,
   );
   object.suraSetting = reader.readObjectOrNull<SuraSetting>(
-        offsets[9],
+        offsets[14],
         SuraSettingSchema.deserialize,
         allOffsets,
       ) ??
       SuraSetting();
-  object.userMail = reader.readStringOrNull(offsets[10]);
+  object.userMail = reader.readStringOrNull(offsets[15]);
   return object;
 }
 
@@ -252,34 +287,44 @@ P _userSettingsDeserializeProp<P>(
         allOffsets,
       )) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 6:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 7:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 8:
+      return (reader.readLong(offset)) as P;
+    case 9:
+      return (reader.readString(offset)) as P;
+    case 10:
+      return (reader.readLong(offset)) as P;
+    case 11:
       return (reader.readObjectOrNull<SavedLastAyah>(
             offset,
             SavedLastAyahSchema.deserialize,
             allOffsets,
           ) ??
           SavedLastAyah()) as P;
-    case 7:
+    case 12:
       return (reader.readBool(offset)) as P;
-    case 8:
+    case 13:
       return (reader.readObjectOrNull<StateModel>(
         offset,
         StateModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 9:
+    case 14:
       return (reader.readObjectOrNull<SuraSetting>(
             offset,
             SuraSettingSchema.deserialize,
             allOffsets,
           ) ??
           SuraSetting()) as P;
-    case 10:
+    case 15:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -421,6 +466,146 @@ extension UserSettingsQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'country',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideAyetDailyContentIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'hideAyetDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideAyetDailyContentIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'hideAyetDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideAyetDailyContentEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hideAyetDailyContent',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideDuaDailyContentIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'hideDuaDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideDuaDailyContentIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'hideDuaDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideDuaDailyContentEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hideDuaDailyContent',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideErkekIsmiDailyContentIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'hideErkekIsmiDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideErkekIsmiDailyContentIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'hideErkekIsmiDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideErkekIsmiDailyContentEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hideErkekIsmiDailyContent',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideHadisDailyContentIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'hideHadisDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideHadisDailyContentIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'hideHadisDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideHadisDailyContentEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hideHadisDailyContent',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideKizIsmiDailyContentIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'hideKizIsmiDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideKizIsmiDailyContentIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'hideKizIsmiDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideKizIsmiDailyContentEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hideKizIsmiDailyContent',
+        value: value,
       ));
     });
   }
@@ -965,6 +1150,76 @@ extension UserSettingsQuerySortBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideAyetDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideAyetDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideAyetDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideAyetDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideDuaDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideDuaDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideDuaDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideDuaDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideErkekIsmiDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideErkekIsmiDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideErkekIsmiDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideErkekIsmiDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideHadisDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideHadisDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideHadisDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideHadisDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideKizIsmiDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideKizIsmiDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideKizIsmiDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideKizIsmiDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       sortByIncreaseAyahFontSize() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'increaseAyahFontSize', Sort.asc);
@@ -1043,6 +1298,76 @@ extension UserSettingsQuerySortThenBy
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy> thenByAlarmModeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'alarmMode', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideAyetDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideAyetDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideAyetDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideAyetDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideDuaDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideDuaDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideDuaDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideDuaDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideErkekIsmiDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideErkekIsmiDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideErkekIsmiDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideErkekIsmiDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideHadisDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideHadisDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideHadisDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideHadisDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideKizIsmiDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideKizIsmiDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideKizIsmiDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideKizIsmiDailyContent', Sort.desc);
     });
   }
 
@@ -1135,6 +1460,41 @@ extension UserSettingsQueryWhereDistinct
   }
 
   QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByHideAyetDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hideAyetDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByHideDuaDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hideDuaDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByHideErkekIsmiDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hideErkekIsmiDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByHideHadisDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hideHadisDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByHideKizIsmiDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hideKizIsmiDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
       distinctByIncreaseAyahFontSize() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'increaseAyahFontSize');
@@ -1193,6 +1553,41 @@ extension UserSettingsQueryProperty
   QueryBuilder<UserSettings, Country?, QQueryOperations> countryProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'country');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool?, QQueryOperations>
+      hideAyetDailyContentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hideAyetDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool?, QQueryOperations>
+      hideDuaDailyContentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hideDuaDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool?, QQueryOperations>
+      hideErkekIsmiDailyContentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hideErkekIsmiDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool?, QQueryOperations>
+      hideHadisDailyContentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hideHadisDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool?, QQueryOperations>
+      hideKizIsmiDailyContentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hideKizIsmiDailyContent');
     });
   }
 

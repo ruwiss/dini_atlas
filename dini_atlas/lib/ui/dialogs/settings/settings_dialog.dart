@@ -186,89 +186,10 @@ class _SettingsBaseDialogItemState extends State<SettingsBaseDialogItem> {
               child: widget.bottomWidget!,
             ),
           if (widget.showDivider) ...[
-            verticalSpace(23),
+            verticalSpace(15),
             const Divider(height: 1, thickness: 1.5, color: kcDividerColor),
           ]
         ],
-      ),
-    );
-  }
-}
-
-class SettingsBaseButton extends StatelessWidget {
-  const SettingsBaseButton({
-    super.key,
-    required this.title,
-    this.svgIcon,
-    this.showDivider = true,
-    this.subtitle,
-    this.bottomWidget,
-    this.actionWidget,
-    this.onTap,
-    this.disabled = false,
-  });
-  final String title;
-  final String? svgIcon;
-  final String? subtitle;
-  final Widget? bottomWidget;
-  final Widget? actionWidget;
-  final bool showDivider;
-  final bool disabled;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        color: kcBackgroundColor,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (svgIcon case final String svg) SvgPicture.asset(svg),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: disabled ? kcGrayColorSoft : kcGrayColor,
-                          ),
-                        ),
-                        if (subtitle case final String subtitle)
-                          Text(
-                            subtitle,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: disabled ? kcGrayColorSoft : kcGrayColor,
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (bottomWidget case final Widget bottom)
-              AbsorbPointer(
-                absorbing: disabled,
-                child: bottom,
-              ),
-            if (showDivider) ...[
-              verticalSpace(23),
-              const Divider(height: 1, thickness: 1.5, color: kcDividerColor),
-            ],
-            if (!showDivider) verticalSpaceSmall
-          ],
-        ),
       ),
     );
   }

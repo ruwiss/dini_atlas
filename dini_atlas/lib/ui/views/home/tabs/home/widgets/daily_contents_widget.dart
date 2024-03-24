@@ -18,28 +18,33 @@ class DailyContentsWidget extends StatelessWidget {
       return Column(
         children: [
           verticalSpace(20),
-          _contentView(
-            metin: contents.ayet.metin,
-            kaynak: contents.ayet.kaynak,
-            type: DailyContentTypes.ayetler,
-          ),
-          _contentView(
-            metin: contents.hadis.metin,
-            kaynak: contents.hadis.kaynak,
-            type: DailyContentTypes.hadisler,
-          ),
-          _contentView(
-            metin: contents.dua,
-            type: DailyContentTypes.dualar,
-          ),
-          _contentView(
-            metin: contents.kizIsimleri,
-            type: DailyContentTypes.kizIsimleri,
-          ),
-          _contentView(
-            metin: contents.erkekIsimleri,
-            type: DailyContentTypes.erkekIsimleri,
-          ),
+          if (!viewModel.hideAyetContent)
+            _contentView(
+              metin: contents.ayet.metin,
+              kaynak: contents.ayet.kaynak,
+              type: DailyContentTypes.ayetler,
+            ),
+          if (!viewModel.hideHadisContent)
+            _contentView(
+              metin: contents.hadis.metin,
+              kaynak: contents.hadis.kaynak,
+              type: DailyContentTypes.hadisler,
+            ),
+          if (!viewModel.hideDuaContent)
+            _contentView(
+              metin: contents.dua,
+              type: DailyContentTypes.dualar,
+            ),
+          if (!viewModel.hideBabyNamesContent) ...[
+            _contentView(
+              metin: contents.kizIsimleri,
+              type: DailyContentTypes.kizIsimleri,
+            ),
+            _contentView(
+              metin: contents.erkekIsimleri,
+              type: DailyContentTypes.erkekIsimleri,
+            ),
+          ]
         ],
       );
     }

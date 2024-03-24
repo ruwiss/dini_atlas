@@ -55,9 +55,20 @@ class HomeTabViewModel extends ReactiveViewModel {
   StoriesModel? _storiesModel;
   StoriesModel? get storiesModel => _storiesModel;
 
-  // DÜZENLE: Veriler burada tutulacak, şuan veri atanmıyor.
   ContentsOfTime? _contentsOfTime;
   ContentsOfTime? get contentsOfTime => _contentsOfTime;
+
+  bool get hideAyetContent =>
+      homeService.userSettings?.hideAyetDailyContent ?? false;
+
+  bool get hideHadisContent =>
+      homeService.userSettings?.hideHadisDailyContent ?? false;
+
+  bool get hideDuaContent =>
+      homeService.userSettings?.hideDuaDailyContent ?? false;
+
+  bool get hideBabyNamesContent =>
+      homeService.userSettings?.hideErkekIsmiDailyContent ?? false;
 
   @override
   List<ListenableServiceMixin> get listenableServices => [homeService];

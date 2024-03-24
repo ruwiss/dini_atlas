@@ -115,6 +115,31 @@ class HomeViewModel extends IndexTrackingViewModel {
           _homeService.getUserSettings();
           await AppNotifications.instance.setAlarmMode(v);
         },
+        hideAyet: userSettings.hideAyetDailyContent ?? false,
+        onChangedHideAyet: (v) async {
+          await _userSettingsService
+              .setUserSettings(userSettings..hideAyetDailyContent = v);
+          _homeService.getUserSettings();
+        },
+        hideHadis: userSettings.hideHadisDailyContent ?? false,
+        onChangedHideHadis: (v) async {
+          await _userSettingsService
+              .setUserSettings(userSettings..hideHadisDailyContent = v);
+          _homeService.getUserSettings();
+        },
+        hideDua: userSettings.hideDuaDailyContent ?? false,
+        onChangedHideDua: (v) async {
+          await _userSettingsService
+              .setUserSettings(userSettings..hideDuaDailyContent = v);
+          _homeService.getUserSettings();
+        },
+        hideBabyNames: userSettings.hideErkekIsmiDailyContent ?? false,
+        onChangedHideBabyNames: (v) async {
+          await _userSettingsService.setUserSettings(userSettings
+            ..hideErkekIsmiDailyContent = v
+            ..hideKizIsmiDailyContent = v);
+          _homeService.getUserSettings();
+        },
       ),
     );
   }
