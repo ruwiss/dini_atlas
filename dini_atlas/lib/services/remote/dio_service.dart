@@ -16,6 +16,7 @@ class DioService {
     url, {
     DioMethod method = DioMethod.get,
     Object? data,
+    ResponseType responseType = ResponseType.json,
   }) async {
     final req = switch (method) {
       DioMethod.get => _dio.get,
@@ -29,13 +30,19 @@ class DioService {
     final Map<String, dynamic>? queryData =
         withArgs ? (data as Map<String, dynamic>?) : null;
 
+    final Map<String, dynamic> headers = {"token": ksToken};
+    if (responseType == ResponseType.bytes) {
+      headers['Connection'] = "Keep-Alive";
+    }
+
     try {
       return await req(
         url,
         data: postData,
         queryParameters: queryData,
         options: Options(
-          headers: {"token": ksToken},
+          headers: headers,
+          responseType: responseType,
         ),
       );
     } on DioException catch (e) {

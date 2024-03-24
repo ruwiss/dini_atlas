@@ -1,4 +1,5 @@
-import 'package:dini_atlas/models/daily_content.dart';
+import 'package:dini_atlas/extensions/string_extensions.dart';
+import 'package:dini_atlas/services/remote/daily_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
@@ -10,71 +11,87 @@ class DailyContentsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contents = viewModel.dailContents;
+    final contents = viewModel.contentsOfTime;
     if (contents == null) {
       return const SizedBox();
     } else {
       return Column(
         children: [
           verticalSpace(20),
-          _contentView(contents.ayet),
-          _contentView(contents.hadis),
-          _contentView(contents.dua),
+          _contentView(
+            metin: contents.ayet.metin,
+            kaynak: contents.ayet.kaynak,
+            type: DailyContentTypes.ayetler,
+          ),
+          _contentView(
+            metin: contents.hadis.metin,
+            kaynak: contents.hadis.kaynak,
+            type: DailyContentTypes.hadisler,
+          ),
+          _contentView(
+            metin: contents.dua,
+            type: DailyContentTypes.dualar,
+          ),
+          _contentView(
+            metin: contents.kizIsimleri,
+            type: DailyContentTypes.kizIsimleri,
+          ),
+          _contentView(
+            metin: contents.erkekIsimleri,
+            type: DailyContentTypes.erkekIsimleri,
+          ),
         ],
       );
     }
   }
 
-  Widget _contentView(DailyContent content) {
-    if (content.metin.trim().isEmpty) {
-      return const SizedBox();
-    } else {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        margin: const EdgeInsets.symmetric(vertical: 18),
-        decoration: BoxDecoration(
-          borderRadius: borderRadiusMedium,
-          color: kcBackgroundColor,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  switch (content.dailyContentType) {
-                    DailyContentType.ayet => "Günün Ayeti",
-                    DailyContentType.hadis => "Günün Hadisi",
-                    DailyContentType.dua => "Günün Duâsı",
-                  },
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: kcPrimaryColor,
-                  ),
+  Widget _contentView(
+      {required String metin,
+      String? kaynak,
+      required DailyContentTypes type}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      margin: const EdgeInsets.symmetric(vertical: 18),
+      decoration: BoxDecoration(
+        borderRadius: borderRadiusMedium,
+        color: kcBackgroundColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                type.whatIs,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: kcPrimaryColor,
                 ),
+              ),
+              if (kaynak case final String kaynak)
                 SizedBox(
                   width: 150,
                   child: Text(
-                    content.kaynak,
+                    kaynak,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.end,
                     style: const TextStyle(fontSize: 12),
                   ),
                 ),
-              ],
+            ],
+          ),
+          verticalSpaceTiny,
+          SelectableText(
+            metin.removeHtmlTags(),
+            style: const TextStyle(
+              color: kcPrimaryColorDark,
+              fontSize: 13,
             ),
-            verticalSpaceTiny,
-            SelectableText(
-              content.metin,
-              style: const TextStyle(
-                color: kcPrimaryColorDark,
-                fontSize: 13,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+          ),
+        ],
+      ),
+    );
   }
 }

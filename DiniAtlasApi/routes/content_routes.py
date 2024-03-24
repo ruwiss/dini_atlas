@@ -267,6 +267,9 @@ def dualar():
 def ay_goruntusu(img):
     return redirect(f"https://namazvakti.diyanet.gov.tr/images/{img}")
 
+@app.route("/daily-zip")
+def daily_zip():
+    return send_file("json/daily.zip")
 
 @app.route("/daily")
 def stories():
@@ -312,3 +315,4 @@ def user_feedback():
         os.remove(temp_image_path)
         
         return "OK"
+     

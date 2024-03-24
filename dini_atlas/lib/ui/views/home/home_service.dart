@@ -37,7 +37,7 @@ class HomeService with ListenableServiceMixin {
     );
   }
 
-  void calculatePrayerTime() async {
+  void calculatePrayerTime() {
     final now = DateTime.now();
     final currentPrayer = getTimesByDay(now);
 

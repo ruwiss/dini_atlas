@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:archive/archive_io.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/daily_content.dart';
@@ -11,18 +13,34 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum DailyContentTypes {
+  ayetler("daily/ayetler.json", "Vaktin Ayeti"),
+  dualar("daily/dualar.json", "Vaktin Duâsı"),
+  hadisler("daily/hadisler.json", "Vaktin Hadisi"),
+  erkekIsimleri("daily/erkek-isimleri.json", "Vaktin Erkek İsmi"),
+  kizIsimleri("daily/kiz-isimleri.json", "Vaktin Kız İsmi");
+
+  final String fileName;
+  final String whatIs;
+  const DailyContentTypes(this.fileName, this.whatIs);
+}
+
 class DailyService {
   final _dio = locator<DioService>();
 
   final String _dailyUrl = "/daily";
+  final String _dailyZipUrl = "/daily-zip";
+
   final String _storiesCacheKey = "storiesMarkAsSeen";
+  final String _dailyContentKey = "dailyContent";
 
   StoriesModel? storiesModel;
-  DailyContents? dailyContentsModel;
-  Future<void> getDaily() async {
+  ContentsOfTime? contentsOfTime;
+
+  Future<void> getStories() async {
     final connectivity = await Connectivity().checkConnectivity();
     if (connectivity == ConnectivityResult.none) return;
-    if (storiesModel != null && dailyContentsModel != null) return;
+    if (storiesModel != null) return;
 
     try {
       final response = await _dio.request(_dailyUrl);
@@ -30,7 +48,6 @@ class DailyService {
       if (response == null || response.statusCode != 200) return;
 
       storiesModel = StoriesModel.fromJson(response.data['stories']);
-      dailyContentsModel = DailyContents.fromJson(response.data['contents']);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -44,7 +61,7 @@ class DailyService {
     for (var i = currentIndex; i < storiesModel!.stories.length; i++) {
       storyItems.add(storiesModel!.stories[i]);
     }
-    return (storiesModel!.categories ,storyItems);
+    return (storiesModel!.categories, storyItems);
   }
 
   SharedPreferences? _prefs;
@@ -84,6 +101,128 @@ class DailyService {
       );
     } catch (e) {
       debugPrint("Paylaşırken sorun oluştu $e");
+    }
+  }
+
+  Future<void> getDailyContentsIfNotExists() async {
+    final prefs = await _getPrefs();
+    if (!prefs.containsKey(_dailyContentKey)) {
+      try {
+        // veriler yok, indirilmeli
+        final response = await _dio.request(
+          _dailyZipUrl,
+          responseType: ResponseType.bytes,
+        );
+        if (response == null) return;
+
+        final appTempDir = await getTemporaryDirectory();
+        // Temp klasörüne indirilen zip dosyası kaydedilir
+        final zipFile = File("${appTempDir.path}/dailyContents.zip");
+        await zipFile.writeAsBytes(response.data);
+
+        // Zip dosyası içerisindeki dosyalar documentDir'e çıkarılır
+        final appDocDir = await getApplicationDocumentsDirectory();
+
+        final zipBytes = File(zipFile.path).readAsBytesSync();
+        final archive =
+            ZipDecoder().decodeBytes(zipBytes, password: "V47R3JNT");
+
+        for (final file in archive) {
+          final filename = file.name;
+          File("${appDocDir.path}/daily/$filename")
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(file.content);
+        }
+        debugPrint("Daily Contents (Zip) sunucudan indirildi");
+        prefs.setString(
+            _dailyContentKey,
+            jsonEncode({
+              // 5 json için index değerleri
+              // Sırayla [ayet, hadis, dua, kizIsim, erkekIsim]
+              "index": [0, 0, 0, 0, 0],
+              "key": null,
+            }));
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+  }
+
+  Future<ContentsOfTime> getContentsOfTime(String currentTime) async {
+    try {
+      await getDailyContentsIfNotExists();
+      final prefs = await _getPrefs();
+
+      final String? prefsData = prefs.getString(_dailyContentKey);
+      if (prefsData == null) {
+        await Future.delayed(const Duration(seconds: 2));
+        return await getContentsOfTime(currentTime);
+      } else {
+        final Map<String, dynamic> prefsDataMap = jsonDecode(prefsData);
+        final String key = "${DateTime.now().day}_$currentTime";
+
+        if (prefsDataMap['key'] != key) {
+          prefsDataMap['key'] = key;
+          List<int> indexList = prefsDataMap['index'].cast<int>();
+          prefsDataMap['index'] = indexList.map((e) => e + 1).toList();
+        }
+
+        final appDocDir = await getApplicationDocumentsDirectory();
+        final ayetFile =
+            File("${appDocDir.path}/${DailyContentTypes.ayetler.fileName}");
+        final hadisFile =
+            File("${appDocDir.path}/${DailyContentTypes.hadisler.fileName}");
+        final duaFile =
+            File("${appDocDir.path}/${DailyContentTypes.dualar.fileName}");
+        final kizIsimleriFile =
+            File("${appDocDir.path}/${DailyContentTypes.kizIsimleri.fileName}");
+        final erkekIsimleriFile = File(
+            "${appDocDir.path}/${DailyContentTypes.erkekIsimleri.fileName}");
+
+        final ayetlerItem = jsonDecode(ayetFile.readAsStringSync()) as List;
+        final hadislerItem = jsonDecode(hadisFile.readAsStringSync()) as List;
+        final dualarItem = jsonDecode(duaFile.readAsStringSync()) as List;
+        final kizIsimlerItem =
+            jsonDecode(kizIsimleriFile.readAsStringSync()) as List;
+        final erkekIsimlerItem =
+            jsonDecode(erkekIsimleriFile.readAsStringSync()) as List;
+
+        if (ayetlerItem.length - 1 < prefsDataMap['index'][0]) {
+          prefsDataMap['index'][0] = 0;
+        }
+        if (hadislerItem.length - 1 < prefsDataMap['index'][1]) {
+          prefsDataMap['index'][1] = 0;
+        }
+        if (dualarItem.length - 1 < prefsDataMap['index'][2]) {
+          prefsDataMap['index'][2] = 0;
+        }
+        if (kizIsimlerItem.length - 1 < prefsDataMap['index'][3]) {
+          prefsDataMap['index'][3] = 0;
+        }
+        if (erkekIsimlerItem.length - 1 < prefsDataMap['index'][4]) {
+          prefsDataMap['index'][4] = 0;
+        }
+
+        final ayetContent =
+            AyetContent.fromJson(ayetlerItem[prefsDataMap['index'][0]]);
+        final hadisContent =
+            HadisContent.fromJson(hadislerItem[prefsDataMap['index'][1]]);
+        final duaContent = dualarItem[prefsDataMap['index'][2]];
+        final kizIsimleriContent = kizIsimlerItem[prefsDataMap['index'][3]];
+        final erkekIsimleriContent = erkekIsimlerItem[prefsDataMap['index'][4]];
+
+        await prefs.setString(_dailyContentKey, jsonEncode(prefsDataMap));
+
+        return ContentsOfTime(
+            ayet: ayetContent,
+            hadis: hadisContent,
+            dua: duaContent,
+            erkekIsimleri: erkekIsimleriContent,
+            kizIsimleri: kizIsimleriContent);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
     }
   }
 }

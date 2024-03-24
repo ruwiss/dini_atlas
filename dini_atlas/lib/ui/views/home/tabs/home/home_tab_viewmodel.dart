@@ -35,7 +35,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   final _userSettingsService = locator<UserSettingsService>();
   final _locationService = locator<LocationService>();
   final _navigationService = locator<NavigationService>();
-  final _storyService = locator<DailyService>();
+  final _dailyService = locator<DailyService>();
 
   String? currentMoonPhaseImage;
   Uint8List? currentMoonImage;
@@ -55,8 +55,9 @@ class HomeTabViewModel extends ReactiveViewModel {
   StoriesModel? _storiesModel;
   StoriesModel? get storiesModel => _storiesModel;
 
-  DailyContents? _dailyContents;
-  DailyContents? get dailContents => _dailyContents;
+  // DÜZENLE: Veriler burada tutulacak, şuan veri atanmıyor.
+  ContentsOfTime? _contentsOfTime;
+  ContentsOfTime? get contentsOfTime => _contentsOfTime;
 
   @override
   List<ListenableServiceMixin> get listenableServices => [homeService];
@@ -74,6 +75,9 @@ class HomeTabViewModel extends ReactiveViewModel {
     // Gelen namaz vakitlerini hazırla
     homeService.calculatePrayerTime();
 
+    // Günlük içerikleri getir
+    _getDailyContents();
+
     // Ayın seklini getir
     _getCurrentMoonPhaseImage();
 
@@ -84,7 +88,7 @@ class HomeTabViewModel extends ReactiveViewModel {
     setPrayerTimeIndex();
 
     // Günlük verileri getir
-    _getDaily();
+    _getStories();
 
     FlutterNativeSplash.remove();
   }
@@ -199,11 +203,10 @@ class HomeTabViewModel extends ReactiveViewModel {
     return items;
   }
 
-  void _getDaily() async {
-    if (_storiesModel == null || _dailyContents == null) {
-      await _storyService.getDaily();
-      _storiesModel = _storyService.storiesModel;
-      _dailyContents = _storyService.dailyContentsModel;
+  void _getStories() async {
+    if (_storiesModel == null) {
+      await _dailyService.getStories();
+      _storiesModel = _dailyService.storiesModel;
       notifyListeners();
       getStoryViews();
     }
@@ -215,11 +218,17 @@ class HomeTabViewModel extends ReactiveViewModel {
         final items = model.stories.singleWhere((e) => e.type == category.id);
         int percentage = items.stories.length;
         for (var story in items.stories) {
-          if (await _storyService.isStorySeen(story.media)) percentage--;
+          if (await _dailyService.isStorySeen(story.media)) percentage--;
         }
         category.seenPercentage = percentage / items.stories.length;
       }
       notifyListeners();
     }
+  }
+
+  void _getDailyContents() async {
+    _contentsOfTime =
+        await _dailyService.getContentsOfTime(currentPrayerType.name);
+    notifyListeners();
   }
 }

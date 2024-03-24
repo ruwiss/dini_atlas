@@ -1,26 +1,35 @@
-class DailyContents {
-  final DailyContent ayet;
-  final DailyContent hadis;
-  final DailyContent dua;
+class ContentsOfTime {
+  final AyetContent ayet;
+  final HadisContent hadis;
+  final String dua;
+  final String erkekIsimleri;
+  final String kizIsimleri;
 
-  DailyContents(this.ayet, this.hadis, this.dua);
-
-  DailyContents.fromJson(Map<String, dynamic> json)
-      : ayet = DailyContent.fromJson(json['ayet'], DailyContentType.ayet),
-        hadis = DailyContent.fromJson(json['hadis'], DailyContentType.hadis),
-        dua = DailyContent.fromJson(json['dua'], DailyContentType.dua);
+  ContentsOfTime({
+    required this.ayet,
+    required this.hadis,
+    required this.dua,
+    required this.erkekIsimleri,
+    required this.kizIsimleri,
+  });
 }
 
-enum DailyContentType { ayet, hadis, dua }
-
-class DailyContent {
-  final DailyContentType dailyContentType;
+class AyetContent {
   final String metin;
   final String kaynak;
-  DailyContent(this.metin, this.kaynak, this.dailyContentType);
+  AyetContent(this.metin, this.kaynak);
 
-  DailyContent.fromJson(Map<String, dynamic> json, DailyContentType type)
+  AyetContent.fromJson(Map<String, dynamic> json)
       : metin = json['metin'],
-        kaynak = json['kaynak'],
-        dailyContentType = type;
+        kaynak = json['kaynak'];
+}
+
+class HadisContent {
+  final String metin;
+  final String kaynak;
+  HadisContent(this.metin, this.kaynak);
+
+  HadisContent.fromJson(Map<String, dynamic> json)
+      : metin = json['turkce'],
+        kaynak = "Riyazus Salihin No: ${json['hadis_id']}";
 }

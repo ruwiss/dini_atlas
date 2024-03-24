@@ -86,4 +86,6 @@ extension StringTimeExtensions on String {
     }
     return result;
   }
+
+  String removeHtmlTags() => replaceAll(RegExp(r'<[^>]*>'), '');
 }
