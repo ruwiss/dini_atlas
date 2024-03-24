@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/models/daily_content.dart';
 import 'package:dini_atlas/models/story_model.dart';
+import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
 import 'package:dio/dio.dart';
@@ -148,7 +149,11 @@ class DailyService {
     }
   }
 
-  Future<ContentsOfTime> getContentsOfTime(String currentTime) async {
+  Future<ContentsOfTime> getContentsOfTime(String currentType) async {
+    // Güneş vakti için yeni içerik getirilmeyecek.
+    if (currentType == PrayerType.gunes.name) {
+      currentType = PrayerType.imsak.name;
+    }
     try {
       await getDailyContentsIfNotExists();
       final prefs = await _getPrefs();
@@ -156,10 +161,10 @@ class DailyService {
       final String? prefsData = prefs.getString(_dailyContentKey);
       if (prefsData == null) {
         await Future.delayed(const Duration(seconds: 2));
-        return await getContentsOfTime(currentTime);
+        return await getContentsOfTime(currentType);
       } else {
         final Map<String, dynamic> prefsDataMap = jsonDecode(prefsData);
-        final String key = "${DateTime.now().day}_$currentTime";
+        final String key = "${DateTime.now().day}_$currentType";
 
         if (prefsDataMap['key'] != key) {
           prefsDataMap['key'] = key;
