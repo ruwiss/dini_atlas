@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dini_atlas_panel/constants.dart';
 import 'package:dini_atlas_panel/extensions/string_extensions.dart';
-import 'package:dini_atlas_panel/models/daily_content.dart';
 import 'package:dini_atlas_panel/models/story_model.dart';
 import 'package:dini_atlas_panel/services/ftp_service.dart';
-import 'package:dini_atlas_panel/ui/views/editor/widgets/content_input.dart';
 import 'package:dini_atlas_panel/ui/views/media/media_view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -19,56 +17,22 @@ class EditorView extends StatefulWidget {
 }
 
 class _EditorViewState extends State<EditorView> {
-  (StoriesModel, DailyContents)? _data;
+  StoriesModel? _stories;
 
-  final _ayetCtrl = TextEditingController();
-  final _ayetKaynakCtrl = TextEditingController();
-  final _hadisCtrl = TextEditingController();
-  final _hadisKaynakCtrl = TextEditingController();
-  final _duaCtrl = TextEditingController();
-  final _duaKaynakCtrl = TextEditingController();
-
-  bool _inputValuesSet = false;
-
-  DailyContents? get _contents => _data?.$2;
-
-  StoriesModel? get _stories => _data?.$1;
   List<StoryCategory> get _categories => _stories?.categories ?? [];
 
   String? _errorText;
   bool _contentSaving = false;
 
-  void _setInputValues() {
-    if (_contents == null || _inputValuesSet || widget.isNew) return;
-
-    _inputValuesSet = true;
-    _ayetCtrl.text = _contents!.ayet.metin;
-    _ayetKaynakCtrl.text = _contents!.ayet.kaynak;
-    _hadisCtrl.text = _contents!.hadis.metin;
-    _hadisKaynakCtrl.text = _contents!.hadis.kaynak;
-    _duaCtrl.text = _contents!.dua.metin;
-    _duaKaynakCtrl.text = _contents!.dua.kaynak;
-  }
-
-  void _updateContents() {
-    _contents!.ayet.metin = _ayetCtrl.text;
-    _contents!.ayet.kaynak = _ayetKaynakCtrl.text;
-    _contents!.hadis.metin = _hadisCtrl.text;
-    _contents!.hadis.kaynak = _hadisKaynakCtrl.text;
-    _contents!.dua.metin = _duaCtrl.text;
-    _contents!.dua.kaynak = _duaKaynakCtrl.text;
-  }
-
   @override
   void initState() {
     if (!widget.isNew) {
       FTPService.instance.getJsonAsModel(widget.fileName).then((value) {
-        _data = value;
-        _setInputValues();
+        _stories = value;
         setState(() {});
       });
     } else {
-      _data = (StoriesModel.empty(), DailyContents.empty());
+      _stories = StoriesModel.empty();
     }
     super.initState();
   }
@@ -92,13 +56,13 @@ class _EditorViewState extends State<EditorView> {
                   )
                 : IconButton(
                     onPressed: () {
-                      _updateContents();
                       setState(() => _contentSaving = true);
                       FTPService.instance
-                          .saveJsonContent(fileName: widget.fileName, json: {
-                        "stories": _stories!.toJson(),
-                        "contents": _contents!.toJson(),
-                      }).then((value) {
+                          .saveJsonContent(
+                        fileName: widget.fileName,
+                        json: _stories!.toJson(),
+                      )
+                          .then((value) {
                         Navigator.of(context).pop();
                       });
                     },
@@ -110,7 +74,7 @@ class _EditorViewState extends State<EditorView> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Center(
-          child: !_inputValuesSet && !widget.isNew
+          child: !widget.isNew
               ? const CircularProgressIndicator()
               : _editorContent(),
         ),
@@ -126,44 +90,9 @@ class _EditorViewState extends State<EditorView> {
         children: [
           if (_errorText case final String error)
             Text(error, textAlign: TextAlign.center),
-          const TabBar(
-            tabs: [
-              Tab(text: "İçerik"),
-              Tab(text: "Hikaye"),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              children: [
-                _contentView(),
-                _storyView(),
-              ],
-            ),
-          ),
+          Expanded(child: _storyView()),
         ],
       ),
-    );
-  }
-
-  Widget _contentView() {
-    return ListView(
-      children: [
-        ContentInput(
-          name: "Günün Ayeti",
-          metinCtrl: _ayetCtrl,
-          kaynakCtrl: _ayetKaynakCtrl,
-        ),
-        ContentInput(
-          name: "Günün Hadisi",
-          metinCtrl: _hadisCtrl,
-          kaynakCtrl: _hadisKaynakCtrl,
-        ),
-        ContentInput(
-          name: "Günün Duası",
-          metinCtrl: _duaCtrl,
-          kaynakCtrl: _duaKaynakCtrl,
-        ),
-      ],
     );
   }
 

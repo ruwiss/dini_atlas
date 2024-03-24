@@ -2,15 +2,17 @@ class ContentsOfTime {
   final AyetContent ayet;
   final HadisContent hadis;
   final String dua;
-  final String erkekIsimleri;
-  final String kizIsimleri;
+  final String erkekIsim;
+  final String kizIsim;
+  final SoruCevapContent soruCevap;
 
   ContentsOfTime({
     required this.ayet,
     required this.hadis,
     required this.dua,
-    required this.erkekIsimleri,
-    required this.kizIsimleri,
+    required this.erkekIsim,
+    required this.kizIsim,
+    required this.soruCevap,
   });
 }
 
@@ -32,4 +34,15 @@ class HadisContent {
   HadisContent.fromJson(Map<String, dynamic> json)
       : metin = json['turkce'],
         kaynak = "Riyazus Salihin No: ${json['hadis_id']}";
+}
+
+class SoruCevapContent {
+  final String soru;
+  final String cevap;
+
+  SoruCevapContent(this.soru, this.cevap);
+
+  SoruCevapContent.fromJson(Map<String, dynamic> json)
+      : soru = json['soru'],
+        cevap = json['cevap'];
 }

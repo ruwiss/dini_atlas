@@ -20,6 +20,8 @@ class HomeSettingsDialog extends StatelessWidget {
     this.onChangedHideDua,
     required this.hideBabyNames,
     this.onChangedHideBabyNames,
+    required this.hideSoruCevap,
+    this.onChangedHideSoruCevap,
   });
   final Function(bool v)? onChangedSilentMode;
   final bool silentEnabled;
@@ -33,6 +35,8 @@ class HomeSettingsDialog extends StatelessWidget {
   final bool hideDua;
   final Function(bool v)? onChangedHideBabyNames;
   final bool hideBabyNames;
+  final Function(bool v)? onChangedHideSoruCevap;
+  final bool hideSoruCevap;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +90,14 @@ class HomeSettingsDialog extends StatelessWidget {
           title: "Vaktin İsimlerini Gizle",
           svgIcon: kiEye,
           onChanged: onChangedHideBabyNames,
+          showDivider: true,
+        ),
+        verticalSpace(20),
+        SettingsBaseDialogItem(
+          checkboxValue: hideSoruCevap,
+          title: "Vaktin Sorularını Gizle",
+          svgIcon: kiEye,
+          onChanged: onChangedHideSoruCevap,
           showDivider: false,
         ),
         verticalSpace(20),

@@ -59,46 +59,51 @@ const UserSettingsSchema = CollectionSchema(
       name: r'hideKizIsmiDailyContent',
       type: IsarType.bool,
     ),
-    r'increaseAyahFontSize': PropertySchema(
+    r'hideSoruCevapDailyContent': PropertySchema(
       id: 8,
+      name: r'hideSoruCevapDailyContent',
+      type: IsarType.bool,
+    ),
+    r'increaseAyahFontSize': PropertySchema(
+      id: 9,
       name: r'increaseAyahFontSize',
       type: IsarType.long,
     ),
     r'jsonString': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'jsonString',
       type: IsarType.string,
     ),
     r'quranReciterId': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'quranReciterId',
       type: IsarType.long,
     ),
     r'savedLastAyah': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'savedLastAyah',
       type: IsarType.object,
       target: r'SavedLastAyah',
     ),
     r'silentModeEnable': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'silentModeEnable',
       type: IsarType.bool,
     ),
     r'state': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'state',
       type: IsarType.object,
       target: r'StateModel',
     ),
     r'suraSetting': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'suraSetting',
       type: IsarType.object,
       target: r'SuraSetting',
     ),
     r'userMail': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'userMail',
       type: IsarType.string,
     )
@@ -191,29 +196,30 @@ void _userSettingsSerialize(
   writer.writeBool(offsets[5], object.hideErkekIsmiDailyContent);
   writer.writeBool(offsets[6], object.hideHadisDailyContent);
   writer.writeBool(offsets[7], object.hideKizIsmiDailyContent);
-  writer.writeLong(offsets[8], object.increaseAyahFontSize);
-  writer.writeString(offsets[9], object.jsonString);
-  writer.writeLong(offsets[10], object.quranReciterId);
+  writer.writeBool(offsets[8], object.hideSoruCevapDailyContent);
+  writer.writeLong(offsets[9], object.increaseAyahFontSize);
+  writer.writeString(offsets[10], object.jsonString);
+  writer.writeLong(offsets[11], object.quranReciterId);
   writer.writeObject<SavedLastAyah>(
-    offsets[11],
+    offsets[12],
     allOffsets,
     SavedLastAyahSchema.serialize,
     object.savedLastAyah,
   );
-  writer.writeBool(offsets[12], object.silentModeEnable);
+  writer.writeBool(offsets[13], object.silentModeEnable);
   writer.writeObject<StateModel>(
-    offsets[13],
+    offsets[14],
     allOffsets,
     StateModelSchema.serialize,
     object.state,
   );
   writer.writeObject<SuraSetting>(
-    offsets[14],
+    offsets[15],
     allOffsets,
     SuraSettingSchema.serialize,
     object.suraSetting,
   );
-  writer.writeString(offsets[15], object.userMail);
+  writer.writeString(offsets[16], object.userMail);
 }
 
 UserSettings _userSettingsDeserialize(
@@ -239,29 +245,30 @@ UserSettings _userSettingsDeserialize(
   object.hideErkekIsmiDailyContent = reader.readBoolOrNull(offsets[5]);
   object.hideHadisDailyContent = reader.readBoolOrNull(offsets[6]);
   object.hideKizIsmiDailyContent = reader.readBoolOrNull(offsets[7]);
+  object.hideSoruCevapDailyContent = reader.readBoolOrNull(offsets[8]);
   object.id = id;
-  object.increaseAyahFontSize = reader.readLong(offsets[8]);
-  object.jsonString = reader.readString(offsets[9]);
-  object.quranReciterId = reader.readLong(offsets[10]);
+  object.increaseAyahFontSize = reader.readLong(offsets[9]);
+  object.jsonString = reader.readString(offsets[10]);
+  object.quranReciterId = reader.readLong(offsets[11]);
   object.savedLastAyah = reader.readObjectOrNull<SavedLastAyah>(
-        offsets[11],
+        offsets[12],
         SavedLastAyahSchema.deserialize,
         allOffsets,
       ) ??
       SavedLastAyah();
-  object.silentModeEnable = reader.readBool(offsets[12]);
+  object.silentModeEnable = reader.readBool(offsets[13]);
   object.state = reader.readObjectOrNull<StateModel>(
-    offsets[13],
+    offsets[14],
     StateModelSchema.deserialize,
     allOffsets,
   );
   object.suraSetting = reader.readObjectOrNull<SuraSetting>(
-        offsets[14],
+        offsets[15],
         SuraSettingSchema.deserialize,
         allOffsets,
       ) ??
       SuraSetting();
-  object.userMail = reader.readStringOrNull(offsets[15]);
+  object.userMail = reader.readStringOrNull(offsets[16]);
   return object;
 }
 
@@ -297,34 +304,36 @@ P _userSettingsDeserializeProp<P>(
     case 7:
       return (reader.readBoolOrNull(offset)) as P;
     case 8:
-      return (reader.readLong(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 9:
-      return (reader.readString(offset)) as P;
-    case 10:
       return (reader.readLong(offset)) as P;
+    case 10:
+      return (reader.readString(offset)) as P;
     case 11:
+      return (reader.readLong(offset)) as P;
+    case 12:
       return (reader.readObjectOrNull<SavedLastAyah>(
             offset,
             SavedLastAyahSchema.deserialize,
             allOffsets,
           ) ??
           SavedLastAyah()) as P;
-    case 12:
-      return (reader.readBool(offset)) as P;
     case 13:
+      return (reader.readBool(offset)) as P;
+    case 14:
       return (reader.readObjectOrNull<StateModel>(
         offset,
         StateModelSchema.deserialize,
         allOffsets,
       )) as P;
-    case 14:
+    case 15:
       return (reader.readObjectOrNull<SuraSetting>(
             offset,
             SuraSettingSchema.deserialize,
             allOffsets,
           ) ??
           SuraSetting()) as P;
-    case 15:
+    case 16:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -605,6 +614,34 @@ extension UserSettingsQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'hideKizIsmiDailyContent',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideSoruCevapDailyContentIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'hideSoruCevapDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideSoruCevapDailyContentIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'hideSoruCevapDailyContent',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterFilterCondition>
+      hideSoruCevapDailyContentEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hideSoruCevapDailyContent',
         value: value,
       ));
     });
@@ -1220,6 +1257,20 @@ extension UserSettingsQuerySortBy
   }
 
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideSoruCevapDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideSoruCevapDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      sortByHideSoruCevapDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideSoruCevapDailyContent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
       sortByIncreaseAyahFontSize() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'increaseAyahFontSize', Sort.asc);
@@ -1371,6 +1422,20 @@ extension UserSettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideSoruCevapDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideSoruCevapDailyContent', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QAfterSortBy>
+      thenByHideSoruCevapDailyContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hideSoruCevapDailyContent', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserSettings, UserSettings, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1495,6 +1560,13 @@ extension UserSettingsQueryWhereDistinct
   }
 
   QueryBuilder<UserSettings, UserSettings, QDistinct>
+      distinctByHideSoruCevapDailyContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hideSoruCevapDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, UserSettings, QDistinct>
       distinctByIncreaseAyahFontSize() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'increaseAyahFontSize');
@@ -1588,6 +1660,13 @@ extension UserSettingsQueryProperty
       hideKizIsmiDailyContentProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hideKizIsmiDailyContent');
+    });
+  }
+
+  QueryBuilder<UserSettings, bool?, QQueryOperations>
+      hideSoruCevapDailyContentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hideSoruCevapDailyContent');
     });
   }
 

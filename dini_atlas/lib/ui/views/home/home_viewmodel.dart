@@ -140,6 +140,12 @@ class HomeViewModel extends IndexTrackingViewModel {
             ..hideKizIsmiDailyContent = v);
           _homeService.getUserSettings();
         },
+        hideSoruCevap: userSettings.hideSoruCevapDailyContent ?? false,
+        onChangedHideSoruCevap: (v) async {
+          await _userSettingsService
+              .setUserSettings(userSettings..hideSoruCevapDailyContent = v);
+          _homeService.getUserSettings();
+        },
       ),
     );
   }

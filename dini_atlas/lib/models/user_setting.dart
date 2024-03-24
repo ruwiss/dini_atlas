@@ -72,6 +72,9 @@ class UserSettings {
 
   /// Erkek isimleri görünürlüğünü kapat
   bool? hideErkekIsmiDailyContent;
+
+  /// Soru cevap görünürlüğünü kapat
+  bool? hideSoruCevapDailyContent;
 }
 
 @collection

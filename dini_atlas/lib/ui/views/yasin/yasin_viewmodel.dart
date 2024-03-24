@@ -8,6 +8,7 @@ import '../../../services/remote/google/admob_service.dart';
 class YasinViewModel extends BaseViewModel {
   final controller = GlobalKey<PageFlipWidgetState>();
 
+
   final _interstitialAdService =
       AdmobInterstitialAdService(adUnitId: ksAdmobInterstitital3);
 

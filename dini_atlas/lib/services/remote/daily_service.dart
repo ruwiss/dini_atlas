@@ -19,7 +19,8 @@ enum DailyContentTypes {
   dualar("daily/dualar.json", "Vaktin Duâsı"),
   hadisler("daily/hadisler.json", "Vaktin Hadisi"),
   erkekIsimleri("daily/erkek-isimleri.json", "Vaktin Bebek İsimleri"),
-  kizIsimleri("daily/kiz-isimleri.json", "Vaktin Bebek İsimleri");
+  kizIsimleri("daily/kiz-isimleri.json", "Vaktin Bebek İsimleri"),
+  soruCevap("daily/soru-cevaplar.json", "Vaktin Sorusu");
 
   final String fileName;
   final String whatIs;
@@ -138,9 +139,9 @@ class DailyService {
         prefs.setString(
             _dailyContentKey,
             jsonEncode({
-              // 5 json için index değerleri
-              // Sırayla [ayet, hadis, dua, kizIsim, erkekIsim]
-              "index": [0, 0, 0, 0, 0],
+              // 6 json için index değerleri
+              // Sırayla [ayet, hadis, dua, kizIsim, erkekIsim, soruCevap]
+              "index": [0, 0, 0, 0, 0, 0],
               "key": null,
             }));
       } catch (e) {
@@ -183,6 +184,8 @@ class DailyService {
             File("${appDocDir.path}/${DailyContentTypes.kizIsimleri.fileName}");
         final erkekIsimleriFile = File(
             "${appDocDir.path}/${DailyContentTypes.erkekIsimleri.fileName}");
+        final soruCevaplarFile =
+            File("${appDocDir.path}/${DailyContentTypes.soruCevap.fileName}");
 
         final ayetlerItem = jsonDecode(ayetFile.readAsStringSync()) as List;
         final hadislerItem = jsonDecode(hadisFile.readAsStringSync()) as List;
@@ -191,6 +194,8 @@ class DailyService {
             jsonDecode(kizIsimleriFile.readAsStringSync()) as List;
         final erkekIsimlerItem =
             jsonDecode(erkekIsimleriFile.readAsStringSync()) as List;
+        final soruCevapItem =
+            jsonDecode(soruCevaplarFile.readAsStringSync()) as List;
 
         if (ayetlerItem.length - 1 < prefsDataMap['index'][0]) {
           prefsDataMap['index'][0] = 0;
@@ -207,6 +212,9 @@ class DailyService {
         if (erkekIsimlerItem.length - 1 < prefsDataMap['index'][4]) {
           prefsDataMap['index'][4] = 0;
         }
+        if (soruCevapItem.length - 1 < prefsDataMap['index'][5]) {
+          prefsDataMap['index'][5] = 0;
+        }
 
         final ayetContent =
             AyetContent.fromJson(ayetlerItem[prefsDataMap['index'][0]]);
@@ -215,15 +223,19 @@ class DailyService {
         final duaContent = dualarItem[prefsDataMap['index'][2]];
         final kizIsimleriContent = kizIsimlerItem[prefsDataMap['index'][3]];
         final erkekIsimleriContent = erkekIsimlerItem[prefsDataMap['index'][4]];
+        final soruCevapContent =
+            SoruCevapContent.fromJson(soruCevapItem[prefsDataMap['index'][5]]);
 
         await prefs.setString(_dailyContentKey, jsonEncode(prefsDataMap));
 
         return ContentsOfTime(
-            ayet: ayetContent,
-            hadis: hadisContent,
-            dua: duaContent,
-            erkekIsimleri: erkekIsimleriContent,
-            kizIsimleri: kizIsimleriContent);
+          ayet: ayetContent,
+          hadis: hadisContent,
+          dua: duaContent,
+          erkekIsim: erkekIsimleriContent,
+          kizIsim: kizIsimleriContent,
+          soruCevap: soruCevapContent,
+        );
       }
     } catch (e) {
       debugPrint(e.toString());

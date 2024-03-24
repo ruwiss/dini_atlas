@@ -35,8 +35,16 @@ class DailyContentsWidget extends StatelessWidget {
               metin: contents.dua,
               type: DailyContentTypes.dualar,
             ),
-          if (!viewModel.hideBabyNamesContent)  _contentView(
-              metin: "Kız ismi: ${contents.kizIsimleri}\nErkek ismi: ${contents.erkekIsimleri}",
+          if (!viewModel.hideSoruCevapContent)
+            _contentView(
+              title: contents.soruCevap.soru,
+              metin: contents.soruCevap.cevap,
+              type: DailyContentTypes.dualar,
+            ),
+          if (!viewModel.hideBabyNamesContent)
+            _contentView(
+              metin:
+                  "Kız ismi: ${contents.kizIsim}\nErkek ismi: ${contents.erkekIsim}",
               type: DailyContentTypes.erkekIsimleri,
             ),
         ],
@@ -47,6 +55,7 @@ class DailyContentsWidget extends StatelessWidget {
   Widget _contentView(
       {required String metin,
       String? kaynak,
+      String? title,
       required DailyContentTypes type}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -61,12 +70,14 @@ class DailyContentsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                type.whatIs,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: kcPrimaryColor,
+              Flexible(
+                child: Text(
+                  title ?? type.whatIs,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: kcPrimaryColor,
+                  ),
                 ),
               ),
               if (kaynak case final String kaynak)

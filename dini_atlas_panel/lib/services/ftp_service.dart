@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dini_atlas_panel/extensions/datetime_extensions.dart';
-import 'package:dini_atlas_panel/models/daily_content.dart';
 import 'package:dini_atlas_panel/models/story_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ftpconnect/ftpconnect.dart';
@@ -37,7 +35,7 @@ class FTPService {
     }
   }
 
-  Future<(StoriesModel, DailyContents)> getJsonAsModel(String fileName) async {
+  Future<StoriesModel?> getJsonAsModel(String fileName) async {
     try {
       final tempDir = await getTemporaryDirectory();
       final fFile = File('${tempDir.path}/$fileName');
@@ -45,8 +43,7 @@ class FTPService {
       await ftpConnect.downloadFileWithRetry(fileName, fFile);
       final jsonObj = jsonDecode(await fFile.readAsString());
       final stories = StoriesModel.fromJson(jsonObj['stories']);
-      final contents = DailyContents.fromJson(jsonObj['contents']);
-      return (stories, contents);
+      return stories;
     } catch (e) {
       await _connect();
       return await getJsonAsModel(fileName);

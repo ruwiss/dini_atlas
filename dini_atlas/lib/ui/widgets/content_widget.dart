@@ -77,7 +77,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
       _previewKey = GlobalKey();
       _setOnShare(true);
       final view = (suraKey!.currentWidget);
-      locator<BottomSheetService>().showCustomSheet(
+      await locator<BottomSheetService>().showCustomSheet(
         title: "Resminiz Hazır",
         variant: BottomSheetType.image,
         data: {
@@ -100,6 +100,7 @@ class _QuranSuraItemState extends State<ContentWidget> {
         },
         useRootNavigator: true,
       );
+      _setOnShare(false);
     } catch (e) {
       _setOnShare(false);
     }

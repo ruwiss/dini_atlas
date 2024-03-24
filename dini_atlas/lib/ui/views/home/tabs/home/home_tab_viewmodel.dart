@@ -67,6 +67,9 @@ class HomeTabViewModel extends ReactiveViewModel {
   bool get hideDuaContent =>
       homeService.userSettings?.hideDuaDailyContent ?? false;
 
+   bool get hideSoruCevapContent =>
+      homeService.userSettings?.hideSoruCevapDailyContent ?? false;
+
   bool get hideBabyNamesContent =>
       homeService.userSettings?.hideErkekIsmiDailyContent ?? false;
 
