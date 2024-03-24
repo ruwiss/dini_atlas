@@ -326,7 +326,7 @@ def user_feedback():
         token = "6421456783:AAE_N4mD1sTL-YuhiqKOF9EC8gz9z2tnWAg"
         chat_id = "-1002033217313"
 
-        temp_image_path = os.path.join(TEMP_FOLDER, f"temp_image.png_{len(text)}")
+        temp_image_path = os.path.join(TEMP_FOLDER, f"temp_image{len(text)}.png")
         image_file.save(temp_image_path)
 
         url = f"https://api.telegram.org/bot{token}/sendPhoto"
