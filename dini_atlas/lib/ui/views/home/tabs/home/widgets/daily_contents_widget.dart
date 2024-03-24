@@ -1,9 +1,11 @@
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/services/remote/daily_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_colors.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DailyContentsWidget extends StatelessWidget {
   const DailyContentsWidget({super.key, required this.viewModel});
@@ -58,12 +60,18 @@ class DailyContentsWidget extends StatelessWidget {
       String? title,
       required DailyContentTypes type}) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      margin: const EdgeInsets.symmetric(vertical: 18),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 14),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        borderRadius: borderRadiusMedium,
-        color: kcBackgroundColor,
-      ),
+          borderRadius: borderRadiusMedium,
+          color: kcBackgroundColor,
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(0, 1),
+              blurRadius: 2,
+              color: kcGrayColor.withOpacity(.6),
+            ),
+          ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,6 +106,20 @@ class DailyContentsWidget extends StatelessWidget {
             style: const TextStyle(
               color: kcPrimaryColorDark,
               fontSize: 13,
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {
+                Share.share(
+                  "${title ?? type.whatIs}\n\n${metin.removeHtmlTags()}\n\n${kaynak != null ? '$kaynak\n\n' : ''}Dini Atlas uygulamasından: $ksAppUrl",
+                );
+              },
+              child: const Text(
+                "Paylaş",
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+              ),
             ),
           ),
         ],
