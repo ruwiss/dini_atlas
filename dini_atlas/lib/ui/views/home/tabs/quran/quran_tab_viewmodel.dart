@@ -7,6 +7,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -94,6 +95,7 @@ class QuranTabViewModel extends IndexTrackingViewModel {
     final InAppReview inAppReview = InAppReview.instance;
 
     if (await inAppReview.isAvailable()) {
+      FirebaseAnalytics.instance.logEvent(name: "show_in_app_review");
       inAppReview.requestReview();
     }
   }
@@ -115,6 +117,8 @@ class QuranTabViewModel extends IndexTrackingViewModel {
 
   void onHeaderTap() {
     final sura = suraList!.singleWhere((e) => e.suraId == lastReadAyah.suraId);
+    FirebaseAnalytics.instance.logScreenView(
+        screenName: "quran_normal", screenClass: "quran_content");
     _navigationService.navigateToQuranView(
       currentTab: QuranTabs.sura,
       sura: sura,

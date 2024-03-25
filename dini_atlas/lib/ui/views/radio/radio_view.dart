@@ -53,7 +53,7 @@ class RadioView extends StackedView<RadioViewModel> {
                               isPlayerLoading:
                                   viewModel.busy(viewModel.currentPlaying) &&
                                       viewModel.currentPlaying == radio.url,
-                              onPlay: () => viewModel.playRadio(radio.url),
+                              onPlay: () => viewModel.playRadio(radio),
                               onPause: viewModel.pauseRadio,
                             ),
                           ],

@@ -10,11 +10,8 @@ class KazaService {
 
   Future<Kaza?> getUserKaza(String mail) async {
     final response = await _dio.request(_kazaUrl, data: {"mail": mail});
-
     if (response == null || response.statusCode != 200) return null;
-
     final data = response.data['data'] as Map<String, dynamic>;
-
     if (data.isEmpty) return null;
 
     return Kaza.fromJson(data);

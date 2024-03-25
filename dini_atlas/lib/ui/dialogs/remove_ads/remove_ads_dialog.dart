@@ -1,6 +1,7 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -71,6 +72,8 @@ class RemoveAdsDialog extends StackedView<RemoveAdsDialogModel> {
             _actionButton(
               text: 'Devam et',
               onTap: () {
+                FirebaseAnalytics.instance
+                    .logEvent(name: "remove_ads_dialog_tap");
                 Navigator.of(context, rootNavigator: true).pop();
                 locator<NavigationService>().navigateToAboutView(
                   showSubscriptionView: true,

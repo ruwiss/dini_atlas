@@ -6,6 +6,7 @@ import 'package:dini_atlas/services/remote/daily_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -44,6 +45,9 @@ class StoryCircleViews extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
         onTap: () async {
+          FirebaseAnalytics.instance.logSelectContent(
+              contentType: "story_category", itemId: category.name);
+
           final (categories, stories) =
               await locator<DailyService>().filterStories(category.id);
           await locator<NavigationService>()

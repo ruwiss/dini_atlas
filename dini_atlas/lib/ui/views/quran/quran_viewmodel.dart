@@ -16,6 +16,7 @@ import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_quran_dialog.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
@@ -323,6 +324,8 @@ class QuranViewModel extends BaseViewModel {
         currentReciterId: _userSettings.quranReciterId,
         currentFontSizeIncreaseValue: _userSettings.increaseAyahFontSize,
         onSelectedReciter: (reciter) {
+          FirebaseAnalytics.instance.logSelectContent(
+              contentType: "reciter", itemId: reciter.id.toString());
           _userSettingsService
               .setQuranReciter(reciter.id)
               .then((value) => _userSettings = value);

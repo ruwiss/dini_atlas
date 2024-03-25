@@ -60,6 +60,8 @@ class _SettingsNotiDialogState extends State<SettingsNotiDialog> {
                 SettingsBaseDialogItem(
                     checkboxValue: _prayerNotiSettings.voiceWarningEnable,
                     title: "Sesli Uyarı",
+                    subtitle:
+                        "Bildirimler veya ses çalmıyorsa, cihazınız bu uygulamanın arka planda çalışmasını engelliyor olabilir.",
                     svgIcon: kiEar,
                     onChanged: (value) {
                       _prayerNotiSettings.voiceWarningEnable = value;

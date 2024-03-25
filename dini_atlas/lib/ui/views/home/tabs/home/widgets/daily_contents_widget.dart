@@ -1,6 +1,5 @@
 import 'package:dini_atlas/extensions/string_extensions.dart';
 import 'package:dini_atlas/services/remote/daily_service.dart';
-import 'package:dini_atlas/ui/common/constants/app_colors.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab_viewmodel.dart';
@@ -67,9 +66,9 @@ class DailyContentsWidget extends StatelessWidget {
           color: kcBackgroundColor,
           boxShadow: [
             BoxShadow(
-              offset: const Offset(0, 1),
-              blurRadius: 2,
-              color: kcGrayColor.withOpacity(.6),
+              offset: const Offset(0, .4),
+              blurRadius: .6,
+              color: kcGrayColor.withOpacity(.5),
             ),
           ]),
       child: Column(

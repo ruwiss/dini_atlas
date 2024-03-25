@@ -20,20 +20,6 @@ class CategoryItem {
 
 final List<CategoryItem> categoryItems = [
   CategoryItem(
-    id: "pusula",
-    name: "Pusula",
-    image: kiCompass,
-    color: kcListCardColors[0],
-    route: Routes.compassView,
-  ),
-  CategoryItem(
-    id: "favoriler",
-    name: "Favoriler",
-    image: kiFolder,
-    color: kcListCardColors[1],
-    route: Routes.favouritesView,
-  ),
-  CategoryItem(
     id: "kaza",
     name: "Kaza\nÇetelesi",
     image: kiKaza,
@@ -46,6 +32,20 @@ final List<CategoryItem> categoryItems = [
     image: kiRosary,
     color: kcListCardColors[3],
     route: Routes.rosaryView,
+  ),
+  CategoryItem(
+    id: "pusula",
+    name: "Pusula",
+    image: kiCompass,
+    color: kcListCardColors[0],
+    route: Routes.compassView,
+  ),
+  CategoryItem(
+    id: "favoriler",
+    name: "Favoriler",
+    image: kiFolder,
+    color: kcListCardColors[1],
+    route: Routes.favouritesView,
   ),
   CategoryItem(
     id: "dini_gunler",
@@ -62,6 +62,13 @@ final List<CategoryItem> categoryItems = [
     route: Routes.fortyHadithsView,
   ),
   CategoryItem(
+    id: "hadisler",
+    name: "Riyâzu's\nSâlihîn",
+    image: kiPaper,
+    color: kcListCardColors[8],
+    route: Routes.riyazusSalihinView,
+  ),
+  CategoryItem(
     id: "yasin",
     name: "Yasin-i\nŞerif",
     image: kiPaper,
@@ -76,25 +83,11 @@ final List<CategoryItem> categoryItems = [
     route: Routes.radioView,
   ),
   CategoryItem(
-    id: "hadisler",
-    name: "Riyâzu's\nSâlihîn",
-    image: kiPaper,
-    color: kcListCardColors[8],
-    route: Routes.riyazusSalihinView,
-  ),
-  CategoryItem(
     id: "esmaul_husna",
     name: "Esma’ül\nHüsna",
     image: kiEsmaulHusna,
     color: kcListCardColors[9],
     route: Routes.esmaulHusnaView,
-  ),
-  CategoryItem(
-    id: "dualar",
-    name: "Duâlar",
-    image: kiPray,
-    color: kcListCardColors[10],
-    route: Routes.dualarView,
   ),
   CategoryItem(
     id: "cuz",

@@ -7,6 +7,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/services/remote/kaza_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
@@ -61,6 +62,8 @@ class KazaViewModel extends FormViewModel {
       setError("Mail hesabınız seçilirken sorun oluştu");
       return;
     } else {
+      FirebaseAnalytics.instance
+          .setUserProperty(name: 'email', value: emailResult.email);
       _userMail = emailResult.email;
       _userSettings = await _userSettingsService.setUserMail(_userMail!);
       notifyListeners();

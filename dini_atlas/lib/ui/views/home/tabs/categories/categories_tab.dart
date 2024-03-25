@@ -3,6 +3,7 @@ import 'package:dini_atlas/app/app.router.dart';
 import 'package:dini_atlas/services/remote/google/firebase_remote_config_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/home/tabs/categories/categories.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -34,6 +35,8 @@ class _CategoriesTabState extends State<CategoriesTab> {
             return InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
+                FirebaseAnalytics.instance.logScreenView(
+                    screenName: item.id, screenClass: "category");
                 if (item.id == "cuz") {
                   locator<NavigationService>().navigateToWebviewView(
                     title: item.name,

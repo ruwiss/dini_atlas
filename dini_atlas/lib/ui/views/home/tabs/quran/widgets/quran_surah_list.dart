@@ -5,6 +5,7 @@ import 'package:dini_atlas/models/user_setting.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:dini_atlas/ui/views/home/tabs/quran/quran_tab_viewmodel.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -51,6 +52,8 @@ class QuranSurahList extends StatelessWidget {
         viewModel.showInterstitalAl();
         final navService = locator<NavigationService>();
         if (currentTab != QuranTabs.traceable) {
+          FirebaseAnalytics.instance.logScreenView(
+              screenName: "quran_normal", screenClass: "quran_content");
           navService
               .navigateToQuranView(currentTab: currentTab, sura: item)
               .then((_) {
@@ -59,6 +62,8 @@ class QuranSurahList extends StatelessWidget {
             viewModel.getUserSettings();
           });
         } else {
+          FirebaseAnalytics.instance.logScreenView(
+              screenName: "quran_traceable", screenClass: "quran_content");
           // Takipli kuran ekranına git
           navService.navigateToTraceableQuranView(sura: item).then((_) {
             viewModel.loadInterstitalAd();

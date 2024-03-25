@@ -4,6 +4,7 @@ import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/views/radio/radio_service.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 
@@ -32,12 +33,15 @@ class RadioViewModel extends BaseViewModel {
     result.fold((list) => _radios = list, (err) => setError(err.message));
   }
 
-  void playRadio(String url) async {
-    _currentPlaying = url;
+  void playRadio(RadioModel radio) async {
+    FirebaseAnalytics.instance
+        .logSelectContent(contentType: "radio", itemId: radio.name);
+
+    _currentPlaying = radio.url;
     setBusyForObject(currentPlaying, true);
     if (_player.state == PlayerState.playing) await _player.stop();
     try {
-      await _player.play(UrlSource(url.trim()));
+      await _player.play(UrlSource(radio.url.trim()));
     } catch (e) {
       setErrorForObject(_currentPlaying, true);
     }

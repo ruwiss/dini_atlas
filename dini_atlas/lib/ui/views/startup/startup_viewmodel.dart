@@ -8,6 +8,7 @@ import 'package:dini_atlas/services/local/network_checker.dart';
 import 'package:dini_atlas/services/local/prayer_times_service.dart';
 import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/fetch_times_service.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked/stacked.dart';
 import 'package:dini_atlas/app/app.locator.dart';
@@ -36,9 +37,7 @@ class StartupViewModel extends BaseViewModel {
     await result.fold((l) async {
       await _userSettingsService.setUserLocationSettings(location: l);
       final fetchResult = await _fetchTimesService.fetchTimes();
-      fetchResult.fold((l) {
-        _navigationService.replaceWithHomeView();
-      }, (r) {
+      fetchResult.fold((l) => _navigateToHomeView(true), (r) {
         manuelFetchLocationCountry(location: l);
       });
     }, (r) async => setError(r));
@@ -106,9 +105,13 @@ class StartupViewModel extends BaseViewModel {
         location: _manuelSelectUserLocation);
     final fetchResult = await _fetchTimesService.fetchTimes();
     setBusy(false);
-    fetchResult.fold((l) {
-      _navigationService.replaceWithHomeView();
-    }, (r) {});
+    fetchResult.fold((l) => _navigateToHomeView(false), (r) {});
+  }
+
+  void _navigateToHomeView(bool autoLocation) {
+    _navigationService.replaceWithHomeView();
+    FirebaseAnalytics.instance.logEvent(
+        name: "location_success", parameters: {"autoLocation": autoLocation});
   }
 
   // Eğer veritabanına daha önce vakitler kayıt edildiyse, ana sayfaya git

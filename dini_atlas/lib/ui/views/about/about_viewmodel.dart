@@ -1,5 +1,6 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/services/remote/google/in_app_purchase_service.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -34,6 +35,7 @@ class AboutViewModel extends IndexTrackingViewModel {
     _showSubscriptionView = true;
     notifyListeners();
     runBusyFuture(_iapService.fetchOffers());
+    FirebaseAnalytics.instance.logScreenView(screenName: 'subscription');
   }
 
   void onBackButtonTap() {

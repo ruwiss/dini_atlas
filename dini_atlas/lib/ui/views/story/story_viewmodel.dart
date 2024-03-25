@@ -3,6 +3,7 @@ import 'package:dini_atlas/models/story_model.dart';
 import 'package:dini_atlas/services/remote/daily_service.dart';
 import 'package:dini_atlas/services/remote/google/admob_service.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stacked_services/stacked_services.dart';
 import "package:story_view/story_view.dart";
@@ -70,6 +71,8 @@ class StoryViewModel extends BaseViewModel {
   late StoryCategory currentCategory = getStoriesCategory(_stories.first);
   void onStoryShow(int index) async {
     currentStory = _storyList[index];
+    FirebaseAnalytics.instance
+        .logEvent(name: "story_view", parameters: {"url": currentStory.media});
 
     currentCategory = getStoriesCategory(_stories[_stories.indexWhere(
         (e) => e.stories.indexWhere((ee) => ee == currentStory) != -1)]);
@@ -90,6 +93,8 @@ class StoryViewModel extends BaseViewModel {
   }
 
   void onShareButtonTap() async {
+    FirebaseAnalytics.instance
+        .logEvent(name: "story_share", parameters: {"url": currentStory.media});
     controller.pause();
     await _storyService.shareMedia(currentStory.media);
     controller.play();

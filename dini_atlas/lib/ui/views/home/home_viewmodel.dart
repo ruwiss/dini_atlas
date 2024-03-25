@@ -11,6 +11,7 @@ import 'package:dini_atlas/services/remote/google/firebase_remote_config_service
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_home_dialog.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_noti_dialog.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:in_app_update/in_app_update.dart';
@@ -88,6 +89,7 @@ class HomeViewModel extends IndexTrackingViewModel {
   void onAboutTap() {
     // Hakkımda sayfası
     _navigationService.navigateToAboutView();
+    FirebaseAnalytics.instance.logScreenView(screenName: 'about');
   }
 
   bool get silentModeEnabled =>

@@ -4,6 +4,7 @@ import 'package:dini_atlas/ui/views/home/tabs/categories/categories_tab.dart';
 import 'package:dini_atlas/ui/views/home/tabs/home/home_tab.dart';
 import 'package:dini_atlas/ui/widgets/appbar.dart';
 import 'package:dini_atlas/ui/widgets/bottom_nav_container.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -92,13 +93,21 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  void _logScreenView(String name) {
+    FirebaseAnalytics.instance
+        .logScreenView(screenName: name, screenClass: 'home');
+  }
+
   Widget getViewForIndex(int index) {
     switch (index) {
       case 2:
+        _logScreenView("kuran_tab");
         return const QuranTab();
       case 1:
+        _logScreenView("categories_tab");
         return const CategoriesTab();
       default:
+        _logScreenView("home_tab");
         return HomeTabView(homeService: _homeService);
     }
   }

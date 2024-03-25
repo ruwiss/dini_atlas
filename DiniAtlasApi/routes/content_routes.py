@@ -275,17 +275,6 @@ def radyolar():
         return []
 
 
-@app.route("/dualar")
-def dualar():
-    try:
-        with open("json/dua.json", "r", encoding="utf-8") as f:
-            existing_data = json.load(f)
-            shuffle(existing_data)
-            return jsonify(existing_data[:10])
-    except:
-        return []
-
-
 @app.route("/aygoruntusu/<img>")
 def ay_goruntusu(img):
     return redirect(f"https://namazvakti.diyanet.gov.tr/images/{img}")
@@ -326,7 +315,7 @@ def user_feedback():
         token = "6421456783:AAE_N4mD1sTL-YuhiqKOF9EC8gz9z2tnWAg"
         chat_id = "-1002033217313"
 
-        temp_image_path = os.path.join(TEMP_FOLDER, f"temp_image{len(text)}.png")
+        temp_image_path = os.path.join(TEMP_FOLDER, f"temp_image_{len(text)}.png")
         image_file.save(temp_image_path)
 
         url = f"https://api.telegram.org/bot{token}/sendPhoto"

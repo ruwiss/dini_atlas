@@ -3,6 +3,7 @@ import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/services/remote/google/google_services.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:feedback/feedback.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -59,6 +60,10 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 )
                     .then((_) async {
                   final emailResult = await AccountPicker.emailHint();
+                  if (emailResult != null) {
+                    FirebaseAnalytics.instance.setUserProperty(
+                        name: 'email', value: emailResult.email);
+                  }
                   GoogleServices.uploadUserFeedBack(
                           feedback, emailResult?.email)
                       .then((value) {

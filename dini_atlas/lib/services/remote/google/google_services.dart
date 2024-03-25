@@ -1,6 +1,7 @@
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/firebase_options.dart';
 import 'package:dini_atlas/services/remote/dio_service.dart';
+import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:feedback/feedback.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -38,8 +39,13 @@ abstract class GoogleServices {
     ));
 
     stopwatch.stop();
-
-    FirebaseAnalytics.instance.logAppOpen();
+    FirebaseAnalytics.instance
+        .setAnalyticsCollectionEnabled(true)
+        .then((_) async {
+      await FirebaseAnalytics.instance
+          .setDefaultEventParameters({"app_version": ksAppVersion});
+      FirebaseAnalytics.instance.logAppOpen();
+    });
   }
 
   static Future<void> _setCrashlytics() async {

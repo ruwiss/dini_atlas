@@ -1,6 +1,7 @@
 import 'package:dini_atlas/app/app.dialogs.dart';
 import 'package:dini_atlas/app/app.locator.dart';
 import 'package:dini_atlas/ui/common/constants/app_strings.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ void checkCountAndShowRemoveAdsDialog() async {
   final adCount = (prefs.getInt('adCounter') ?? 0);
   prefs.setInt('adCounter', adCount + 1);
   if (adCount == 5 || adCount >= 10) {
+    FirebaseAnalytics.instance.logEvent(name: "show_remove_ads_dialog");
     await locator<DialogService>().showCustomDialog(
       variant: DialogType.removeAds,
       barrierDismissible: true,

@@ -11,6 +11,7 @@ import 'package:dini_atlas/services/local/user_settings_service.dart';
 import 'package:dini_atlas/services/remote/quran_service.dart';
 import 'package:dini_atlas/ui/dialogs/settings/settings_traceable_quran_dialog.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -247,6 +248,8 @@ class TraceableQuranViewModel extends BaseViewModel {
         quranReciters: quranReciters,
         currentReciterId: userSettings.quranReciterId,
         onSelectedReciter: (reciter) {
+          FirebaseAnalytics.instance.logSelectContent(
+              contentType: "reciter", itemId: reciter.id.toString());
           _userSettingsService.setQuranReciter(reciter.id).then((value) {
             _userSettings = value;
             notifyListeners();
