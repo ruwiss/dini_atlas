@@ -26,6 +26,7 @@ class TableWidget extends StatelessWidget {
                     viewModel.ifTodayEidPrayerTimeGetTime();
                 return Column(
                   children: [
+                    verticalSpace(10),
                     _currentDayPrayerTimes(),
                     // Eğer bugün bayram ise namaz saatini göster
                     if (eidPrayer != null) ...[

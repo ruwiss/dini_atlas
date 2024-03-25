@@ -1,28 +1,30 @@
 import 'dart:math';
 
-class StoriesModel {
-  final List<StoryCategory> categories;
+class StoryModel {
   final List<Stories> stories;
-  StoriesModel({required this.categories, required this.stories});
+  final List<StoryCategory> categories;
 
-  factory StoriesModel.fromJson(Map<String, dynamic> json) {
-    final List categoriesJson = json['categories'];
-    final List storiesJson = json['stories'];
+  StoryModel(this.stories, this.categories);
 
-    return StoriesModel(
-      categories: categoriesJson.map((e) => StoryCategory.fromJson(e)).toList(),
-      stories: storiesJson.map((e) => Stories.fromJson(e)).toList(),
-    );
+  factory StoryModel.fromJson(Map<String, dynamic> json) {
+    final stories =
+        (json['stories'] as List).map((e) => Stories.fromJson(e)).toList();
+
+    final categories = (json['categories'] as List)
+        .map((e) => StoryCategory.fromJson(e))
+        .toList();
+
+    return StoryModel(stories, categories);
   }
 
-  StoriesModel.empty()
-      : categories = [],
-        stories = [];
-
   Map<String, dynamic> toJson() => {
-        "categories": categories.map((e) => e.toJson()).toList(),
         "stories": stories.map((e) => e.toJson()).toList(),
+        "categories": categories.map((e) => e.toJson()).toList(),
       };
+
+  StoryModel.empty()
+      : stories = [],
+        categories = [];
 }
 
 class StoryCategory {

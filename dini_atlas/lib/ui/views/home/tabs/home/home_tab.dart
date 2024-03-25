@@ -36,7 +36,7 @@ class HomeTabViewState extends State<HomeTabView> {
               viewModel: viewModel,
               homeService: widget.homeService,
             ),
-            verticalSpaceMedium,
+            verticalSpaceTiny,
             Flexible(
               child: SingleChildScrollView(
                 child: TableWidget(viewModel: viewModel),

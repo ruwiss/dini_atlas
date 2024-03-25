@@ -17,9 +17,10 @@ class EditorView extends StatefulWidget {
 }
 
 class _EditorViewState extends State<EditorView> {
-  StoriesModel? _stories;
+  StoryModel? _storyModel;
 
-  List<StoryCategory> get _categories => _stories?.categories ?? [];
+  List<StoryCategory> get _categories => _storyModel?.categories ?? [];
+  List<Stories> get _stories => _storyModel?.stories ?? [];
 
   String? _errorText;
   bool _contentSaving = false;
@@ -28,11 +29,10 @@ class _EditorViewState extends State<EditorView> {
   void initState() {
     if (!widget.isNew) {
       FTPService.instance.getJsonAsModel(widget.fileName).then((value) {
-        _stories = value;
-        setState(() {});
+        setState(() => _storyModel = value);
       });
     } else {
-      _stories = StoriesModel.empty();
+      _storyModel = StoryModel.empty();
     }
     super.initState();
   }
@@ -60,7 +60,7 @@ class _EditorViewState extends State<EditorView> {
                       FTPService.instance
                           .saveJsonContent(
                         fileName: widget.fileName,
-                        json: _stories!.toJson(),
+                        json: _storyModel!.toJson(),
                       )
                           .then((value) {
                         Navigator.of(context).pop();
@@ -74,7 +74,7 @@ class _EditorViewState extends State<EditorView> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Center(
-          child: !widget.isNew
+          child: !widget.isNew && _storyModel == null
               ? const CircularProgressIndicator()
               : _editorContent(),
         ),
@@ -83,16 +83,12 @@ class _EditorViewState extends State<EditorView> {
   }
 
   Widget _editorContent() {
-    return DefaultTabController(
-      length: 2,
-      initialIndex: 0,
-      child: Column(
-        children: [
-          if (_errorText case final String error)
-            Text(error, textAlign: TextAlign.center),
-          Expanded(child: _storyView()),
-        ],
-      ),
+    return Column(
+      children: [
+        if (_errorText case final String error)
+          Text(error, textAlign: TextAlign.center),
+        Expanded(child: _storyView()),
+      ],
     );
   }
 
@@ -157,12 +153,10 @@ class _EditorViewState extends State<EditorView> {
             const Text("Kategoriler"),
             TextButton(
               onPressed: () {
-                if (_categories.length < 4) {
-                  _showAddCategoryView = true;
-                  setState(() {});
-                }
+                _showAddCategoryView = true;
+                setState(() {});
               },
-              child: const Text("Ekle (Max 4)"),
+              child: const Text("Ekle"),
             )
           ],
         ),
@@ -171,14 +165,12 @@ class _EditorViewState extends State<EditorView> {
           (index) {
             final category = _categories[index];
             final storiesIndex =
-                _stories?.stories.indexWhere((e) => e.type == category.id) ??
-                    -1;
+                _stories.indexWhere((e) => e.type == category.id);
             return ListTile(
               title: Text(category.name),
               subtitle: storiesIndex == -1
                   ? null
-                  : Text(
-                      "${_stories?.stories[storiesIndex].stories.length} Hikaye"),
+                  : Text("${_stories[storiesIndex].stories.length} Hikaye"),
               onTap: () {
                 if (storiesIndex != -1) {
                   setState(() => _showStoryCategoryId = category.id);
@@ -192,8 +184,7 @@ class _EditorViewState extends State<EditorView> {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  _stories!.stories
-                      .removeWhere((e) => e.type == _categories[index].id);
+                  _stories.removeWhere((e) => e.type == _categories[index].id);
                   _categories.removeAt(index);
                   setState(() {});
                 },
@@ -261,10 +252,9 @@ class _EditorViewState extends State<EditorView> {
 
   Widget _storiesListView() {
     List<Story> stories = [];
-    if (_stories != null && _stories!.stories.isNotEmpty) {
-      stories = _stories!.stories
-          .singleWhere((e) => e.type == _showStoryCategoryId)
-          .stories;
+    if (_storyModel != null && _stories.isNotEmpty) {
+      stories =
+          _stories.singleWhere((e) => e.type == _showStoryCategoryId).stories;
     }
 
     return Column(
@@ -335,8 +325,8 @@ class _EditorViewState extends State<EditorView> {
         : "/story/$_pickedStoryMediaFromMedia";
     setState(() => _loadingStoryData = false);
 
-    final storyIdx = _stories!.stories
-        .indexWhere((e) => e.type == _storyCreatorSelectedCategory);
+    final storyIdx =
+        _stories.indexWhere((e) => e.type == _storyCreatorSelectedCategory);
 
     final StoryAddon? addon = _addonTextCtrl.text.isEmpty
         ? null
@@ -352,7 +342,7 @@ class _EditorViewState extends State<EditorView> {
     );
     if (storyIdx == -1) {
       // Yeni
-      _stories!.stories.add(
+      _stories.add(
         Stories(
           type: _storyCreatorSelectedCategory!,
           stories: [story],
@@ -360,7 +350,7 @@ class _EditorViewState extends State<EditorView> {
       );
     } else {
       // Düzenle
-      _stories!.stories[storyIdx].stories.add(story);
+      _stories[storyIdx].stories.add(story);
     }
 
     _addonTextCtrl.clear();
