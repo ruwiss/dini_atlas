@@ -1,7 +1,7 @@
 name: dini_atlas
 description: Dini Atlas
 publish_to: 'none'
-version: 1.1.4+19
+version: 1.1.5+20
 
 environment:
     sdk: '>=3.0.3 <4.0.0'
