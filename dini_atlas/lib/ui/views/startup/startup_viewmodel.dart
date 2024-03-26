@@ -115,9 +115,10 @@ class StartupViewModel extends BaseViewModel {
   }
 
   // Eğer veritabanına daha önce vakitler kayıt edildiyse, ana sayfaya git
-  void checkLocation() async {
+  void checkLocation({bool delayed = false}) async {
     final hasPrayerTimes = await _prayerTimesService.hasPrayerTimes();
     if (hasPrayerTimes) {
+      if (delayed) await Future.delayed(const Duration(seconds: 1));
       _navigationService.replaceWithHomeView();
     } else {
       FlutterNativeSplash.remove();

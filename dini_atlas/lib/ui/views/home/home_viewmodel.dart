@@ -44,19 +44,23 @@ class HomeViewModel extends IndexTrackingViewModel {
   }
 
   Future<void> _optimizationPermissions() async {
-    final batteryPerm = await Permission.ignoreBatteryOptimizations.isGranted;
-    final systemAlertWindow = await Permission.systemAlertWindow.isGranted;
-    if (!batteryPerm || !systemAlertWindow) {
-      final result = await _bottomSheetService.showBottomSheet(
-        title: "Küçük bir ayar gerekli",
-        description:
-            "Vakitlerin düzgün çalışması pil optimizasyonu ayarı gereklidir. Gelecek olan izin isteğini kabul ediniz.",
-        confirmButtonTitle: "Yönlendir",
-      );
-      if (result != null && result.confirmed) {
-        await Permission.ignoreBatteryOptimizations.request();
-        await Permission.systemAlertWindow.request();
+    try {
+      final batteryPerm = await Permission.ignoreBatteryOptimizations.isGranted;
+      final systemAlertWindow = await Permission.systemAlertWindow.isGranted;
+      if (!batteryPerm || !systemAlertWindow) {
+        final result = await _bottomSheetService.showBottomSheet(
+          title: "Küçük bir ayar gerekli",
+          description:
+              "Vakitlerin düzgün çalışması pil optimizasyonu ayarı gereklidir. Gelecek olan izin isteğini kabul ediniz.",
+          confirmButtonTitle: "Yönlendir",
+        );
+        if (result != null && result.confirmed) {
+          await Permission.ignoreBatteryOptimizations.request();
+          await Permission.systemAlertWindow.request();
+        }
       }
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 
@@ -108,7 +112,11 @@ class HomeViewModel extends IndexTrackingViewModel {
           final permission =
               await PermissionHandler.permissionsGranted ?? false;
           if (!permission) {
-            await PermissionHandler.openDoNotDisturbSetting();
+            try {
+              await PermissionHandler.openDoNotDisturbSetting();
+            } catch (e) {
+              debugPrint(e.toString());
+            }
           }
         },
         alarmModeEnabled: userSettings.alarmMode,

@@ -19,6 +19,7 @@ void periodicTimerController() async {
   // Alarm mod etkin ise kendini tekrarla
   if (alarmMode) {
     final alarmId = AppNotifications.alarmModeId;
+    await AppNotifications.instance.cancelAllAlarms();
     await AndroidAlarmManager.oneShot(
       const Duration(minutes: 1),
       alarmId,
@@ -26,13 +27,9 @@ void periodicTimerController() async {
       alarmClock: true,
       exact: true,
       allowWhileIdle: true,
-      rescheduleOnReboot: true,
     );
 
-    await prefs.setStringList(
-      "alarmIds",
-      [...prefs.getStringList('alarmIds') ?? [], "$alarmId"],
-    );
+    await prefs.setInt("alarmId", alarmId);
 
     debugPrint("Alarm Fired: $alarmId");
   } else {
@@ -58,11 +55,16 @@ class AppNotifications {
   bool _enabled = false;
 
   Future<bool> _requestPermission() async {
-    return await localNotiPlugin
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()!
-            .requestNotificationsPermission() ??
-        false;
+    try {
+      return await localNotiPlugin
+              .resolvePlatformSpecificImplementation<
+                  AndroidFlutterLocalNotificationsPlugin>()!
+              .requestNotificationsPermission() ??
+          false;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
   }
 
   Future<void> setupNotification() async {
@@ -79,7 +81,7 @@ class AppNotifications {
       final bool alarmMode = prefs.getBool('alarmMode') ?? true;
 
       if (alarmMode) {
-        await _cancelAllAlarms();
+        await cancelAllAlarms();
         final alarmId = alarmModeId;
         await AndroidAlarmManager.oneShot(
           const Duration(minutes: 1),
@@ -90,7 +92,7 @@ class AppNotifications {
           allowWhileIdle: true,
           rescheduleOnReboot: true,
         );
-        await prefs.setStringList("alarmIds", ["$alarmId"]);
+        await prefs.setInt("alarmId", alarmId);
         debugPrint("Alarm Notification Mode Activated");
       } else {
         await AndroidAlarmManager.periodic(
@@ -110,19 +112,25 @@ class AppNotifications {
     }
   }
 
-  Future<void> _cancelAllAlarms() async {
-    final prefs = await SharedPreferences.getInstance();
-    for (String i in prefs.getStringList('alarmIds') ?? []) {
-      final int id = int.parse(i);
-      AndroidAlarmManager.cancel(id);
+  Future<void> cancelAllAlarms() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final alarmModeId = prefs.getInt("alarmId");
+      if (alarmModeId != null) await AndroidAlarmManager.cancel(alarmModeId);
+      await AndroidAlarmManager.cancel(normalModeId);
+    } catch (e) {
+      debugPrint(e.toString());
     }
-    AndroidAlarmManager.cancel(normalModeId);
   }
 
   Future<void> setAlarmMode(bool value) async {
     // Eğer alarm modu değilse ve alarm yapılacaksa önceki process'i kapat
-    await _cancelAllAlarms();
+    await cancelAllAlarms();
     _enabled = false;
-    await setupNotification();
+    try {
+      await setupNotification();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

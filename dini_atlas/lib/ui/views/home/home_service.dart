@@ -19,6 +19,7 @@ class HomeService with ListenableServiceMixin {
         currentPrayerType,
         countdownTimer
       ]);
+  
 
   PrayerTimes? prayerTimes;
   bool nextTimeIsAfterDay = false;

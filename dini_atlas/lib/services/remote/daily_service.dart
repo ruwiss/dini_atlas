@@ -145,12 +145,14 @@ class DailyService {
               "key": null,
             }));
       } catch (e) {
-        debugPrint(e.toString());
+        debugPrint("Daily Service $e");
       }
     }
   }
 
-  Future<ContentsOfTime> getContentsOfTime(String currentType) async {
+  int _maxTry = 1;
+
+  Future<ContentsOfTime?> getContentsOfTime(String currentType) async {
     // Güneş vakti için yeni içerik getirilmeyecek.
     if (currentType == PrayerType.gunes.name) {
       currentType = PrayerType.imsak.name;
@@ -158,11 +160,15 @@ class DailyService {
     try {
       await getDailyContentsIfNotExists();
       final prefs = await _getPrefs();
-
       final String? prefsData = prefs.getString(_dailyContentKey);
       if (prefsData == null) {
-        await Future.delayed(const Duration(seconds: 2));
-        return await getContentsOfTime(currentType);
+        if (_maxTry != 0) {
+          await Future.delayed(const Duration(seconds: 2));
+          _maxTry--;
+          return await getContentsOfTime(currentType);
+        } else {
+          return null;
+        }
       } else {
         final Map<String, dynamic> prefsDataMap = jsonDecode(prefsData);
         final String key = "${DateTime.now().day}_$currentType";

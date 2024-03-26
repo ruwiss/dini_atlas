@@ -22,6 +22,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:dini_atlas/ui/views/home/home_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -67,7 +68,7 @@ class HomeTabViewModel extends ReactiveViewModel {
   bool get hideDuaContent =>
       homeService.userSettings?.hideDuaDailyContent ?? false;
 
-   bool get hideSoruCevapContent =>
+  bool get hideSoruCevapContent =>
       homeService.userSettings?.hideSoruCevapDailyContent ?? false;
 
   bool get hideBabyNamesContent =>
@@ -104,6 +105,9 @@ class HomeTabViewModel extends ReactiveViewModel {
     // Günlük verileri getir
     _getStories();
 
+    // Uygulama durumunu dinle (geri gelme durumu)
+    _listenToAppStateChanges();
+
     FlutterNativeSplash.remove();
   }
 
@@ -117,6 +121,7 @@ class HomeTabViewModel extends ReactiveViewModel {
             (a, b) =>
                 a.miladiTarihUzunIso8601.compareTo(b.miladiTarihUzunIso8601),
           );
+
         notifyListeners();
         // Namaz vakitlerini bildirim ekranı için Shared Preferences'a kaydet
         await PrayerTimesService.savePrayerTimesToSharedPreferences(times);
@@ -124,14 +129,26 @@ class HomeTabViewModel extends ReactiveViewModel {
         AppWidgetService.updateHomeWidgetsIfAvailable();
       },
       (ifNotUpToDate) async {
-        // Asenkron işlem tamamlanana kadar bekleyeceğiz
-        final fetchResult = await _fetchTimesService.fetchTimes();
-        fetchResult.fold((l) => homeService.prayerTimes = l, (r) => null);
-        notifyListeners();
+        await _updatePrayerTimes();
       },
     );
 
     notifyListeners();
+  }
+
+  Future<void> _updatePrayerTimes() async {
+    final fetchResult = await _fetchTimesService.fetchTimes();
+    fetchResult.fold((l) => homeService.prayerTimes = l, (r) => null);
+    notifyListeners();
+  }
+
+  void _listenToAppStateChanges() {
+    AppStateEventNotifier.startListening();
+    AppStateEventNotifier.appStateStream.forEach((state) {
+      if (state == AppState.foreground) {
+        _navigationService.replaceWithStartupView(justLogo: true);
+      }
+    });
   }
 
   void _getCurrentMoonPhaseImage() async {
@@ -163,12 +180,18 @@ class HomeTabViewModel extends ReactiveViewModel {
 
   PrayerTime get tablePrayerTime => _prayerTimeList![selectedPrayerTime!];
 
-  void setPrayerTimeIndex() {
+  void setPrayerTimeIndex() async {
     final DateTime datetime = DateTime.now();
 
     // Sıradaki vakit namazları getir (tablo için)
-    selectedPrayerTime = _prayerTimeList
+    selectedPrayerTime ??= _prayerTimeList
         ?.indexWhere((e) => e.miladiTarihUzunIso8601.isEqualTo(datetime));
+
+    // Veritabanında kayıtlı son 7 günlük vakit kaldıysa yenisini getir
+    if (((_prayerTimeList!.length - 1) - selectedPrayerTime!) < 7) {
+      _updatePrayerTimes();
+    }
+
     notifyListeners();
   }
 
@@ -210,9 +233,12 @@ class HomeTabViewModel extends ReactiveViewModel {
 
   List<PrayerTime> get weeklyPrayerTimes {
     List<PrayerTime> items = [];
+    int firstTime = selectedPrayerTime!;
     for (var i = 1; i <= 7; i++) {
-      _prayerTimeList!.length - 1 >= selectedPrayerTime! + i;
-      items.add(_prayerTimeList![selectedPrayerTime! + i]);
+      firstTime++;
+      if (_prayerTimeList!.length - 1 >= firstTime) {
+        items.add(_prayerTimeList![firstTime]);
+      }
     }
     return items;
   }

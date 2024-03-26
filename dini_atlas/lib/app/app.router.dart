@@ -191,8 +191,12 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i3.StartupView: (data) {
+      final args = data.getArgs<StartupViewArguments>(
+        orElse: () => const StartupViewArguments(),
+      );
       return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i3.StartupView(),
+        builder: (context) =>
+            _i3.StartupView(key: args.key, justLogo: args.justLogo),
         settings: data,
       );
     },
@@ -339,6 +343,33 @@ class StackedRouter extends _i1.RouterBase {
 
   @override
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
+}
+
+class StartupViewArguments {
+  const StartupViewArguments({
+    this.key,
+    this.justLogo = false,
+  });
+
+  final _i22.Key? key;
+
+  final bool justLogo;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "justLogo": "$justLogo"}';
+  }
+
+  @override
+  bool operator ==(covariant StartupViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.justLogo == justLogo;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ justLogo.hashCode;
+  }
 }
 
 class QuranViewArguments {
@@ -577,14 +608,17 @@ extension NavigatorStateExtension on _i27.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToStartupView([
+  Future<dynamic> navigateToStartupView({
+    _i22.Key? key,
+    bool justLogo = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.startupView,
+        arguments: StartupViewArguments(key: key, justLogo: justLogo),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -874,14 +908,17 @@ extension NavigatorStateExtension on _i27.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithStartupView([
+  Future<dynamic> replaceWithStartupView({
+    _i22.Key? key,
+    bool justLogo = false,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.startupView,
+        arguments: StartupViewArguments(key: key, justLogo: justLogo),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

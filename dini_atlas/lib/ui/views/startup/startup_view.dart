@@ -10,7 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'startup_viewmodel.dart';
 
 class StartupView extends StackedView<StartupViewModel> {
-  const StartupView({super.key});
+  const StartupView({super.key, this.justLogo = false});
+  final bool justLogo;
 
   @override
   Widget builder(
@@ -35,22 +36,26 @@ class StartupView extends StackedView<StartupViewModel> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(),
+                      verticalSpaceTiny,
                       Column(
+                        mainAxisAlignment: justLogo
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
                         children: [
                           _startupTitle(context),
                           verticalSpace(40),
                           _startupImage(context),
                           verticalSpace(30),
-                          viewModel.isBusy
-                              ? const Padding(
-                                  padding: EdgeInsets.only(bottom: 20),
-                                  child: CircularProgressIndicator(),
-                                )
-                              : _actionButtons(context, viewModel),
+                          if (!justLogo)
+                            viewModel.isBusy
+                                ? const Padding(
+                                    padding: EdgeInsets.only(bottom: 20),
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : _actionButtons(context, viewModel),
                         ],
                       ),
-                      _startupPrivacyPolicy(),
+                      if (!justLogo) _startupPrivacyPolicy(),
                     ],
                   ),
                 ),
@@ -95,10 +100,12 @@ class StartupView extends StackedView<StartupViewModel> {
             ),
           ),
           verticalSpace(15),
-          const Text(
-            "Namazdan Kuran'a, Her An Yanınızda!",
+          Text(
+            justLogo
+                ? "Tekrar Hoş Geldiniz"
+                : "Namazdan Kuran'a, Her An Yanınızda!",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
         ],
       ),
@@ -181,6 +188,6 @@ class StartupView extends StackedView<StartupViewModel> {
   @override
   void onViewModelReady(StartupViewModel viewModel) =>
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-        viewModel.checkLocation();
+        viewModel.checkLocation(delayed: justLogo);
       });
 }

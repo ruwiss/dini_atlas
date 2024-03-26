@@ -1,6 +1,4 @@
 import 'package:dini_atlas/models/story_model.dart';
-import 'package:dini_atlas/ui/common/constants/app_colors.dart';
-import 'package:dini_atlas/ui/common/constants/app_images.dart';
 import 'package:dini_atlas/ui/common/constants/constants.dart';
 import 'package:dini_atlas/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
