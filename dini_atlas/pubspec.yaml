@@ -84,6 +84,7 @@ dependencies:
 
   # in app purchase
   purchases_flutter: ^6.21.0
+  flutter_meta_sdk: ^1.0.2
 
 dev_dependencies:
   build_runner: ^2.4.5

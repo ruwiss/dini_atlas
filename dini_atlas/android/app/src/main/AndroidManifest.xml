@@ -77,6 +77,10 @@
                 android:resource="@xml/prayer_widget_mini" />
         </receiver>
 
+        <!-- Facebook SDK -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="2004096619987958"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="7927e509d5b0d50e770bb8fa58cb1889"/>
+
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

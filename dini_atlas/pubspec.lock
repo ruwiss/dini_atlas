@@ -627,6 +627,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  flutter_meta_sdk:
+    dependency: "direct main"
+    description:
+      name: flutter_meta_sdk
+      sha256: e96aaaea2915d34e180d5077575c786a728984acd17d9706ede7362299f76b80
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   flutter_native_splash:
     dependency: "direct main"
     description:
