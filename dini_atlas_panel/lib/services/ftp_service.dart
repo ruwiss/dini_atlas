@@ -16,8 +16,8 @@ class FTPService {
   Future<void> init() async {
     ftpConnect = FTPConnect(
       'cp70.servername.co',
-      user: 'kodlayalim',
-      pass: 'Ankara.0660.',
+      user: 'user',
+      pass: 'pass',
       showLog: true,
     );
     await _connect();

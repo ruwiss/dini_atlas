@@ -18,9 +18,9 @@ app.config["JSON_AS_ASCII"] = False
 app.config["JSONIFY_MIMETYPE"] = "application/json; charset=utf-8"
 
 app.config["DB_HOST"] = "localhost"
-app.config["DB_USER"] = "root" if debug_mode else "kodlayalim_user"
-app.config["DB_PASSWORD"] = None if debug_mode else "Ankara.0660."
-app.config["DB_DATABASE"] = "kodlayalim_diniatlas"
+app.config["DB_USER"] = "root" if debug_mode else "user"
+app.config["DB_PASSWORD"] = None if debug_mode else "pass"
+app.config["DB_DATABASE"] = "db"
 
 app.register_blueprint(content_app)
 app.register_blueprint(user_app, url_prefix="/kullanici")
