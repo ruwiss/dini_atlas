@@ -1,7 +1,7 @@
 
-Uygulama Özellikleri
+# Uygulama Özellikleri
 
-Namaz Vakitleri:
+## Namaz Vakitleri:
 - Konuma göre otomatik veya manuel şehir seçimi
 - Konumu değiştirerek mevcut konumda ezan vakitlerini güncelleme
 - Namaz vakitleri için önceden, ezan vakti veya sonrası hatırlatma bildirimleri
@@ -15,7 +15,7 @@ Namaz Vakitleri:
 - Aylık ezan vakitleri ve imsakiye
 - Ücretsiz ana ekran namaz vakti geri sayım widget görünümleri
 
-Kuran'ı Kerim:
+## Kuran'ı Kerim:
 - Arapça, Türkçe okunuş ve meali ile birlikte detaylı ayarlar
 - Farklı kişilerden Kuran dinleme
 - Son okunan ayet gösterimi, kaldığın yerden devam etme
@@ -24,7 +24,7 @@ Kuran'ı Kerim:
 - Sure içerisinde istenilen ayete anında gidebilme
 - Ayet takipli Kuranı Kerim özelliği ile okunan ayeti aynı anda takip edebilirsiniz
 
-Diğer Özellikler:
+## Diğer Özellikler:
 - Story (Hikaye)
 - Yasin-i Şerif Kitapçığı
 - Günlük seçilmiş ayet / dua / hadis
@@ -41,6 +41,11 @@ Diğer Özellikler:
 - Yakın Camiler ekranı ile bulunduğunuz konuma en yakın camileri görme
 - Her sayfada hata / sorun bildirme seçeneği.
 - Reklamsız kullanım için üyelik seçeneği
-- ___
+___
 ![Post Image](public/post.jpeg "Örnek uygulama").
 ![Figma Image](public/figma.jpeg "Örnek uygulama tasarımı").
+
+## Demo Video
+
+[![Dini Atlas DEMO](https://img.youtube.com/vi/Vrs0fmcU8aM/sddefault.jpg)](https://youtu.be/Vrs0fmcU8aM?si=n4WB7qHkJNkbNWBp)
+
